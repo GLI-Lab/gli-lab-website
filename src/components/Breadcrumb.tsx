@@ -10,11 +10,15 @@ export function Breadcrumb() {
   const links = [
     {name: 'Home', path: '/'}, // 항상 포함
   ];
+  const mapping: { [key: string]: string } = {
+    'topic': 'Research Topic',
+  }
 
   // 동적으로 경로와 이름 매핑
   segments.forEach((segment, index) => {
     const path = `/${segments.slice(0, index + 1).join('/')}`;
-    let name = segment.charAt(0).toUpperCase() + segment.slice(1); // Capitalize the first letter
+    segment = mapping[segment] || segment  // undefined 대응
+    let name = segment.charAt(0).toUpperCase() + segment.slice(1); // 첫번째 문자 대문자
     links.push({name, path});
   });
 
