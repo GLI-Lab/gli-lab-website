@@ -25,7 +25,7 @@ export const META = {
   url: 'https://gli.konkuk.ac.kr',
   googleVerification: 'xxx',
   naverVerification: 'xxx',
-  ogImage: '/GLI_opengraph_2000x1050.png',
+  ogImage: '/GLI_opengraph_2000x1050.jpg',
 } as const;
 
 export const getMetadata = (metadataProps?: generateMetadataProps) => {  // ? 기호는 이 인자가 선택적
