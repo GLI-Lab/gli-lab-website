@@ -11,11 +11,11 @@ export const generateMetadata = async (): Promise<Metadata> => {
 export default function Page() {
   return (
     <div className="flex h-screen flex-col items-center text-center">
-      <div className="mt-10 text-gray-600 text-[14px]">
+      <div className="mt-6 md:mt-10 text-gray-600 text-[14px]">
         You are here: <Breadcrumb/>
       </div>
 
-      <div className="mt-16 text-left">
+      <div className="mt-16 text-left px-3 md:text-gb">
         <p className="text-lg mb-4">Our research fields are as follows:</p>
         <div className="space-y-6">
           <div>

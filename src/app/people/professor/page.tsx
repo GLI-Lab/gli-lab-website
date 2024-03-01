@@ -13,37 +13,37 @@ export const generateMetadata = async (): Promise<Metadata> => {
 export default function Page() {
   return (
     <div className="flex h-screen flex-col items-center text-center">
-      <div className="mt-10 text-gray-600 text-[14px]">
+      <div className="mt-6 md:mt-10 text-gray-600 text-[14px]">
         You are here: <Breadcrumb/>
       </div>
 
-      <div className="mt-16 text-left">
-        <h2 className="text-xl font-semibold">FACULTY</h2>
-        <div className="flex flex-col space-y-8 pt-6">
-          <div className="flex space-x-6">
-            <Image alt="Byungkook Oh" className="rounded-xl" height="250" width="250" src="/professor.jpg" />
-            <div className="flex flex-col justify-between">
-              <div>
-                <h3 className="text-lg font-semibold">Byungkook Oh (오병국)</h3>
-                <p className="">Assistant professor</p>
-                <p className="">Department of Computer Science and Engineering (CSE)</p>
-                <p className="">Konkuk University, Seoul, Korea</p>
-                <p className="">Research Interest</p>
-                <p className=""> - Knowledge Representation</p>
-                <p className=""> - Knowledge-enhanced NLP Applications</p>
-                <p className=""> - Information Retrieval & Recommendation</p>
-              </div>
-              <div className="space-y-1">
-                <p className="">bkoh at konkuk.ac.kr, bkoh509 at gmail.com</p>
-              </div>
-              <div className="flex space-x-2">
-                <TextIcon className="text-gray-600"/>
-                <DatabaseIcon className="text-gray-600"/>
-                <GraduationCapIcon className="text-gray-600"/>
-              </div>
+      <div className="mt-8 text-left">
+        <h2 className="ml-4 text-xl font-semibold">FACULTY</h2>
+
+        <div className="flex flex-col md:flex-row items-center space-y-8 space-x-6 pt-6 md:pt-2">
+
+          <Image alt="Byungkook Oh" className="rounded-xl h-[200px] w-[200px]" height="200" width="200"
+                 src="/professor.jpg"/>
+          <div className="">
+            <h3 className="text-lg font-semibold">Byungkook Oh (오병국)</h3>
+            <p>Assistant professor</p>
+            <p>Department of Computer Science and Engineering (CSE)</p>
+            <p>Konkuk University, Seoul, Korea</p>
+            <p>Research Interest</p>
+            <p> - Knowledge Representation</p>
+            <p> - Knowledge-enhanced NLP Applications</p>
+            <p> - Information Retrieval & Recommendation</p>
+            <p>bkoh at konkuk.ac.kr, bkoh509 at gmail.com</p>
+            <div className="mt-2 flex space-x-2">
+              <TextIcon className="text-gray-600"/>
+              <DatabaseIcon className="text-gray-600"/>
+              <GraduationCapIcon className="text-gray-600"/>
             </div>
           </div>
+
+
         </div>
+
       </div>
     </div>
   )

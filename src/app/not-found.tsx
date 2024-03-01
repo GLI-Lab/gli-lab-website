@@ -5,10 +5,10 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 export default function NotFound() {
   return (
     <div className="flex h-screen flex-col items-center text-center">
-      <div className="mt-10 text-gray-600 text-[14px]">
+      <div className="mt-6 md:mt-10 text-gray-600 text-[14px]">
         You are here: <Breadcrumb/>
       </div>
-      <LoaderIcon className="mt-24 h-40 w-40 animate-spin text-green-800"/>
+      <LoaderIcon className="mt-12 md:mt-24 h-40 w-40 animate-spin text-green-800"/>
       <h1 className="mt-8 text-2xl font-bold">Coming Soon</h1>
       <h1 className="mt-4 text-4xl font-bold">콘텐츠 준비 중입니다.</h1>
       <p className="mt-4 text-lg text-gray-800">
