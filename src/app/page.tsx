@@ -1,9 +1,7 @@
-import ComingSoon from "@/components/ComingSoon";
+import NotFound from "@/app/not-found";
 
-export default function Home() {
+export default function Page() {
   return (
-    <div>
-      <ComingSoon />
-    </div>
+    <NotFound/>
   )
 }
