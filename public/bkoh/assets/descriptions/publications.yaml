@@ -1,0 +1,145 @@
+"Context-Aware Relational Learning for Knowledge Graph Completion":
+  short_ko: 본 논문은 context(이웃 정보)를 고려한 지식그래프 임베딩 학습이 다양한 task 조건에서 triple 유효성 판단에 효과적임을 보임. 이를 위해서, 그래프 탐색을 통해 추출한 multi-hop 엔티티/관계 정보를 활용하는 모델,  학습 과정에서 보지 못했던 새로운 개체/관계가 포함된 새로운 triple에 대한 추론이 가능한 모델, 지식그래프 내 특정 관계에 대한 low-resource triples에 대해 meta-learning 개념을 도입한 모델을 제안함
+
+"Knowledge-constrained Interest-aware Multi-Behavior Recommendation with Behavior Pattern Identification": Under Review
+"Granular Intents Learning via Mutual Information Maximization for Knowledge-aware Recommendation": Under Review
+"A Survey on Knowledge Graph Evolution: Proliferation, Embedding, and Versioning": Under Review
+
+"Cross-modal contrastive learning for aspect-based recommendation":
+  history: Received 2023.01.24 / Accepted 2023.05.26 / Available online 2023.06.03 / Issued 2023.11
+  cite: Heesoo Won, Byungkook Oh, Hyeongjun Yang, and Kyong-Ho Lee, "Cross-modal contrastive learning for aspect-based recommendation", Information Fusion, 99, 101858, 2023.11 (Q1/IF:18.6)
+  short_ko: 본 논문에서는 정교한 aspect-level preference 파악하는 것을 목표로 함. 지식 그래프 또는 리뷰 텍스트를 활용하는 기존의 단일모달 aspect 기반 모델링을 통합/응용하여, 멀티모달 데이터(그래프와 텍스트) 사이의 aspect 상관관계를 학습하는 contrastive pretrining 방법을 제안함. 따라서, 학습되는 aspect-level representation은 텍스트로부터 명확한 특징과 지식그래프부터 일반적인 특징을 동시에 반영할 수 있음
+  short_en: In this paper, we aim to identify sophisticated aspect-level preferences. We propose a contrastive pretraining method to learn aspect correlations between multimodal data (graphs and texts) by integrating/adapting existing unimodal aspect-based modeling that utilizes knowledge graphs or review texts. Thus, the learned aspect-level representation can simultaneously reflect salient from text and general features from knowledge graphs, resulting in recommendation performance improvement.
+  long_ko: |-
+    지식 기반의 추천시스템은 사용자와 아이템 사이의 부가적인 지식을 컨텍스트 정보로 활용함으로써 추천 성능을 향상시키는데 효과적임. 활용되는 외부 지식의 종류에 따라 그래프 기반과 텍스트 기반의 추천시스템으로 분류할 수 있음. 그래프 기반의 추천시스템은 협업 지식그래프를 활용함으로써 정확도 향상과 설명가능성 제공이 가능하고, 아이템 사이 연관성과 사용자 선호도 파악이 용이함. 텍스트 기반의 추천시스템은 사용자와 아이템 사이 단어 수준의 공유 정보를 활용함으로써 의미 정보를 반영한 표현 학습이 가능함.
+    최근 들어, 사용자의 선호도를 더 정교하게 모델링하기 위해 외부 지식을 속성 단위로 분석하는 추천시스템이 주목을 받아오고 있음. 속성 기반의 추천시스템은 속성 모델링에 활용되는 지식에 따라 그래프 기반과 텍스트 기반의 방법으로 나눌 수 있음. 그래프 기반 방법은 각 속성을 지식그래프의 관계 조합으로 정의하고 각 관계 조합의 중요도를 고려함으로써 아이템 특징에 기반한 일반적인 선호도 추출이 가능함. 하지만 사용자가 상호작용했던 모든 아이템을 선호한다고 간주하기 때문에 interaction noise에 취약하고, 동일한 아이템을 선택한 사용자들의 속성은 모두 동일하다고 여긴다는 한계점을 가짐. 반면에 텍스트 기반의 방법에서는 사용자가 특정 속성에 대한 의견을 분명하게 표현하기 때문에 핵심적인 특징 추출이 가능하지만, 사용자가 리뷰 텍스트에 속성을 언급하지 않거나 리뷰를 남기지 않는 경우는 다루지 못한다는 근본적인 문제가 존재함.
+    본 연구가 제안하는 모델은 COntrastive learning with croSs-MOdal ASpects(COSMOS)로, 정교한 속성 수준의 선호도 파악을 위해 멀티 모달 데이터에 대한 자기지도학습 방법을 제안함. 그래프와 텍스트를 활용한 속성 기반 추천시스템의 한계점을 해결하기 위해 두 속성 모델링 방식을 통합함으로써 더 정교한 속성 수준의 선호도를 파악함. 이때 두 지식에서 정의한 속성들은 서로 다른 잠재 공간에 표현되기 때문에 직접적인 연관이 불가능하기 때문에, 각 지식으로부터 얻은 사용자 또는 아이템에 대한 속성 수준 표현에 대한 대조 학습을 적용함. 특히, 지식그래프와 리뷰 텍스트 사이 데이터 불균형을 고려하여, 데이터 간 상관관계에 기반한 교차 모달 대조 학습 방법을 제안함. 잠재적인 속성들 사이 상관관계를 통해서 두 데이터 사이 의존성 포착이 가능함. 또한 학습되는 속성 수준의 표현은 텍스트로부터 명확한 특징과 지식그래프부터 일반적인 특징을 반영함으로써, 사용자가 두 데이터 중 하나만 가지고 있는 경우에도 효과적인 추천이 가능함. 
+    지식 기반 추천시스템은 공유되는 지식에 기초해 상품과 고객의 특성을 파악하고 그 특성 정보를 이용해 상품 추천을 제공하는 기술임. 본 발명에서 제안하는 속성 기반 추천 기술(Aspect-based Recommendation)은 하나의 데이터가 아닌 멀티 모달 데이터를 활용하는 기술로서, 사용자의 선호도를 세분화된 기준으로 분류할 수 있음. 따라서 특정 데이터에 편향적이지 않으면서 사용자의 정교한 선호도를 파악하여 개인 맞춤형 추천 서비스를 제공할 수 있음.
+  
+"Dual-Oriented Contrast for Recommendation with A Stop-Gradient Operation": 
+  - Submit 2023.06.02 / Presented 2023.10.21-25
+  - Byungkook Oh, Yul Kim, and Bumki Min, "Dual-Oriented Contrast for Recommendation with A Stop-Gradient Operation", In Proceedings of the 32nd ACM International Conference on Information and Knowledge Management (CIKM'23), Birmingham, United Kingdom, 2023.10.21-25 (full)
+  - 추천시스템 내 InfoNCE-like loss들은 한 유저당 다수의 negative 아이템을 활용하는 non-symmetric loss로, 유의미한 아이템 분포 학습에 집중함. 본 논문에서는 다수의 negative 유저와 아이템을 동시에 활용하고 각 유저/아이템 분포 특징을 보존하기 위해 stop-gradient를 적용한 symmetric loss를 제안하여, 최적화된 유저/아이템 분포를 동시에 학습할 수 있음. 결과적으로, user/item prediction 성능을 동시에 향상시킴
+  - InfoNCE-like losses in recommendation systems are non-symmetric losses that utilize multiple negative items per user and focus on learning meaningful item distributions. In this paper, we propose a symmetric loss that utilizes multiple negative users and items simultaneously and applies a stop-gradient to preserve each characteristic of user/item embedding distributions, so that we can simultaneously explore optimized user/item distributions. As a result, the user and item prediction performances can be improved simultaneously.
+
+"Active learning for cross-sentence n-ary relation extraction": 
+  - Received 2021.09.28 / Accepted 2023.06.10 / Available online 2023.06.15 / Issued 2023.10
+  - Seungmin Seo, Byungkook Oh, Jeongbeom Jeoung, Donghyun Kim, Kyong-Ho Lee, Dong-Hoon Shin, and Yeonsoo Lee, "Active learning for cross-sentence n-ary relation extraction", Information Sciences, 645, 119328, 2023.10 (Q1/IF:8.1)
+  - text에서의 N-ary relation 추출은 대량의 레이블링된 고품질 dataset이 필요함. 본 논문에서는 data 의존성이 완화된, multiple sentences로부터 N-ary relation을 추출하는 active learning 기반의 incremental training을 제안함. 이때, 제안하는 schema-aware sampling 기법은 최초 학습된 (relation과 entitiies 사이의) 구조적 유사도 추출 모델을 활용하여, 레이블이 안된 dataset에서 유의미한 샘플을 추가적으로 활용함
+  - N-ary relation extraction from text requires a large amount of labeled high-quality datasets. In this paper, we propose an active learning-based incremental training method for extracting N-ary relations from multiple sentences that is less data-dependent. The proposed schema-aware sampling technique leverages the initially trained structural similarity extraction model (between relations and entities) to further utilize significant samples from unlabeled datasets.
+ 
+"Pre-training local and non-local geographical influences with contrastive learning": 
+  - Received 2022.04.17 / Accepted 2022.10.12 / Available online 2022.10.22 / Issued 2023.01.10
+  - Byungkook Oh, Ilhyun Suh, Kihoon Cha, Junbeom Kim, Goeon Park, and Sihyun Jeong, "Pre-training local and non-local geographical influences with contrastive learning", Knowledge-Based Systems, 259, 110016, 2023.01.10 (Q1/IF:8.8)
+  - Location-Based Services (LBS) task를 수행하기 위해서는 대량의 task-specific data가 필요함. 본 논문에서는 LBS task에서 필요한 범용적 지식인 geographical influence를 사전학습하고 활용하는 것을 목표로 함. 이를 위해 사용자 방문 정보에서 두 지점의 지리적 근접성 (geospatial proximity)과 상대적 거리 차이 (relative distance difference)를 동시에 학습하기 위해 sequence-graph contrastive learning을 제안함
+  - Location-Based Services (LBS) tasks require large amounts of task-specific data. In this paper, we aim to pre-train and utilize geographical influence, which is general-purpose knowledge required in LBS tasks. To this end, we propose a sequence-graph contrastive learning objective that simultaneously learns the geospatial proximity and relative distance difference of two locations from user visit information.
+
+"Active Learning for Knowledge Graph Schema Expansion":
+  - Received 2020.03.10 / Accepted 2021.03.17 / Available online 2021.04.01 / Issued 2022.12.01
+  - Seungmin Seo, Byungkook Oh, Eunju Jo, Sanghak Lee, Dongho Lee, Kyong-Ho Lee, Donghoon Shin, and Yeonsoo Lee, "Active Learning for Knowledge Graph Schema Expansion", IEEE Transactions on Knowledge and Data Engineering, 34(12), 5610-5620, 2022.12.01 (Q1/IF:8.9)
+  - 기존 entity typing과 relation extraction은 text 내 entity/relation에 KG 내 정의된 type만 할당함. 본 논문에서는 유저 피드백을 반영하여, 기존 KG schema에 없는 새로운 types을 할당하기 위한 KG schema 확장과 text로부터의 새로운 정답 data 추출을 위해, KG schema 확장 active learning 프레임워크를 최초로 제안함. 따라서, 보유 데이터를 잘 표현하는 KG schema 구축 시, 도메인 전문가 의존도를 낮출 수 있음
+  - Existing entity typing and relation extraction assign only the types defined in KG to entities/relations in text. In this paper, we propose a novel KG schema extension active learning framework to extend a KG schema, which assigns new out-of-KG types and extracts new gold-labeled data from text, based on user feedback. Thus, the dependency on domain experts can be mitigated when building a KG schema representing text.
+
+"Open-world knowledge graph completion for unseen entities and relations via attentive feature aggregation": 
+  - Received 2020.09.01 / Accepted 2021.11.28 / Available online 2021.12.03 / Issued 2022.03
+  - Byungkook Oh, Seungmin Seo, Jimin Hwang, Dongho Lee, and Kyong-Ho Lee, "Open-world knowledge graph completion for unseen entities and relations via attentive feature aggregation", Information Sciences, 586, 468-484, 2022.03 (Q1/IF:8.1)
+  - 기존 triple (head, relation, tail) 타당성 검증은 in-KG entity/relation sets에 대해서만 수행할 수 있음. 본 논문에서는 out-of-KG entity와 relation가 포함된 triple 검증 (즉, open-world setting)을 위해서, entity의 textual description과 realtion type constraints를 활용한 inductive KG embedding 방법을 제안함. 또한, multi-hop neighborhood 정보를 추가적으로 활용하여 고품질의 fact representation을 추출함
+  - Most triple (head, relation, tail) validation can only be performed on in-KG entity/relation sets. In this paper, we propose an inductive KG embedding method using entity textual descriptions and relation type constraints (i.e., domain and range constraints) to validate triples containing an out-of-KG entity or relation (called an open-world setting). Also, multi-hop neighborhood information is additionally utilized to extract high-quality fact representation.
+  
+"DynaPosGNN: Dynamic-Positional GNN for Next POI Recommendation": 
+  history: Presented 2021.12.07-10
+  cite: Junbeom Kim, Sihyun Jeong, Goeon Park, Kihoon Cha, Ilhyun Suh, and Byungkook Oh, "DynaPosGNN: Dynamic-Positional GNN for Next POI Recommendation", 2021 International Conference on Data Mining Workshops (ICDMW'21), Auckland, New Zealand, 2021.12.07-10 (eight pages) 
+  short_ko: 기존 next Point-Of-Interest (POI) 추천은 과거 trajectory 내 POI들의 방문 시간과 위치정보를 주로 활용하여 순차적인 패턴을 학습함. 본 논문에서는 좀 더 실용적인 시나리오인 유저의 다음 POI 도착 예정 시간에 따른 next POI 추천을 타겟으로함. 이를 위해, graph neural networks를 활용하여, next POI 도착 예정 시간과 user trajectories에서 추출한 user-POI/POI-POI graphs 사이의 상관관계를 학습함
+  short_en: Existing next Point-Of-Interest (POI) recommendations mainly utilize the visit times and locations of POIs in the past trajectory to learn sequential patterns. In this paper, we address the more practical scenario of recommending the next POI based on the user's expected arrival time at the next POI. For this purpose, we leverage graph neural networks to learn the correlation between the next POI arrival time and user-POI/POI-POI graphs from user trajectories.
+  long_ko: 
+
+"Multi-task learning for spatial events prediction from social data": 
+  history: Received 2020.06.15 / Accepted 2021.09.17 / Available online 2021.09.21 / Issued 2021.12
+  cite: Sungkwang Eom, Byungkook Oh, Sangjin Shin, and Kyong-Ho Lee, "Multi-task learning for spatial events prediction from social data", Information Sciences, 581, 278-290, 2021.12 (Q1/IF:8.1)
+  short_ko: 본 논문은 social data로부터 특정 위치에 발생할 spatial event를 상세하게 파악하고 위치-specific data 부족 문제 해결을 위해, event subtype을 예측하는 task를 설계하고 다수의 subtypes에 대한 multi-task learning을 적용함. 또한, 위치 사이의 의미적/공간적 관계 정보를 활용하여, 관계 정보에 따라 event representation들을 해당 tasks 사이에 공유함. 따라서, subtypes 사이의 상관관계를 더욱 잘 포착할 수 있음
+  short_en: In this paper, we aim to identify spatial events occurring at a specific location in detail and handle the problem of location-specific data sparsity. To do this, we design a task to predict event subtypes from social data and extend the tasks to perform multi-task learning for multiple subtypes. We also utilize semantic and spatial relationship information between locations to share event representations among tasks according to the relationship information. Thus, correlations between subtypes can be better captured.
+  long_ko: 본 논문은 social data로부터 특정 위치에 발생할 spatial event를 attribute 단위(subtype)로 상세하게 파악하고 위치-specific data 부족 및 불완전성 문제 해결을 위해, multiple subtypes (multiple tasks)을 예측하는 것을 목표로 함. 예를 들어, population of event의 subtype은 'Agricultural', 'Business', 'Education', and 'Labor'들이 존재하며, code of event는 'Economic Issues', 'Government and Political Issues', and 'Employment and Wages'들이 존재함. 이때, 각 subtype을 예측하는 task의 여러 개를 수행하는 multi-task learning을 수행함. 또한, 위치 사이의 의미적 관계와 지리적 근접성 (공간적 관계) 정보를 추가적으로 활용하여, 관계 정보에 따라 event representation들을 event subtype 예측하는 task들 사이에 공유함. 결과적으로, event 사이의 공유되는 정보인 social data로부터 event subtype별 특징을 잘 파악하여, event subtype 사이의 상관관계를 더욱 잘 포착할 수 있음
+
+"Inductive Gaussian representation of user-specific information for personalized stress-level prediction": 
+  history: Received 2019.10.30 / Accepted 2021.03.14 / Available online 2021.03.18 / Issued 2021.09.15
+  cite: Byungkook Oh, Jimin Hwang, Seungmin Seo, Sejin Chun, and Kyong-Ho Lee, "Inductive Gaussian representation of user-specific information for personalized stress-level prediction", Expert Systems with Applications, 178, 114912, 2021.09.15 (Q1/IF:8.5)
+  short_ko: 본 논문은 학습 과정에서 보지 못했던 새로운 개체/관계가 포함된 새로운 트리플에 대한 추론을 수행하기 위해서, Inductive KG Embedding 모델을 제안함. 기존 지식그래프와 새로운 트리플 사이의 공유 정보인 textual feature을 핵심적으로 활용하기 위해, 관계의 타입 제약 정보와 라벨 그리고 개체의 설명문/타입/라벨로부터 트리플 특징정보를 추출함. 또한, 타입 제약 정보 기반의 GNNs을 통해 불필요한 이웃정보를 제한함
+  short_en: This paper proposes an Inductive KG Embedding model to perform inference on unseen triples containing new entity or relation that is not seen in the learning process. To do that, we utilize textual features, which are the shared information between the existing knowledge graph and the unseen triples. Specifically, we extract triple features from type constraints and labels of relations and descriptions/types/labels of entities. In addition, we restrict unnecessary neighborhood features in GNN's feature aggregation based on type constraint information.
+  long_ko:
+
+"News Recommendation with Topic‑Enriched Knowledge Graphs": 
+  history: Presented 2020.10.19–23
+  cite: Dongho Lee, Byungkook Oh, Seungmin Seo, and Kyong‑Ho Lee, "News Recommendation with Topic‑Enriched Knowledge Graphs", In Proceedings of the 29th ACM International Conference on Information and Knowledge Management (CIKM'20), Virtual Event, Ireland, 2020.10.19–23 (full)
+  short_ko: 본 논문에서는 뉴스 토픽 정보가 모델링 된 지식 그래프에 기반한 뉴스 추천을 목표로 함. 먼저, 모든 뉴스로부터 공통의 토픽 정보을 추출하기 위해, 뉴스 타이틀 내 엔티티에 기반하여 토픽-enhanced 지식 서브그래프를 구축함. 그리고, GNN을 활용하여, 구축한 공통의 토필 정보(서브그래프)가 반영된 후보 뉴스의 topical feature를 추출하고, 과거 뉴스 feature들 사이의 유사성을 파악하여, 후보 뉴스 추천 여부를 파악함
+  short_en: This paper aims to provide news recommendations based on knowledge graphs about news topical information. First, we construct a topic-enhanced knowledge subgraph based on entities in all news histories' titles, which means common topical knowledge of all news. Then, with a GNN, we extract the topical features from the candidate news reflecting the common topical information (subgraph) and identify the similarity between the news history features to determine whether the candidate news should be recommended.
+  long_ko:
+
+"Cross-sentence N-ary Relation Extraction using Entity Link and Discourse Relation": 
+  history: Presented 2020.10.19–23
+  cite: Sanghak Lee, Seungmin Seo, Byungkook Oh, Kyong-Ho Lee, Donghoon Shin, and Yeonsoo Lee, "Cross-sentence N-ary Relation Extraction using Entity Link and Discourse Relation." In Proceedings of the 29th ACM International Conference on Information and Knowledge Management (CIKM'20), Virtual Event, Ireland, 2020.10.19–23 (full)
+  short_ko: 본 논문에서는 다중 문장으로부터 N-ary 관계 추출을 위해서, 문장 사이의 다양한 발화 타입과 다중 문장 내 개체 간 연결 정보를 활용함. 특히, 개체 간 연결 정보 추출을 위해서, 입력된 다중 문장에 대한 document graph를 먼저 생성함. document graph 내 인식된 개체들을 개체-루트 경로 모델링을 통해서 다중 문장에 대한 벡터 표현을 얻음. 최종적으로, 벡터 표현을 활용하여, 인식된 개체들 사이의 N-ary 관게를 추출함
+  short_en: To extract N-ary relations from multiple sentences, this paper mainly utilizes different discourse types between sentences and connectivity information between recognized entities in multiple sentences. In particular, to extract inter-entity connectivity information, we first generate a document graph for the input multi-sentence. A vector representation of the multi-sentence is obtained by modeling the entity-root paths in the document graph. Finally, the N-ary relation among recognized entities is classified from the vector representation.
+  long_ko:
+
+"Reliable Knowledge Graph Path Representation Learning": 
+  history: Received 2019.11.17 / Accepted 2020.01.28 / Published 2020.02.14
+  cite: Seungmin Seo, Byungkook Oh, and Kyong-Ho Lee, "Reliable Knowledge Graph Path Representation Learning." IEEE Access, 8, 32816-32825, 2020.02.14
+  short_ko: 본 논문에서는 신뢰도가 높고 의미적으로 유효한 지식그래프 관계 경로 (relational path)를 탐색하기 위해, 기존 방법과 달리, 관계 경로 내 중간 개체와 관계의 의미적 중요도를 반영함. 이를 위해, RDF schema 내 entity/relation 간 의미적 유효성을 보장하는 type constraints를 추가적으로 고려함. 또한, 관계-개체-관계 연결의 통계적 정보에 따라, 중간 개체/관계에 가중치를 달리하여 경로의 신뢰도를 다르게 평가함
+  short_en:
+  long_ko:
+  
+"Learning Region Similarity over Spatial Knowledge Graphs with Hierarchical Types and Semantic Relations": 
+  history: Presented 2019.11.03-07
+  cite: Xiongnan Jin, Byungkook Oh, Sanghak Lee, Dongho Lee, Kyong-Ho Lee, and Liang Chen, "Learning Region Similarity over Spatial Knowledge Graphs with Hierarchical Types and Semantic Relations", In Proceedings of the 28th ACM International Conference on Information and Knowledge Management (CIKM'19), Beijing, China, 2019.11.03-07 (full)
+  short_ko: 기존 유사 지역 검색 방법은 spatial entity의 계층적 유형과 entity 사이의 관계를 포착하지 못함. 본 논문은 지역 유사성 파악을 위한 공간 지식그래프 표현학습 방법으로, spatial entity의 계층적 유형/의미 정보를 유지하는 entity embedding에 대해 triplet loss를 적용하여, 지역 내 spatial entity 사이의 상대적 위치정보를 보존하는 지역 특징 벡터를 추출함. 이 특징 벡터를 활용하여 지역 유사성을 측정할 수 있음
+  short_en:
+  long_ko:
+
+"Topic-Guided Coherence Modeling for Sentence Ordering by Preserving Global and Local Information":
+  history: Presented 2019.11.03-07
+  cite: Byungkook Oh, Seungmin Seo, Cheolheon Shin, Eunju Jo, and Kyong-Ho Lee, "Topic-Guided Coherence Modeling for Sentence Ordering by Preserving Global and Local Information", In Proceedings of the 9th International Joint Conference on Natural Language Processing (EMNLP'19), Hong Kong, China, 2019.11.03-07 (oral)
+  short_ko: 본 논문은 문장들의 올바른 순서를 구하기 위한 문장 사이의 일관성 모델링을 목표로 함. 뒤섞인 문장들의 모든 벡터 표현을 단일 벡터로 압축하는 기존 방식과 달리, 본 논문은 Transformer를 활용하여 단일 벡터로의 압축을 수행하지 않음. 또한, 문단과 무관하게 다음에 나올 문장을 선택하는 것이 아니라, 토픽 모델링 기반의 feature를 활용하여 현재까지 예측한 문장들의 주제적 문맥 흐름을 고려하여 다음 문장을 예측함
+  short_en: This paper aims to model the dependency between sentences in order to find the correct order of sentences. Unlike existing methods that compress all vector representations of shuffled sentences into a single vector representation, this paper utilizes Transformer not to perform compression into a single vector. Also, instead of selecting the next sentence independent of the paragraph, this paper uses topic modeling-based features to predict the next sentence by considering the thematic and contextual flow of the sentences predicted so far.
+  long_ko:
+
+"Reliable TF-based recommender system for capturing complex correlations among contexts": 
+  history: Received 2017.07.25 / Accepted 2018.06.04 / Available online 2018.06.25 / Issued 2019.04.15
+  cite: Byungkook Oh, Sangjin Shin, Sungkwang Eom, Jooik Jung, Minjae Song, Seungmin Seo, and Kyong-Ho Lee, "Reliable TF-based recommender system for capturing complex correlations among contexts", Journal of Intelligent Information Systems, 52(2), 337-365, 2019.04.15 (Q2/IF:3.4)
+  short_ko: 본 논문에서 제안하는 텐서 분해 기반의 상황 인지형 추천 시스템은 다양한 상황 정보에 대한 유저별로 상이한 가중치를 파악하는 것을 목표로 함. 특히, 상황 정보 타입 개수에 맞게 상황 정보 벡터 표현 차원 수를 설정하여 학습할 수 있기 때문에 풍푸한 상황 정보 표현이 가능함. 또한, 시간이 지날수록 달라지는 유저 선호도를 고려하기 위해, 학습 데이터가 오래될수록 시그모이드 함수를 활용하여 재활용 가중치 조정함
+  short_en: Our tensor factorization-based context-aware recommender system proposed aims to capture user-specific weights for various contextual information. In particular, it can be trained by setting the number of dimensions of the contextual information vector representation according to the number of contextual information types. This can foster a rich contextual information representation. In addition, to account for user preferences that change over time, we utilize a sigmoid function to adjust the recycling weights as the training data gets older.
+  long_ko:
+
+"Knowledge Graph Completion by Context-Aware Convolutional Learning with Multi-Hop Neighborhoods": 
+  history: Presented 2018.10.22-26
+  cite: Byungkook Oh, Seungmin Seo, and Kyong-Ho Lee, "Knowledge Graph Completion by Context-Aware Convolutional Learning with Multi-Hop Neighborhoods", In Proceedings of the 27th ACM International Conference on Information and Knowledge Management (CIKM'18), Torino, Italy, 2018.10.22-26 (full)
+  short_ko: 본 논문은 지식그래프 내 triple 유효성 판단을 위해, triple 내 엔티티의 multi-hop 엔티티/관계 정보를 추가적으로 활용하는 모델을 제안함. 특히, multi-hop 정보를 전부 활용하지 않고, BFS 그래프 탐색을 활용하여 유용한 multi-hop 엔티티/관계들을 시퀀스 형태로 추출함. 이 시퀀스를 반영하여 triple의 유효성 점수를 계산하기 위해, 합성곱 연산을 활용하여 부분부분 중요한 연결 패턴(엔티티/관계 서브 시퀀스)에 집중함
+  short_en: This paper proposes a knowledge graph embedding model that utilizes additional multi-hop entity/relation information of a given triple for its validation. In particular, instead of utilizing all multi-hop information, we extract useful multi-hop entities/relationships in the form of sequences using BFS graph traversal. To compute the validation score of a triple based on the sequence, we utilize convolutional operations to focus on partially significant connection patterns (entity/relationship sub-sequences).
+  long_ko:
+  
+"Outlier-robust web service selection based on a probabilistic QoS model": 
+  history: Published 2016.05.01
+  cite: Minjung Kim, Byungkook Oh, Jooik Jung, and Kyong-Ho Lee, "Outlier-robust web service selection based on a probabilistic QoS model", International Journal of Web and Grid Services, 12(2), 162-181, 2016.05.01 (Q3/IF:1.0)
+  short_ko: 서비스의 각 속성 Quality of Service (QoS)에 대한 local 제약 조건을 주로 고려하는 기존 방법은 적절한 서비스를 선택하지 못할 때가 있음. 본 논문은 속성 QoS의 이상치를 고려할 수 있는 확률적 QoS 모델을 제안함. 실행 이력으로부터 다수의 서비스 속성을 동시에 고려하는 global 제약 조건을 재구성하고, global QoS conformance를 기반으로 서비스를 선택함. 따라서, 이상치를 포함한 다양한 QoS를 고려할 수 있음
+  short_en: Existing methods, which centrally consider local constraints on each attribute quality of service (QoS) of a service, often fail to select the appropriate service. This paper proposes a probabilistic QoS model that can consider outliers in an attribute QoS of a service. To do this, we reconstruct global QoS constraints from service execution history that consider multiple service attributes simultaneously. Then, the final service is selected based on the global QoS conformance. Thus, a variety of QoS including outliers can be considered.
+  long_ko:
+
+"Web Service Selection based on a Probabilistic QoS Model":
+  history: Presented 2015.12.17-19 
+  cite: Minjung Kim, Xiongnan Jin, Jooik Jung, Byungkook Oh, and Kyong-Ho Lee, "Web Service Selection based on a Probabilistic QoS Model", In Proceedings of Korea Computer Congress (KCC'15), 2015.12.17-19 (domestic)
+  short_ko: 기존 서비스 선택 방법은 Quality of Service (QoS)의 정적인 값을 고려하거나 정규분포를 가정하는 한계가 존재함. 본 논문에서는 동적인 환경에서 발생할 수 있는 QoS 값을 다루기 위해, 서비스 실행 이력 기반의 확률적 QoS 모델을 제안함. 실행 이력으로부터 유저 요구사항인 제약조건을 만족시키는 정도를 서비스 속성별로 계산하여 최종 서비스를 선택함. 따라서, 이상치를 포함한 다양한 QoS를 고려할 수 있음
+  short_en: Existing service selection methods mainly focus on the static values of QoS or the assumption of a normal distribution. In this paper, we propose a probabilistic QoS model based on service execution history to deal with QoS values in a dynamic environment. From the execution history, the degree of satisfying QoS constraints (user requirements) is calculated for each service attribute to select the final service. Thus, a variety of QoS, including outliers, can be considered.
+  long_ko: 
+
+"SDPA: Sensor Data Processing Architecture for Modeling Semantic Data from Sensor Steams": 
+  history: Presented 2015.08.13-15
+  cite: Seungmin Seo, Sejin Chun, Byungkook Oh, and Kyong-Ho Lee, "SDPA: Sensor Data Processing Architecture for Modeling Semantic Data from Sensor Steams", 2015 IEEE International Conference on Information Reuse and Integration (IRI'15), San Francisco, CA, USA, 2015.08.13-15
+  short_ko: 본 논문에서는 raw sensor data에서 유의미한 정보를 추출하기 위한 sensor data processing 아키텍처를 제안함. 특히 유의미한 정보 추출을 위해서 머신러닝(클러스터링과 HMMs)과 온톨로지를 활용함. 추출된 정보는 sensor data에 대한 high-level description 나타낼 수 있으며, 시맨틱 지식 베이스 구축에 사용됨. 따라서, 사용자의 sensor data에 대한 높은 이해도와 재사용이 용이한 유의미한 정보 제공이 가능함
+  short_en: This paper proposes a sensor data processing architecture to extract meaningful information from raw sensor data. In particular, we utilize machine learning (clustering and HMMs) and ontology for meaningful information extraction. The extracted information can represent a high-level description of the sensor data and is used to build a semantic knowledge base. This enables users to better understand the sensor data and provide meaningful information that is easy to reuse.
+  long_ko:
+  
+"Semantic description, discovery and integration for the Internet of Things": 
+  history: Presented 2015.02.07-09
+  cite: Sejin Chun, Seungmin Seo, Byungkook Oh, and Kyong-Ho Lee, "Semantic description, discovery and integration for the Internet of Things", In Proceedings of the 9th IEEE International Conference on Semantic Computing (ICSC'15), Anaheim, CA, USAICSC, 2015.02.07-09
+  short_ko: 본 논문에서는 다양한 IoT 자원 간의 메타데이터와 복잡한 관계를 효율적으로 관리/업데이트하기 위해, IoT 객체의 의미론적 기술, 검색, 통합을 지원하는 IoT directory를 제안함. 공유 컨셉화를 위해, 제안하는 시맨틱 IoT 컴포넌트 모델은 5개의 핵심 컨셉으로 구성되어 있으며, 메타데이터를 효율적으로 업데이트하기 위해 ModelType 관계를 포함하고 있음. 따라서, IoT 객체의 도메인 지식을 쉽게 공유/공개할 수 있음
+  short_en: In order to efficiently manage/update metadata and complex relationships among various IoT resources, this paper proposes an IoT directory that supports semantic description, search, and integration of IoT objects. For shared conceptualization, the proposed semantic IoT component model consists of five core concepts and includes ModelType relationships to efficiently update metadata. Thus, domain knowledge of IoT objects can be easily shared/published.
+  long_ko:

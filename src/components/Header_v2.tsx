@@ -1,4 +1,4 @@
-"use client"
+"use client"  // useStatus 때문에
 
 import Image from 'next/image'
 import {useState} from "react"
@@ -24,11 +24,11 @@ export default function Header() {
       ]
     },
     {
-      title: "Member",
-      path: "/member/professor",
+      title: "People",
+      path: "/people/professor",
       subMenus: [
-        { title: "Professor", path: "/member/professor" },
-        { title: "Member", path: "/member/member" }
+        { title: "Professor", path: "/people/professor" },
+        { title: "Student", path: "/people/student" }
       ]
     },
     {
@@ -36,7 +36,7 @@ export default function Header() {
       path: "/research/topic",
       subMenus: [
         { title: "Research Topic", path: "/research/topic" },
-        { title: "Project", path: "/research/lab" }
+        { title: "Project", path: "/research/project" }
       ]
     },
     {
@@ -66,7 +66,7 @@ export default function Header() {
   return (
     <nav className="bg-white w-full border-b md:border-b-1">
       <div className="items-center max-w-screen-xl pl-6 pr-6 mx-auto md:flex md:pr-14">
-        <div className="flex items-center justify-between py-3 md:py-3 md:block">
+        <div className="flex items-center justify-between py-2">
 
           {/* 네비게이션 로고 */}
           <Link href="/" className="items-center flex min-w-[270px]">
@@ -75,7 +75,7 @@ export default function Header() {
               <Image src="/GLI_logo_green.png" alt="logo" width="96" height="96" layout="intrinsic"/>
             </div>
             {/*lg:text-[24px]*/}
-            <div className="-space-y-1 ml-3 text-gray-600 font-medium text-[20px] md:text-[20px]">
+            <div className="-space-y-1 ml-3 text-gray-800 font-medium text-[20px] md:text-[20px]">
               <p>Graph & Language</p>
               <p>Intelligence Lab.</p>
             </div>
@@ -116,17 +116,17 @@ export default function Header() {
               >
 
                 {/* 메인 메뉴 */}
-                  <Link href={item.path} className={`flex items-center pb-5 mt-5 ${
-                    activeMenu === idx ? "font-medium text-green-900" : ""}`}>
-                    {item.title}
-                    {item.subMenus && !menu && (
-                      <ChevronDown
-                        size={16}
-                        className={`ml-0.5 mt-0.5 transition duration-200 ${
-                          activeMenu === idx ? "rotate-180" : "rotate-0"}`}
-                        aria-hidden="true"
-                      />)}
-                  </Link>
+                <Link href={item.path} className={`flex items-center pb-5 mt-5 ${
+                  activeMenu === idx ? "font-medium text-green-900" : ""}`}>
+                  {item.title}
+                  {item.subMenus && !menu && (
+                    <ChevronDown
+                      size={16}
+                      className={`ml-0.5 mt-0.5 transition duration-200 ${
+                        activeMenu === idx ? "rotate-180" : "rotate-0"}`}
+                      aria-hidden="true"
+                    />)}
+                </Link>
 
                 {/* 서브 메뉴 리스트 */}
                 {activeMenu === idx && item.subMenus && (
@@ -154,25 +154,32 @@ export default function Header() {
           {menu && (
             // 모바일 네비게이션
             // items-center space-y-6
-            <ul className="flex-col justify-between text-[14px] divide-y divide-gray-400 my-2.5 border-t-4 border-green-900">
+            <ul className="flex-col justify-between text-[14px] divide-y divide-gray-400 my-1.5 border-t-4 border-green-900">
               {menus.map((item, idx) => (
                 <li key={idx} className={`py-3 cursor-pointer px-5`}
                     onClick={() => setActiveMenu(activeMenu === idx ? null : idx)}
                 >
 
                   {/* 메인 메뉴 */}
-                  <div className={`flex justify-between hover:font-bold hover:text-green-900 ${activeMenu === idx ? "font-bold text-green-900" : ""}`}>
-                  {item.title}
-                  {item.subMenus && (
-                    <ChevronDown
-                      size={20}
-                      className={`ml-1 justify-end transition duration-200 ${
-                        activeMenu === idx ? "rotate-180" : "rotate-0"}`}
-                      aria-hidden="true"
-                    />)}
-                  </div>
+                  {item.subMenus ? (
+                    <div
+                      className={`flex justify-between hover:font-bold hover:text-green-900 ${activeMenu === idx ? "font-bold text-green-900" : ""}`}>
+                      {item.title}
+                      <ChevronDown
+                        size={20}
+                        className={`ml-1 justify-end transition duration-200 ${
+                          activeMenu === idx ? "rotate-180" : "rotate-0"}`}
+                        aria-hidden="true"
+                      />
+                    </div>
+                  ) : (
+                    <Link href={item.path}
+                      className={`flex justify-between hover:font-bold hover:text-green-900 ${activeMenu === idx ? "font-bold text-green-900" : ""}`}>
+                      {item.title}
+                    </Link>
+                  )}
 
-                  {/* 서브 메뉴 리스트 */}
+                  {/* 서브 메뉴 리스트 (실제 이동) */}
                   {activeMenu === idx && item.subMenus && (
                     // {true && item.subMenus && (
                     <ul
@@ -180,7 +187,8 @@ export default function Header() {
                       {item.subMenus.map((subItem, subIdx) => (
                         <li key={subIdx} className="">
                           {/* block을 주면 부모 전체 영역이 선택 가능해짐 */}
-                          <Link href={subItem.path} className="block pl-8 py-2.5 hover:font-bold hover:text-green-900 hover:bg-gray-100">{subItem.title}</Link>
+                          <Link href={subItem.path}
+                                className="block pl-8 py-2.5 hover:font-bold hover:text-green-900 hover:bg-gray-100">{subItem.title}</Link>
                         </li>
                       ))}
                     </ul>
