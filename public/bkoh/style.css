@@ -1,0 +1,386 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;500;700&family=Roboto&display=swap');
+
+:root {
+    --main-tooltip-display: none;
+}
+
+/* 800px 이하인 경우 (아이폰), 좀 더 잘보이도록 확대 */
+@media screen and (max-device-width: 800px) {
+    html, body {
+        font-size: 25px;
+    }
+
+    h1{
+        font-size: 1.3em;
+    }
+
+    h2 {
+        font-size: 1.1em;
+    }
+
+    #profile {
+        max-height: 240px;
+    }
+
+    #header-info {
+        height: 240px;
+    }
+
+    #header img {
+        height: 200px;
+    }
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+    color: #333;
+    background: #f7f7f7;
+
+    font-family: 'Noto Sans KR', 'Roboto', Helvetica, Arial, sans-serif;
+    font-size: 17px; /* recommended */
+    font-weight: 300;
+
+    /* ⭐핵심⭐ */
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+.content {
+    max-width: 850px;
+    background-color: #fff;
+    padding: 30px;
+    border-top: 15px solid #035384;
+    border-bottom: 15px solid #035384;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+}
+
+#header.content {
+    margin-top: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#main.content {
+    font-size: 0.95em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #222;
+    margin: 0 0 20px !important;
+    display: flex;
+    font-weight: 700;;
+}
+
+h1 {
+    font-size: 1.5em;
+    color: #393939;
+    margin: 0 0 20px;
+    line-height: 1.1;
+}
+
+h2 {
+    color: #494949;
+    position: relative;
+    line-height: 1.1;
+    font-size: 1.17em;
+}
+
+h2:after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 70px;
+    height: 1px;
+    background-color: #1378b2;
+    display: block;
+}
+
+h3, h4, h5, h6 {
+    color: #494949;
+    margin: 0 0 10px;
+}
+
+p, table, pre, dl {
+    margin: 0 0 20px;
+    /*margin: 0;*/
+}
+
+a {
+    color: #39c;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #0f5a80;
+    text-decoration: underline;
+}
+
+b {
+    font-weight: 500;
+}
+
+.sparse-list {
+    padding-bottom: 15px;
+}
+
+.sparse-list:last-child {
+    padding-bottom: 0;
+}
+
+.small {
+    margin-top: -50px;
+    font-size: 0.8em;
+}
+
+.footnotes {
+    font-size: 0.8em;
+    text-align: center;
+    margin: 0 auto;
+    max-width: 900px;
+    /*padding: 30px;*/
+    margin-bottom: 20px;
+}
+
+/* ==================== HEADER ==================== */
+#profile {
+    display: flex;
+    align-items: center;
+    flex-direction: row; /*가로 배치*/
+    /*flex-wrap: nowrap;*/ /*내용물이 안 넘어 가도록*/
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    overflow: hidden; /* 내용물이 넘어갈 때 다른 div안에 숨겨지도록 */
+    max-height: 210px; /* height를 고정해야 내용물이 넘어갈때 #profile이 같이 안 커짐 */
+}
+
+#header-info {
+    /*flex-grow: 0;  !* 팽창지수: 여분의 free space가 있어도 폭이 저절로 늘어남 *!*/
+    /*flex-shrink: 0; !* 수축지수 *!*/
+    /*flex-basis: auto; !* 기준 사이즈 *!*/
+
+    display: flex;
+    align-items: center;
+    height: 210px;
+    width: auto;
+}
+
+#header img {;
+    /*flex-grow: 0;*/
+    /*flex-shrink: 1;*/
+    /*flex-basis: 0; !* 기준 사이즈 *!*/
+
+    width: auto;
+    height: 180px;
+    margin: 15px;
+    float: right;
+}
+
+#header #biography {
+    font-size: 0.95em;
+}
+
+.quote {
+    font-size: 1em;
+    font-weight: 500;
+    text-align: center;
+    padding: 10px 10px;
+}
+
+.quote::before {
+    content: open-quote;
+    display: inline;
+    height: 0;
+    line-height: 0;
+    left: 0;
+    position: relative;
+    top: 15px;
+    color: #ccc;
+    font-size: 2.5em;
+}
+
+.quote::after {
+    content: close-quote;
+    display: inline;
+    height: 0;
+    line-height: 0;
+    left: 0;
+    position: relative;
+    top: 20px;
+    color: #ccc;
+    font-size: 2.5em;
+}
+/* ================================================= */
+
+
+/* ==================== TOGGLE ==================== */
+#toggle-wrapper {
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    float: right;
+    font-size: 0.9em;
+    z-index: 99;
+}
+
+#toggle-wrapper span {
+    position: relative;
+    margin-right: 5px;
+    top: -7px;
+}
+
+/* Hide the checkbox input */
+#toggle {
+    display: none;
+}
+
+/* Toggle button style */
+.toggle-label {
+    cursor: pointer;
+    display: inline-block;
+    width: 50px;
+    height: 25px;
+    background-color: #ccc;
+    border-radius: 30px;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+/* Toggle button circle */
+.toggle-label::before {
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 21px;
+    height: 21px;
+    background-color: white;
+    border-radius: 50%;
+    transition: left 0.3s;
+}
+
+/* When the checkbox is checked, adjust the style */
+#toggle:checked + .toggle-label {
+    background-color: #035384;
+}
+
+#toggle:checked + .toggle-label::before {
+    left: 27px;
+}
+/* ================================================ */
+
+
+/* ==================== TOOLTIP ==================== */
+/* ToolTip (currently not use): https://blog.logrocket.com/creating-beautiful-tooltips-with-only-css/ */
+/* CSS data-content attribute escapes backslashes */
+/* https://stackoverflow.com/questions/31011660/css-data-content-attribute-escapes-backslashes*/
+/* Current version is GPT-4 */
+.tooltip {
+    position: relative; /* making the .tooltip span a container for the tooltip text */
+    border-bottom: 1px dashed #000; /* little indicater to indicate it's hoverable */
+    /*width: max-content;*/
+    cursor: help;
+}
+
+.tooltip-hover {
+    position: absolute; /* 다른 element와 겹쳐지도록 */
+    z-index: 2; /* 맨 위로 */
+    padding-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: none;
+}
+
+.tooltip-content {
+    font-size: 0.9em;
+    /*width: max-content;*/ /*화면 밖으로 나가는 경우가 발생함*/
+    max-width: 780px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    background: #505050;
+    color: #fff;
+    /*!*vertically center*!*/
+    /*top: 50%;*/
+    /*transform: translateY(-50%);*/
+}
+
+/* 터치폰에서는 hover가 작동 안 하도록 */
+/*@media(hover: hover) and (pointer: fine) {*/
+/*}*/
+
+/* 툴팁이 hover될 때, tooltip-hover 요소는 다음과 같은 속성을 가짐 */
+.tooltip:hover ~ .tooltip-hover {
+    /* '+' means sibiling */
+    /* '~' means more flexible sibiling */
+    /* sibiling 형태로 작성해야 description 드래그 여부를 결정할 수 있음 */
+    display: block;
+    cursor: help;
+}
+
+.tooltip-hover:hover {
+        /*display: block;  !* block의 경우에는 description이 드래그 가능해짐 *!*/
+        display: var(--main-tooltip-display);
+        cursor: help;
+    }
+/* ================================================= */
+
+
+/* ==================== SNACKBAR =================== */
+#snackbar {
+    display: none;
+    min-width: 50px;
+    margin-left: -25px; /* width 절반 */
+    background-color: #505050;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 8px 16px;
+    position: fixed;
+    z-index: 10;
+    left: 50%;
+    bottom: 30px;
+    font-size: 0.95em;
+}
+
+#snackbar.show {
+    display: block;
+    animation: fadein 0.5s, fadeout 0.5s 1.0s;
+}
+
+@keyframes fadein {
+    from {
+        bottom: 30px;
+        opacity: 0;
+    }
+    to {
+        bottom: 30px;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeout {
+    from {
+        bottom: 30px;
+        opacity: 1;
+    }
+    to {
+        bottom: 30px;
+        opacity: 0;
+    }
+}
+
+#myBtn {
+    display: none;
+    font-size: 2rem;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    z-index: 99;
+    cursor: pointer;
+    color: #035384;
+}
+/* ================================================= */
