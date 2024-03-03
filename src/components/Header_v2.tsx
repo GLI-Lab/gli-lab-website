@@ -65,7 +65,7 @@ export default function Header() {
               <Image src="/GLI_logo_green.png" alt="logo" width="96" height="96" layout="intrinsic"/>
             </div>
             {/*lg:text-[24px]*/}
-            <div className="-space-y-1 ml-3 text-gray-800 font-medium text-[20px] md:text-[20px]">
+            <div className="-space-y-2 ml-3 text-gray-800/85 font-medium tracking-tighter text-[22px]">
               <p>Graph & Language</p>
               <p>Intelligence Lab.</p>
             </div>
@@ -88,14 +88,14 @@ export default function Header() {
         <div className="hidden md:block flex-1 mt-2 md:pb-0 md:mt-0">
           <ul className="justify-end items-center md:flex md:space-x-5 md:space-y-0 lg:space-x-10">
             {menus.map((item, idx) => (
-              <li key={idx} className="relative text-gray-600"  // 서브메뉴 리스트 선택할 수 있게
+              <li key={idx} className="relative text-gray-800"  // 서브메뉴 리스트 선택할 수 있게
                   onMouseEnter={() => setActiveMenu(idx)}  // 호버 시 서브메뉴 활성화
                   onMouseLeave={() => setActiveMenu(null)}  // 호버 해제 시 서브메뉴 비활성화
               >
 
                 {/* 메인 메뉴 */}
-                <Link href={item.path} className={`flex items-center pb-5 mt-5 ${
-                  activeMenu === idx ? "font-medium text-green-900" : ""}`}>
+                <Link href={item.path} className={`flex font-normal items-center pb-5 mt-5 ${
+                  activeMenu === idx ? "text-green-900" : "text-black"}`}>
                   {item.title}
                   {item.subMenus && !menu && (
                     <ChevronDown

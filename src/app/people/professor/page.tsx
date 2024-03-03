@@ -3,6 +3,7 @@ import {Metadata} from "next";
 import {Breadcrumb} from "@/components/Breadcrumb";
 import {JSX, SVGProps} from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return getMetadata({
@@ -39,6 +40,9 @@ export default function Page() {
               <DatabaseIcon className="text-gray-600"/>
               <GraduationCapIcon className="text-gray-600"/>
             </div>
+            <Link href="https://bkoh509.github.io" className="font-bold text-green-900 hover:underline underline-offset-4">
+              https://bkoh509.github.io
+            </Link>
           </div>
 
 
