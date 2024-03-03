@@ -4,7 +4,7 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 
 export default function NotFound() {
   return (
-    <div className="flex h-screen flex-col items-center text-center">
+    <div className="home flex h-screen flex-col items-center text-center">
       <div className="mt-6 md:mt-10 text-gray-600 text-[14px]">
         You are here: <Breadcrumb/>
       </div>
@@ -18,7 +18,7 @@ export default function NotFound() {
         <br/>
         감사합니다.
         <br/>
-        <Link href="https://bkoh509.github.io" className="font-bold text-green-900">
+        <Link href="https://bkoh509.github.io" className="font-bold text-green-900 hover:underline underline-offset-4">
           https://bkoh509.github.io
         </Link>
       </p>
