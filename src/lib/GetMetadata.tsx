@@ -48,7 +48,7 @@ export const getMetadata = (metadataProps?: generateMetadataProps) => {  // ? ê¸
     description: DESCRIPTION,
     keywords: [...META.keyword],
     icons: {
-      icon: "/GLI_logo_green.png",
+      icon: "/GLI_logo_green_filled.jpg",
     },
     openGraph: {
       title: TITLE,
