@@ -21,6 +21,9 @@ const config = {
       },
     },
     extend: {
+      backgroundImage: {
+        'main-image': "url('/main1.jpg')"
+      },
       // backgroundImage: {
       //   "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
       //   "gradient-conic":
@@ -31,6 +34,12 @@ const config = {
       // 애니메이션 정의
       ////////////////////////////////////////////
       keyframes: {
+        slide: {
+          '0%, 100%': { 'background-image': 'url("/main1.jpg")' },
+          '25%': { 'background-image': 'url("/main2.jpg")' },
+          '50%': { 'background-image': 'url("/main3.jpg")' },
+          '75%': { 'background-image': 'url("/main4-3.jpg")' }
+        },
         fadeUp: {
           '0%': {opacity: '0', transform: 'translateY(10px)'},
           '100%': {opacity: '1', transform: 'translateY(0)'},
@@ -51,6 +60,7 @@ const config = {
         },
       },
       animation: {
+        'slider': 'slide 40s infinite linear',
         'fade-up': 'fadeUp 0.5s ease-out',
         'flip-down': 'flipDown 1s ease-out forwards',
         'drop-in': 'dropIn 0.5s ease-out forwards',
