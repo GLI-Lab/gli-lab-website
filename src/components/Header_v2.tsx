@@ -1,7 +1,7 @@
 "use client"  // useStatus 때문에
 
 import Image from 'next/image'
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { ChevronDown, Menu } from "lucide-react"
 import * as React from "react";
@@ -9,6 +9,24 @@ import * as React from "react";
 export default function Header() {
   const [menu, setMenu] = useState (false)
   const [activeMenu, setActiveMenu] = useState<number | null>(null);
+
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   // 메뉴 항목 정의 (서브 메뉴를 포함할 수 있도록)
   const menus = [
@@ -54,18 +72,17 @@ export default function Header() {
   ];
 
   return (
-    <nav className="bg-white w-full border-b md:border-b-1">
-      <div className="items-center max-w-screen-xl pl-6 pr-6 mx-auto md:flex md:pr-14">
-        <div className="flex items-center justify-between py-2">
+    // 항상 상단에 고정: fixed top-0
+    <nav className="fixed top-0 bg-white w-full border-b md:border-b-1">
+      <div className="items-center max-w-screen-xl pl-6 pr-6 mx-auto md:flex">
+        <div className={`flex items-center justify-between ${isScrolled ? "py-1" : "py-2"}`}>
 
           {/* 네비게이션 로고 */}
           <Link href="/" className="items-center flex min-w-[270px]">
-            {/*lg:h-20 lg:w-20*/}
-            <div className="h-[70px] w-[70px]">
+            <div className={`${isScrolled ? "h-[55px] w-[55px] transition-all duration-500" : "h-[70px] w-[70px]"}`}>
               <Image src="/GLI_logo_green.png" alt="logo" width="96" height="96" layout="intrinsic"/>
             </div>
-            {/*lg:text-[24px]*/}
-            <div className="-space-y-2 ml-3 text-gray-800/85 font-medium tracking-tighter text-[22px]">
+            <div className={`-space-y-2 ml-3 text-gray-800/90 font-medium tracking-tighter ${isScrolled ? "text-[20px]" : "text-[22px]"}`}>
               <p>Graph & Language</p>
               <p>Intelligence Lab.</p>
             </div>
@@ -94,7 +111,7 @@ export default function Header() {
               >
 
                 {/* 메인 메뉴 */}
-                <Link href={item.path} className={`flex font-normal items-center pb-5 mt-5 ${
+                <Link href={item.path} className={`flex text-gray-800/85 font-medium items-center pb-5 mt-5 ${
                   activeMenu === idx ? "text-green-900" : "text-black"}`}>
                   {item.title}
                   {item.subMenus && !menu && (
@@ -109,8 +126,8 @@ export default function Header() {
                 {/* 서브 메뉴 리스트 */}
                 {activeMenu === idx && item.subMenus && (  // {true && item.subMenus && (
                   <ul
-                    className="absolute text-[14px] -mt-1 -left-6 border-t-4 border-green-900 divide-y divide-gray-200 bg-white
-                    shadow-xl z-10 md:w-auto animate-fade-up">
+                    className="absolute font-medium text-[14px] -mt-1 -left-6 border-t-4 border-green-900 divide-y divide-gray-200 bg-white
+                    shadow-xl z-10 md:w-[150px] animate-fade-up">
                     {item.subMenus.map((subItem, subIdx) => (
                       <li key={subIdx}
                           className="whitespace-nowrap hover:bg-gray-100 hover:text-green-900 hover:font-medium">
