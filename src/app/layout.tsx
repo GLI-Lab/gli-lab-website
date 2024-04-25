@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 // import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header_v2";
+import { Analytics } from "@vercel/analytics/react"
 import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 
@@ -28,6 +29,7 @@ export default function RootLayout({
     <body className={`${inter.className}`}>
       <Header/>
       {children}
+      <Analytics/>
     </body>
     </html>
   );
