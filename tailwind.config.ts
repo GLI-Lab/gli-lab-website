@@ -35,10 +35,10 @@ const config = {
       ////////////////////////////////////////////
       keyframes: {
         slide: {
-          '0%, 100%': { 'background-image': 'url("/main1.jpg")' },
-          '25%': { 'background-image': 'url("/main2.jpg")' },
-          '50%': { 'background-image': 'url("/main3.jpg")' },
-          '75%': { 'background-image': 'url("/main4-3.jpg")' }
+          '0%, 100%': { 'background-image': 'url("/cover/main1-min.webp")' },
+          '25%': { 'background-image': 'url("/cover/main2.webp")' },
+          '50%': { 'background-image': 'url("/cover/main3.webp")' },
+          '75%': { 'background-image': 'url("/cover/main4-3.webp")' }
         },
         fadeUp: {
           '0%': {opacity: '0', transform: 'translateY(10px)'},
