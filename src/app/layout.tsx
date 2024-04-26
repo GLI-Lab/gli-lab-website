@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/Header_v2";
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 
@@ -27,9 +28,10 @@ export default function RootLayout({
   return (
     <html lang="en">
     <body className={`${inter.className}`}>
+      <Analytics/>
+      <SpeedInsights/>
       <Header/>
       {children}
-      <Analytics/>
     </body>
     </html>
   );
