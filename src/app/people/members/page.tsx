@@ -1,4 +1,5 @@
 import {Metadata} from "next";
+
 import {getMetadata} from "@/lib/GetMetadata";
 import Subcover from "@/components/Subcover";
 import ProfileCard from "@/components/ProfileCard";
@@ -7,7 +8,7 @@ import {profiles_faculty, profiles_graduate, profiles_undergraduate} from "./pro
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
-        title: `Members`,
+        title: `Research Topics`,
     });
 };
 
