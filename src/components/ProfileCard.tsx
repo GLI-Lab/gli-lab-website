@@ -16,21 +16,19 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ image, name, title, period, i
     const IMAGE = `${image}` || "/members/ku_basic_1_down.png"
 
 
-    // sm(640px)  : 핸드폰        / 1-col 세로 프로필 (W 320px(사진 256px) )
-    // md(768px)  : 아이패드 미니 / 1-col 가로 프로필 (W 600px(사진 240px) H 270px)
-    // lg(1024px) : 아이패드 프로 / 2-col 가로 프로필 (W 600px(사진 240px) H 270px)
-    // xl(1280px) : 데스크탑      / 2-col 가로 프로필 (W 600px(사진 240px) H 270px)
-    // 공통: 사진 8:9
+    // sm(640px)  : 핸드폰        / 1-col 세로 프로필 (W 320px(사진 256px) )        / 사진 8:9
+    // md(768px)  : 아이패드 미니 / 1-col 가로 프로필 (W 600px(사진 240px) H 270px) /
+    // lg(1024px) : 아이패드 프로 / 2-col 가로 프로필 (W 600px(사진 240px) H 270px) /
+    // xl(1280px) : 데스크탑      / 2-col 가로 프로필 (W 600px(사진 240px) H 270px) /
     return (
         <div className="flex flex-col w-[320px]
                         sm:flex-row sm:aspect-[20/9] sm:w-full sm:max-w-[600px]
                         lg:max-w-full
-                        mx-auto bg-[#f7f8fa] shadow-lg rounded-xl
-                        hover:scale-105 transform transition-transform duration-300 ease-in-out
-                        ">
+                        bg-[#f7f8fa] shadow-lg rounded-xl mx-auto
+                        hover:scale-105 transform transition-transform duration-300 ease-in-out">
 
             {/* ####################################### */}
-            {/* ############# 세로 프로필 ############# */}
+            {/* ####### 세로 프로필 (사진 8:9) ######## */}
             {/* ####################################### */}
             <div className="block sm:hidden mx-8 mt-4 mb-2">
                 <div className="aspect-[8/9] relative">
@@ -39,7 +37,7 @@ const ProfileCard: React.FC<ProfileCardProps> = ({ image, name, title, period, i
             </div>
 
             {/* ####################################### */}
-            {/* ############# 가로 프로필 ############# */}
+            {/* ######### 가로 프로필 (40:60) ######### */}
             {/* ####################################### */}
             <div className="hidden sm:block sm:w-[40%] bg-white">
                 <Image src={IMAGE} alt={name} width={200} height={200} className="h-full w-full object-cover" />
