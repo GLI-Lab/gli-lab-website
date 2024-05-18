@@ -4,46 +4,25 @@
     --main-tooltip-display: none;
 }
 
-/* 800px 이하인 경우 (아이폰), 좀 더 잘보이도록 확대 */
-@media screen and (max-device-width: 800px) {
-    html, body {
-        font-size: 25px;
-    }
-
-    h1{
-        font-size: 1.3em;
-    }
-
-    h2 {
-        font-size: 1.1em;
-    }
-
-    #profile {
-        max-height: 240px;
-    }
-
-    #header-info {
-        height: 240px;
-    }
-
-    #header img {
-        height: 200px;
-    }
-}
-
 html, body {
     padding: 0;
     margin: 0;
-    color: #333;
+    color: #333;  /* text color */
     background: #f7f7f7;
 
     font-family: 'Noto Sans KR', 'Roboto', Helvetica, Arial, sans-serif;
     font-size: 17px; /* recommended */
     font-weight: 300;
 
+    /* 800px 이하인 경우 (아이폰), 좀 더 잘 보이도록 확대 */
+    @media screen and (max-device-width: 800px) {
+        font-size: 25px;
+    }
+
     /* ⭐핵심⭐ */
-    -moz-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%; /* Safari, Chrome */
+    -moz-text-size-adjust: 100%;    /* Firefox */
+    -ms-text-size-adjust: 100%;     /* Internet Explorer, Edge */
     text-size-adjust: 100%;
 }
 
@@ -79,6 +58,11 @@ h1 {
     color: #393939;
     margin: 0 0 20px;
     line-height: 1.1;
+
+    /* 800px 이하인 경우 (아이폰), 좀 더 잘보이도록 확대 */
+    @media screen and (max-device-width: 800px) {
+        font-size: 1.3em;
+    }
 }
 
 h2 {
@@ -86,6 +70,11 @@ h2 {
     position: relative;
     line-height: 1.1;
     font-size: 1.17em;
+
+    /* 800px 이하인 경우 (아이폰), 좀 더 잘보이도록 확대 */
+    @media screen and (max-device-width: 800px) {
+        font-size: 1.1em;
+    }
 }
 
 h2:after {
@@ -156,6 +145,11 @@ b {
 
     overflow: hidden; /* 내용물이 넘어갈 때 다른 div안에 숨겨지도록 */
     max-height: 210px; /* height를 고정해야 내용물이 넘어갈때 #profile이 같이 안 커짐 */
+
+    /*800px 이하인 경우 (아이폰), 좀 더 잘보이도록 확대*/
+    @media screen and (max-device-width: 800px) {
+        max-height: 240px;
+    }
 }
 
 #header-info {
@@ -167,6 +161,11 @@ b {
     align-items: center;
     height: 210px;
     width: auto;
+
+    /*800px 이하인 경우 (아이폰), 좀 더 잘보이도록 확대*/
+    @media screen and (max-device-width: 800px) {
+        height: 240px;
+    }
 }
 
 #header img {;
@@ -178,6 +177,11 @@ b {
     height: 180px;
     margin: 15px;
     float: right;
+
+    /* 800px 이하인 경우 (아이폰), 좀 더 잘보이도록 확대 */
+    @media screen and (max-device-width: 800px) {
+        height: 200px;
+    }
 }
 
 #header #biography {
@@ -322,10 +326,10 @@ b {
 }
 
 .tooltip-hover:hover {
-        /*display: block;  !* block의 경우에는 description이 드래그 가능해짐 *!*/
-        display: var(--main-tooltip-display);
-        cursor: help;
-    }
+    /*display: block;  !* block의 경우에는 description이 드래그 가능해짐 *!*/
+    display: var(--main-tooltip-display);
+    cursor: help;
+}
 /* ================================================= */
 
 

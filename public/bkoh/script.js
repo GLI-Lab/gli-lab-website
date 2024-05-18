@@ -79,3 +79,17 @@ function topFunction() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 }
+
+// send the height of this webpage(inner webpage) to parent(iframe)
+function sendHeight() {
+    // const height = document.documentElement.scrollHeight; // ifream 사이즈에 따른 실제값이 반영 안 됨
+    // const height = document.body.scrollHeight; // 마진, 패딩 등이 포함 안됨
+    const height = document.documentElement.offsetHeight;
+
+    console.log(`Inner: ${height}px`)
+
+    window.parent.postMessage({ type: 'setHeight', height }, '*');
+}
+
+window.addEventListener('load', sendHeight);
+window.addEventListener('resize', sendHeight);

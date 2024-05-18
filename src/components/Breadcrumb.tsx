@@ -23,17 +23,17 @@ export function Breadcrumb() {
   });
 
   return (
-    <div>
-      {links.map((link, index) => (
-        <span key={index}>
+      <div>
+        {links.map((link, index) => (
+            <span key={index}>
           {index === segments.length ? (
-            <span className="text-green-900 font-semibold">{link.name}</span>
+              <span className="tracking-tight text-green-900 font-semibold">{link.name}</span>
           ) : (
-            <Link href={link.path}>{link.name}</Link>
+              <Link href={link.path} className="tracking-tight">{link.name}</Link>
           )}
-          {index < links.length - 1 ? ' > ' : ''}
+              {index < links.length - 1 ? ' > ' : ''}
         </span>
-      ))}
-    </div>
+        ))}
+      </div>
   );
 }

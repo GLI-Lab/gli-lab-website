@@ -2,25 +2,34 @@
 <html lang="en">
 <head>
     <title>Byungkook Oh</title>
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
-<!--    <meta name="viewport" content="width=device-width">-->
-    <meta name="viewport" content="width=850">
-<!--    <meta name="viewport" content="width=850, minimum-scale=1, initial-scale=1">-->
     <meta name="description" content="Byungkook Oh's Homepage">
     <meta name="keywords" content="Byungkook Oh,Yonsei">
     <meta name="author" content="Byungkook Oh">
+    <!-- 디바이스 뷰포트 가로를 850px로 고정해서 모바일 환경에서도 동일한 레이아웃 유지 가능 -->
+    <!-- 다만, 가로 850px에 맞춰서 모바일 폰트사이즈도 25px로 증가시켜 줘야함. -->
+    <!-- 하지만, iframe에서 화면이 줄어들 때 부모 페이지와의 폰트 사이즈 차이가 나버림 -->
+    <meta name="viewport" content="width=850">
+    <!-- 디바이스 뷰포트 가로를 유연하게, 하지만, 디바이스별로 레이아웃이 달라질 수 있음 -->
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
 
     <!-- Open Graph -->
     <!-- Delete Cache: https://developers.kakao.com/tool/debugger/sharing -->
-    <meta property="og:url" content="https://bkoh509.github.io/">
     <meta property="og:title" content="Byungkook Oh">
-    <meta property="og:type" content="website">
-    <meta property="og:image" content="./assets/profile/bkoh.jpg">
     <meta property="og:description" content="Think Different">
+    <meta property="og:url" content="https://bkoh509.github.io/">
+    <meta property="og:image" content="./assets/profile/bkoh.jpg">
+    <meta property="og:type" content="website">
 
-    <!-- disable this but still want telephone links, you can still use the "tel" URI scheme -->
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="./assets/profile/bkoh.jpg">
+    <meta name="twitter:title" content="Byungkook Oh's Homepage">
+    <meta name="twitter:description" content="Think Different">
+    <meta name="twitter:image" content="./assets/profile/bkoh.jpg">
+
+    <!-- 전화번호가 자동으로 링크로 변환되는 것을 방지 -->
     <meta name="format-detection" content="telephone=no">
 
     <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicon/apple-touch-icon.png">
@@ -34,7 +43,6 @@
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-    
       gtag('config', 'G-H5SVTD18RE');
     </script>
     <script src="https://kit.fontawesome.com/f321d0a9d2.js" crossorigin="anonymous"></script>
