@@ -1,38 +1,37 @@
-import { Inter } from "next/font/google";
-// import { Open_Sans } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/Header_v2";
-import { Analytics } from "@vercel/analytics/react"
-import { SpeedInsights } from "@vercel/speed-insights/next"
 import {Metadata} from "next";
-import {getMetadata} from "@/lib/GetMetadata";
-
-const inter = Inter({ subsets: ["latin"] });
-// const open_sans = Open_Sans({ subsets: ["latin"] });
-
 
 export const generateMetadata = async (): Promise<Metadata> => {
-  return getMetadata({
-    // title: `반짝반짝 빛날 ${username}님의 인생지도`,
-    // asPath: `/home/${username}`
-    title: `Home`,
-  });
+    return getMetadata({
+        title: `Home`,
+        // asPath: `/home/${username}`
+    });
 };
 
+import {pretendard} from "./fonts"
+import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import {getMetadata} from "@/lib/GetMetadata";
+import Header from "@/components/Header_v2";
+import Footer from "@/components/Footer";
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-    <body className={`${inter.className}`}>
-      <Analytics/>
-      <SpeedInsights/>
-      <Header/>
-      {children}
-    </body>
-    </html>
-  );
+
+// min-h-screen: 클래스를 사용해 최소 높이를 브라우저 창의 높이와 같게 설정
+// flex-grow   : <main>이 부모 컨테이너 <body>의 여유 공간을 모두 차지하도록 함
+//               (<Footer/>가 맨 아래에 붙어있게 됨)
+export default function RootLayout({children,}:
+    Readonly<{children: React.ReactNode;}>) {
+    return (
+        <html lang="en" className={`${pretendard.variable}`}>
+            <body className={`flex flex-col min-h-screen font-sans text-[#333] text-[16px]`}>
+                <Analytics/>
+                <SpeedInsights/>
+                <Header/>
+                <main className="flex-grow pb-10">
+                    {children}
+                </main>
+                <Footer/>
+            </body>
+        </html>
+    );
 }
