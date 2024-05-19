@@ -1,6 +1,6 @@
 import {getMetadata} from "@/lib/GetMetadata";
 import {Metadata} from "next";
-import Subcover from "@/components/Subcover";
+import { SubCover } from "@/components/Covers";
 import IframeWrapper from "@/components/legacy/IframeWrapper";
 import Head from 'next/head';
 
@@ -15,7 +15,7 @@ export default function Page() {
     return (
         // bg-[#f7f7f7]
         <div className="max-w-[1600px] mx-auto">
-            <Subcover pos="Student"/>
+            <SubCover title="Student"/>
             <IframeWrapper />
 
             {/*<div className="mt-8 text-left">*/}
