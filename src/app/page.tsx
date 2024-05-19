@@ -1,20 +1,12 @@
 import Image from "next/image";
+import { MainCover } from "@/components/Covers";
 
 
 export default function Page() {
     return (
         <div className="">
-            {/* =============================== */}
-            {/*           Main Slider           */}
-            {/* =============================== */}
-            {/* animate-slider: 메인 그림 슬라이더 */}
-            {/* text-[#036B3F]: 예전 '@Konkuk Univ.' */}
-            <div className="max-w-[1600px] mx-auto animate-slider bg-cover bg-center items-center justify-center text-center
-                            py-24 md:py-36 lg:py-48 xl:py-56">
-                <div className="bg-white bg-opacity-55 p-4 space-y-1 md:space-y-2 font-semibold leading-none md:whitespace-nowrap">
-                    <p className="tracking-tighter text-[34px] md:text-[42px] lg:text-[54px] xl:text-[60px]">Graph & Language Intelligence Lab.</p>
-                    <p className="tracking-tighter text-gray-500/90 text-[28px] md:text-[36px] lg:text-[42px] xl:text-[48px]">@ Konkuk Univ.</p>
-                </div>
+            <div className="max-w-[1600px] mx-auto">
+                <MainCover/>
             </div>
 
             {/* =============================== */}
@@ -22,10 +14,10 @@ export default function Page() {
             {/* =============================== */}
             <div
                 className="max-w-screen-2xl mx-auto flex flex-col items-center justify-center text-center py-6 md:py-12 px-4 md:px-6 gap-6">
-                <h2 className="font-bold tracking-tighter text-[28px] md:text-4xl">
+                <h2 className="font-bold tracking-tighter text-[#555] text-[28px] md:text-4xl">
                     Explore Our Research Areas
                 </h2>
-                <p className="max-w-[1000px] text-gray-500/85 text-base md:text-xl/relaxed">
+                <p className="max-w-[1000px] text-[#555] text-base md:text-xl/relaxed">
                     Our research focuses on developing AI/DL algorithms and applications for various domains, including
                     knowledge representation (e.g., knowledge graph embedding and graph embedding) and knowledge-based
                     applications (e.g., Knowledge-enhanced NLP Applications, Information Retrieval & Recommendation),

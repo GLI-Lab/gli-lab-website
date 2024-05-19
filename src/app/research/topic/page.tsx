@@ -2,7 +2,7 @@ import {Metadata} from "next";
 import Image from "next/image";
 
 import {getMetadata} from "@/lib/GetMetadata";
-import Subcover from "@/components/Subcover";
+import { SubCover } from "@/components/Covers";
 
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -14,8 +14,10 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 export default function Page() {
     return (
-        <div className="max-w-[1600px] mx-auto">
-            <Subcover pos="Research Topic"/>
+        <>
+            <div className="max-w-screen-2xl mx-auto">
+                <SubCover title="Research Topic"/>
+            </div>
 
             <div className="max-w-screen-xl mx-auto px-5 py-10">
                 <h2 className="font-medium tracking-tighter text-[26px] md:text-[30px]">Summary</h2>
@@ -56,6 +58,6 @@ export default function Page() {
                     <Image src="/topic/poster2.webp" alt="poster2" width={1600} height={2000} className="h-full w-full object-cover"/>
                 </div>
             </div>
-        </div>
+        </>
     )
 }
