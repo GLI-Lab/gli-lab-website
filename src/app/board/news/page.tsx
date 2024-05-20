@@ -20,6 +20,8 @@ export default function Page() {
             <div className="max-w-screen-xl mx-auto">
                 <NotFound/>
             </div>
+
+            <div className="h-40"></div>
         </>
     )
 }
