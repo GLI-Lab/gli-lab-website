@@ -3,7 +3,7 @@ import NotFound from "@/app/not-found";
 import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
 
-const TITLE = `Publication`
+const TITLE = `Project`
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({

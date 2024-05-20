@@ -24,8 +24,7 @@ export default function RootLayout({children,}:
     Readonly<{children: React.ReactNode;}>) {
     return (
         <html lang="en" className={`${pretendard.variable}`}>
-            <body className={`flex flex-col min-h-screen min-w-[370px] 
-                              font-sans text-[#333] text-[16px] sm:text-[17px] md:text-[19px] lg:text-[20px]`}>
+            <body className={`flex flex-col min-h-screen min-w-[370px] text-body`}>
                 <Analytics/>
                 <SpeedInsights/>
                 <Header/>

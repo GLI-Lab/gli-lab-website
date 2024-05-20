@@ -29,7 +29,7 @@ export function SubCover(props: CoverProps) {
 
 export function MainCover() {
     return (
-        <div className="bg-black animate-slider bg-cover bg-center items-center justify-center text-center
+        <div className="animate-slider bg-cover bg-center items-center justify-center text-center
                         py-24 md:py-36 lg:py-48 xl:py-56">
             <div className="bg-white bg-opacity-55 font-bold leading-none md:whitespace-nowrap
                             space-y-1 lg:space-y-2

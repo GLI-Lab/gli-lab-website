@@ -2,26 +2,38 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-    --foreground-rgb: 0, 0, 0;
-    --background-start-rgb: 214, 219, 220;
-    --background-end-rgb: 255, 255, 255;
-}
+/* Tailwind CSS 클래스의 조합을 하나의 클래스명으로 정의 */
+@layer components {
+    .text-header {
+        @apply font-sans text-[#333] font-medium tracking-tighter
+        text-[24px] md:text-[26px] lg:text-[28px] xl:text-[30px];
+    }
 
-@media (prefers-color-scheme: dark) {
-    :root {
-        --foreground-rgb: 255, 255, 255;
-        --background-start-rgb: 0, 0, 0;
-        --background-end-rgb: 0, 0, 0;
+    .text-accent {
+        @apply font-sans text-[#333] font-semibold tracking-normal
+        text-[16px] sm:text-[17.5px] md:text-[18px] lg:text-[18.5px] xl:text-[19px];
+    }
+
+    .text-home {
+        @apply font-sans text-[#333] leading-[1.8] font-normal tracking-normal
+        text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px] xl:text-[20px];
+    }
+
+    .text-body {
+        @apply font-sans text-[#333] font-normal tracking-normal
+        text-[16px] sm:text-[16.5px] md:text-[17px] lg:text-[17.5px] xl:text-[18px];
+    }
+
+    .highlight {
+        @apply font-semibold bg-[#ffff99] px-1; /* 배경색과 약간의 패딩을 적용하여 하이라이트 효과 */
     }
 }
 
-.home {
-    color: rgb(var(--foreground-rgb));
-    background: linear-gradient(
-            to bottom,
-            transparent,
-            rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+
+
+li {
+    line-height: 1.25;
+    /*text-indent: -1.5rem; !* 첫 번째 줄을 기본 위치로 되돌림 *!*/
+    /*word-break: break-all; !*특수문자를 제외하고 강제로 줄바꿈*!*/
+    /*overflow-wrap: break-word; */
 }
