@@ -1,7 +1,7 @@
 import {Metadata} from "next";
 
 import {getMetadata} from "@/lib/GetMetadata";
-import Subcover from "@/components/Subcover";
+import { SubCover } from "@/components/Covers";
 import ProfileCard from "@/components/ProfileCard";
 import {profiles_faculty, profiles_graduate, profiles_undergraduate} from "./profiles"
 
@@ -16,7 +16,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 export default function Page() {
     return (
         <div className="max-w-[1600px] mx-auto">
-            <Subcover pos="Members" />
+            <SubCover title="Members" />
 
             {/* Profile Contents */}
             <div className="max-w-screen-xl mx-auto px-5 py-10">

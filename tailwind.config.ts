@@ -13,7 +13,8 @@ const config = {
             'md': '768px',   // 기본값
             'lg': '1024px',  // 기본값
             'xl': '1280px',  // 기본값
-            '2xl': '1536px', // 기본값
+            '2xl': '1600px', // 기본값 1536px
+
         },
         extend: {
             backgroundImage: {
