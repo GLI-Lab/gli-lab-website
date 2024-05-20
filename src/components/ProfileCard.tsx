@@ -15,16 +15,23 @@ interface ProfileCardProps {
 const ProfileCard: React.FC<ProfileCardProps> = ({ image, name, title, period, interest, email, homepage }) => {
     const IMAGE = `${image}` || "/members/ku_basic_1_down.png"
 
-
-    // sm(640px)  : 핸드폰        / 1-col 세로 프로필 (W 320px(사진 256px) )        / 사진 8:9
+    // 가로는 600px 고정
+    // Version 1
+    // sm(640px)  : 핸드폰        / 1-col 세로 프로필 (W 320px(사진 8:9 256px))
     // md(768px)  : 아이패드 미니 / 1-col 가로 프로필 (W 600px(사진 240px) H 270px) /
     // lg(1024px) : 아이패드 프로 / 2-col 가로 프로필 (W 600px(사진 240px) H 270px) /
     // xl(1280px) : 데스크탑      / 2-col 가로 프로필 (W 600px(사진 240px) H 270px) /
+    //
+    // Version 2 (Yet)
+    // sm(640px)  : 핸드폰        / 1-col 세로 프로필 (W 320px(사진 8:9 256px))
+    // lg(1024px) : 아이패드 프로 / 2-col 가로 프로필 (W 600px(사진 240px) H 250px) /
+    // md(768px)  : 아이패드 미니 / 1-col 가로 프로필 (W 600px(사진 240px) H 250px) /
+    // xl(1280px) : 데스크탑      / 2-col 가로 프로필 (W 600px(사진 240px) H 250px) /
     return (
         <div className="flex flex-col w-[320px]
-                        sm:flex-row sm:aspect-[20/9] sm:w-full sm:max-w-[600px]
+                        sm:flex-row sm:aspect-[600/270] sm:w-full sm:max-w-[600px]
                         lg:max-w-full
-                        bg-[#f7f8fa] shadow-lg rounded-xl mx-auto
+                        bg-[#f4f4f4] shadow-lg rounded-xl mx-auto
                         hover:scale-105 transform transition-transform duration-300 ease-in-out">
 
             {/* ####################################### */}

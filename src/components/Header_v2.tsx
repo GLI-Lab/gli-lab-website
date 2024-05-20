@@ -1,10 +1,10 @@
 "use client"  // useStatus 때문에
 
 import Image from 'next/image'
-import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ChevronDown, Menu } from "lucide-react"
-import * as React from "react";
+import { useState, useEffect } from "react"
+
+import { IoChevronDown, IoMenuOutline } from "react-icons/io5";
 
 
 export default function Header() {
@@ -63,7 +63,7 @@ export default function Header() {
             path: "/board/news",
             subMenus: [
                 {title: "News", path: "/board/news"},
-                {title: "Gallery", path: "/board/team"},
+                {title: "Gallery", path: "/board/gallery"},
                 {title: "Teaching", path: "/board/teaching"},
                 {title: "Resources", path: "/board/resources"},
             ]
@@ -72,8 +72,8 @@ export default function Header() {
 
     return (
         // fixed top-0: 항상 상단에 고정
-        <nav className={`z-40 ${isScrolled ? "" : ""}`}>
-            <div className="fixed top-0 bg-white w-full border-b md:border-b-1">
+        <nav className={`z-40`}>
+            <div className={`fixed top-0 ${isScrolled ? "bg-[#f4f4f4] shadow-md" : "bg-white shadow-sm"} w-full border-b md:border-b-1`}>
                 <div className="max-w-screen-xl items-center mx-auto md:flex px-6">
 
                     {/* ##################################################### */}
@@ -81,17 +81,17 @@ export default function Header() {
                     {/* ##################################################### */}
                     <div className={`flex items-center justify-between ${isScrolled ? "py-1" : "py-2"}`}>
                         <Link href="/" className="items-center flex min-w-[270px]">
-                            <div className={`transition-all duration-300 ${isScrolled ? "h-[50px] w-[50px]" : "h-[70px] w-[70px]"}`}>
+                            <div className={`transition-all duration-200 ${isScrolled ? "h-[50px] w-[50px]" : "h-[70px] w-[70px]"}`}>
                                 <Image src={`${isScrolled ? "/GLI_logo_black.png" : "/GLI_logo_green.png"}`} alt="logo" width="96" height="96"/>
                             </div>
-                            <div className={`-space-y-2 ml-3  tracking-tighter ${isScrolled ? "text-[20px]" : "text-[22px] lg:text-[23px]"}`}>
+                            <div className={`-space-y-2 ml-3 tracking-tighter ${isScrolled ? "text-[20px]" : "text-[22px] lg:text-[23.5px]"}`}>
                                 <p>Graph & Language</p>
                                 <p>Intelligence Lab.</p>
                             </div>
                         </Link>
                         <div className="md:hidden">
-                            <button className="outline-none p-2 rounded-md focus:border-gray-400 focus:border" onClick={() => setMenu(!menu)}>
-                                <Menu className="h-7 w-7"/>
+                            <button className="pr-2 pt-3" onClick={() => setMenu(!menu)}>
+                                <IoMenuOutline  className="h-8 w-8"/>
                             </button>
                         </div>
                     </div>
@@ -100,7 +100,8 @@ export default function Header() {
                     {/* # DESKTOP: 네비게이션 메뉴 (hidden md:block) # */}
                     {/* ############################################## */}
                     <div className="hidden md:block flex-1">
-                        <ul className="justify-end items-center md:flex md:space-x-5 md:space-y-0 lg:space-x-10 xl:space-x-12">
+                        <ul className="justify-end items-center md:flex
+                                       md:space-x-6 lg:space-x-10 xl:space-x-12">
                             {menus.map((item, idx) => (
                                 <li key={idx} className="relative "  // 서브메뉴 리스트 선택할 수 있게
                                     onMouseEnter={() => setActiveMenu(idx)}  // 호버 시 서브메뉴 활성화
@@ -109,22 +110,24 @@ export default function Header() {
 
                                     {/* 메인 메뉴 */}
                                     <Link href={item.path}
-                                          className={`flex items-center text-[17px] pb-5 mt-5 ${
-                                              activeMenu === idx ? "text-green-900" : ""}`}>
+                                          className={`flex tracking-tight items-center transition-all duration-200 pb-5 mt-5 ${
+                                              activeMenu === idx ? "text-green-900" : ""}
+                                              ${isScrolled ? "text-[16px]" : "text-[16.5px] lg:text-[17.5px]"} `}>
                                         {item.title}
                                         {item.subMenus && !menu && (
-                                            <ChevronDown
+                                            <IoChevronDown
                                                 size={16}
                                                 className={`ml-0.5 mt-0.5 transition duration-200 ${
                                                     activeMenu === idx ? "rotate-180" : "rotate-0"}`}
-                                                aria-hidden="true"
                                             />)}
                                     </Link>
 
                                     {/* 서브 메뉴 리스트 */}
                                     {activeMenu === idx && item.subMenus && (  // {true && item.subMenus && (
-                                        <ul className={`absolute bg-white animate-fade-up lg:w-[160px] text-[15px] -mt-1 -left-6
-                                                        border-t-4 border-green-900 divide-y divide-gray-200  shadow-xl z-10`}>
+                                        <ul className={`absolute animate-fade-up w-[140px] lg:w-[160px] -mt-1 
+                                                        ${idx == menus.length - 1 ? "-left-24" : "-left-6"}
+                                                        border-t-4 border-green-900 divide-y divide-gray-200  shadow-xl z-10
+                                                        tracking-tight ${isScrolled ? "bg-[#f4f4f4] text-[15px]" : "bg-white text-[15.5px] lg:text-[16.5px]"}`}>
                                             {item.subMenus.map((subItem, subIdx) => (
                                                 <li key={subIdx}
                                                     className="whitespace-nowrap hover:bg-gray-100 hover:text-green-900">
@@ -146,7 +149,7 @@ export default function Header() {
                     {/* ######################################### */}
                     {/* # MOBILE: 네비게이션 메뉴 (menu 클릭시) # */}
                     {/* ######################################### */}
-                    <div className={`block md:hidden font-normal text-[15px] ${menu ? "animate-drop-in mb-2" : ""}`}>
+                    <div className={`block md:hidden text-[15.5px] ${menu ? "animate-drop-in mb-2" : ""}`}>
                         {menu && (
                             // 모바일 네비게이션
                             // items-center space-y-6
@@ -162,8 +165,8 @@ export default function Header() {
                                             <div
                                                 className={`flex justify-between hover:font-semibold hover:text-green-900 ${activeMenu === idx ? "font-semibold text-green-900" : ""}`}>
                                                 {item.title}
-                                                <ChevronDown
-                                                    size={20}
+                                                <IoChevronDown
+                                                    size={18}
                                                     className={`ml-1 justify-end transition duration-200 ${
                                                         activeMenu === idx ? "rotate-180" : "rotate-0"}`}
                                                     aria-hidden="true"
@@ -198,8 +201,6 @@ export default function Header() {
                                                 ))}
                                             </ul>
                                         )}
-
-
                                     </li>
                                 ))}
                             </ul>
@@ -207,7 +208,7 @@ export default function Header() {
                     </div>
                 </div>
             </div>
-            <div className={`transition-all duration-300 ${isScrolled ? "h-[66px]" : "h-[87px]"}`}></div>
+            <div className={`transition-all duration-300 ${isScrolled ? "h-[70px]" : "h-[86px]"}`}></div>
         </nav>
 )
 }
