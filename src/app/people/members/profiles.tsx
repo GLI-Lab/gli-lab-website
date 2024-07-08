@@ -34,7 +34,7 @@ export const profiles_graduate = [
 
 export const profiles_undergraduate = [
     {
-        image: "/members/yunjin_kim.jpg",
+        image: "/members/formal_yunjin_kim.jpg",
         name: "Yunjin Kim (김윤진)",
         title: "Undergraduate Intern",
         period: "2024.03 - Current",
@@ -43,7 +43,7 @@ export const profiles_undergraduate = [
         homepage: "",
     },
     {
-        image: "/members/seo.jpg",
+        image: "/members/formal_seo.jpg",
         name: "- (서지명)",
         title: "Undergraduate Intern",
         period: "2024.06 - Current",
@@ -52,7 +52,7 @@ export const profiles_undergraduate = [
         homepage: "",
     },
     {
-        image: "/members/lee.jpg",
+        image: "/members/formal_lee.jpg",
         name: "- (이영호)",
         title: "Undergraduate Intern",
         period: "2024.06 - Current",
@@ -61,11 +61,11 @@ export const profiles_undergraduate = [
         homepage: "",
     },
     {
-        image: "/members/hyeyoon_baek.jpg",
+        image: "/members/formal_hyeyoon_baek.jpg",
         name: "Hye-Yoon Baek (백혜윤)",
         title: "Undergraduate Intern",
         period: "2024.07 - Current",
-        interest: "Graph Machine Learning",
+        interest: "Graph Machine Learning, Natural Language Processing",
         email: "",
         homepage: "",
     },
@@ -79,8 +79,8 @@ export const profiles_undergraduate = [
         homepage: "",
     },
     {
-        image: "",
-        name: " (지상준)",
+        image: "/members/formal_jisang_jun.jpg",
+        name: "Ji-Sang Jun (지상준)",
         title: "Undergraduate Intern",
         period: "2024.06 - Current",
         interest: "Graph Machine Learning",
