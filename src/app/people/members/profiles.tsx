@@ -39,7 +39,7 @@ export const profiles_undergraduate = [
         title: "Undergraduate Intern",
         period: "2024.03 - Current",
         interest: "Graph Machine Learning",
-        email: "kimyunjin23@konkuk.ac.kr, dbswls135700@gmail.com",
+        email: "kimyunjin23@konkuk.ac.kr, yunjink008@gmail.com",
         homepage: "",
     },
     {
@@ -48,7 +48,7 @@ export const profiles_undergraduate = [
         title: "Undergraduate Intern",
         period: "2024.06 - Current",
         interest: "Graph Machine Learning",
-        email: "",
+        email: "rfyam8562@konkuk.ac.kr",
         homepage: "",
     },
     {
@@ -66,7 +66,7 @@ export const profiles_undergraduate = [
         title: "Undergraduate Intern",
         period: "2024.07 - Current",
         interest: "Graph Machine Learning, Natural Language Processing",
-        email: "",
+        email: "hannah100@konkuk.ac.kr",
         homepage: "",
     },
     {
@@ -75,7 +75,7 @@ export const profiles_undergraduate = [
         title: "Undergraduate Intern",
         period: "2024.07 - Current",
         interest: "Graph Machine Learning",
-        email: "",
+        email: "oseoko@naver.com",
         homepage: "",
     },
     {
@@ -84,7 +84,7 @@ export const profiles_undergraduate = [
         title: "Undergraduate Intern",
         period: "2024.06 - Current",
         interest: "Graph Machine Learning",
-        email: "",
+        email: "wltkdwns0220@naver.com",
         homepage: "",
     },
     // {
