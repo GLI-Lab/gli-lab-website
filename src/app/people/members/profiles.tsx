@@ -80,7 +80,7 @@ export const profiles_undergraduate = [
     },
     {
         image: "/members/formal_jisang_jun.jpg",
-        name: "Ji-Sang Jun (지상준)",
+        name: "Sang-Jun Ji (지상준)",
         title: "Undergraduate Intern",
         period: "2024.07 - Current",
         interest: "Graph Machine Learning",
