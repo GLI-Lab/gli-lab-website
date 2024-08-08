@@ -1,6 +1,6 @@
 {
-  "name": "gli-home",
-  "version": "0.1.0",
+  "name": "gli-lab",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -12,8 +12,8 @@
     "@vercel/analytics": "^1.2.2",
     "@vercel/speed-insights": "^1.0.10",
     "clsx": "^2.1.0",
-    "lucide-react": "^0.343.0",
-    "next": "14.1.0",
+    "lucide-react": "^0.400.0",
+    "next": "^14.2.5",
     "react": "^18.2.0",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
