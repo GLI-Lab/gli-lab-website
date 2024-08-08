@@ -4,6 +4,9 @@ import Image from "next/image";
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
 
+// import Head from 'next/head';
+// import ResearchTopics from "@/components/Tooltip";
+
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
@@ -30,29 +33,30 @@ export default function Page() {
                         </p>
                         <div>
                             <p className="text-accent mb-2">
-                                Knowledge Representation with Deep Learning
+                                Graph/Text Representation Learning with ML/DL for Real-World Applications
                             </p>
                             <ul className="list-inside list-disc space-y-2">
-                                <li>Knowledge Graph Embedding and Completion</li>
-                                <li>Reliable Knowledge Graph Path Representation Learning</li>
+                                <li>Node/Edge/Graph Embedding with Graph Neural Networks</li>
+                                <li>Graph Construction from Un-/Semi-Structured Data</li>
                                 <li>Context-aware Relational Learning for Knowledge Graphs</li>
-                                <li>Open-World Knowledge Graph Completion for Unseen Entities and Relations</li>
+                                <li>Open-World Knowledge Graph Reasoning for Unseen Entities and Relations</li>
                             </ul>
                         </div>
                         <div>
                             <p className="text-accent mb-2">
-                                NLP with Deep Learning & Knowledge Graphs
+                                Knowledge-Enhanced Language Models, Information Retrieval, and Recommendation
                             </p>
                             <ul className="list-inside list-disc space-y-2">
+                                <li>Graph-based & Explainable Item Recommendation</li>
                                 <li>Knowledge Injection for Conversational Recommender System</li>
-                                <li>Persona-Grounded Response Generation with Commonsense Knowledge</li>
-                                <li>Empathetic Response Generation via Recognizing Emotional Feature Transitions
-                                </li>
-                                <li>Active Learning for Information Extraction from Unstructured Text</li>
+                                <li>Open-Domain/Persona-Grounded Response Generation</li>
+                                <li>Document Analysis (Sentiment, Opinion, Topic, Named Entity, Summary, ...)</li>
                             </ul>
                         </div>
                     </div>
                 </div>
+
+                {/*<ResearchTopics/>*/}
 
                 <p className="text-header">Poster</p>
                 <div className="w-14 border-b-4 border-green-900 mt-1 mb-8"></div>
