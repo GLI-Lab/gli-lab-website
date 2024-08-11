@@ -98,7 +98,7 @@ const ProfileCard: React.FC<ProfileCardProps> = (props) => {
 };
 
 
-const SelectedProfileCard = (props) => {
+const SelectedProfileCard: React.FC<ProfileCardProps> = (props) => {
     const {name_en, name_ko, photo, email, interest, homepage, github, linkedin } = props;
 
     return (
