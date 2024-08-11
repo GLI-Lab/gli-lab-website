@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image';
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { profiles as rawProfiles } from "@/assets/data/profiles";
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
@@ -143,15 +143,18 @@ const SelectedProfileCard: React.FC<ProfileCardProps> = (props) => {
 
 
 const ProfileCardList: React.FC = () => {
-    const defaultSelectedProfile = window.innerWidth > 880
-        ? profiles.find(profile => profile.name_en === "Byungkook Oh") || null
-        : null;
+    // const defaultSelectedProfile = window.innerWidth > 880
+    //     ? profiles.find(profile => profile.name_en === "Byungkook Oh") || null
+    //     : null;
+    const [init, setInit] = useState(true);
+    const defaultSelectedProfile = profiles.find(profile => profile.name_en === "Byungkook Oh") || null;
     const [selectedCard, setSelectedCard] = useState<ProfileCardProps | null>(defaultSelectedProfile);
     const categories = [
         {title: 'Faculty', type: 'faculty'},
         // {title: 'Graduate Students', type: 'graduate'},
         {title: 'Undergraduate Interns', type: 'undergraduate'},
     ];
+
 
     return (
         <div className="max-w-screen-1.5xl mx-auto px-4 py-10 flex flex-row">
@@ -164,16 +167,16 @@ const ProfileCardList: React.FC = () => {
             }
 
             {/* Detailed Profile (popup) */}
-            {selectedCard !== null && (
-                <div className="fixed inset-0 z-[9999] bg-black bg-opacity-20 1.5md:hidden">
-                    <div className="fixed top-0 left-0 right-0 bottom-auto flex px-6 pt-3 justify-center overflow-y-auto">
+            {selectedCard !== null && !init && (
+                <div className="fixed inset-0 z-[100] bg-black bg-opacity-20 1.5md:hidden">
+                    <div className="fixed top-0 left-0 right-0 bottom-auto z-[150] flex px-6 pt-3 justify-center overflow-y-auto">
                         <ScrollArea
                             className="w-[360px] 1.5md:w-[400px] max-h-screen pt-3 pb-14 rounded-lg bg-white shadow-2xl border border-KU-dark_green relative overflow-y-auto">
                             <button
-                                className="absolute top-0 right-3 z-50 text-5xl text-KU-dark_green font-light"
+                                className="absolute top-0 right-3 z-[2-0] text-5xl text-KU-dark_green font-light"
                                 onClick={() => {
                                     setSelectedCard(null);
-                                    document.body.style.overflow = 'auto';  // 팝업 닫을 때 body 스크롤 복원
+                                    document.body.style.overflow = 'auto';
                                 }}
                             >
                                 &times;
@@ -199,8 +202,11 @@ const ProfileCardList: React.FC = () => {
                                 .filter(profile => profile.type === category.type)
                                 .map((profile) => (
                                     <ProfileCard
-                                        onClick={() => setSelectedCard(profile)}
-                                        isSelected={profile === selectedCard}
+                                        onClick={() => {
+                                            setInit(false);
+                                            setSelectedCard(profile);
+                                        }}
+                                        isSelected={profile === selectedCard && !init}
                                         {...profile}
                                     />
                                 ))
