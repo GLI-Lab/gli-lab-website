@@ -46,13 +46,13 @@ const nextConfig = {
             //     source: '/people/professor/:path*',
             //     destination: 'https://bkoh509.github.io/:path*',
             // },
+            // {
+            //     source: '/test/:path*',
+            //     destination: 'https://bkoh509.github.io/:path*',
+            // },
             {
-                source: '/test/:path*',
-                destination: 'https://bkoh509.github.io/:path*',
-            },
-            {
-                source: '/jupyterlite/:slug',
-                destination: 'https://gli-lab.github.io/jupyterlite/:slug',
+                source: '/jupyterlite/:path*',
+                destination: 'https://gli-lab.github.io/jupyterlite/:path*',
                 basePath: false,
                 locale: false,
             },
