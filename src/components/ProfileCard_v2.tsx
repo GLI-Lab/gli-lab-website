@@ -122,15 +122,19 @@ const SelectedProfileCard: React.FC<ProfileCardProps> = (props) => {
                 <Separator className="my-4"/>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4 sm:gap-x-4`}>
                     <span className={`text-KU-dark_green font-medium`}>Email</span>
-                    <a href={`mailto:${email[0]}`} className="hover:text-KU-dark_green hover:underline underline-offset-4">{email[0]}</a>
+                    <a href={`mailto:${email[0]}`}
+                       className="hover:text-KU-dark_green hover:underline underline-offset-4">{email[0]}</a>
                     <span className={`text-KU-dark_green font-medium`}>Homepage</span>
-                    <a href={homepage} target="_blank" rel="" className="hover:text-KU-dark_green hover:underline underline-offset-4">{homepage}</a>
+                    <a href={homepage} target="_blank" rel=""
+                       className="hover:text-KU-dark_green hover:underline underline-offset-4">{homepage}</a>
                     <span className={`text-KU-dark_green font-medium`}>Github</span>
-                    <a href={github} rel="" className="hover:text-KU-dark_green hover:underline underline-offset-4">{github}</a>
+                    <a href={github} rel=""
+                       className="hover:text-KU-dark_green hover:underline underline-offset-4">{github}</a>
                     <span className={`text-KU-dark_green font-medium`}>LinkedIn</span>
-                    <a href={linkedin} rel="" className="hover:text-KU-dark_green hover:underline underline-offset-4">{linkedin}</a>
+                    <a href={linkedin} rel=""
+                       className="hover:text-KU-dark_green hover:underline underline-offset-4">{linkedin}</a>
                 </div>
-
+                <Separator className="my-4"/>
 
             </div>
         </div>
@@ -139,7 +143,9 @@ const SelectedProfileCard: React.FC<ProfileCardProps> = (props) => {
 
 
 const ProfileCardList: React.FC = () => {
-    const defaultSelectedProfile = profiles.find(profile => profile.name_en === "Byungkook Oh") || null;
+    const defaultSelectedProfile = window.innerWidth > 880
+        ? profiles.find(profile => profile.name_en === "Byungkook Oh") || null
+        : null;
     const [selectedCard, setSelectedCard] = useState<ProfileCardProps | null>(defaultSelectedProfile);
     const categories = [
         {title: 'Faculty', type: 'faculty'},
@@ -152,29 +158,31 @@ const ProfileCardList: React.FC = () => {
 
             {/* Detailed Profile (left side) */}
             {selectedCard !== null &&
-                <div className="hidden 1.5md:block 1.5md:pr-12 lg:pr-24 sticky self-start top-24">
+                <div className="hidden 1.5md:block 1.5md:pr-12 lg:pr-24 sticky self-start top-12">
                     <SelectedProfileCard {...selectedCard}/>
                 </div>
             }
 
             {/* Detailed Profile (popup) */}
             {selectedCard !== null && (
-                // overflow-hidden: 특정 요소의 콘텐츠가 그 요소의 크기를 초과할 경우 초과된 부분을 숨기는 역할
-                <div className="fixed inset-0 z-50 flex px-6 py-3 justify-center bg-black bg-opacity-20 1.5md:hidden">
-                    <ScrollArea className="w-[360px] 1.5md:w-[400px] py-3 rounded-lg bg-white shadow-2xl border border-KU-dark_green relative overflow-y-auto">
-                        <button
-                            className="absolute top-0 right-3 z-50 text-5xl text-KU-dark_green font-light"
-                            onClick={() => {
-                                setSelectedCard(null);
-                                document.body.style.overflow = 'auto';  // 팝업 닫을 때 body 스크롤 복원
-                            }}
-                        >
-                            &times;
-                        </button>
-                        <div className="flex flex-col items-center justify-center">
-                            <SelectedProfileCard {...selectedCard}/>
-                        </div>
-                    </ScrollArea>
+                <div className="fixed inset-0 z-[9999] bg-black bg-opacity-20 1.5md:hidden">
+                    <div className="fixed top-0 left-0 right-0 bottom-auto flex px-6 pt-3 justify-center overflow-y-auto">
+                        <ScrollArea
+                            className="w-[360px] 1.5md:w-[400px] max-h-screen pt-3 pb-14 rounded-lg bg-white shadow-2xl border border-KU-dark_green relative overflow-y-auto">
+                            <button
+                                className="absolute top-0 right-3 z-50 text-5xl text-KU-dark_green font-light"
+                                onClick={() => {
+                                    setSelectedCard(null);
+                                    document.body.style.overflow = 'auto';  // 팝업 닫을 때 body 스크롤 복원
+                                }}
+                            >
+                                &times;
+                            </button>
+                            <div className="flex flex-col items-center justify-center pb-14">
+                                <SelectedProfileCard {...selectedCard}/>
+                            </div>
+                        </ScrollArea>
+                    </div>
                 </div>
             )}
 
