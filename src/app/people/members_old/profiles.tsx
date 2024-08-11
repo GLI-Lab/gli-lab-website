@@ -1,7 +1,7 @@
 
 export const profiles_faculty = [
     {
-        image: "/professor.jpg",
+        image: "/byungkook_oh.jpg",
         name: "Byungkook Oh (오병국)",
         title: "Professor/Director",
         period: "2024.03 - Current",
@@ -13,7 +13,7 @@ export const profiles_faculty = [
 
 export const profiles_graduate = [
     {
-        image: "/members/ku_basic_1_down.png",
+        image: "/profiles/ku_basic_1_down.png",
         name: "Jane Smith",
         title: "Research Scientist",
         period: "2015 - Present",
@@ -34,7 +34,7 @@ export const profiles_graduate = [
 
 export const profiles_undergraduate = [
     {
-        image: "/members/formal_yunjin_kim.jpg",
+        image: "/profiles/yunjin_kim.jpg",
         name: "Yunjin Kim (김윤진)",
         title: "Undergraduate Intern",
         period: "2024.03 - Current",
@@ -43,7 +43,7 @@ export const profiles_undergraduate = [
         homepage: "",
     },
     {
-        image: "/members/formal_seo.jpg",
+        image: "/profiles/seo.jpg",
         name: "- (서지명)",
         title: "Undergraduate Intern",
         period: "2024.06 - Current",
@@ -52,7 +52,7 @@ export const profiles_undergraduate = [
         homepage: "",
     },
     {
-        image: "/members/formal_lee.jpg",
+        image: "/profiles/lee.jpg",
         name: "- (이영호)",
         title: "Undergraduate Intern",
         period: "2024.06 - Current",
@@ -61,7 +61,7 @@ export const profiles_undergraduate = [
         homepage: "",
     },
     {
-        image: "/members/formal_hyeyoon_baek.jpg",
+        image: "/profiles/hyeyoon_baek.jpg",
         name: "Hye-Yoon Baek (백혜윤)",
         title: "Undergraduate Intern",
         period: "2024.07 - Current",
@@ -79,7 +79,7 @@ export const profiles_undergraduate = [
         homepage: "",
     },
     {
-        image: "/members/formal_jisang_jun.jpg",
+        image: "/profiles/sangjun_ji.jpg",
         name: "Sang-Jun Ji (지상준)",
         title: "Undergraduate Intern",
         period: "2024.07 - Current",
@@ -88,7 +88,7 @@ export const profiles_undergraduate = [
         homepage: "",
     },
     {
-        image: "/members/formal_jiyeon_park.jpg",
+        image: "/profiles/jiyeon_park.jpg",
         name: "Ji-Yeon Park (박지연)",
         title: "Undergraduate Intern",
         period: "2024.07 - Current",
@@ -97,7 +97,7 @@ export const profiles_undergraduate = [
         homepage: "",
     },
     // {
-    //     image: "/members/yunjin_kim.jpg",
+    //     image: "/profiles/yunjin_kim.jpg",
     //     name: "John Doe",
     //     title: "Professor",
     //     period: "2010 - Present",
