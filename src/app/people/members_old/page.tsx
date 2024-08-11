@@ -4,7 +4,7 @@ import {Metadata} from "next";
 
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
-import ProfileCard from "@/components/ProfileCard";
+import ProfileCard from "@/components/legacy/ProfileCard";
 import {profiles_faculty, profiles_graduate, profiles_undergraduate} from "./profiles"
 
 

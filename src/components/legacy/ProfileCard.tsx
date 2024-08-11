@@ -13,7 +13,7 @@ interface ProfileCardProps {
 }
 
 const ProfileCard: React.FC<ProfileCardProps> = ({ image, name, title, period, interest, email, homepage }) => {
-    const IMAGE = `${image}` || "/members/ku_basic_1_down.png"
+    const IMAGE = `${image}` || "/profiles/ku_basic_1_down.png"
 
     // 가로는 600px 고정
     // Version 1
