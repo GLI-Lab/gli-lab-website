@@ -173,7 +173,7 @@ const ProfileCardList: React.FC = () => {
                         <ScrollArea
                             className="w-[360px] 1.5md:w-[400px] max-h-screen pt-3 pb-14 rounded-lg bg-white shadow-2xl border border-KU-dark_green relative overflow-y-auto">
                             <button
-                                className="absolute top-0 right-3 z-[2-0] text-5xl text-KU-dark_green font-light"
+                                className="absolute top-0 right-3 z-[200] text-5xl text-KU-dark_green font-light"
                                 onClick={() => {
                                     setSelectedCard(null);
                                     document.body.style.overflow = 'auto';
