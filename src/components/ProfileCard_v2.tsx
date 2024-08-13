@@ -5,7 +5,6 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
 import { profiles as rawProfiles } from "@/assets/data/profiles";
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 
 
@@ -14,6 +13,7 @@ interface ProfileCardProps {
     onClick?: () => void;  // option
     isSelected?: boolean;  // option
     type: string;
+    title: string;
     name_en: string;
     name_ko: string;
     admission: string;
@@ -29,6 +29,7 @@ interface ProfileCardProps {
 
 const defaultProfile: ProfileCardProps = {
     type: "Unknown",
+    title: "Unknown",
     name_en: "Unknown",
     name_ko: "Unknown",
     admission: "Unknown",
@@ -220,7 +221,7 @@ const ProfileCardList: React.FC = () => {
         profiles.find(profile => profile.name_en === "Byungkook Oh") || null
     );
 
-    const popupRef = useRef(null);
+    const popupRef = useRef<HTMLDivElement | null>(null);
     const categories = [
         {title: 'Faculty', type: 'faculty'},
         // {title: 'Graduate Students', type: 'graduate'},
@@ -229,8 +230,8 @@ const ProfileCardList: React.FC = () => {
 
 
     const updateCanScroll = () => {
-        const disableScroll = (e) => {
-            if (popupRef.current && !popupRef.current.contains(e.target)) {
+        const disableScroll = (e: Event) => {
+            if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
                 e.preventDefault();
             }
         };
