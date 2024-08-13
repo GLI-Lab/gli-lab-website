@@ -37,3 +37,34 @@ li {
     /*word-break: break-all; !*특수문자를 제외하고 강제로 줄바꿈*!*/
     /*overflow-wrap: break-word; */
 }
+
+
+/*flex-grow: 0;*/
+/*이 값은 아이템이 Flex 컨테이너 내에서 남아 있는 공간을 얼마나 차지할지를 결정합니다.*/
+/*0은 남은 공간을 전혀 차지하지 않겠다는 의미입니다. 즉, 아이템은 컨테이너가 가진 여분의 공간을 늘리지 않습니다.*/
+
+/*flex-shrink: 0;*/
+/*이 값은 아이템이 Flex 컨테이너 내에서 공간이 부족할 때 얼마나 줄어들지를 결정합니다.*/
+/*0은 아이템이 줄어들지 않겠다는 의미입니다. 즉, 컨테이너가 작아져도 아이템의 크기는 줄어들지 않습니다.*/
+
+/*flex-basis: 100%;*/
+/*이 값은 Flex 아이템의 기본 크기를 설정합니다. 100%는 Flex 컨테이너의 너비나 높이의 100%를 기준으로 아이템의 크기를 설정하겠다는 의미입니다.*/
+
+.embla {
+    /*max-width: 48rem;*/
+    /*margin: auto;*/
+    /*--slide-height: 19rem;*/
+    /*--slide-spacing: 1rem;*/
+    --slide-size: 100%;
+}
+.embla__container {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+    /*margin-left: calc(var(--slide-spacing) * -1);*/
+}
+.embla__slide {
+    transform: translate3d(0, 0, 0);
+    flex: 0 0 100%;
+    /*min-width: 0;*/
+    /*padding-left: var(--slide-spacing);*/
+}

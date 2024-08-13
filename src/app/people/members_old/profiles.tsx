@@ -43,7 +43,7 @@ export const profiles_undergraduate = [
         homepage: "",
     },
     {
-        image: "/profiles/seo.jpg",
+        image: "/profiles/jimyeung_seo.jpg",
         name: "- (서지명)",
         title: "Undergraduate Intern",
         period: "2024.06 - Current",
@@ -52,7 +52,7 @@ export const profiles_undergraduate = [
         homepage: "",
     },
     {
-        image: "/profiles/lee.jpg",
+        image: "/profiles/youngho_lee.jpg",
         name: "- (이영호)",
         title: "Undergraduate Intern",
         period: "2024.06 - Current",

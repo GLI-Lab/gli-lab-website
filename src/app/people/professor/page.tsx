@@ -22,10 +22,10 @@ export default function Page() {
             {/*  <h2 className="ml-4 text-xl font-semibold">Professor</h2>*/}
             {/*  <div className="flex flex-col md:flex-row items-center space-y-8 space-x-6 pt-6 md:pt-2">*/}
             {/*    <Image alt="Byungkook Oh" className="rounded-xl h-[200px] w-[200px]" height="200" width="200"*/}
-            {/*           src="/professor.jpg"/>*/}
+            {/*           src="/_professor.jpg"/>*/}
             {/*    <div className="">*/}
             {/*      <h3 className="text-lg font-semibold">Byungkook Oh (오병국)</h3>*/}
-            {/*      <p>Assistant professor</p>*/}
+            {/*      <p>Assistant _professor</p>*/}
             {/*      <p>Department of Computer Science and Engineering (CSE)</p>*/}
             {/*      <p>Konkuk University, Seoul, Korea</p>*/}
             {/*      <p>Research Interest</p>*/}
