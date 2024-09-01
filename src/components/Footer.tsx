@@ -10,14 +10,16 @@ export default function Footer() {
             <div className="px-3 md:px-10 mx-auto">
                 <div className="flex justify-center text-white/85
                                 gap-3 sm:gap-5 pt-6 pb-3">
-                    <Link className="hover:underline underline-offset-4" href="#">Contact Us</Link>
+                    <Link className="hover:underline underline-offset-4" href="/about/contact">Contact Us</Link>
                     <p>|</p>
-                    <Link className="hover:underline underline-offset-4" href="#">Terms of Service</Link>
+                    <Link className="hover:underline underline-offset-4" href="https://github.com/GLI-Lab/GLI-Lab">Terms of Service</Link>
                     <p>|</p>
-                    <Link className="hover:underline underline-offset-4" href="#">Privacy</Link>
+                    <Link className="hover:underline underline-offset-4" href="https://github.com/GLI-Lab/GLI-Lab">Privacy</Link>
+                    <p>|</p>
+                    <Link className="hover:underline underline-offset-4" href="https://github.com/GLI-Lab/GLI-Lab">Github</Link>
                 </div>
                 <div className="pt-3 pb-6 text-white/85 border-t border-t-white border-opacity-20">
-                    <p>
+                <p>
                         Copyright © 2024
                         <Link className="hover:text-white hover:underline underline-offset-4 font-semibold" href="/">
                             <span> Graph Intelligence Lab. </span></Link>
