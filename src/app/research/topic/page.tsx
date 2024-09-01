@@ -7,10 +7,11 @@ import { SubCover } from "@/components/Covers";
 // import Head from 'next/head';
 // import ResearchTopics from "@/components/Tooltip";
 
+const TITLE = `Research Topic`
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
-        title: `Research Topic`,
+        title: TITLE,
     });
 };
 
@@ -19,7 +20,7 @@ export default function Page() {
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
-                <SubCover title="Research Topic"/>
+                <SubCover title={TITLE}/>
             </div>
 
             <div className="max-w-screen-xl mx-auto px-5 py-10">
@@ -44,6 +45,17 @@ export default function Page() {
                         </div>
                         <div>
                             <p className="text-accent mb-2">
+                                Multi-Modal Large Language Models & Foundation Models
+                            </p>
+                            <ul className="list-inside list-disc space-y-2">
+                                <li>Prompting Engineering, RAG, GraphRAG, Chain-of-Thought</li>
+                                <li>Graph-Structured Interaction for LLMs</li>
+                                <li>Knowledge-Enhanced LLMs</li>
+                                <li>Knowledge Distillation with LLMs</li>
+                            </ul>
+                        </div>
+                        <div>
+                        <p className="text-accent mb-2">
                                 Knowledge-Enhanced Language Models, Information Retrieval, and Recommendation
                             </p>
                             <ul className="list-inside list-disc space-y-2">
@@ -62,8 +74,10 @@ export default function Page() {
                 <div className="w-14 border-b-4 border-green-900 mt-1 mb-8"></div>
 
                 <div className="space-y-6">
-                    <Image src="/topic/poster1.webp" alt="poster1" width={1600} height={2000} className="h-full w-full object-cover"/>
-                    <Image src="/topic/poster2.webp" alt="poster2" width={1600} height={2000} className="h-full w-full object-cover"/>
+                    <Image src="/topic/poster1.webp" alt="poster1" width={1600} height={2000}
+                           className="h-full w-full object-cover"/>
+                    <Image src="/topic/poster2.webp" alt="poster2" width={1600} height={2000}
+                           className="h-full w-full object-cover"/>
                 </div>
             </div>
         </>
