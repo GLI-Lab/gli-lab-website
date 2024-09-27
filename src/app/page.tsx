@@ -67,11 +67,11 @@ export default function Page() {
                         <li className="flex space-x-2">
                             <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
                             <span><span
-                                className="font-semibold pr-2">추천시스템:</span>협업필터링, 대화형 추천시스템, 유저/아이템 클러스터링</span>
+                                className="font-semibold pr-2">추천시스템:</span>멀티모달/대화형 추천, 유저/아이템 클러스터링</span>
                         </li>
                         <li className="flex space-x-2">
                             <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
-                            <span><span className="font-semibold pr-2">자연어처리:</span>질의응답, 정보검색, 관계추출, 언어모델</span>
+                            <span><span className="font-semibold pr-2">자연어처리:</span>지식증류, 질의응답, 정보검색, 관계추출, 언어모델</span>
                         </li>
                         <li className="flex space-x-2">
                             <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
