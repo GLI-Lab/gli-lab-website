@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { MainCover } from "@/components/Covers";
 import { FaCheck } from "react-icons/fa";
-import {news} from "@/assets/data/news";
+import {newsData} from "@/assets/data/news";
 
 
 export default function Page() {
@@ -95,7 +95,11 @@ export default function Page() {
                         Latest News
                     </p>
                     <div className="flex flex-col text-home items-start text-left space-y-2">
-                        {news}
+                        {newsData.map(({id, date, content}) => (
+                            <p key={id}>
+                                <span className="font-semibold">[{date}]</span> {content}
+                            </p>
+                        ))}
                     </div>
                 </div>
             </div>
