@@ -1,7 +1,7 @@
 import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
-import {news} from "@/assets/data/news";
+import {newsData} from "@/assets/data/news";
 
 const TITLE = `News`
 
@@ -25,7 +25,11 @@ export default function Page() {
                         Latest News
                     </p>
                     <div className="flex flex-col text-home items-start text-left space-y-2">
-                        {news}
+                        {newsData.map(({id, date, content}) => (
+                            <p key={id}>
+                                <span className="font-semibold">[{date}]</span> {content}
+                            </p>
+                        ))}
                     </div>
                 </div>
             </div>
