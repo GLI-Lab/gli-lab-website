@@ -17,7 +17,9 @@ interface ProfileCardProps {
     name_en: string;
     name_ko: string;
     admission: string;
-    major: string;
+    bs: string;
+    ms: string;
+    phd: string;
     period: string;
     interest: string;
     photo: string[];
@@ -33,7 +35,9 @@ const defaultProfile: ProfileCardProps = {
     name_en: "Unknown",
     name_ko: "Unknown",
     admission: "Unknown",
-    major: "Unknown",
+    bs: "Unknown",
+    ms: "Unknown",
+    phd: "Unknown",
     period: "Unknown",
     interest: "Unknown",
     photo: ["/profiles/photo/ku_basic_1_down.png"],
@@ -50,6 +54,9 @@ const profiles = rawProfiles.map(profile => ({
     name_en: profile.name_en ?? defaultProfile.name_en,
     name_ko: profile.name_ko ?? defaultProfile.name_ko,
     admission: profile.admission ?? defaultProfile.admission,
+    bs: profile.bs ?? defaultProfile.bs,
+    ms: profile.ms ?? defaultProfile.ms,
+    phd: profile.phd ?? defaultProfile.phd,
     period: profile.period ?? defaultProfile.period,
     interest: profile.interest ?? defaultProfile.interest,
     photo: profile.photo && profile.photo.length > 0 ? profile.photo : defaultProfile.photo,
@@ -88,6 +95,11 @@ const ProfileCard: React.FC<ProfileCardProps> = (props) => {
                             <span className={`${isSelected ? '' : 'group-hover:text-KU-dark_green'}`}>Period</span>
                             <span>{period}</span>
                         </>
+                    ) : type === "faculty" ? (
+                        <>
+                            <span className={`${isSelected ? '' : 'group-hover:text-KU-dark_green'}`}>Office</span>
+                            <span>C384-2, Engineering Hall</span>
+                        </>
                     ) : (
                         <>
                             <span className={`${isSelected ? '' : 'group-hover:text-KU-dark_green'}`}>Admission</span>
@@ -104,7 +116,7 @@ const ProfileCard: React.FC<ProfileCardProps> = (props) => {
 
 
 const SelectedProfileCard: React.FC<ProfileCardProps> = (props) => {
-    const {title, name_en, name_ko, major, photo, email, interest, homepage, github, linkedin } = props;
+    const {title, name_en, name_ko, admission, period, bs, ms, phd, photo, email, interest, homepage, github, linkedin } = props;
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30}, [Fade()]);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -140,11 +152,13 @@ const SelectedProfileCard: React.FC<ProfileCardProps> = (props) => {
                             ))}
                         </div>
                     </div>
+                    {/* Navigation Buttons */}
+
                     <div className="flex justify-center pt-2">
                         {photo.map((_, index) => (
                             <button
                                 key={index}
-                                className={`w-2.5 h-2.5 rounded-full mx-1 cursor-pointer
+                                className={`w-3 h-3 rounded-full mx-1 cursor-pointer
                                             ${index === selectedIndex ? 'bg-KU-dark_green' : 'bg-[#ccc]'}`}
                                 onClick={() => emblaApi?.scrollTo(index)}
                             />
@@ -157,29 +171,61 @@ const SelectedProfileCard: React.FC<ProfileCardProps> = (props) => {
                     <h1 className="text-[28px] font-bold leading-none">{name_ko}</h1>
                     <h1 className="text-[22px]">{name_en}</h1>
                 </div>
-                <div className={`grid grid-cols-[auto,1fr] gap-x-4 sm:gap-x-4`}>
+                <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1`}>
                     <span className={`text-KU-dark_green highlight text-[17px] sm:text-[19px]`}>{title}</span>
                 </div>
-                <Separator className="my-3"/>
-
-                <div className={`grid grid-cols-[auto,1fr] gap-x-4 sm:gap-x-4`}>
-                    {/*<p>Admission: {admission}</p>*/}
-                    <span className={`text-KU-dark_green font-medium`}>Major</span>
-                    <span>{major}</span>
-                    <span className={`text-KU-dark_green font-medium`}>Topics</span>
-                    <div className="text-[14px] sm:text-[16px]">
-                        {interest.split(',').map((item, index) => (
-                            <>
-                                <span key={index} className="text-KU-dark_green font-semibold pr-0.5">#</span>
-                                <span className="text-KU-dark_gray pr-2">{item.trim()} </span>
-                            </>
-                        ))}
-                    </div>
-                    {/*<span>{interest}</span>*/}
+                <div className="my-3"></div>
+                <div className={`grid grid-cols-[auto,1fr] gap-x-4`}>
+                    {admission !== "Unknown" && (
+                        <>
+                            <span className={`text-KU-dark_green font-medium`}>Admission</span>
+                            <span>{admission}</span>
+                        </>
+                    )}
+                    {period !== "Unknown" && (
+                        <>
+                            <span className={`text-KU-dark_green font-medium`}>Period</span>
+                            <span>{period}</span>
+                        </>
+                    )}
                 </div>
                 <Separator className="my-3"/>
 
-                <div className={`grid grid-cols-[auto,1fr] gap-x-4 sm:gap-x-4`}>
+
+                <div className={`grid gap-x-4 gap-y-1 my-3`}>
+                    <span className={`text-KU-dark_green font-medium`}>Research Interests</span>
+                    <div className="text-[14px] sm:text-[16px]">
+                        {interest.split(',').map((item, index) => (
+                            <React.Fragment key={index}>
+                                <span key={index} className="text-KU-dark_green font-semibold pr-0.5">#</span>
+                                <span className="text-KU-dark_gray pr-2">{item.trim()} </span>
+                            </React.Fragment>
+                        ))}
+                    </div>
+                </div>
+                <div className={`grid grid-cols-[auto,1fr] gap-x-4`}>
+                    {bs !== "Unknown" && (
+                        <>
+                            <span className={`text-KU-dark_green font-medium`}>B.S.</span>
+                            <span>{bs}</span>
+                        </>
+                    )}
+                    {ms !== "Unknown" && (
+                        <>
+                            <span className={`text-KU-dark_green font-medium`}>M.S.</span>
+                            <span>{ms}</span>
+                        </>
+                    )}
+                    {phd !== "Unknown" && (
+                        <>
+                            <span className={`text-KU-dark_green font-medium`}>Ph.D.</span>
+                            <span>{phd}</span>
+                        </>
+                    )}
+                </div>
+                <Separator className="my-3"/>
+
+                <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1`}>
                     <span className={`text-KU-dark_green font-medium`}>Email</span>
                     <div className="flex flex-col">
                         {email.map((src, index) => (
@@ -204,7 +250,7 @@ const SelectedProfileCard: React.FC<ProfileCardProps> = (props) => {
                     <span className={`text-KU-dark_green font-medium`}>LinkedIn</span>
                     <a href={linkedin} rel="" title={linkedin} target="_blank"
                        className="hover:text-KU-dark_green hover:underline underline-offset-4">
-                    {linkedin.replace("https://www.linkedin.com/in/", "")}
+                        {linkedin.replace("https://www.linkedin.com/in/", "")}
                     </a>
                 </div>
                 <Separator className="my-3"/>
@@ -224,7 +270,9 @@ const ProfileCardList: React.FC = () => {
     const popupRef = useRef<HTMLDivElement | null>(null);
     const categories = [
         {title: 'Faculty', type: 'faculty'},
-        // {title: 'Graduate Students', type: 'graduate'},
+        // {title: 'Ph.D. Students', type: 'phd'},
+        // {title: 'Combined M.S./Ph.D. Students', type: 'msphd'},
+        {title: 'M.S. Students', type: 'ms'},
         {title: 'Undergraduate Interns', type: 'undergraduate'},
     ];
 
@@ -235,9 +283,9 @@ const ProfileCardList: React.FC = () => {
                 e.preventDefault();
             }
         };
-        if (!init && selectedCard && window.innerWidth < 880){  // 1.5md
+        if (!init && selectedCard && window.innerWidth < 880) {  // 1.5md
             document.body.style.overflow = 'hidden';
-            document.addEventListener('touchmove', disableScroll, { passive: false });
+            document.addEventListener('touchmove', disableScroll, {passive: false});
 
         } else {
             document.body.style.overflow = 'auto';
@@ -247,7 +295,7 @@ const ProfileCardList: React.FC = () => {
 
     const checkBottom = () => {
         if (popupRef.current) {
-            const { scrollHeight, scrollTop, clientHeight } = popupRef.current;
+            const {scrollHeight, scrollTop, clientHeight} = popupRef.current;
             const atBottom = scrollHeight - scrollTop <= clientHeight + 20;
             setIsAtBottom(atBottom);
         }
@@ -376,7 +424,7 @@ const ProfileCardList: React.FC = () => {
                 {categories.map((category) => (
                     <div key={category.type}>
                         <div>
-                            <h2 className="font-medium tracking-tighter text-[26px] md:text-[30px]">{category.title}</h2>
+                            <h2 className="font-medium tracking-tight text-[26px] md:text-[30px]">{category.title}</h2>
                             <div className="w-14 border-b-4 border-KU-dark_green mt-1 mb-6"></div>
                         </div>
                         <div className="grid grid-cols-1 1.5xl:grid-cols-2 gap-x-4 gap-y-4 1.5xl:gap-y-6 mb-10">
