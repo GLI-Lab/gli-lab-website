@@ -90,7 +90,7 @@ const ProfileCard: React.FC<ProfileCardProps> = (props) => {
                 </div>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-2 sm:gap-x-4 tracking-tighter sm:tracking-normal text-sm sm:text-base
                                  ${isSelected ? 'group-hover:text-white' : 'text-gray-500'}`}>
-                    {type === "undergraduate" ? (
+                    {(type === "intern") || (type === "pms") ? (
                         <>
                             <span className={`${isSelected ? '' : 'group-hover:text-KU-dark_green'}`}>Period</span>
                             <span>{period}</span>
@@ -273,7 +273,8 @@ const ProfileCardList: React.FC = () => {
         // {title: 'Ph.D. Students', type: 'phd'},
         // {title: 'Combined M.S./Ph.D. Students', type: 'msphd'},
         {title: 'M.S. Students', type: 'ms'},
-        {title: 'Undergraduate Interns', type: 'undergraduate'},
+        {title: 'Prospective M.S. Students', type: 'pms'},
+        {title: 'Interns', type: 'intern'},
     ];
 
 
