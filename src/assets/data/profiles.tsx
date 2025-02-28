@@ -217,7 +217,7 @@ export const profiles = [
         phd: null,
         period: "2024.12 - Current",
         interest: "Graph ML/DL, Information Retrieval, LLM Knowledge Distillation",
-        photo: ["jinho_choi_1.jpg", "jinho_choi_2.jpeg"],
+        photo: ["/profiles/photo/jinho_choi_1.jpg", "/profiles/photo/jinho_choi_2.jpeg"],
         email: ["jhc12931293@gmail.com", "jinho159@konkuk.ac.kr"],
         homepage: null,
         github: null,
