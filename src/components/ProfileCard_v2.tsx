@@ -236,7 +236,7 @@ const SelectedProfileCard: React.FC<ProfileCardProps> = (props) => {
                     <span className={`text-KU-dark_green font-medium`}>Home</span>
                     <a href={homepage} target="_blank" rel="" title={homepage}
                        className="hover:text-KU-dark_green hover:underline underline-offset-4">
-                        {homepage.replace("https://", "")}
+                        {homepage.replace("https://", "").split('/')[0]}
                     </a>
                     <span className={`text-KU-dark_green font-medium`}>Github</span>
                     <div className="flex flex-col">
