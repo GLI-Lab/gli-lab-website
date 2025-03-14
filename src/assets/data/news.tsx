@@ -1,5 +1,5 @@
 export const newsData = [
-    { id: 13, date: "Mar, 2025", content: "Welcome to GLI lab, Eun-Yeong Jo!" },
+    { id: 13, date: "Mar, 2025", content: "Welcome to GLI lab, Eun-Yeong Jo and Sang-June Kim!" },
     { id: 12, date: "Jan, 2025", content: "Welcome to GLI lab, Minseok Geum and Hae-Yoon Koo\n!" },
     { id: 11, date: "Dec, 2024", content: "Welcome to GLI lab, Jinho Choi!" },
     { id: 10, date: "Dec, 2024", content: "Welcome to GLI lab, Hye-Yoon, Jimyeung, and Dongcheon, as master students! 😊" },
