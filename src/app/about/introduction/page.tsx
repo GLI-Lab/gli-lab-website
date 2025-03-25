@@ -28,28 +28,29 @@ export default function Page() {
                         About GLI Lab.
                     </h2>
                     <p className="text-home">
-                        Our research focuses on developing AI/DL algorithms and applications for various domains,
-                        including
-                        knowledge representation (e.g., knowledge graph embedding and graph embedding) and
-                        knowledge-based
-                        applications (e.g., Knowledge-enhanced NLP Applications, Information Retrieval &
-                        Recommendation),
-                        with a wide range of data types (e.g., matrix/tensor, text, graph, time series).
+                        We strive for technological innovation across various real-world applications
+                        such as explainable and conversational recommendations, information retrieval and extraction,
+                        and trustworthy response generation.
+                        To achieve this, we actively research and develop advanced methods including Graph Neural Networks (GNNs),
+                        multimodal and knowledge-enhanced Large Language Models (LLMs), Synergizing LLMs and Graphs techniques,
+                        GraphRAG, and LLM-based agents, aiming toward knowledge-enhanced intelligent systems.
                     </p>
                     <p className="text-home">
-                        저희는 다양한 데이터 유형(예: 행렬/텐서, 텍스트, 그래프, 시계열)의 지식 표현(예: 지식 그래프 임베딩 및 그래프 임베딩)과 지식 기반 애플리케이션(예: 지식 강화
-                        NLP 애플리케이션, 정보 검색 및 추천)을 포함한 다양한 도메인을 위한 AI/DL 알고리즘 및 애플리케이션 개발에 중점을 두고 연구하고 있습니다.
+                        <span className="underline underline-offset-4"><span className="highlight">그래프</span>는
+                        다양한 형태와 여러 소스에서 수집된 데이터 간의 연결 관계를 의미론적으로 구조화</span>하여 관계 중심으로 표현할 수 있습니다.
+                        <span className="underline underline-offset-4"><span className="highlight">텍스트</span>는
+                        인간의 방대하고 잠재적인 지식과 정보</span>를 담고있지만, 이로부터 의미 있는 정보를 추출/분석할 수 있어야합니다.
+                        이미 글로벌 빅테크 기업들은 자사의 핵심 사업 분야인 검색/추천/개인화/추론 서비스 고도화를 위해
+                        그래프와 텍스트 데이터를 유기적으로 융합하여 활용하고 있습니다.
                     </p>
                     <p className="text-home">
-                        <span className="underline underline-offset-4"><span className="highlight">그래프</span>는 다양한 형태와 다양한 소스의 데이터 간의 연결 관계를 의미론적으로 구조화하여 표현</span>할
-                        수 있습니다.
-                        반면, <span className="underline underline-offset-4"><span className="highlight">텍스트</span>는 지식 전달 및 공유를 위한 데이터로 방대한 지식과 정보를
-                        담고</span>있지만, 의미 있는 정보를 추출/분석할 수 있어야 합니다. 해외 빅테크 기업들은 이미 자사들의 핵심 사업분야에서 검색/추천/추론 서비스 고도화를 위해,
-                        그래프와 텍스트 데이터를 유기적으로 활용하고 있습니다.
-                        본 연구실에서는 텍스트와 이미지와 같은 비정형 데이터로부터 그래프 형태의 아이템, 사용자, 상식, 멀티모달 등에 대한 관계지식을 추출합니다.
-                        이러한 관계지식을 융합/탐색/활용하여 새로운 정보를 추론하거나 사용자 의도 및 선호 파악 등에 활용합니다.
-                        <span className="highlight">궁극적으로는 추천시스템, 질의응답, 정보검색, 관계추출 등에 그래프 구조의 정형 데이터와 텍스트와 같은 비정형 데이터를 유기적으로 활용하여 지식기반 지능형 시스템을 연구개발</span>하는
-                        것을 목적으로 합니다.
+                        본 연구실은 텍스트 및 이미지와 같은 멀티모달 비정형 데이터뿐만 아니라 행렬·텐서·그래프·시계열과 같은 다양한 형태의 데이터를 활용하여,
+                        아이템·사용자·상식·도메인 지식 등의 관계지식을 그래프 형태로 구조화하고 이를 표현하는 연구를 수행하고 있습니다.
+                        이러한 관계지식을 다양한 모델(ex, 언어모델 및 추천시스템)과 융합하여 사용자 의도, 선호, 사실정보 등을 더욱 정확히 반영하고자 합니다.
+
+                        궁극적으로 설명가능한 추천, 대화형 추천, 정보 검색 및 추출, 신뢰할 수 있는 응답 생성 등 다양한 실세계 응용 분야에서 기술 혁신을 도전합니다.
+                        이를 위해 <span className="highlight">그래프 뉴럴네트워크(GNNs), 멀티모달 및 지식 기반 LLMs, 그래프와 LLM의 융합 기술,
+                        GraphRAG, LLM 에이전트 등 지식기반 지능형 시스템을 위한 최신 기술들을 연구개발</span>하고 있습니다.
                     </p>
                 </div>
             </div>
