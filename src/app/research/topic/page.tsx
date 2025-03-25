@@ -32,37 +32,69 @@ export default function Page() {
                         <p className="text-body">
                             Our research fields are as follows:
                         </p>
+                        <p className="text-accent">
+                            <span className="highlight">&lt;Approaches&gt;</span>
+                        </p>
                         <div>
                             <p className="text-accent mb-2">
-                                Graph/Text Representation Learning with ML/DL for Real-World Applications
+                                Graph Representation Learning
                             </p>
                             <ul className="list-inside list-disc space-y-2">
-                                <li>Node/Edge/Graph Embedding with Graph Neural Networks</li>
-                                <li>Graph Construction from Un-/Semi-Structured Data</li>
-                                <li>Context-aware Relational Learning for Knowledge Graphs</li>
-                                <li>Open-World Knowledge Graph Reasoning for Unseen Entities and Relations</li>
+                                <li>Graph Neural Networks (GNNs) for Node/Edge/Graph Embedding</li>
+                                <li>Knowledge Graph Representation/Completion/Validation/Construction</li>
+                                <li>Context-Aware Knowledge Graph Representation and Relational Learning</li>
                             </ul>
                         </div>
                         <div>
                             <p className="text-accent mb-2">
-                                Multi-Modal Large Language Models & Foundation Models
+                                Large Language Models (LLMs)
                             </p>
                             <ul className="list-inside list-disc space-y-2">
-                                <li>Prompting Engineering, RAG, GraphRAG, Chain-of-Thought</li>
-                                <li>Graph-Structured Interaction for LLMs</li>
-                                <li>Knowledge-Enhanced LLMs</li>
-                                <li>Knowledge Distillation with LLMs</li>
+                                <li>Multi-Modal & Knowledge-Enhanced Foundation Models</li>
+                                <li>Knowledge & LLM Distillation for Efficient Model Development</li>
+                                <li>Advanced Prompt Engineering: Chain-of-Thought (CoT), and Retrieval-Augmented
+                                    Generation (RAG)
+                                </li>
                             </ul>
                         </div>
                         <div>
-                        <p className="text-accent mb-2">
-                                Knowledge-Enhanced Language Models, Information Retrieval, and Recommendation
+                            <p className="text-accent mb-2">
+                                Synergizing LLMs and Graphs
                             </p>
                             <ul className="list-inside list-disc space-y-2">
-                                <li>Graph-based & Explainable Item Recommendation</li>
-                                <li>Knowledge Injection for Conversational Recommender System</li>
-                                <li>Open-Domain/Persona-Grounded Response Generation</li>
-                                <li>Document Analysis (Sentiment, Opinion, Topic, Named Entity, Summary, ...)</li>
+                                <li>Text-to-Graph & Graph-to-Text Generation</li>
+                                <li>Graph-Structured Interaction for LLMs (GraphRAG, Graph-driven LLM Agents)</li>
+                                <li>Knowledge-grounded & Context-aware Response Generation with LLMs</li>
+                            </ul>
+                        </div>
+                        <p className="text-accent">
+                            <span className="highlight">&lt;Applications&gt;</span>
+                        </p>
+                        <div>
+                            <p className="text-accent mb-2">
+                                Natural Language Processing (NLP)
+                            </p>
+                            <ul className="list-inside list-disc space-y-2">
+                                <li>Question Answering, Information Retrieval & Extraction</li>
+                                <li>Document Analysis (Sentiment, Opinion, Topic, NER, Summarization)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p className="text-accent mb-2">
+                                Recommender Systems
+                            </p>
+                            <ul className="list-inside list-disc space-y-2">
+                                <li>Knowledge-enhanced & Explainable Recommendations</li>
+                                <li>Conversational & Graph-based Recommendations</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p className="text-accent mb-2">
+                                Graph Analytics and Prediction
+                            </p>
+                            <ul className="list-inside list-disc space-y-2">
+                                <li>Node & Graph Classification Tasks</li>
+                                <li>Link Prediction and Knowledge Graph Completion</li>
                             </ul>
                         </div>
                     </div>
