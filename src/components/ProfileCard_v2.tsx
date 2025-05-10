@@ -273,6 +273,7 @@ const ProfileCardList: React.FC = () => {
         // {title: 'Ph.D. Students', type: 'phd'},
         // {title: 'Combined M.S./Ph.D. Students', type: 'msphd'},
         {title: 'M.S. Students', type: 'ms'},
+        {title: 'Prospective Ph.D. Students', type: 'pphd'},
         {title: 'Prospective M.S. Students', type: 'pms'},
         {title: 'Interns', type: 'intern'},
     ];
