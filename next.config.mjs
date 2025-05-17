@@ -32,6 +32,26 @@ const nextConfig = {
                 destination: '/board/news',
                 permanent: true,
             },
+            {
+                source: '/people/professor',
+                destination: 'https://bkoh509.github.io/',
+                permanent: true,
+            },
+            {
+                source: '/people/professor/:path*',
+                destination: 'https://bkoh509.github.io/:path*',
+                permanent: true,
+            },
+            {
+                source: '/publication',
+                destination: 'https://bkoh509.github.io/',
+                permanent: true,
+            },
+            {
+                source: '/publication/:path*',
+                destination: 'https://bkoh509.github.io/:path*',
+                permanent: true,
+            },
         ];
     },
     // 브라우저 주소 표시줄의 URL이 변경되지 않음
@@ -49,22 +69,6 @@ const nextConfig = {
             //     source: '/test/:path*',
             //     destination: 'https://bkoh509.github.io/:path*',
             // },
-            {
-                source: '/people/professor',
-                destination: 'https://bkoh509.github.io/',
-            },
-            {
-                source: '/people/professor/:path*',
-                destination: 'https://bkoh509.github.io/:path*',
-            },
-            {
-                source: '/publication',
-                destination: 'https://bkoh509.github.io/',
-            },
-            {
-                source: '/publication/:path*',
-                destination: 'https://bkoh509.github.io/:path*',
-            },
             {
                 source: '/jupyterlite/:path*',
                 destination: 'https://gli-lab.github.io/jupyterlite/:path*',
