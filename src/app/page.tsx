@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { MainCover } from "@/components/Covers";
 import { FaCheck } from "react-icons/fa";
-import {newsData} from "@/assets/data/news";
+import { NewsList } from "@/components/News";
 
 
 export default function Page() {
@@ -92,18 +92,15 @@ export default function Page() {
             {/*               Image             */}
             {/* =============================== */}
             <div className="max-w-screen-2xl mx-auto bg-white">
-                <div className="max-w-screen-xl mx-auto flex flex-col items-center justify-center text-center space-y-8
+                <div className="max-w-screen-xl mx-auto flex flex-col items-center text-center space-y-8
                                 py-8 md:py-16 px-4 md:px-6">
                     <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
                         Latest News
                     </p>
-                    <div className="flex flex-col text-home items-start text-left space-y-2">
-                        {newsData.map(({id, date, content}) => (
-                            <p key={id}>
-                                <span className="font-semibold">[{date}]</span> {content}
-                            </p>
-                        ))}
-                    </div>
+                    <NewsList 
+                        className="w-full text-home text-left"
+                        count={30}
+                    />
                 </div>
             </div>
             {/*<div className="max-w-screen-2xl mx-auto bg-white">*/}
@@ -128,7 +125,19 @@ export default function Page() {
                             className="font-semibold">bkoh@konkuk.ac.kr (오병국 교수)</span> if you are interested in our
                         research.</p>
 
-                    <p className="text-home">그래프 머신러닝과 지식 기반의 지능형 시스템에 관심이 있는 대학원 지망생과 학부연구생은 언제든지 연락 주시기 바랍니다.</p>
+                    <p className="text-home">LLM, 추천시스템, 그래프 머신러닝과 지식 기반의 지능형 시스템에 관심이 있는 대학원 지망생과 학부연구생은 언제든지 연락 주시기 바랍니다.</p>
+                    
+                    <div className="text-home flex flex-col text-left mb-6">
+                        <p className="font-semibold mb-2">
+                            [연구지원]
+                        </p>
+                        <ul className="list-inside list-disc space-y-2">
+                            <li>정기적인 논문 스터디 및 우수논문 작성/참여 기회 제공</li>
+                            <li>학술적 성과에 따른 추가 장려금 지원</li>
+                            <li>논문 게제료 및 국내외 학술대회 참석 지원</li>
+                            <li>연구 장비 및 소프트웨어 사용 지원</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
 
