@@ -1,7 +1,7 @@
 const nextConfig = {
     // https://nextjs.org/docs/app/api-reference/next-config-js/rewrites#rewriting-to-an-external-url
     // trailingSlash를 하지 않으면, http://203.252.149.219:3000/jupyterlite -> http://203.252.149.219:3000/style.css 로 불러오게 됨
-    // trailingSlash를 하면       , http://203.252.149.219:3000/jupyterlite -> http://203.252.149.219:3000/jupyterlite/ -> http://203.252.149.219:3000/jupyterlite/style.css 로 불러오게 됨
+    // trailingSlash를 하면      , http://203.252.149.219:3000/jupyterlite -> http://203.252.149.219:3000/jupyterlite/ -> http://203.252.149.219:3000/jupyterlite/style.css 로 불러오게 됨
     trailingSlash: true,
     reactStrictMode: true,
     
@@ -10,7 +10,6 @@ const nextConfig = {
     // 브라우저가 새 URL로 직접 요청을 보냄
     // 다른 도메인으로 이동할 경우 CORS 정책이 적용됨
     async redirects() {
-        console.log('Redirect called');
         return [
             {
                 source: '/about',
@@ -32,26 +31,6 @@ const nextConfig = {
                 destination: '/board/news',
                 permanent: true,
             },
-            {
-                source: '/people/professor',
-                destination: 'https://bkoh509.github.io/',
-                permanent: true,
-            },
-            {
-                source: '/people/professor/:path*',
-                destination: 'https://bkoh509.github.io/:path*',
-                permanent: true,
-            },
-            {
-                source: '/publication',
-                destination: 'https://bkoh509.github.io/',
-                permanent: true,
-            },
-            {
-                source: '/publication/:path*',
-                destination: 'https://bkoh509.github.io/:path*',
-                permanent: true,
-            },
         ];
     },
     // 브라우저 주소 표시줄의 URL이 변경되지 않음
@@ -59,16 +38,19 @@ const nextConfig = {
     // 서버 측에서 대상 URL의 콘텐츠를 가져와 마치 원래 URL에서 온 것처럼 제공
     // 서버에서 프록시 역할을 하므로 CORS 문제가 발생하지 않음
     async rewrites() {
-        console.log('Rewrite called');
         return [
-            // {
-            //     source: '/people/professor/:path*',
-            //     destination: 'https://bkoh509.github.io/:path*',
-            // },
-            // {
-            //     source: '/test/:path*',
-            //     destination: 'https://bkoh509.github.io/:path*',
-            // },
+            {
+                source: '/people/professor/:path*',
+                destination: 'https://bkoh509.github.io/:path*',
+                basePath: false,
+                locale: false,
+            },
+            {
+                source: '/publication/:path*',
+                destination: 'https://bkoh509.github.io/:path*',
+                basePath: false,
+                locale: false,
+            },
             {
                 source: '/jupyterlite/:path*',
                 destination: 'https://gli-lab.github.io/jupyterlite/:path*',
