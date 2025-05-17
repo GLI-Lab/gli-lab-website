@@ -60,7 +60,6 @@ export default function Page() {
                         </li>
                     </ul>
 
-                    <div id="map" className="w-full mt-8 h-[400px] md:h-[600px]"></div>
                     <KakaoMap />
                 </div>
             </div>
