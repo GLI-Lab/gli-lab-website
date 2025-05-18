@@ -40,7 +40,7 @@ const defaultProfile: ProfileCardProps = {
     phd: "Unknown",
     period: "Unknown",
     interest: "Unknown",
-    photo: ["/profiles/photo/ku_basic_1_down.png"],
+    photo: ["/images/profiles/ku_basic_1_down.png"],
     email: ["#"],
     homepage: "#",
     github: ["#"],
@@ -68,6 +68,7 @@ const profiles = rawProfiles.map(profile => ({
 
 const ProfileCard: React.FC<ProfileCardProps> = (props) => {
     const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, period } = props;
+    console.log('----ProfileCard rendered');  // 컴포넌트가 렌더링될 때마다 로그 출력
 
     return (
         <div
@@ -266,6 +267,8 @@ const ProfileCardList: React.FC = () => {
     const [selectedCard, setSelectedCard] = useState<ProfileCardProps | null>(
         profiles.find(profile => profile.name_en === "Byungkook Oh") || null
     );
+    console.log('ProfileCardList rendered');  // 컴포넌트가 렌더링될 때마다 로그 출력
+
 
     const popupRef = useRef<HTMLDivElement | null>(null);
     const categories = [

@@ -43,7 +43,7 @@ export default function Header() {
             path: "/people/members",
             subMenus: [
                 {title: "Members", path: "/people/members"},
-                {title: "Professor", path: "/people/professor"}
+                {title: "Professor", path: "https://bkoh509.github.io", isExternal: true}
             ]
         },
         {
@@ -56,7 +56,8 @@ export default function Header() {
         },
         {
             title: "Publication",
-            path: "/publication",
+            path: "https://bkoh509.github.io",
+            isExternal: true
         },
         {
             title: "Board",
@@ -65,9 +66,9 @@ export default function Header() {
                 {title: "News", path: "/board/news"},
                 {title: "Gallery", path: "/board/gallery"},
                 {title: "Teaching", path: "/board/teaching"},
-                {title: "Resources", path: "/board/resources"},
+                {title: "Resources", path: "/board/resources"}
             ]
-        },
+        }
     ];
 
     return (
@@ -82,7 +83,7 @@ export default function Header() {
                     <div className={`flex items-center justify-between ${isScrolled ? "py-1" : "py-2"}`}>
                         <Link href="/" className="items-center flex min-w-[270px]">
                             <div className={`transition-all duration-200 ${isScrolled ? "h-[50px] w-[50px]" : "h-[70px] w-[70px]"}`}>
-                                <Image src={`${isScrolled ? "/GLI_logo_black.png" : "/GLI_logo_green.png"}`} alt="logo" width="96" height="96"/>
+                                <Image src={`${isScrolled ? "/images/logo/GLI_logo_black.png" : "/images/logo/GLI_logo_green.png"}`} alt="logo" width="96" height="96"/>
                             </div>
                             <div className={`-space-y-2 ml-3 tracking-tighter ${isScrolled ? "text-[20px]" : "text-[22px] lg:text-[23.5px]"}`}>
                                 <p>Graph & Language</p>
@@ -109,21 +110,38 @@ export default function Header() {
                                 >
 
                                     {/* 메인 메뉴 */}
-                                    <Link href={item.path}
-                                          className={`flex tracking-tight items-center transition-all duration-200 pb-5 mt-5 ${
-                                              activeMenu === idx ? "text-green-900" : ""}
-                                              ${isScrolled ? "text-[16px]" : "text-[16.5px] lg:text-[17.5px]"} `}>
-                                        {item.title}
-                                        {item.subMenus && !menu && (
-                                            <IoChevronDown
-                                                size={16}
-                                                className={`ml-0.5 mt-0.5 transition duration-200 ${
-                                                    activeMenu === idx ? "rotate-180" : "rotate-0"}`}
-                                            />)}
-                                    </Link>
+                                    {item.isExternal ? (
+                                        <a href={item.path}
+                                           target="_blank"
+                                           rel="noopener noreferrer"
+                                           className={`flex tracking-tight items-center transition-all duration-200 pb-5 mt-5 ${
+                                               activeMenu === idx ? "text-green-900" : ""}
+                                               ${isScrolled ? "text-[16px]" : "text-[16.5px] lg:text-[17.5px]"} `}>
+                                            {item.title}
+                                            {item.subMenus && !menu && (
+                                                <IoChevronDown
+                                                    size={16}
+                                                    className={`ml-0.5 mt-0.5 transition duration-200 ${
+                                                        activeMenu === idx ? "rotate-180" : "rotate-0"}`}
+                                                />)}
+                                        </a>
+                                    ) : (
+                                        <Link href={item.path}
+                                              className={`flex tracking-tight items-center transition-all duration-200 pb-5 mt-5 ${
+                                                  activeMenu === idx ? "text-green-900" : ""}
+                                                  ${isScrolled ? "text-[16px]" : "text-[16.5px] lg:text-[17.5px]"} `}>
+                                            {item.title}
+                                            {item.subMenus && !menu && (
+                                                <IoChevronDown
+                                                    size={16}
+                                                    className={`ml-0.5 mt-0.5 transition duration-200 ${
+                                                        activeMenu === idx ? "rotate-180" : "rotate-0"}`}
+                                                />)}
+                                        </Link>
+                                    )}
 
                                     {/* 서브 메뉴 리스트 */}
-                                    {activeMenu === idx && item.subMenus && (  // {true && item.subMenus && (
+                                    {activeMenu === idx && item.subMenus && (
                                         <ul className={`absolute animate-fade-up w-[140px] lg:w-[160px] -mt-1 
                                                         ${idx == menus.length - 1 ? "-left-24" : "-left-6"}
                                                         border-t-4 border-green-900 divide-y divide-gray-200  shadow-xl z-10
@@ -131,12 +149,25 @@ export default function Header() {
                                             {item.subMenus.map((subItem, subIdx) => (
                                                 <li key={subIdx}
                                                     className="whitespace-nowrap hover:bg-gray-100 hover:text-green-900">
-                                                    <Link  // block을 주고 padding을 주면 전체 영역이 선택 가능해짐
-                                                        href={subItem.path} className="block px-5 py-3"
-                                                        onClick={() => setActiveMenu(null)}  // 다른 페이지로 이동할 때 서브메뉴 초기화
-                                                    >
-                                                        {subItem.title}
-                                                    </Link>
+                                                    {subItem.isExternal ? (
+                                                        <a
+                                                            href={subItem.path}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="block px-5 py-3"
+                                                            onClick={() => setActiveMenu(null)}
+                                                        >
+                                                            {subItem.title}
+                                                        </a>
+                                                    ) : (
+                                                        <Link
+                                                            href={subItem.path}
+                                                            className="block px-5 py-3"
+                                                            onClick={() => setActiveMenu(null)}
+                                                        >
+                                                            {subItem.title}
+                                                        </Link>
+                                                    )}
                                                 </li>
                                             ))}
                                         </ul>
@@ -172,6 +203,16 @@ export default function Header() {
                                                     aria-hidden="true"
                                                 />
                                             </div>
+                                        ) : item.isExternal ? (
+                                            <a
+                                                href={item.path}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`flex justify-between hover:font-semibold hover:text-green-900 ${activeMenu === idx ? "font-semibold text-green-900" : ""}`}
+                                                onClick={() => setMenu(false)}
+                                            >
+                                                {item.title}
+                                            </a>
                                         ) : (
                                             <Link
                                                 href={item.path}
@@ -184,19 +225,28 @@ export default function Header() {
 
                                         {/* 서브 메뉴 리스트 (실제 이동) */}
                                         {activeMenu === idx && item.subMenus && (
-                                            // {true && item.subMenus && (
-                                            <ul
-                                                className="justify-between divide-y divide-gray-400 mt-2.5 -mb-2.5 border-t-2 border-green-900 animate-drop-in-25">
+                                            <ul className="justify-between divide-y divide-gray-400 mt-2.5 -mb-2.5 border-t-2 border-green-900 animate-drop-in-25">
                                                 {item.subMenus.map((subItem, subIdx) => (
                                                     <li key={subIdx} className="">
-                                                        {/* block을 주면 부모 전체 영역이 선택 가능해짐 */}
-                                                        <Link
-                                                            href={subItem.path}
-                                                            className="block pl-8 py-2.5 hover:font-semibold hover:text-green-900 hover:bg-gray-100"
-                                                            onClick={() => setMenu(false)}
-                                                        >
-                                                            {subItem.title}
-                                                        </Link>
+                                                        {subItem.isExternal ? (
+                                                            <a
+                                                                href={subItem.path}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="block pl-8 py-2.5 hover:font-semibold hover:text-green-900 hover:bg-gray-100"
+                                                                onClick={() => setMenu(false)}
+                                                            >
+                                                                {subItem.title}
+                                                            </a>
+                                                        ) : (
+                                                            <Link
+                                                                href={subItem.path}
+                                                                className="block pl-8 py-2.5 hover:font-semibold hover:text-green-900 hover:bg-gray-100"
+                                                                onClick={() => setMenu(false)}
+                                                            >
+                                                                {subItem.title}
+                                                            </Link>
+                                                        )}
                                                     </li>
                                                 ))}
                                             </ul>
