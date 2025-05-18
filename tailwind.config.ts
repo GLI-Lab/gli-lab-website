@@ -66,7 +66,7 @@ const config = {
             //
             ////////////////////////////////////////////
             backgroundImage: {
-                'subcover': "url('/cover/main4-3-dark.webp')"  // use `bg-subcover`
+                'subcover': "url('/images/cover/main4-3-dark.webp')"  // use `bg-subcover`
             },
             ///////////////////////////////////////////
             // 폰트 정의
@@ -81,10 +81,10 @@ const config = {
             ////////////////////////////////////////////
             keyframes: {
                 slide: {
-                    '0%, 100%': { 'background-image': 'url("/cover/main1-min-crop.webp")' },
-                    '25%': { 'background-image': 'url("/cover/main2.webp")' },
-                    '50%': { 'background-image': 'url("/cover/main3.webp")' },
-                    '75%': { 'background-image': 'url("/cover/main4-3.webp")' }
+                    '0%, 100%': { 'background-image': 'url("/images/cover/main1-min-crop.webp")' },
+                    '25%': { 'background-image': 'url("/images/cover/main2.webp")' },
+                    '50%': { 'background-image': 'url("/images/cover/main3.webp")' },
+                    '75%': { 'background-image': 'url("/images/cover/main4-3.webp")' }
                 },
                 fadeUp: {
                     '0%': {opacity: '0', transform: 'translateY(10px)'},
