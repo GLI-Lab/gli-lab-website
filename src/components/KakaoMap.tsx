@@ -26,7 +26,6 @@ export default function KakaoMap() {
     window.kakao.maps.load(() => {
       if (!mapRef.current) return;
       
-      // 지도 중심 위치 (두 위치의 중간점)
       const centerLat = (locations[0].lat + locations[1].lat) / 2;
       const centerLng = (locations[0].lng + locations[1].lng) / 2;
       

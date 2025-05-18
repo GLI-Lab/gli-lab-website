@@ -24,7 +24,7 @@ export default function Header() {
           {/* 네비게이션 로고 */}
           <Link href="/public" className="items-center flex">
             <div className="h-16 w-16 md:h-20 md:w-20">
-              <Image src="/GLI_spare_v2 Black Logo.png" alt="logo" width="96" height="96" layout="intrinsic" />
+              <Image src="/images/GLI_spare_v2 Black Logo.png" alt="logo" width="96" height="96" layout="intrinsic" />
             </div>
             <div className="-space-y-1 ml-3 text-xl md:text-2xl py-1">
               <p>Graph & Language</p>

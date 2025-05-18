@@ -106,9 +106,9 @@ export default function Page() {
                 <div className="w-14 border-b-4 border-green-900 mt-1 mb-8"></div>
 
                 <div className="space-y-6">
-                    <Image src="/topic/poster1.webp" alt="poster1" width={1600} height={2000}
+                    <Image src="/images/topic/poster1.webp" alt="poster1" width={1600} height={2000}
                            className="h-full w-full object-cover"/>
-                    <Image src="/topic/poster2.webp" alt="poster2" width={1600} height={2000}
+                    <Image src="/images/topic/poster2.webp" alt="poster2" width={1600} height={2000}
                            className="h-full w-full object-cover"/>
                 </div>
             </div>
