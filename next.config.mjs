@@ -28,7 +28,7 @@ const nextConfig = {
             },
             {
                 source: '/board',
-                destination: '/board/news',
+                destination: '/board/gallery',
                 permanent: true,
             },
         ];

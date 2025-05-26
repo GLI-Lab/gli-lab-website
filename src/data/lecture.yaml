@@ -1,0 +1,24 @@
+- semester: "2025 Spring"
+  courses:
+    - title: "C Programming (C 프로그래밍)"
+      university: "Konkuk University"
+    - title: "Introduction to Graph Machine Learning (그래프머신러닝개론)"
+      university: "Konkuk University"
+    - title: "Capstone Design 1 (졸업프로젝트1)"
+      university: "Konkuk University"
+    - title: "CSP진로상담"
+      university: "Konkuk University"
+
+- semester: "2024 Fall"
+  courses:
+    - title: "Data Science (데이터사이언스)"
+      university: "Konkuk University"
+    - title: "Capstone Design 2 (졸업프로젝트2)"
+      university: "Konkuk University"
+
+- semester: "2024 Spring"
+  courses:
+    - title: "C Programming (C 프로그래밍)"
+      university: "Konkuk University"
+    - title: "Capstone Design 1 (졸업프로젝트1)"
+      university: "Konkuk University"

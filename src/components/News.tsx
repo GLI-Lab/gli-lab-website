@@ -7,14 +7,19 @@ export interface NewsItem {
   content: string
 }
 
-export async function NewsList({ className = '', count = 5 }) {
+export interface NewsListProps {
+  className?: string
+  count?: number | null
+}
+
+export async function NewsList({ className = '', count = null }: NewsListProps) {
   // ------------------------------------------------------------------------------------------------
   // 로컬 파일 활용 - 로컬 fs 읽기
   //   유지되는 서버 디스크에 직접 붙어있는 경우
   //   -> news.yaml을 덮어쓰기만 하면, 바로 새 내용이 반영됨
   //   Vercel 같은 서버리스 배포 환경
-  //   -> public 디렉토리는 "배포 시점 스냅샷"으로 묶여서 올라가기 때문에, 런타임에 파일을 바꿔도 반영되지 않음
-  const filePath = path.join(process.cwd(), 'public', 'news.yaml');
+  //   -> src/data 디렉토리는 빌드 시점에 포함되어 배포됨
+  const filePath = path.join(process.cwd(), 'src', 'data', 'news.yaml');
   const yamlText = await fs.readFile(filePath, 'utf8');
   // ------------------------------------------------------------------------------------------------
 
@@ -44,16 +49,17 @@ export async function NewsList({ className = '', count = 5 }) {
   const newsData = [...rawData].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
   )
-  const latestNews = newsData.slice(0, count ?? newsData.length)
+  const latestNews = count ? newsData.slice(0, count) : rawData
 
   return (
     <div className={className}>
       <div className="grid grid-cols-[auto,1fr] gap-x-2 gap-y-2">
         {latestNews.map((news, idx) => {
-          const formattedDate = new Date(news.date).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short'
-          });
+          // 2025.05 형식으로 날짜 포맷팅
+          const date = new Date(news.date);
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, '0');
+          const formattedDate = `${year}.${month}`;
 
           const [title, ...description] = news.content.split('\n');
           const descriptionText = description.length > 0 ? ` - ${description.join(' ')}` : '';

@@ -2,7 +2,7 @@ import {Metadata} from "next";
 
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
-import ProfileCardList from "@/components/ProfileCard_v2";
+import { ProfileCardList } from "@/components/Profile";
 
 
 export const generateMetadata = async (): Promise<Metadata> => {
