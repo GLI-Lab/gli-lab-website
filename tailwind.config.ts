@@ -43,23 +43,41 @@ const config = {
         },
         extend: {
             //////////////////////////////////////////////////////////////////////////////////////
-            // Customized Color (based on https://www.konkuk.ac.kr/konkuk/2109/subview.do)
+            // 색상 정의
             ///////////////////////////////////////////////////////////////////////////////////////
             colors: {
+                // 기능별 색상 그룹화 (새로운 권장 방식)
+                brand: {
+                    primary: '#036B3F',      // 메인 브랜드 컬러
+                    secondary: '#656F76',    // 보조 브랜드 컬러
+                },
+                text: {
+                    primary: '#1f2937',      // 기본 텍스트
+                    secondary: '#656F76',    // 보조 텍스트
+                    accent: '#036B3F',       // 강조 텍스트
+                    muted: '#9ca3af',        // 흐린 텍스트
+                },
+                background: {
+                    primary: '#ffffff',      // 기본 배경
+                    secondary: '#f9fafb',    // 보조 배경
+                    accent: '#036B3F',       // 강조 배경
+                },
+                border: {
+                    primary: '#e5e7eb',      // 기본 테두리
+                    secondary: '#d1d5db',    // 보조 테두리
+                    accent: '#036B3F',       // 강조 테두리
+                },
+                interactive: {
+                    primary: '#036B3F',      // 기본 인터랙션
+                    hover: '#065f37',        // 호버 상태
+                    active: '#054a2b',       // 액티브 상태
+                    disabled: '#9ca3af',     // 비활성 상태
+                },
+                
+                // 기존 KU 색상 (하위 호환성 유지)
                 KU: {
-                    dark_green: '#036B3F',
-                    light_green: "#B8F329",
-                    green: "#21BA31",
-                    magenta: "#E9708C",
-                    yellow: "#F6DB00",
-                    violet: "#C283C6",
-                    orange: "#F0A704",
-                    dark_gray: "#656F76",
-                    blue: "#61A7DD",
-                    cool_gray: "#B1B3B4",
-                    warm_gray: "#B0CDA6",
-                    light_gray: "#ECEBE3",
-                    beige: "#F0F4DA",
+                    dark_green: '#036B3F',   // 🟢 메인 브랜드 컬러 (가장 많이 사용)
+                    dark_gray: "#656F76",    // ⚫ 보조 텍스트 컬러 (제한적 사용)
                 },
             },
             ///////////////////////////////////////////

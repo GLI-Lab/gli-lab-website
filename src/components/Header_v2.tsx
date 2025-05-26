@@ -61,11 +61,11 @@ export default function Header() {
         },
         {
             title: "Board",
-            path: "/board/news",
+            path: "/board/gallery",
             subMenus: [
-                {title: "News", path: "/board/news"},
                 {title: "Gallery", path: "/board/gallery"},
-                {title: "Teaching", path: "/board/teaching"},
+                {title: "News", path: "/board/news"},
+                {title: "Lecture", path: "/board/lecture"},
                 {title: "Resources", path: "/board/resources"}
             ]
         }

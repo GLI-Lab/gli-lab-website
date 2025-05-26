@@ -29,15 +29,12 @@
     }
 }
 
-
-
 li {
     line-height: 1.25;
     /*text-indent: -1.5rem; !* 첫 번째 줄을 기본 위치로 되돌림 *!*/
     /*word-break: break-all; !*특수문자를 제외하고 강제로 줄바꿈*!*/
     /*overflow-wrap: break-word; */
 }
-
 
 /*flex-grow: 0;*/
 /*이 값은 아이템이 Flex 컨테이너 내에서 남아 있는 공간을 얼마나 차지할지를 결정합니다.*/
