@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "optimize-gallery": "node scripts/optimize-gallery.js",
+    "fix-rotation": "node scripts/fix-rotation.js"
   },
   "dependencies": {
     "@radix-ui/react-separator": "^1.1.0",
