@@ -3,11 +3,13 @@ import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
 import { getGalleryItems, GalleryGrid } from "@/components/Gallery";
 
-const TITLE = `Gallery`
+const PAGE_TITLE = 'Gallery' as const;
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
-        title: TITLE,
+        title: PAGE_TITLE,
+        description: "Photo gallery and visual content from GLI Lab - Graph Learning and Intelligence Laboratory at Konkuk University",
+        asPath: '/board/gallery'
     });
 };
 
@@ -44,34 +46,32 @@ export default async function Page() {
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
-                <SubCover title={TITLE}/>
+                <SubCover title={PAGE_TITLE}/>
             </div>
             
-            <div className="max-w-screen-2xl mx-auto bg-white">
-                <div className="max-w-screen-xl mx-auto px-4 md:px-6 py-8 md:py-16">
-                    {/* 총 게시글 개수 */}
-                    <div className="mb-8">
-                        <p className="text-gray-600 text-lg">
-                            Total <span className="font-semibold text-gray-900">{galleryItems.length}</span> items
-                        </p>
-                    </div>
-
-                    {/* 전체 갤러리 아이템들 */}
-                    <GalleryGrid items={galleryItems} />
-
-                    {/* 년도별 그룹화 출력 (주석처리) */}
-                    {/* {groupedItems.map((yearGroup) => (
-                        <div key={yearGroup.year} className="mb-12">
-                            <div className="mb-8">
-                                <h2 className="font-medium tracking-tight text-[26px] md:text-[30px]">{yearGroup.year}</h2>
-                                <div className="w-14 border-b-4 border-border-accent mt-1"></div>
-                            </div>
-                            
-                            <GalleryGrid items={yearGroup.items} />
-                        </div>
-                    ))} */}
+            <div className="max-w-screen-xl mx-auto px-4 md:px-6 py-8 md:py-16">
+                {/* 총 게시글 개수 */}
+                <div className="mb-4">
+                    <p className="text-gray-600 text-lg">
+                        Total <span className="font-semibold text-gray-900">{galleryItems.length}</span> items
+                    </p>
                 </div>
-            </div> 
+
+                {/* 전체 갤러리 아이템들 */}
+                <GalleryGrid items={galleryItems} />
+
+                {/* 년도별 그룹화 출력 (주석처리) */}
+                {/* {groupedItems.map((yearGroup) => (
+                    <div key={yearGroup.year} className="mb-12">
+                        <div className="mb-8">
+                            <h2 className="font-medium tracking-tight text-[26px] md:text-[30px]">{yearGroup.year}</h2>
+                            <div className="w-14 border-b-4 border-border-accent mt-1"></div>
+                        </div>
+                        
+                        <GalleryGrid items={yearGroup.items} />
+                    </div>
+                ))} */}
+            </div>
 
             <div className="h-40"></div>
         </>
