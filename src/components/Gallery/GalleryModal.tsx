@@ -87,7 +87,11 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
         </div>
 
         {/* 콘텐츠 */}
-        <div className="flex flex-col max-h-[calc(90vh-80px)] relative">
+        <div 
+          ref={contentRef}
+          className="gallery-modal-content overflow-y-auto max-h-[calc(90vh-80px)] relative" 
+          onScroll={handleScroll}
+        >
           {/* 이미지 섹션 */}
           <div className="relative">
             <ImageCarousel
@@ -102,11 +106,7 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
           </div>
 
           {/* 정보 섹션 */}
-          <div 
-            ref={contentRef}
-            className="gallery-modal-content p-6 overflow-y-auto flex-1" 
-            onScroll={handleScroll}
-          >
+          <div className="p-6">
             {/* 타이틀 */}
             <div className="mb-2">
               <h2 className="text-xl font-bold text-gray-900">

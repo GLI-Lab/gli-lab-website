@@ -10,50 +10,27 @@ export interface NewsItem {
 export interface NewsListProps {
   className?: string
   count?: number | null
+  newsItems?: NewsItem[]  // 외부에서 데이터를 전달받을 수 있도록 추가
 }
 
-export async function NewsList({ className = '', count = null }: NewsListProps) {
-  // ------------------------------------------------------------------------------------------------
-  // 로컬 파일 활용 - 로컬 fs 읽기
-  //   유지되는 서버 디스크에 직접 붙어있는 경우
-  //   -> news.yaml을 덮어쓰기만 하면, 바로 새 내용이 반영됨
-  //   Vercel 같은 서버리스 배포 환경
-  //   -> src/data 디렉토리는 빌드 시점에 포함되어 배포됨
+// 뉴스 데이터를 가져오는 함수 분리
+export async function getNewsItems(): Promise<NewsItem[]> {
   const filePath = path.join(process.cwd(), 'src', 'data', 'news.yaml');
   const yamlText = await fs.readFile(filePath, 'utf8');
-  // ------------------------------------------------------------------------------------------------
-
-  // ------------------------------------------------------------------------------------------------
-  // 외부/로컬 파일 활용 - HTTP fetch (쿼리 파라미터+TTL 캐시 전략)
-  // const currentDate = new Intl.DateTimeFormat('en-CA', {
-  //   timeZone: 'Asia/Seoul',
-  // }).format(new Date()).replace(/-/g, '')  // "20250518"
-
-  // const base = process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, '') ?? ''  // base URL 끝 슬래시 제거
-  // const url = `${base}/news.yaml?v=${currentDate}` // github page 같은 CDN 캐시 무효화화(하지만 어차피 원본이 수정되면 재캐시화 함)
-
-  // const res = await fetch(url, 
-  //   {
-  //     cache: 'no-store',  // 배포환경 내 캐싱 비활성화 (런타임에 파일 교체 반영 가능)
-  //     // next: { revalidate: 3600 }  // 3600초(1시간) 후 재검증
-  //   }
-  // )
-  // if (!res.ok) {
-  //   console.error('Fetch Error:', res.status, res.statusText)
-  //   return <div className="text-red-500">뉴스를 불러올 수 없습니다.</div>
-  // }
-  // const yamlText = await res.text()
-  // ------------------------------------------------------------------------------------------------
-
-  const rawData = yaml.load(yamlText) as NewsItem[]
-  const newsData = [...rawData].sort(
+  const rawData = yaml.load(yamlText) as NewsItem[];
+  return [...rawData].sort(
     (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  )
-  const latestNews = count ? newsData.slice(0, count) : rawData
+  );
+}
+
+export async function NewsList({ className = '', count = null, newsItems }: NewsListProps) {
+  // newsItems가 전달되면 사용, 없으면 직접 가져오기 (하위 호환성)
+  const newsData = newsItems || await getNewsItems();
+  const latestNews = count ? newsData.slice(0, count) : newsData;
 
   return (
     <div className={className}>
-      <div className="grid grid-cols-[auto,1fr] gap-x-2 gap-y-2">
+      <div className="grid grid-cols-[auto,1fr] gap-x-2 gap-y-0.5 sm:gap-y-1 ">
         {latestNews.map((news, idx) => {
           // 2025.05 형식으로 날짜 포맷팅
           const date = new Date(news.date);
@@ -65,128 +42,24 @@ export async function NewsList({ className = '', count = null }: NewsListProps) 
           const descriptionText = description.length > 0 ? ` - ${description.join(' ')}` : '';
 
           return (
-            <div key={`${news.date}-${idx}`} className="contents">
-              <div className="font-semibold">
-                [{formattedDate}]
+            <>
+              <div key={`${news.date}-${idx}`} className="contents leading-normal">
+                <div className="flex justify-center items-center">
+                  <span className="font-semibold bg-gray-100 px-2 py-1 rounded text-sm">
+                    {formattedDate}
+                  </span>
+                </div>
+                <div>
+                  {title}{descriptionText && (<span className="italic">{descriptionText}</span>)}
+                </div>
               </div>
-              <div>
-                {title}{descriptionText && (<span className="italic">{descriptionText}</span>)}
-              </div>
-            </div>
+              {idx < latestNews.length - 1 && (
+                <div className="col-span-2 border-b border-gray-200 my-1"></div>
+              )}
+            </>
           );
         })}
       </div>
     </div>
   )
 }
-
-// ------------------------------------------------------------------------------------------------
-// 예전 코드 (firebase 대신 assets/data/news.json 파일 사용)
-// ------------------------------------------------------------------------------------------------
-// "use client"
-
-// import { useEffect, useState } from 'react'
-// import { db } from '@/lib/firebase'
-// import { collection, query, orderBy, limit, getDocs } from 'firebase/firestore'
-
-
-// interface NewsItem {
-//   date: string
-//   content: string
-// }
-
-// export function NewsList({ className = '', count = 5 }) {
-//   const [latestNews, setLatestNews] = useState<NewsItem[]>([])
-
-//   useEffect(() => {
-//     async function fetchNews() {
-//       const q = query(
-//         collection(db, 'news'),
-//         orderBy('date', 'desc'),
-//         limit(count)
-//       )
-//       const snap = await getDocs(q)
-//       const data = snap.docs.map(doc => {
-//         const { date, content } = doc.data()
-//         return { date, content }
-//       })
-//       setLatestNews(data)
-//     }
-//     fetchNews()
-//   }, [count])
-
-//   return (
-//     <div className={className}>
-//       <div className="grid grid-cols-[auto,1fr] gap-x-2 gap-y-2">
-//         {latestNews.map(news => {
-//           const formattedDate = new Date(news.date).toLocaleDateString('en-US', {
-//             year: 'numeric',
-//             month: 'short'
-//           })
-        
-//           const [title, ...description] = news.content.replace(/\\n/g, '\n').split('\n')
-//           const descriptionText = description.length > 0 ? ` - ${description.join(' ')}` : ''
-
-//           return (
-//             <div key={news.date} className="contents">
-//               <div className="font-semibold">
-//                 [{formattedDate}]
-//               </div>
-//               <div>
-//                 {title}
-//                 {descriptionText && (
-//                   <span className="italic">
-//                     {descriptionText}
-//                   </span>
-//                 )}
-//               </div>
-//             </div>
-//           )
-//         })}
-//       </div>
-//     </div>
-//   )
-// }
-
-// ------------------------------------------------------------------------------------------------
-// 예전 코드 (firebase 대신 assets/data/news.json 파일 사용)
-// ------------------------------------------------------------------------------------------------
-// import newsData from '@/assets/data/news.json';
-
-// export function NewsList({ className = '', count = newsData.length }) {
-//   const latestNews = [...newsData]
-//     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-//     .slice(0, count);
-
-//   return (
-//     <div className={className}>
-//       <div className="grid grid-cols-[auto,1fr] gap-x-2 gap-y-2">
-//         {latestNews.map((news) => {
-//           const formattedDate = new Date(news.date).toLocaleDateString('en-US', {
-//             year: 'numeric',
-//             month: 'short'
-//           });
-
-//           const [title, ...description] = news.content.split('\n');
-//           const descriptionText = description.length > 0 ? ` - ${description.join(' ')}` : '';
-
-//           return (
-//             <div key={news.date} className="contents">
-//               <div className="font-semibold">
-//                 [{formattedDate}]
-//               </div>
-//               <div>
-//                 {title}
-//                 {descriptionText && (
-//                   <span className="italic">
-//                     {descriptionText}
-//                   </span>
-//                 )}
-//               </div>
-//             </div>
-//           );
-//         })}
-//       </div>
-//     </div>
-//   );
-// } 

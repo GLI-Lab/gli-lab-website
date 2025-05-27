@@ -55,7 +55,7 @@ export default function Page() {
             {/* =============================== */}
             {/*            연구 영역            */}
             {/* =============================== */}
-            <div className="max-w-screen-2xl mx-auto bg-[#f4f4f4]">
+            <div className="max-w-screen-2xl mx-auto bg-gray-100">
                 <div className="max-w-screen-xl mx-auto flex flex-col items-center justify-center text-center space-y-8
                                 py-8 md:py-16 px-4 md:px-6">
                     <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
@@ -89,7 +89,7 @@ export default function Page() {
             </div>
 
             {/* =============================== */}
-            {/*               Image             */}
+            {/*                뉴스             */}
             {/* =============================== */}
             <div className="max-w-screen-2xl mx-auto bg-white">
                 <div className="max-w-screen-xl mx-auto flex flex-col items-center text-center space-y-8
@@ -103,17 +103,11 @@ export default function Page() {
                     />
                 </div>
             </div>
-            {/*<div className="max-w-screen-2xl mx-auto bg-white">*/}
-            {/*    <div className="max-w-screen-xl mx-auto flex flex-col items-center justify-center text-center space-y-8*/}
-            {/*                    py-8 md:py-16 px-4 md:px-6">*/}
-            {/*        <Image src="/images/key_research.png" alt="research topics" width="1100" height="500"/>*/}
-            {/*    </div>*/}
-            {/*</div>*/}
 
             {/* =============================== */}
             {/*               채용              */}
             {/* =============================== */}
-            <div className="max-w-screen-2xl mx-auto bg-[#f4f4f4]">
+            <div className="max-w-screen-2xl mx-auto bg-gray-100">
                 <div className="max-w-screen-xl mx-auto flex flex-col items-center justify-center text-center space-y-8
                                 py-8 md:py-16 px-4 md:px-6">
                     <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
