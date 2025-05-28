@@ -23,15 +23,15 @@ export default async function Page() {
                 <SubCover title={PAGE_TITLE}/>
             </div>
             
-            <div className="max-w-screen-xl mx-auto px-4 md:px-6 py-8 md:py-16">
+            <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
                 {/* 총 강의 개수 */}
                 <div className="mb-4">
                     <p className="text-gray-600 text-lg">
-                        Total <span className="font-semibold text-gray-900">{totalCourses}</span> courses
+                        Total <span className="font-semibold text-gray-900">{totalCourses}</span> lectures
                     </p>
                 </div>
 
-                <div className="rounded-lg border border-gray-200 shadow-sm p-2 md:p-4">
+                <div className="rounded-lg border border-gray-200 shadow-sm p-2 md:p-4 py-3 md:py-5">
                     <LectureList 
                         className="w-full text-left"
                         count={50}

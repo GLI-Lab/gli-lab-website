@@ -22,6 +22,13 @@
 // font-extrabold: 폰트 두께를 800으로 설정
 // font-black: 폰트 두께를 900으로 설정
 
+// leading-none      /* line-height: 1 */
+// leading-tight     /* line-height: 1.25 */
+// leading-snug      /* line-height: 1.375 */
+// leading-normal    /* line-height: 1.5 */
+// leading-relaxed   /* line-height: 1.625 */
+// leading-loose     /* line-height: 2 */
+
 const config = {
     darkMode: ["class"],
     content: [
@@ -100,11 +107,73 @@ const config = {
             // 애니메이션 정의
             ////////////////////////////////////////////
             keyframes: {
-                slide: {
-                    '0%, 100%': { 'background-image': 'url("/images/cover/main1-min-crop.webp")' },
-                    '25%': { 'background-image': 'url("/images/cover/main2.webp")' },
-                    '50%': { 'background-image': 'url("/images/cover/main3.webp")' },
-                    '75%': { 'background-image': 'url("/images/cover/main4-3.webp")' }
+                cinematic1: {
+                    '0%, 15%': { 
+                        opacity: '1', 
+                        transform: 'scale(1) rotate(0deg)',
+                        filter: 'brightness(1) blur(0px)'
+                    },
+                    '25%, 80%': { 
+                        opacity: '0', 
+                        transform: 'scale(1.1) rotate(1deg)',
+                        filter: 'brightness(0.8) blur(2px)'
+                    },
+                    '100%': { 
+                        opacity: '1', 
+                        transform: 'scale(1) rotate(0deg)',
+                        filter: 'brightness(1) blur(0px)'
+                    }
+                },
+                cinematic2: {
+                    '0%, 15%': { 
+                        opacity: '0', 
+                        transform: 'scale(1.1) rotate(-1deg)',
+                        filter: 'brightness(0.8) blur(2px)'
+                    },
+                    '25%, 40%': { 
+                        opacity: '1', 
+                        transform: 'scale(1) rotate(0deg)',
+                        filter: 'brightness(1) blur(0px)'
+                    },
+                    '50%, 100%': { 
+                        opacity: '0', 
+                        transform: 'scale(1.1) rotate(1deg)',
+                        filter: 'brightness(0.8) blur(2px)'
+                    }
+                },
+                cinematic3: {
+                    '0%, 40%': { 
+                        opacity: '0', 
+                        transform: 'scale(1.1) rotate(1deg)',
+                        filter: 'brightness(0.8) blur(2px)'
+                    },
+                    '50%, 65%': { 
+                        opacity: '1', 
+                        transform: 'scale(1) rotate(0deg)',
+                        filter: 'brightness(1) blur(0px)'
+                    },
+                    '75%, 100%': { 
+                        opacity: '0', 
+                        transform: 'scale(1.1) rotate(-1deg)',
+                        filter: 'brightness(0.8) blur(2px)'
+                    }
+                },
+                cinematic4: {
+                    '0%, 65%': { 
+                        opacity: '0', 
+                        transform: 'scale(1.1) rotate(-1deg)',
+                        filter: 'brightness(0.8) blur(2px)'
+                    },
+                    '75%, 90%': { 
+                        opacity: '1', 
+                        transform: 'scale(1) rotate(0deg)',
+                        filter: 'brightness(1) blur(0px)'
+                    },
+                    '100%': { 
+                        opacity: '0', 
+                        transform: 'scale(1.1) rotate(1deg)',
+                        filter: 'brightness(0.8) blur(2px)'
+                    }
                 },
                 fadeUp: {
                     '0%': {opacity: '0', transform: 'translateY(10px)'},
@@ -126,8 +195,10 @@ const config = {
                 },
             },
             animation: {
-                'slider': 'slide 40s infinite cubic-bezier(0.4, 0, 0.2, 1)', // animate-slider
-                // 'slider': 'slide 40s infinite linear', // animate-slider
+                'cinematic-1': 'cinematic1 40s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                'cinematic-2': 'cinematic2 40s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                'cinematic-3': 'cinematic3 40s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+                'cinematic-4': 'cinematic4 40s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94)',
                 'fade-up': 'fadeUp 0.5s ease-out',
                 'flip-down': 'flipDown 1s ease-out forwards',
                 'drop-in': 'dropIn 0.5s ease-out forwards',

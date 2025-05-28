@@ -29,15 +29,26 @@ export function SubCover(props: CoverProps) {
 
 export function MainCover() {
     return (
-        <div className="animate-slider bg-cover bg-center items-center justify-center text-center
-                        py-24 md:py-36 lg:py-48 xl:py-56">
-            <div className="bg-white bg-opacity-55 font-bold leading-none md:whitespace-nowrap
-                            space-y-1 lg:space-y-2
-                            p-2 md:p-3 lg:p-4">
-                <p className="tracking-tighter text-[36px] md:text-[44px] lg:text-[54px] xl:text-[60px]">Graph &
-                    Language Intelligence Lab.</p>
-                <p className="tracking-tighter text-[#888] text-[30px] md:text-[36px] lg:text-[42px] xl:text-[48px]">@
-                    Konkuk Univ.</p>
+        <div className="relative overflow-hidden py-24 md:py-36 lg:py-48 xl:py-56">
+            <div className="absolute inset-0 bg-cover bg-center animate-cinematic-1" 
+                 style={{ backgroundImage: 'url("/images/cover/main1-min-crop.webp")' }} />
+            <div className="absolute inset-0 bg-cover bg-center animate-cinematic-2" 
+                 style={{ backgroundImage: 'url("/images/cover/main2.webp")' }} />
+            <div className="absolute inset-0 bg-cover bg-center animate-cinematic-3" 
+                 style={{ backgroundImage: 'url("/images/cover/main3.webp")' }} />
+            <div className="absolute inset-0 bg-cover bg-center animate-cinematic-4" 
+                 style={{ backgroundImage: 'url("/images/cover/main4-3.webp")' }} />
+            
+            {/* 콘텐츠 */}
+            <div className="relative z-10 flex items-center justify-center text-center h-full">
+                <div className="w-full bg-white bg-opacity-55 font-bold leading-none md:whitespace-nowrap
+                                space-y-1 lg:space-y-2
+                                p-2 md:p-3 lg:p-4">
+                    <p className="tracking-tighter text-[36px] md:text-[44px] lg:text-[54px] xl:text-[60px]">Graph &
+                        Language Intelligence Lab.</p>
+                    <p className="tracking-tighter text-[#888] text-[30px] md:text-[36px] lg:text-[42px] xl:text-[48px]">@
+                        Konkuk Univ.</p>
+                </div>
             </div>
         </div>
     )
