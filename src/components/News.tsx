@@ -13,6 +13,15 @@ export interface NewsListProps {
   newsItems?: NewsItem[]  // 외부에서 데이터를 전달받을 수 있도록 추가
 }
 
+// check if an item is new (within 3 months)
+function isNewItem(date?: string): boolean {
+  if (!date) return false;
+  const itemDate = new Date(date);
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 3);
+  return itemDate >= sixMonthsAgo;
+}
+
 // 뉴스 데이터를 가져오는 함수 분리
 export async function getNewsItems(): Promise<NewsItem[]> {
   const filePath = path.join(process.cwd(), 'src', 'data', 'news.yaml');
@@ -30,9 +39,8 @@ export async function NewsList({ className = '', count = null, newsItems }: News
 
   return (
     <div className={className}>
-      <div className="grid grid-cols-[auto,1fr] gap-x-2 gap-y-0.5 sm:gap-y-1 ">
+      <div className="grid grid-cols-[auto,1fr] gap-x-[0.5em] gap-y-[0.25em]">
         {latestNews.map((news, idx) => {
-          // 2025.05 형식으로 날짜 포맷팅
           const date = new Date(news.date);
           const year = date.getFullYear();
           const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -43,16 +51,32 @@ export async function NewsList({ className = '', count = null, newsItems }: News
 
           return (
             <>
-              <div key={`${news.date}-${idx}`} className="contents leading-normal">
-                <div className="flex justify-center items-center">
-                  <span className="font-semibold bg-gray-100 px-2 py-1 rounded text-sm">
-                    {formattedDate}
-                  </span>
+              <div key={`${news.date}-${idx}`} className="contents leading-snug">
+                <div className="flex justify-center items-start -mt-0.5">
+                  <div className="relative">
+                    <span className="text-[0.8em] font-semibold bg-gray-100 px-[0.6em] py-[0.3em] rounded">
+                      {formattedDate}
+                    </span>
+                    {isNewItem(news.date) && (
+                      <span className="absolute -top-[0.65em] -left-1 text-[0.75em] text-red-500 transform -rotate-12 inline-flex">
+                        <span className="animate-pulse" style={{animationDelay: '0ms'}}>N</span>
+                        <span className="animate-pulse" style={{animationDelay: '100ms'}}>e</span>
+                        <span className="animate-pulse" style={{animationDelay: '200ms'}}>w</span>
+                      </span>
+                    )}
+                  </div>
                 </div>
-                <div>
-                  {title}{descriptionText && (<span className="italic">{descriptionText}</span>)}
+                <div className="">
+                  {title}
+                  {descriptionText && (
+                    <div className="text-[0.9em] italic text-gray-600 mt-1">
+                      {description.join(' ')}
+                    </div>
+                  )}
                 </div>
               </div>
+
+              {/* Divider */}
               {idx < latestNews.length - 1 && (
                 <div className="col-span-2 border-b border-gray-200 my-1"></div>
               )}

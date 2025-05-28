@@ -38,14 +38,14 @@ const GalleryItemComponent = ({
   
   return (
     <div 
-      className="group relative bg-white rounded-lg border border-gray-300 overflow-hidden hover:border-interactive-primary hover:shadow-lg transition-all duration-300 touch-manipulation"
+      className="group/details relative bg-white rounded-lg border border-gray-300 overflow-hidden hover:border-interactive-primary hover:shadow-lg transition-all duration-300 touch-manipulation"
       onClick={() => onCardClick(item)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
       {/* 썸네일 이미지 - ImageCarousel */}
-      <div style={{ cursor: 'grab' }}>
+      <div className="cursor-grab">
         <ImageCarousel
           images={item.images}
           title={item.title}
@@ -59,20 +59,20 @@ const GalleryItemComponent = ({
 
       {/* 카드 정보 - 호버 시 손모양 커서 */}
       <div 
-        className="p-3 group/details cursor-pointer"
+        className="p-3 cursor-pointer"
         onMouseEnter={() => setIsCardHovered(true)}
         onMouseLeave={() => setIsCardHovered(false)}
       >
-        <h3 className="font-semibold text-gray-900 mb-1 line-clamp-2 text-lg">
+        <div className="font-semibold text-gray-900 mb-1 text-lg truncate">
           {item.title}
           {isNewItem(item.date) && (
-            <span className="ml-1 text-xs font-bold text-red-500 inline-flex">
+            <span className="ml-1 text-xs font-bold text-red-500 inline-flex ">
               <span className="animate-bounce" style={{animationDelay: '0ms'}}>N</span>
               <span className="animate-bounce" style={{animationDelay: '100ms'}}>e</span>
               <span className="animate-bounce" style={{animationDelay: '200ms'}}>w</span>
             </span>
           )}
-        </h3>
+        </div>
         
         {item.date && (
           <div className="flex justify-between items-center">
@@ -82,7 +82,7 @@ const GalleryItemComponent = ({
             
             {/* See more 버튼 */}
             {item.description && (
-              <span className="text-xs sm:text-sm text-gray-500 group-hover/details:underline group-hover/details:text-interactive-primary transition-all duration-200">
+              <span className="text-sm text-gray-500 group-hover/details:underline group-hover/details:text-interactive-primary transition-all duration-200">
                 See more
               </span>
             )}

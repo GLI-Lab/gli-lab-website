@@ -18,6 +18,23 @@ export interface LectureListProps {
   lectureItems?: SemesterData[]  // 외부에서 데이터를 전달받을 수 있도록 추가
 }
 
+// check if a semester is new (within 6 months)
+function isNewSemester(semester: string): boolean {
+  // 학기 형식: "2025 Spring", "2025 Fall" 등
+  const match = semester.match(/(\d{4})\s+(Spring|Fall)/i);
+  if (!match) return false;
+  
+  const year = parseInt(match[1]);
+  const semesterType = match[2].toLowerCase();
+  
+  // 학기를 날짜로 변환 (Spring: 3월, Fall: 9월 기준)
+  const semesterDate = new Date(year, semesterType === 'spring' ? 2 : 8, 1); // 3월 또는 9월
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+  
+  return semesterDate > sixMonthsAgo;
+}
+
 // 강의 데이터를 가져오는 함수 분리
 export async function getLectureItems(): Promise<SemesterData[]> {
   const filePath = path.join(process.cwd(), 'src', 'data', 'lecture.yaml');
@@ -35,34 +52,40 @@ export async function LectureList({ className = '', count = null, lectureItems }
   return (
     <div className={className}>
       {semesterData.map((semesterInfo, semesterIdx) => (
-        <div key={semesterIdx} className="mb-6 last:mb-0">
+        <div key={semesterIdx} className="mb-4 last:mb-0">
           {/* 학기 헤더 */}
-          <div className="mb-3">
-            <span className="font-semibold bg-gray-100 px-2 py-1 rounded text-sm">
-              {semesterInfo.semester}
-            </span>
+          <div className="mb-2">
+            <div className="relative">
+              <span className="text-[0.8em] font-semibold bg-gray-100 px-[0.6em] py-[0.3em] rounded">
+                {semesterInfo.semester}
+              </span>
+              {isNewSemester(semesterInfo.semester) && (
+              <span className="absolute -top-[0.65em] -left-1 text-[0.75em] text-red-500 transform -rotate-12 inline-flex">
+                  <span className="animate-pulse" style={{animationDelay: '0ms'}}>N</span>
+                  <span className="animate-pulse" style={{animationDelay: '100ms'}}>e</span>
+                  <span className="animate-pulse" style={{animationDelay: '200ms'}}>w</span>
+                </span>
+              )}
+            </div>
           </div>
           
-          {/* 해당 학기의 강의 목록 - News와 유사한 그리드 스타일 */}
-          <div className="grid grid-cols-[auto,1fr] gap-x-2 gap-y-0.5 sm:gap-y-1">
+          {/* 해당 학기의 강의 목록 */}
+          <div className="space-y-1.5 pl-1">
             {semesterInfo.courses.map((course, courseIdx) => (
-              <>
-                <div key={`${semesterInfo.semester}-${courseIdx}`} className="contents leading-normal">
-                  <div className="flex justify-center items-center">
-                    {/* <span className="w-1 h-1 bg-gray-400 rounded-full"></span> */}
-                  </div>
-                  <div>
-                    {course.title}, <span className="italic">{course.university}</span>
-                  </div>
-                </div>
-                {courseIdx < semesterInfo.courses.length - 1 && (
-                  <div className="col-span-2 border-b border-gray-200 my-1"></div>
-                )}
-              </>
+              <div key={`${semesterInfo.semester}-${courseIdx}`} className="leading-snug">
+                {course.title}, <span className="italic">{course.university}</span>
+              </div>
             ))}
           </div>
+
+          {/* Divider */}
+          {semesterIdx < semesterData.length - 1 && (
+            <div className="col-span-1 border-b border-gray-200 my-2"></div>
+          )}
         </div>
+        
       ))}
+      
     </div>
   )
 } 

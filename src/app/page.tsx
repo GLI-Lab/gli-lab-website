@@ -128,7 +128,7 @@ export default function Page() {
                         <ul className="list-inside list-disc space-y-2">
                             <li>정기적인 논문 스터디 및 우수논문 작성/참여 기회 제공</li>
                             <li>학술적 성과에 따른 추가 장려금 지원</li>
-                            <li>논문 게제료 및 국내외 학술대회 참석 지원</li>
+                            <li>논문 게재료 및 국내외 학술대회 참석 지원</li>
                             <li>연구 장비 및 소프트웨어 사용 지원</li>
                         </ul>
                     </div>

@@ -75,7 +75,7 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
       className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
       onClick={handleBackdropClick}
     >
-      <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] w-full overflow-hidden">
+      <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] w-full overflow-hidden relative">
         {/* 헤더 */}
         <div className="relative">
           <button
@@ -89,11 +89,11 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
         {/* 콘텐츠 */}
         <div 
           ref={contentRef}
-          className="gallery-modal-content overflow-y-auto max-h-[calc(90vh-80px)] relative" 
+          className="overflow-y-auto max-h-[calc(90vh-80px)] relative" 
           onScroll={handleScroll}
         >
           {/* 이미지 섹션 */}
-          <div className="relative">
+          <div className="relative cursor-grab">
             <ImageCarousel
               images={item.images}
               title={item.title}
@@ -117,6 +117,11 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
                     <span className="animate-bounce" style={{animationDelay: '100ms'}}>e</span>
                     <span className="animate-bounce" style={{animationDelay: '200ms'}}>w</span>
                   </span>
+                  // <span className="ml-1 text-xs font-bold text-red-500 inline-flex">
+                  //   <span className="animate-pulse" style={{animationDelay: '0ms'}}>N</span>
+                  //   <span className="animate-pulse" style={{animationDelay: '100ms'}}>e</span>
+                  //   <span className="animate-pulse" style={{animationDelay: '200ms'}}>w</span>
+                  // </span>
                 )}
               </h2>
             </div>
@@ -146,7 +151,6 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
               </div>
             )}
 
-
             {/* 썸네일 그리드 - 높이 고정 */}
             <div className="mb-4">
               <h3 className="text-sm font-semibold text-brand-primary uppercase tracking-wide mb-2">
@@ -159,9 +163,9 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
-                  className={`relative w-20 h-20 rounded overflow-hidden border-2 transition-all ${
+                  className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded overflow-hidden border-2 transition-all ${
                     index === currentImageIndex 
-                      ? 'border-blue-500' 
+                      ? 'border-brand-primary' 
                       : 'border-gray-200 hover:border-gray-300'
                   }`}
                 >
@@ -177,25 +181,25 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
               ))}
             </div>
           </div>
-
-          {/* 스크롤 인디케이터 - 모달 전체 하단에 위치 */}
-          {!isAtBottom && (
-            <>
-              <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none"></div>
-              <div className="absolute bottom-2 left-0 right-0 flex justify-center items-center pointer-events-none">
-                <svg
-                  className="w-8 h-4 ml-2 text-interactive-primary animate-bounce"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M2 9l10 10 10-10" />
-                </svg>
-              </div>
-            </>
-          )}
         </div>
+
+        {/* 스크롤 인디케이터 - 모달 전체 하단에 고정 */}
+        {!isAtBottom && (
+          <>
+            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none"></div>
+            <div className="absolute bottom-2 left-0 right-0 flex justify-center items-center pointer-events-none">
+              <svg
+                className="w-8 h-4 ml-2 text-interactive-primary animate-bounce"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M2 9l10 10 10-10" />
+              </svg>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
