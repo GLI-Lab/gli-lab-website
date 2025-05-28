@@ -58,7 +58,7 @@ export async function NewsList({ className = '', count = null, newsItems }: News
                       {formattedDate}
                     </span>
                     {isNewItem(news.date) && (
-                      <span className="absolute -top-[0.65em] -left-1 text-[0.75em] text-red-500 transform -rotate-12 inline-flex">
+                      <span className="absolute -top-[0.65em] -left-1 text-[0.7em] font-semibold text-red-500 transform -rotate-12 inline-flex">
                         <span className="animate-pulse" style={{animationDelay: '0ms'}}>N</span>
                         <span className="animate-pulse" style={{animationDelay: '100ms'}}>e</span>
                         <span className="animate-pulse" style={{animationDelay: '200ms'}}>w</span>
