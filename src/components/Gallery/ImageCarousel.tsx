@@ -64,6 +64,26 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
     emblaApi?.scrollTo(index);
   }, [emblaApi]);
 
+  // ------------------------------------------------------------ 프리로딩 관련
+  // 특정 인덱스가 우선순위 로딩 대상인지 확인
+  const shouldHavePriority = (index: number): boolean => {
+    // 현재 선택된 이미지
+    if (index === selectedIndex) return true;
+    
+    const totalImages = images.length;
+    
+    // 이전 이미지 (루프 고려)
+    const prevIndex = selectedIndex === 0 ? totalImages - 1 : selectedIndex - 1;
+    if (index === prevIndex) return true;
+    
+    // 다음 이미지 (루프 고려)
+    const nextIndex = selectedIndex === totalImages - 1 ? 0 : selectedIndex + 1;
+    if (index === nextIndex) return true;
+    
+    return false;
+  };
+  // ------------------------------------------------------------
+
   return (
     <div className={`${className} group`}>
       <div className="overflow-hidden h-full" ref={emblaRef}>
@@ -77,6 +97,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
                 className={imageClassName}
                 sizes={sizes}
                 draggable={false}
+                priority={shouldHavePriority(index)}
               />
             </div>
           ))}
@@ -121,4 +142,4 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
       )}
     </div>
   );
-}; 
+};

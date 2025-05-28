@@ -5,6 +5,29 @@ const nextConfig = {
     trailingSlash: true,
     reactStrictMode: true,
     
+    // 이미지 최적화 설정
+    images: {
+        formats: ['image/webp', 'image/avif'],
+        deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+        imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+        minimumCacheTTL: 31536000, // 1년 캐시
+    },
+    
+    // 정적 파일 캐시 설정
+    async headers() {
+        return [
+            {
+                source: '/images/:path*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=31536000, immutable',
+                    },
+                ],
+            },
+        ];
+    },
+    
     // 브라우저 주소 표시줄의 URL이 변경됨 (사용자가 새 URL로 이동)
     // HTTP 상태 코드 301, 302, 307, 308 등을 사용함
     // 브라우저가 새 URL로 직접 요청을 보냄
