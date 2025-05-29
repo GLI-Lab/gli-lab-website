@@ -7,111 +7,182 @@ import { SubCover } from "@/components/Covers";
 // import Head from 'next/head';
 // import ResearchTopics from "@/components/Tooltip";
 
-const TITLE = `Research Topic`
+const PAGE_TITLE = `Research Topic`
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
-        title: TITLE,
+        title: PAGE_TITLE,
+        description: "Research topics and approaches from GLI Lab - Graph Learning and Intelligence Laboratory focusing on Graph ML/DL, LLMs, and their applications",
+        asPath: '/research/topic'
     });
 };
 
+// 연구 데이터 정의
+const researchData = {
+    approaches: [
+        {
+            title: "Graph Representation Learning (그래프 표현학습)",
+            items: [
+                "Graph Neural Networks (GNNs) for Node/Edge/Graph Embedding",
+                "Knowledge Graph Representation/Completion/Validation/Construction",
+                "Context-Aware Knowledge Graph Representation and Relational Learning"
+            ]
+        },
+        {
+            title: "Large Language Models (대형 언어모델)",
+            items: [
+                "Multi-Modal & Knowledge-Enhanced Foundation Models",
+                "Knowledge & LLM Distillation for Efficient Model Development",
+                "Advanced Prompt Engineering: Chain-of-Thought (CoT), and Retrieval-Augmented Generation (RAG)"
+            ]
+        },
+        {
+            title: "Synergizing LLMs and Graphs (그래프·언어모델 통합)",
+            items: [
+                "Text-to-Graph & Graph-to-Text Generation",
+                "Graph-Structured Interaction for LLMs (GraphRAG, Graph-driven LLM Agents)",
+                "Knowledge-grounded & Context-aware Response Generation with LLMs"
+            ]
+        }
+    ],
+    applications: [
+        {
+            title: "Natural Language Processing (자연어처리)",
+            items: [
+                "Question Answering, Information Retrieval & Extraction",
+                "Document Analysis (Sentiment, Opinion, Topic, NER, Summarization)"
+            ]
+        },
+        {
+            title: "Recommender Systems (추천시스템)",
+            items: [
+                "Knowledge-enhanced & Explainable Recommendations",
+                "Conversational & Graph-based Recommendations"
+            ]
+        },
+        {
+            title: "Graph Analytics and Prediction (그래프 분석·예측)",
+            items: [
+                "Node & Graph Classification Tasks",
+                "Link Prediction and Knowledge Graph Completion"
+            ]
+        }
+    ]
+};
+
+// 연구 항목 컴포넌트
+const ResearchSection = ({ 
+    title, 
+    items, 
+    bgColor = "bg-gray-100" 
+}: { 
+    title: string; 
+    items: string[]; 
+    bgColor?: string; 
+}) => (
+    <div className={`${bgColor} rounded-lg p-4 overflow-hidden`}>
+        <p className="text-accent mb-3 font-semibold break-words">
+            {title}
+        </p>
+        <div className="grid gap-2 text-gray-700">
+            {items.map((item, index) => (
+                <div key={index} className="break-words flex leading-snug">
+                    <span className="mr-2 flex-shrink-0">-</span>
+                    <span>{item}</span>
+                </div>
+            ))}
+        </div>
+    </div>
+);
+
+// 섹션 헤더 컴포넌트
+const SectionHeader = ({ title }: { title: string }) => (
+    <p className="text-accent text-lg md:text-xl font-semibold mb-4">
+        <span className="highlight">&lt;{title}&gt;</span>
+    </p>
+);
 
 export default function Page() {
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
-                <SubCover title={TITLE}/>
+                <SubCover title={PAGE_TITLE}/>
             </div>
 
-            <div className="max-w-screen-xl mx-auto px-5 py-10">
-                <p className="text-header">Summary</p>
-                <div className="w-14 border-b-4 border-green-900 mt-1 mb-8"></div>
+            <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
+                {/* Summary Section */}
+                <div className="mb-12">
+                    <p className="text-header">Summary</p>
+                    <div className="w-14 border-b-4 border-border-accent mt-1 mb-6"></div>
 
-                <div className="flex flex-col items-center text-left mb-6">
-                    <div className="space-y-6">
-                        <p className="text-body">
-                            Our research fields are as follows:
-                        </p>
-                        <p className="text-accent">
-                            <span className="highlight">&lt;Approaches&gt;</span>
-                        </p>
-                        <div>
-                            <p className="text-accent mb-2">
-                                Graph Representation Learning
-                            </p>
-                            <ul className="list-inside list-disc space-y-2">
-                                <li>Graph Neural Networks (GNNs) for Node/Edge/Graph Embedding</li>
-                                <li>Knowledge Graph Representation/Completion/Validation/Construction</li>
-                                <li>Context-Aware Knowledge Graph Representation and Relational Learning</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p className="text-accent mb-2">
-                                Large Language Models (LLMs)
-                            </p>
-                            <ul className="list-inside list-disc space-y-2">
-                                <li>Multi-Modal & Knowledge-Enhanced Foundation Models</li>
-                                <li>Knowledge & LLM Distillation for Efficient Model Development</li>
-                                <li>Advanced Prompt Engineering: Chain-of-Thought (CoT), and Retrieval-Augmented
-                                    Generation (RAG)
-                                </li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p className="text-accent mb-2">
-                                Synergizing LLMs and Graphs
-                            </p>
-                            <ul className="list-inside list-disc space-y-2">
-                                <li>Text-to-Graph & Graph-to-Text Generation</li>
-                                <li>Graph-Structured Interaction for LLMs (GraphRAG, Graph-driven LLM Agents)</li>
-                                <li>Knowledge-grounded & Context-aware Response Generation with LLMs</li>
-                            </ul>
-                        </div>
-                        <p className="text-accent">
-                            <span className="highlight">&lt;Applications&gt;</span>
-                        </p>
-                        <div>
-                            <p className="text-accent mb-2">
-                                Natural Language Processing (NLP)
-                            </p>
-                            <ul className="list-inside list-disc space-y-2">
-                                <li>Question Answering, Information Retrieval & Extraction</li>
-                                <li>Document Analysis (Sentiment, Opinion, Topic, NER, Summarization)</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p className="text-accent mb-2">
-                                Recommender Systems
-                            </p>
-                            <ul className="list-inside list-disc space-y-2">
-                                <li>Knowledge-enhanced & Explainable Recommendations</li>
-                                <li>Conversational & Graph-based Recommendations</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <p className="text-accent mb-2">
-                                Graph Analytics and Prediction
-                            </p>
-                            <ul className="list-inside list-disc space-y-2">
-                                <li>Node & Graph Classification Tasks</li>
-                                <li>Link Prediction and Knowledge Graph Completion</li>
-                            </ul>
+                    <div className="rounded-lg border border-gray-200 shadow-sm p-3 md:p-5 overflow-hidden">
+                        <div className="space-y-6">
+                            {/* Approaches Section */}
+                            <div>
+                                <SectionHeader title="Approaches" />
+                                <div className="grid gap-3 md:gap-4">
+                                    {researchData.approaches.map((approach, index) => (
+                                        <ResearchSection 
+                                            key={index}
+                                            title={approach.title}
+                                            items={approach.items}
+                                            bgColor="bg-gray-100"
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Applications Section */}
+                            <div>
+                                <SectionHeader title="Applications" />
+                                <div className="grid gap-3 md:gap-4">
+                                    {researchData.applications.map((application, index) => (
+                                        <ResearchSection 
+                                            key={index}
+                                            title={application.title}
+                                            items={application.items}
+                                            bgColor="bg-gray-100"
+                                        />
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 {/*<ResearchTopics/>*/}
 
-                <p className="text-header">Poster</p>
-                <div className="w-14 border-b-4 border-green-900 mt-1 mb-8"></div>
+                {/* Poster Section */}
+                <div>
+                    <p className="text-header">Poster</p>
+                    <div className="w-14 border-b-4 border-border-accent mt-1 mb-6"></div>
 
-                <div className="space-y-6">
-                    <Image src="/images/topic/poster1.webp" alt="poster1" width={1600} height={2000}
-                           className="h-full w-full object-cover"/>
-                    <Image src="/images/topic/poster2.webp" alt="poster2" width={1600} height={2000}
-                           className="h-full w-full object-cover"/>
+                    <div className="rounded-lg border border-gray-200 shadow-sm p-3 md:p-5 overflow-hidden">
+                        <div className="space-y-6">
+                            <div className="text-center">
+                                <Image 
+                                    src="/images/topic/poster1.webp" 
+                                    alt="Research Topic Poster 1" 
+                                    width={1600} 
+                                    height={2000}
+                                    className="max-w-full h-auto object-contain rounded-lg"
+                                />
+                            </div>
+                            <div className="text-center">
+                                <Image 
+                                    src="/images/topic/poster2.webp" 
+                                    alt="Research Topic Poster 2" 
+                                    width={1600} 
+                                    height={2000}
+                                    className="max-w-full h-auto object-contain rounded-lg"
+                                />
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+            <div className="h-40"></div>
         </>
     )
 }
