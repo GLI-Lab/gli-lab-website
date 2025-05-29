@@ -5,10 +5,10 @@ import React, { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
 import { Separator } from "@/components/ui/separator"
-import { ProfileDetailProps } from './types';
+import { ProfileDetailProps } from './profiles';
 
 export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
-    const {title, name_en, name_ko, admission, period, bs, ms, phd, photo, email, interest, homepage, github, linkedin } = props;
+    const {title, name_en, name_ko, admission, joined, bs, ms, phd, photo, email, interest, current_work, homepage, github, linkedin, academic_year, academic_semester } = props;
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30}, [Fade()]);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -67,21 +67,28 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                 </div>
                 <div className="my-3"></div>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4`}>
-                    {admission !== "Unknown" && (
+                    {academic_year !== null && academic_semester !== null && (
+                        <>
+                            <span className={`text-text-accent font-medium`}>Status</span>
+                            <span>{academic_year}학년 {academic_semester}학기</span>
+                        </>
+                    )}
+                    {admission && admission !== "Unknown" && (
                         <>
                             <span className={`text-text-accent font-medium`}>Admission</span>
                             <span>{admission}</span>
                         </>
                     )}
-                    {period !== "Unknown" && (
+                    {joined && joined !== "Unknown" && (
                         <>
-                            <span className={`text-text-accent font-medium`}>Period</span>
-                            <span>{period}</span>
+                            <span className={`text-text-accent font-medium`}>Joined</span>
+                            <span>{joined}</span>
                         </>
                     )}
                 </div>
                 <Separator className="my-3"/>
 
+                {/* Research Interests */}
                 <div className={`grid gap-x-4 gap-y-1 my-3`}>
                     <span className={`text-text-accent font-medium`}>Research Interests</span>
                     <div className="text-[14px] sm:text-[16px]">
@@ -93,20 +100,37 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                         ))}
                     </div>
                 </div>
+
+                {/* Current Work */}
+                <div className={`grid gap-x-4 gap-y-1 my-3`}>
+                    <span className={`text-text-accent font-medium`}>Current Work</span>
+                    <div className="">
+                        {current_work.map((work, index) => (
+                            <div key={index} className="mb-1 leading-snug">
+                                <span className="text-text-accent font-semibold pr-0.5 text-[14px] sm:text-[16px]">-</span>
+                                <span className="">{work}</span>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+
+                <Separator className="my-3"/>
+
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4`}>
-                    {bs !== "Unknown" && (
+                    {bs && bs !== "Unknown" && (
                         <>
                             <span className={`text-text-accent font-medium`}>B.S.</span>
                             <span>{bs}</span>
                         </>
                     )}
-                    {ms !== "Unknown" && (
+                    {ms && ms !== "Unknown" && (
                         <>
                             <span className={`text-text-accent font-medium`}>M.S.</span>
                             <span>{ms}</span>
                         </>
                     )}
-                    {phd !== "Unknown" && (
+                    {phd && phd !== "Unknown" && (
                         <>
                             <span className={`text-text-accent font-medium`}>Ph.D.</span>
                             <span>{phd}</span>
@@ -123,27 +147,38 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                                className="hover:text-interactive-hover hover:underline underline-offset-4">{src}</a>
                         ))}
                     </div>
-                    <span className={`text-text-accent font-medium`}>Home</span>
-                    <a href={homepage} target="_blank" rel="" title={homepage}
-                       className="hover:text-interactive-hover hover:underline underline-offset-4">
-                        {homepage.replace("https://", "").split('/')[0]}
-                    </a>
-                    <span className={`text-text-accent font-medium`}>Github</span>
-                    <div className="flex flex-col">
-                        {github.map((src, index) => (
-                            <a href={src} rel="" title={src} key={index} target="_blank"
-                               className="hover:text-interactive-hover hover:underline underline-offset-4 break-all">
-                                {src.replace("https://github.com/", "")}
+                    {homepage && (
+                        <>
+                            <span className={`text-text-accent font-medium`}>Home</span>
+                            <a href={homepage} target="_blank" rel="" title={homepage}
+                               className="hover:text-interactive-hover hover:underline underline-offset-4">
+                                {homepage.replace("https://", "").split('/')[0]}
                             </a>
-                        ))}
-                    </div>
-                    <span className={`text-text-accent font-medium`}>LinkedIn</span>
-                    <a href={linkedin} rel="" title={linkedin} target="_blank"
-                       className="hover:text-interactive-hover hover:underline underline-offset-4">
-                        {linkedin.replace("https://www.linkedin.com/in/", "")}
-                    </a>
+                        </>
+                    )}
+                    {github.length > 0 && (
+                        <>
+                            <span className={`text-text-accent font-medium`}>Github</span>
+                            <div className="flex flex-col">
+                                {github.map((src, index) => (
+                                    <a href={src} rel="" title={src} key={index} target="_blank"
+                                       className="hover:text-interactive-hover hover:underline underline-offset-4 break-all">
+                                        {src.replace("https://github.com/", "")}
+                                    </a>
+                                ))}
+                            </div>
+                        </>
+                    )}
+                    {linkedin && (
+                        <>
+                            <span className={`text-text-accent font-medium`}>LinkedIn</span>
+                            <a href={linkedin} rel="" title={linkedin} target="_blank"
+                               className="hover:text-interactive-hover hover:underline underline-offset-4">
+                                {linkedin.replace("https://www.linkedin.com/in/", "")}
+                            </a>
+                        </>
+                    )}
                 </div>
-                <Separator className="my-3"/>
             </div>
         </div>
     );

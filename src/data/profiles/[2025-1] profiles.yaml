@@ -7,7 +7,7 @@
 # Faculty
 ###############################################
 - id: "[2024.03] 오병국"
-  role: faculty
+  position: faculty
   title: Assistant Professor (조교수)
   name:
     en: Byungkook Oh
@@ -17,16 +17,22 @@
     bs: Computer Science
     ms: Computer Science
     phd: Computer Science
-  period: null
+  academic:
+    year: null
+    semester: null
+  joined: null
   interests:
     - Graph ML/DL
     - Recommender Systems
     - Knowledge-based Systems
     - NLP
+  current_work:
+    - "Lab Management & Research Direction"
+    - "Mentoring Graduate Students"
   photos:
-    - /profiles/photo/[2024.03] 오병국1.jpg
-    - /profiles/photo/[2024.03] 오병국2.jpg
-    - /profiles/photo/[2024.03] 오병국3.jpg
+    - /images/profiles/[2024.03] 오병국1.jpg
+    - /images/profiles/[2024.03] 오병국2.jpg
+    - /images/profiles/[2024.03] 오병국3.jpg
   contacts:
     emails:
       - bkoh@konkuk.ac.kr
@@ -41,7 +47,7 @@
 # MS Students
 ###############################################
 - id: "[2024.06] 서지명"
-  role: ms
+  position: ms
   title: Graduate Student (석사과정)
   name:
     en: Jimyeung Seo
@@ -51,13 +57,19 @@
     bs: Computer Science & Engineering
     ms: Computer Science & Engineering
     phd: null
-  period: "2024.06 - Current"
+  academic:
+    year: 1
+    semester: 1
+  joined: "2024.06 - Current"
   interests:
     - Graph ML/DL
-    - News Recommendation
-    - Multimodal Recommendation
+    - LLM Optimization
+    - Multimodal News Recommendation
+  current_work:
+    - "논문 작성 (제1저자, 공저자)"
+    - "프로젝트 참여 및 심화 연구 훈련"
   photos:
-    - /profiles/photo/[2024.06] 서지명1.jpg
+    - /images/profiles/[2024.06] 서지명1.jpg
   contacts:
     emails:
       - myungs8562@gmail.com
@@ -68,7 +80,7 @@
     linkedin: null
 
 - id: "[2024.07] 백혜윤"
-  role: ms
+  position: ms
   title: Graduate Student (석사과정)
   name:
     en: Hye-Yoon Baek
@@ -78,14 +90,20 @@
     bs: English Language & Literature
     ms: Computer Science & Engineering
     phd: null
-  period: "2024.07 - Current"
+  academic:
+    year: 1
+    semester: 1
+  joined: "2024.07 - Current"
   interests:
     - Graph ML/DL
     - Information Retrieval
     - LLM Knowledge Distillation
+  current_work:
+    - "논문 작성 (제1저자, 공저자)"
+    - "프로젝트 참여 및 심화 연구 훈련"
   photos:
-    - /profiles/photo/[2024.07] 백혜윤1.jpg
-    - /profiles/photo/[2024.07] 백혜윤2.jpg
+    - /images/profiles/[2024.07] 백혜윤1.jpg
+    - /images/profiles/[2024.07] 백혜윤2.jpg
   contacts:
     emails:
       - hyeyoonbaek@gmail.com
@@ -96,7 +114,7 @@
     linkedin: null
 
 - id: "[2024.11] 이동천"
-  role: ms
+  position: ms
   title: Graduate Student (석사과정)
   name:
     en: Dongcheon Lee
@@ -106,13 +124,19 @@
     bs: Mathematics
     ms: Computer Science & Engineering
     phd: null
-  period: "2024.11 - Current"
+  academic:
+    year: 1
+    semester: 1
+  joined: "2024.11 - Current"
   interests:
     - Graph ML/DL
-    - Multimodal LLM
-    - Knowledge-Enhanced LLM
+    - Retrieval-Augmented LLM
+    - KG-Based Question Answering
+  current_work:
+    - "논문 작성 (제1저자, 공저자)"
+    - "프로젝트 참여 및 심화 연구 훈련"
   photos:
-    - /profiles/photo/[2024.10] 이동천1.jpg
+    - /images/profiles/[2024.10] 이동천1.jpg
   contacts:
     emails:
       - ehdcjs987@gmail.com
@@ -125,7 +149,7 @@
 # Prospective PhD Students
 ###############################################
 - id: "[2025.04] 구본유"
-  role: pphd
+  position: pphd
   title: Master's Graduate (석사)
   name:
     en: Bonyou Koo
@@ -135,27 +159,31 @@
     bs: Computer Science & Engineering
     ms: Information Convergence Engineering
     phd: null
-  period: "2025.04 - Current"
+  academic:
+    year: null
+    semester: null
+  joined: "2025.04 - Current"
   interests:
     - Graph ML/DL
+  current_work:
+    - "스터디 참여 및 기초 연구 훈련"
   photos:
-    - /profiles/photo/[2025.04] 구본유1.jpg
-    - /profiles/photo/[2025.04] 구본유2.jpg
-    - /profiles/photo/[2025.04] 구본유3.jpg
+    - /images/profiles/[2025.04] 구본유1.jpg
+    - /images/profiles/[2025.04] 구본유2.jpg
+    - /images/profiles/[2025.04] 구본유3.jpg
   contacts:
     emails:
       - number9you@gmail.com
-    homepage: null
-    github:
-      - sites.google.com/view/bonyoukoo/home
+    homepage: https://sites.google.com/view/bonyoukoo/home
+    github: null
     linkedin: null
 
 ###############################################
 # Prospective MS Students
 ###############################################
 - id: "[2025.01] 구해윤"
-  role: pms
-  title: Undergraduate Student (학부생)
+  position: pms
+  title: Bachelor's Graduate (학사)
   name:
     en: Hae-Yoon Koo
     ko: 구해윤
@@ -164,12 +192,17 @@
     bs: Computer Science & Engineering
     ms: null
     phd: null
-  period: "2025.01 - Current"
+  academic:
+    year: null
+    semester: null
+  joined: "2025.01 - Current"
   interests:
     - Graph ML/DL
+  current_work:
+    - "스터디 참여 및 기초 연구 훈련"
   photos:
-    - /profiles/photo/[2025.01] 구해윤1.jpg
-    - /profiles/photo/[2025.01] 구해윤2.jpg
+    - /images/profiles/[2025.01] 구해윤1.jpg
+    - /images/profiles/[2025.01] 구해윤2.jpg
   contacts:
     emails:
       - haeyoonkoo61@gmail.com
@@ -182,7 +215,7 @@
 # Interns
 ###############################################
 - id: "[2024.03] 김윤진"
-  role: intern
+  position: intern
   title: Undergraduate Student (학부생)
   name:
     en: Yunjin Kim
@@ -192,21 +225,26 @@
     bs: Biological Engineering
     ms: null
     phd: null
-  period: "2024.03 - Current"
+  academic:
+    year: 4
+    semester: 2
+  joined: "2024.03 - Current"
   interests:
     - Graph ML/DL
+  current_work:
+    - "스터디 참여 및 기초 연구 훈련"
   photos:
-    - /profiles/photo/[2024.03] 김윤진1.jpg
+    - /images/profiles/[2024.03] 김윤진1.jpg
   contacts:
     emails:
-      - yunjink008@gmail.com
-      - kimyunjin23@konkuk.ac.kr
+      - yj071099@gmail.com
     homepage: null
-    github: null
+    github:
+      - ksdjyj071099
     linkedin: null
 
 - id: "[2024.06] 이영호"
-  role: intern
+  position: intern
   title: Undergraduate Student (학부생)
   name:
     en: Young-Ho Lee
@@ -216,11 +254,16 @@
     bs: Computer Science & Engineering
     ms: null
     phd: null
-  period: "2024.06 - Current"
+  academic:
+    year: 2
+    semester: 1
+  joined: "2024.06 - Current"
   interests:
     - Graph ML/DL
+  current_work:
+    - "스터디 참여 및 기초 연구 훈련"
   photos:
-    - /profiles/photo/[2024.06] 이영호1.jpg
+    - /images/profiles/[2024.06] 이영호1.jpg
   contacts:
     emails:
       - james20042016@gmail.com
@@ -230,7 +273,7 @@
     linkedin: null
 
 - id: "[2024.07] 정우석"
-  role: intern
+  position: intern
   title: Undergraduate Student (학부생)
   name:
     en: Wooseok Jeong
@@ -240,12 +283,18 @@
     bs: Computer Science & Engineering
     ms: null
     phd: null
-  period: "2024.07 - Current"
+  academic:
+    year: 3
+    semester: 1
+  joined: "2024.07 - Current"
   interests:
+    - LLM-Based Recommender Systems
     - Graph ML/DL
-    - Recommender Systems
+  current_work:
+    - "논문 작성 (제1저자)"
+    - "스터디 참여 및 기초 연구 훈련"
   photos:
-    - /profiles/photo/[2024.07] 정우석1.jpg
+    - /images/profiles/[2024.07] 정우석1.jpg
   contacts:
     emails:
       - oseoko8@gmail.com
@@ -255,7 +304,7 @@
     linkedin: null
 
 - id: "[2024.07] 지상준"
-  role: intern
+  position: intern
   title: Undergraduate Student (학부생)
   name:
     en: Sang-Jun Ji
@@ -265,14 +314,19 @@
     bs: Computer Science & Engineering
     ms: null
     phd: null
-  period: "2024.07 - Current"
+  academic:
+    year: 4
+    semester: 1
+  joined: "2024.07 - Current"
   interests:
     - Graph ML/DL
-    - Multimodal LLM
-    - Knowledge-Enhanced LLM
+    - Hyper-Relational KG
+  current_work:
+    - "논문 작성 (제1저자)"
+    - "스터디 참여 및 기초 연구 훈련"
   photos:
-    - /profiles/photo/[2024.07] 지상준1.jpg
-    - /profiles/photo/[2024.07] 지상준2.jpg
+    - /images/profiles/[2024.07] 지상준1.jpg
+    - /images/profiles/[2024.07] 지상준2.jpg
   contacts:
     emails:
       - wltkdwns0220@naver.com
@@ -283,7 +337,7 @@
     linkedin: null
 
 - id: "[2024.07] 박지연"
-  role: intern
+  position: intern
   title: Undergraduate Student (학부생)
   name:
     en: Ji-Yeon Park
@@ -293,13 +347,19 @@
     bs: Food Science and Biotechnology of Animal Resources
     ms: null
     phd: null
-  period: "2024.07 - Current"
+  academic:
+    year: 4
+    semester: 2
+  joined: "2024.07 - Current"
   interests:
     - Graph ML/DL
     - Recommender Systems
+  current_work:
+    - "논문 작성 (공저자)"
+    - "스터디 참여 및 기초 연구 훈련"
   photos:
-    - /profiles/photo/[2024.07] 박지연1.jpg
-    - /profiles/photo/[2024.07] 박지연2.jpg
+    - /images/profiles/[2024.07] 박지연1.jpg
+    - /images/profiles/[2024.07] 박지연2.jpg
   contacts:
     emails:
       - yeoniyoui@gmail.com
@@ -308,7 +368,7 @@
     linkedin: null
 
 - id: "[2024.10] 김영진"
-  role: intern
+  position: intern
   title: Undergraduate Student (학부생)
   name:
     en: Young-Jin Kim
@@ -318,13 +378,19 @@
     bs: Applied Statistics
     ms: null
     phd: null
-  period: "2024.11 - Current"
+  academic:
+    year: 3
+    semester: 1
+  joined: "2024.11 - Current"
   interests:
+    - LLM-Based Recommender Systems
     - Graph ML/DL
-    - Recommender Systems
+  current_work:
+    - "논문 작성 (제1저자)"
+    - "스터디 참여 및 기초 연구 훈련"
   photos:
-    - /profiles/photo/[2024.10] 김영진1.jpg
-    - /profiles/photo/[2024.10] 김영진2.jpg
+    - /images/profiles/[2024.10] 김영진1.jpg
+    - /images/profiles/[2024.10] 김영진2.jpg
   contacts:
     emails:
       - ab960119@naver.com
@@ -334,7 +400,7 @@
     linkedin: null
 
 - id: "[2024.12] 최진호"
-  role: intern
+  position: intern
   title: Undergraduate Student (학부생)
   name:
     en: Jinho Choi
@@ -344,14 +410,20 @@
     bs: Industrial Engineering
     ms: null
     phd: null
-  period: "2024.12 - Current"
+  academic:
+    year: 4
+    semester: 1
+  joined: "2024.12 - Current"
   interests:
     - Graph ML/DL
     - Information Retrieval
     - LLM Knowledge Distillation
+  current_work:
+    - "논문 작성 (공저자)"
+    - "스터디 참여 및 기초 연구 훈련"
   photos:
-    - /profiles/photo/[2024.12] 최진호1.jpg
-    - /profiles/photo/[2024.12] 최진호2.jpeg
+    - /images/profiles/[2024.12] 최진호1.jpg
+    - /images/profiles/[2024.12] 최진호2.jpeg
   contacts:
     emails:
       - jhc12931293@gmail.com
@@ -361,7 +433,7 @@
     linkedin: null
 
 - id: "[2025.03] 조은영"
-  role: intern
+  position: intern
   title: Undergraduate Student (학부생)
   name:
     en: Eun-Yeong Jo
@@ -371,15 +443,21 @@
     bs: Biomedical Science & Engineering
     ms: null
     phd: null
-  period: "2025.03 - Current"
+  academic:
+    year: 4
+    semester: 1
+  joined: "2025.03 - Current"
   interests:
     - Graph ML/DL
-    - News Recommendation
-    - Multimodal Recommendation
+    - LLM Optimization
+    - Multimodal News Recommendation
+  current_work:
+    - "논문 작성 (공저자)"
+    - "스터디 참여 및 기초 연구 훈련"
   photos:
-    - /profiles/photo/[2025.03] 조은영1.jpg
-    - /profiles/photo/[2025.03] 조은영2.jpg
-    - /profiles/photo/[2025.03] 조은영3.jpg
+    - /images/profiles/[2025.03] 조은영1.jpg
+    - /images/profiles/[2025.03] 조은영2.jpg
+    - /images/profiles/[2025.03] 조은영3.jpg
   contacts:
     emails:
       - tina6022@naver.com
@@ -388,7 +466,7 @@
     linkedin: null
 
 - id: "[2025.03] 김상준"
-  role: intern
+  position: intern
   title: Undergraduate Student (학부생)
   name:
     en: Sang-June Kim
@@ -398,14 +476,19 @@
     bs: Smart ICT Convergence
     ms: null
     phd: null
-  period: "2025.03 - Current"
+  academic:
+    year: 4
+    semester: 1
+  joined: "2025.03 - Current"
   interests:
     - Graph ML/DL
     - Bioinfomatics
+  current_work:
+    - "스터디 참여 및 기초 연구 훈련"
   photos:
-    - /profiles/photo/[2025.03] 김상준1.jpg
-    - /profiles/photo/[2025.03] 김상준2.jpg
-    - /profiles/photo/[2025.03] 김상준3.jpg
+    - /images/profiles/[2025.03] 김상준1.jpg
+    - /images/profiles/[2025.03] 김상준2.jpg
+    - /images/profiles/[2025.03] 김상준3.jpg
   contacts:
     emails:
       - drbug2000@naver.com

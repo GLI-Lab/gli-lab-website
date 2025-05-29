@@ -4,7 +4,7 @@ import Image from 'next/image'
 import Link from "next/link"
 import { useState, useEffect } from "react"
 
-import { IoChevronDown, IoMenuOutline } from "react-icons/io5";
+import { IoChevronDown, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
 
 
 export default function Header() {
@@ -92,7 +92,26 @@ export default function Header() {
                         </Link>
                         <div className="md:hidden">
                             <button className="pr-2 pt-3" onClick={() => setMenu(!menu)}>
-                                <IoMenuOutline  className="h-8 w-8"/>
+                                <div className="w-8 h-8 flex flex-col justify-center items-center">
+                                    <div className="w-6 h-0.5 bg-black transition-all duration-500 ease-out mb-1"
+                                         style={{
+                                             transform: menu ? 'rotate(45deg) translate(0, 0.5rem) scale(1.1)' : 'rotate(0) scale(1)',
+                                             transformOrigin: 'center',
+                                         }}>
+                                    </div>
+                                    <div className="w-6 h-0.5 bg-black transition-all duration-300 ease-in-out mb-1"
+                                         style={{
+                                             opacity: menu ? 0 : 1,
+                                             transform: menu ? 'scale(0.3)' : 'scale(1)',
+                                         }}>
+                                    </div>
+                                    <div className="w-6 h-0.5 bg-black transition-all duration-500 ease-out"
+                                         style={{
+                                             transform: menu ? 'rotate(-45deg) translate(0, -0.5rem) scale(1.1)' : 'rotate(0) scale(1)',
+                                             transformOrigin: 'center',
+                                         }}>
+                                    </div>
+                                </div>
                             </button>
                         </div>
                     </div>
