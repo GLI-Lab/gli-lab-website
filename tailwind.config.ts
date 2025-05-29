@@ -115,8 +115,8 @@ const config = {
                     },
                     '25%, 80%': { 
                         opacity: '0', 
-                        transform: 'scale(1.1) rotate(1deg)',
-                        filter: 'brightness(0.8) blur(2px)'
+                        transform: 'scale(1.15) rotate(1deg)',
+                        filter: 'brightness(0.8) blur(1px)'
                     },
                     '100%': { 
                         opacity: '1', 
@@ -127,8 +127,8 @@ const config = {
                 cinematic2: {
                     '0%, 15%': { 
                         opacity: '0', 
-                        transform: 'scale(1.1) rotate(-1deg)',
-                        filter: 'brightness(0.8) blur(2px)'
+                        transform: 'scale(1.15) rotate(-1deg)',
+                        filter: 'brightness(0.8) blur(1px)'
                     },
                     '25%, 40%': { 
                         opacity: '1', 
@@ -137,15 +137,15 @@ const config = {
                     },
                     '50%, 100%': { 
                         opacity: '0', 
-                        transform: 'scale(1.1) rotate(1deg)',
-                        filter: 'brightness(0.8) blur(2px)'
+                        transform: 'scale(1.15) rotate(1deg)',
+                        filter: 'brightness(0.8) blur(1px)'
                     }
                 },
                 cinematic3: {
                     '0%, 40%': { 
                         opacity: '0', 
-                        transform: 'scale(1.1) rotate(1deg)',
-                        filter: 'brightness(0.8) blur(2px)'
+                        transform: 'scale(1.15) rotate(1deg)',
+                        filter: 'brightness(0.8) blur(1px)'
                     },
                     '50%, 65%': { 
                         opacity: '1', 
@@ -154,25 +154,25 @@ const config = {
                     },
                     '75%, 100%': { 
                         opacity: '0', 
-                        transform: 'scale(1.1) rotate(-1deg)',
-                        filter: 'brightness(0.8) blur(2px)'
+                        transform: 'scale(1.15) rotate(-1deg)',
+                        filter: 'brightness(0.8) blur(1px)'
                     }
                 },
                 cinematic4: {
                     '0%, 65%': { 
                         opacity: '0', 
-                        transform: 'scale(1.1) rotate(-1deg)',
-                        filter: 'brightness(0.8) blur(2px)'
+                        transform: 'scale(1.45) rotate(-1deg)',
+                        filter: 'brightness(0.8) blur(1px)'
                     },
                     '75%, 90%': { 
                         opacity: '1', 
-                        transform: 'scale(1) rotate(0deg)',
+                        transform: 'scale(1.3) rotate(0deg)',
                         filter: 'brightness(1) blur(0px)'
                     },
                     '100%': { 
                         opacity: '0', 
-                        transform: 'scale(1.1) rotate(1deg)',
-                        filter: 'brightness(0.8) blur(2px)'
+                        transform: 'scale(1.45) rotate(1deg)',
+                        filter: 'brightness(0.8) blur(1px)'
                     }
                 },
                 fadeUp: {
