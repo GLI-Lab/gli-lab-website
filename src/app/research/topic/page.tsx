@@ -1,15 +1,11 @@
-import {Metadata} from "next";
 import Image from "next/image";
 
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
 
-// import Head from 'next/head';
-// import ResearchTopics from "@/components/Tooltip";
-
 const PAGE_TITLE = `Research Topic`
 
-export const generateMetadata = async (): Promise<Metadata> => {
+export async function generateMetadata() {
     return getMetadata({
         title: PAGE_TITLE,
         description: "Research topics and approaches from GLI Lab - Graph Learning and Intelligence Laboratory focusing on Graph ML/DL, LLMs, and their applications",
