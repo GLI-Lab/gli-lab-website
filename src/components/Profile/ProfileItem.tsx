@@ -2,10 +2,10 @@
 
 import Image from 'next/image';
 import React from 'react';
-import { ProfileItemProps } from './types';
+import { ProfileItemProps } from './profiles';
 
 export const ProfileItem: React.FC<ProfileItemProps> = (props) => {
-    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, period } = props;
+    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined } = props;
     console.log('----ProfileItem rendered:', name_ko);
 
     return (
@@ -29,10 +29,10 @@ export const ProfileItem: React.FC<ProfileItemProps> = (props) => {
                 </div>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-2 sm:gap-x-4 tracking-tighter sm:tracking-normal text-sm sm:text-base
                                  ${isSelected ? 'group-hover:text-white' : 'text-gray-500'}`}>
-                    {(type === "intern") || (type === "pms") ? (
+                    {(type === "intern") || (type === "pms") || (type === "pphd") ? (
                         <>
-                            <span className={`${isSelected ? '' : 'group-hover:text-interactive-primary'}`}>Period</span>
-                            <span>{period}</span>
+                            <span className={`${isSelected ? '' : 'group-hover:text-interactive-primary'}`}>Joined</span>
+                            <span>{joined}</span>
                         </>
                     ) : type === "faculty" ? (
                         <>

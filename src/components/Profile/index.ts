@@ -3,5 +3,10 @@ export { ProfileCardList } from './ProfileCardList';
 export { ProfileItem } from './ProfileItem';
 export { ProfileDetail } from './ProfileDetail';
 
-// Types
-export type { ProfileData, ProfileItemProps, ProfileDetailProps } from './types'; 
+// Data functions and types - all from profiles.ts
+export { 
+  getProfiles,
+  type ProfileData,
+  type ProfileItemProps,
+  type ProfileDetailProps,
+} from './profiles'; 
