@@ -68,13 +68,15 @@ function renderProfileWithLink(profileId: string, profiles: any[]): React.ReactN
       return (
         <Link 
           href={`/people/members?slug=${nameSlug}&id=${encodeURIComponent(profileId)}`}
-          className="group hover:text-brand-primary underline-offset-4 hover:underline hover:decoration-1 transition-all duration-200"
+          className="underline-offset-4 hover:underline hover:decoration-1 transition-all duration-200"
           title={`View ${profile.name_ko} (${profile.name_en})`}
         >
-          {displayName}
-          <svg className="w-3.5 h-3 ml-0.5 inline text-gray-500 group-hover:text-brand-primary transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
+          <span className="hover:text-brand-primary transition-colors [&:hover>svg]:text-brand-primary">
+            {displayName}
+            <svg className="w-3.5 h-3 ml-0.5 inline text-gray-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </span>
         </Link>
       );
     } else {
@@ -106,10 +108,14 @@ export async function StudyList({ className = '', count = null, studyItems }: St
   const studies = count ? rawData.slice(0, count) : rawData;
 
   return (
-    <div className={className}>
-      {studies.map((study, idx) => (
-        <div key={study.title} id={`study-${study.title.replace(/\s+/g, '-').toLowerCase()}`}>
-          <div className="flex justify-between items-center gap-2 mb-1">
+    <div className={`flex flex-col divide-y divide-gray-200 ${className}`}>
+      {studies.map((study, _) => (
+        <div 
+          key={study.title} 
+          id={`study-${study.title.replace(/\s+/g, '-').toLowerCase()}`}
+          className="w-full hover:border-brand-primary/30 hover:bg-slate-50 hover:shadow-sm bg-white first:rounded-t-lg last:rounded-b-lg px-4 py-3 transition-all duration-300 ease-out"
+        >
+          <div className="flex justify-between items-center gap-2 mb-2">
             {/* Title */}
             <div className="flex-1 min-w-0">
               {study.link ? (
@@ -122,10 +128,10 @@ export async function StudyList({ className = '', count = null, studyItems }: St
                 >
                   <span className="sm:text-[1.05em] leading-snug font-semibold text-gray-800 group-hover:text-brand-primary transition-colors">
                     {study.title}
+                    <svg className="w-4 h-4 ml-1 inline text-gray-500 group-hover:text-brand-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
                   </span>
-                  <svg className="w-4 h-4 text-gray-500 group-hover:text-brand-primary transition-colors flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
                 </Link>
               ) : (
                 <span className="sm:text-[1.05em] leading-snug font-semibold text-gray-800">
@@ -149,21 +155,16 @@ export async function StudyList({ className = '', count = null, studyItems }: St
           </div>
           
           {/* 참여자 정보 */}
-            <div className="text-[0.9em] text-gray-600">
-              <span className="text-gray-800">
-                - {study.profile_ids.map((profileId, idx) => (
-                  <span key={idx}>
-                    {renderProfileWithLink(profileId, profiles)}
-                    {idx < study.profile_ids.length - 1 ? ', ' : ''}
-                  </span>
-                ))}
-              </span>
-            </div>
-
-          {/* Divider */}
-          {idx < studies.length - 1 && (
-            <div className="border-b border-gray-200 my-3"></div>
-          )}
+          <div className="text-[0.9em] text-gray-600">
+            <span className="text-gray-800">
+              - {study.profile_ids.map((profileId, idx) => (
+                <span key={idx}>
+                  {renderProfileWithLink(profileId, profiles)}
+                  {idx < study.profile_ids.length - 1 ? ', ' : ''}
+                </span>
+              ))}
+            </span>
+          </div>
         </div>
       ))}
     </div>
