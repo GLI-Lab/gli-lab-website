@@ -234,9 +234,10 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                             </span>
                             <div className="">
                                 {studies.map((study: StudyData, index: number) => (
-                                    <div key={study.title} className="mb-2 leading-snug">
-                                        <div className="flex justify-between items-center gap-2">
-                                            <div className="flex-1">
+                                    <div key={study.title} className="mb-1 leading-snug">
+                                        <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-center">
+                                            <div className="flex items-start">
+                                                <span className="text-text-accent font-semibold pr-0.5 text-[14px] sm:text-[16px]">-</span>
                                                 <Link 
                                                     href={`/board/study#study-${study.title.replace(/\s+/g, '-').toLowerCase()}`}
                                                     className="text-[14px] sm:text-[15px] hover:text-interactive-hover hover:underline underline-offset-4"
@@ -245,6 +246,7 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                                                     {study.title}
                                                 </Link>
                                             </div>
+                                            <div></div>
                                             <div className="flex items-center gap-1 flex-shrink-0">
                                                 <span className="text-[12px] text-text-accent">
                                                     {formatDate(study.start_date)}

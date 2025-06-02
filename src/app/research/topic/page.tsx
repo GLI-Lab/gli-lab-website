@@ -122,7 +122,7 @@ export default function Page() {
                                             key={index}
                                             title={approach.title}
                                             items={approach.items}
-                                            bgColor="bg-gray-100"
+                                            bgColor="bg-slate-100"
                                         />
                                     ))}
                                 </div>
@@ -137,7 +137,7 @@ export default function Page() {
                                             key={index}
                                             title={application.title}
                                             items={application.items}
-                                            bgColor="bg-gray-100"
+                                            bgColor="bg-slate-100"
                                         />
                                     ))}
                                 </div>

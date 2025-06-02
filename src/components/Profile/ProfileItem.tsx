@@ -11,7 +11,7 @@ export const ProfileItem: React.FC<ProfileItemProps> = (props) => {
     return (
         <div
             onClick={onClick}
-            className={`border border-gray-300 p-2 flex gap-2 sm:gap-5 rounded-lg cursor-pointer group
+            className={`border border-gray-300 px-2 py-2 flex gap-2 sm:gap-5 rounded-lg cursor-pointer group
                        ${isSelected ? 'bg-brand-primary text-white' : 'bg-white hover:border-interactive-primary hover:shadow-lg'}`}
         >
             <div className="w-[115px] h-[135px] sm:w-[140px] sm:h-[160px] lg:w-[150px] lg:h-[170px] relative">

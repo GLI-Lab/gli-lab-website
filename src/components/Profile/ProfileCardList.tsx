@@ -161,7 +161,7 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
 
             {/* Detailed Profile (popup) */}
             {selectedCard && !init && (
-                <div className="fixed inset-0 z-[100] bg-black bg-opacity-20 1.5md:hidden ">
+                <div className="fixed inset-0 z-50 bg-black bg-opacity-50 1.5md:hidden">
                     <div className="fixed top-0 left-0 right-0 z-[150] px-6 pt-3 pb-24 max-h-screen flex justify-center">
                         <div className="w-[360px] 1.5md:w-[400px] max-h-screen pt-3 pb-0
                                        rounded-lg bg-white shadow-2xl border border-border-accent relative overflow-hidden"
@@ -169,14 +169,28 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
                             <div ref={popupRef} className="h-full w-full overflow-x-hidden overflow-y-scroll"
                                 onScroll={checkBottom}
                                 >
+                                {/* 닫기버튼 */}
                                 <button
-                                    className="absolute top-0 right-3 z-[200] text-5xl text-interactive-primary font-light"
-                                    onClick={() => {
-                                        setSelectedCard(null);
-                                        document.body.style.overflow = 'auto';
-                                    }}
+                                onClick={() => {
+                                    setSelectedCard(null);
+                                    document.body.style.overflow = 'auto';
+                                }}
+                                className="absolute top-1 right-1 z-[200]"
                                 >
-                                    &times;
+                                <svg
+                                    className="w-8 h-8"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path 
+                                    strokeLinecap="round" 
+                                    strokeLinejoin="round" 
+                                    strokeWidth={2} 
+                                    d="M6 18L18 6M6 6l12 12" 
+                                    />
+                                </svg>
                                 </button>
                                 <div className="flex flex-col items-center justify-center pb-8">
                                     <ProfileDetail {...selectedCard} studies={selectedProfileStudies}/>

@@ -75,7 +75,7 @@ export default function Header() {
         // fixed top-0: 항상 상단에 고정
         <nav className={`z-40`}>
             <div className={`fixed top-0 ${isScrolled ? "bg-[#f4f4f4] shadow-md" : "bg-white shadow-sm"} w-full border-b md:border-b-1`}>
-                <div className="max-w-screen-xl items-center mx-auto md:flex px-6">
+                <div className="max-w-screen-xl items-center mx-auto md:flex px-4 md:px-6">
 
                     {/* ##################################################### */}
                     {/* # 네비게이션 로고/텍스트 + 네비게이션 햄버거 아이콘 # */}
@@ -197,7 +197,7 @@ export default function Header() {
                     </div>
 
                     {/* ######################################### */}
-                    {/* # MOBILE: 네비게이션 메뉴 (menu 클릭시) # */}
+                    {/* # MOBILE: 네비게이션 메뉴 (menu 클릭시)    # */}
                     {/* ######################################### */}
                     <div className={`block md:hidden text-[15.5px] ${menu ? "animate-drop-in mb-2" : ""}`}>
                         {menu && (

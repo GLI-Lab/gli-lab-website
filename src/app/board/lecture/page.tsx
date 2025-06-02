@@ -31,7 +31,7 @@ export default async function Page() {
                     </p>
                 </div>
 
-                <div className="rounded-lg border border-gray-200 shadow-sm p-2 md:p-4 py-3 md:py-5">
+                <div className="rounded-lg border border-gray-200 shadow-sm">
                     <LectureList 
                         className="w-full text-left"
                         count={50}

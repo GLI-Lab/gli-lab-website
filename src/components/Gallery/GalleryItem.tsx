@@ -104,12 +104,12 @@ const GalleryItemComponent = ({
       {isInViewport && (
         <>
           {/* 썸네일 이미지 - ImageCarousel */}
-          <div className="cursor-grab relative">
+          <div className="cursor-grab relative overflow-hidden">
             <ImageCarousel
               images={item.images}
               title={item.title}
-              className="relative aspect-[7/6] overflow-hidden select-none"
-              imageClassName="object-cover"
+              className="relative aspect-[7/6] "
+              imageClassName="object-cover overflow-hidden select-none transform transition-all duration-500 md:hover:scale-105 md:brightness-85 md:saturate-60 md:contrast-90 md:grayscale-[50%] transition-all duration-300 md:hover:brightness-100 md:hover:saturate-100 md:hover:contrast-100 md:hover:grayscale-0"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
               showNavigation={!isCardHovered}
               showIndicators={!isCardHovered}

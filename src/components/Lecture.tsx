@@ -50,11 +50,11 @@ export async function LectureList({ className = '', count = null, lectureItems }
   const semesterData = count ? rawData.slice(0, count) : rawData
 
   return (
-    <div className={className}>
-      {semesterData.map((semesterInfo, semesterIdx) => (
-        <div key={semesterIdx} className="mb-4 last:mb-0">
+    <div className={`flex flex-col divide-y divide-gray-200 ${className}`}>
+      {semesterData.map((semesterInfo: SemesterData, semesterIdx: number) => (
+        <div key={semesterIdx} className="w-full hover:border-brand-primary/30 hover:bg-slate-50 hover:shadow-sm bg-white first:rounded-t-lg last:rounded-b-lg p-4 last:pb-4 pb-3 transition-all duration-300 ease-out">
           {/* 학기 헤더 */}
-          <div className="mb-2">
+          <div className="flex justify-between items-center gap-2 mb-2">
             <div className="relative">
               <span className="text-[0.8em] font-semibold bg-gray-100 px-[0.6em] py-[0.3em] rounded">
                 {semesterInfo.semester}
@@ -66,26 +66,21 @@ export async function LectureList({ className = '', count = null, lectureItems }
                   <span className="animate-pulse" style={{animationDelay: '200ms'}}>w</span>
                 </span>
               )}
+
             </div>
           </div>
+          
           
           {/* 해당 학기의 강의 목록 */}
           <div className="space-y-1.5 pl-1">
             {semesterInfo.courses.map((course, courseIdx) => (
               <div key={`${semesterInfo.semester}-${courseIdx}`} className="leading-snug">
-                {course.title}, <span className="italic">{course.university}</span>
+                {course.title}, <span className="text-[0.9em] italic text-gray-600">{course.university}</span>
               </div>
             ))}
           </div>
-
-          {/* Divider */}
-          {semesterIdx < semesterData.length - 1 && (
-            <div className="col-span-1 border-b border-gray-200 my-2"></div>
-          )}
         </div>
-        
       ))}
-      
     </div>
   )
 } 

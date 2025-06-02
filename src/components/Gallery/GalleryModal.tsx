@@ -15,10 +15,32 @@ interface GalleryModalProps {
 export function GalleryModal({ item, onClose }: GalleryModalProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isAtBottom, setIsAtBottom] = useState(true);
+  const [imageDisplayMode, setImageDisplayMode] = useState<'contain' | 'cover'>('cover');
+  const [isZoomEnabled, setIsZoomEnabled] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
 
   const handleImageChange = (index: number) => {
     setCurrentImageIndex(index);
+  };
+
+  // 현재 이미지 변경 시 비율 확인
+  useEffect(() => {
+    const img = new window.Image();
+    img.onload = () => {
+      checkImageRatio(img.naturalWidth, img.naturalHeight);
+    };
+    img.src = item.images[currentImageIndex];
+  }, [currentImageIndex, item.images]);
+
+  // 이미지 비율 확인 함수
+  const checkImageRatio = (naturalWidth: number, naturalHeight: number) => {
+    const imageRatio = naturalWidth / naturalHeight;
+    const targetRatio = 4 / 3; // 1.333...
+    const tolerance = 0.15; // 허용 오차
+    
+    // 현재 aspect-[4/3]와 비슷한 비율이면 줌 비활성화
+    const shouldDisableZoom = Math.abs(imageRatio - targetRatio) < tolerance;
+    setIsZoomEnabled(!shouldDisableZoom);
   };
 
   // ------------------------------------------------------------
@@ -76,40 +98,85 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
       onClick={handleBackdropClick}
     >
       <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] w-full overflow-hidden relative">
-        {/* 헤더 */}
-        <div className="relative">
+        {/* 닫기버튼 */}
           <button
             onClick={onClose}
-            className="absolute top-0 right-3 z-[200] text-5xl text-interactive-primary font-light"
+            className="absolute top-1 right-1 z-[200]"
           >
-            &times;
+            <svg
+              className="w-8 h-8"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path 
+                strokeLinecap="round" 
+                strokeLinejoin="round" 
+                strokeWidth={2} 
+                d="M6 18L18 6M6 6l12 12" 
+              />
+            </svg>
           </button>
-        </div>
 
         {/* 콘텐츠 */}
         <div 
           ref={contentRef}
-          className="overflow-y-auto max-h-[calc(90vh-80px)] relative" 
+          className="overflow-y-auto max-h-[calc(90vh-80px)] relative overscroll-none" 
           onScroll={handleScroll}
         >
           {/* 이미지 섹션 */}
-          <div className="relative cursor-grab">
+          <div 
+            className={`relative ${
+              isZoomEnabled 
+                ? (imageDisplayMode === 'contain' ? 'cursor-zoom-in' : 'cursor-zoom-out')
+                : 'cursor-default'
+            }`}
+            onClick={isZoomEnabled ? () => setImageDisplayMode(prev => prev === 'contain' ? 'cover' : 'contain') : undefined}
+          >
             <ImageCarousel
               images={item.images}
               title={item.title}
-              className="relative aspect-[4/3] bg-gray-100"
-              imageClassName="object-contain"
+              className="relative aspect-[4/3]"
+              imageClassName={`object-${imageDisplayMode}`}
               sizes="100vw"
               currentIndex={currentImageIndex}
               onImageChange={handleImageChange}
             />
+            
+            {/* 이미지 표시 모드 전환 버튼 */}
+            {isZoomEnabled && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setImageDisplayMode(prev => prev === 'contain' ? 'cover' : 'contain');
+                }}
+                className="absolute top-2 left-2 bg-black bg-opacity-50 hover:bg-opacity-70 rounded-full p-1.5 text-white transition-all"
+                title={imageDisplayMode === 'contain' ? '이미지 채우기' : '이미지 맞추기'}
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    strokeWidth={2} 
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" 
+                  />
+                </svg>
+              </button>
+            )}
           </div>
 
           {/* 정보 섹션 */}
-          <div className="p-6">
+          <div className="p-4 sm:p-6">
             {/* 타이틀 */}
             <div className="mb-2">
-              <h2 className="text-xl font-bold text-gray-900">
+              <div className="text-xl font-bold text-gray-900">
                 {item.title}
                 {isNewItem(item.date) && (
                   <span className="ml-1 text-xs font-bold text-red-500 inline-flex">
@@ -117,17 +184,11 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
                     <span className="animate-bounce" style={{animationDelay: '100ms'}}>e</span>
                     <span className="animate-bounce" style={{animationDelay: '200ms'}}>w</span>
                   </span>
-                  // <span className="ml-1 text-xs font-bold text-red-500 inline-flex">
-                  //   <span className="animate-pulse" style={{animationDelay: '0ms'}}>N</span>
-                  //   <span className="animate-pulse" style={{animationDelay: '100ms'}}>e</span>
-                  //   <span className="animate-pulse" style={{animationDelay: '200ms'}}>w</span>
-                  // </span>
                 )}
-              </h2>
+              </div>
             </div>
             
             {item.date && (
-              <div className="mb-4">
                 <p className="text-gray-900">
                   {new Date(item.date).toLocaleDateString('ko-KR', {
                     year: 'numeric',
@@ -135,7 +196,6 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
                     day: 'numeric'
                   })}
                 </p>
-              </div>
             )}
 
             <Separator className="my-3"/>
