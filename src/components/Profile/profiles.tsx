@@ -4,7 +4,6 @@ import fs from 'fs/promises';
 
 // Study data interface (to avoid importing from Study component)
 export interface StudyData {
-  id: string
   title: string
   start_date: string
   end_date: string | null
