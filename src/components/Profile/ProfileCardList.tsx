@@ -4,13 +4,16 @@ import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react'
 import { ProfileItem } from './ProfileItem';
 import { ProfileDetail } from './ProfileDetail';
 import { type ProfileData } from './profiles';
+import { StudyData } from '../Study';
 
 interface ProfileCardListProps {
     profiles: ProfileData[];
     defaultSelected?: ProfileData;
+    studies?: StudyData[];
 }
 
 const defaultProfile: ProfileData = {
+    id: "Unknown",
     type: "Unknown",
     title: "Unknown",
     name_en: "Unknown",
@@ -31,7 +34,23 @@ const defaultProfile: ProfileData = {
     linkedin: "#",
 };
 
-export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawProfiles, defaultSelected }) => {
+// 현재 프로필과 관련된 스터디를 필터링하는 함수
+const filterStudiesForProfile = (allStudies: StudyData[], profile: ProfileData) => {
+    return allStudies.filter(study => 
+        study.profile_ids.some(profileId => {
+            // <profile=[date] name>Full Name</> 형식 파싱
+            const profileMatch = profileId.match(/^<profile=(.+?)>(.+?)<\/>$/);
+            if (profileMatch) {
+                const [, id, displayName] = profileMatch;
+                return displayName.includes(profile.name_ko) || displayName.includes(profile.name_en);
+            }
+            // 기존 형식 [date] name
+            return profileId.includes(profile.name_ko);
+        })
+    );
+};
+
+export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawProfiles, defaultSelected, studies = [] }) => {
     const [init, setInit] = useState(true);
     const [isAtBottom, setIsAtBottom] = useState(false);
     const [selectedCard, setSelectedCard] = useState<ProfileData | null>(defaultSelected || null);
@@ -50,6 +69,7 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
     const processedProfiles: ProfileData[] = useMemo(() => rawProfiles.map(profile => ({
         ...defaultProfile,
         ...profile,
+        id: profile.id ?? defaultProfile.id,
         type: profile.type ?? defaultProfile.type,
         name_en: profile.name_en ?? defaultProfile.name_en,
         name_ko: profile.name_ko ?? defaultProfile.name_ko,
@@ -79,6 +99,13 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
         }
     }, [selectedCard]);
 
+    // URL 파라미터를 통해 선택된 경우 init을 false로 설정
+    useEffect(() => {
+        if (defaultSelected && defaultSelected.name_en !== "Byungkook Oh") {
+            setInit(false);
+        }
+    }, [defaultSelected]);
+
     const updateCanScroll = useCallback(() => {
         const disableScroll = (e: Event) => {
             if (popupRef.current && !popupRef.current.contains(e.target as Node)) {
@@ -102,12 +129,11 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
         }
     }, []);
 
-    // 기본 선택 설정은 이제 불필요 (서버에서 미리 설정됨)
-    // useEffect(() => {
-    //     if (processedProfiles.length > 0 && !selectedCard) {
-    //         setSelectedCard(processedProfiles.find(profile => profile.name_en === "Byungkook Oh") || processedProfiles[0]);
-    //     }
-    // }, [processedProfiles, selectedCard]);
+    // 선택된 프로필의 스터디만 필터링
+    const selectedProfileStudies = useMemo(() => {
+        if (!selectedCard) return [];
+        return filterStudiesForProfile(studies, selectedCard);
+    }, [studies, selectedCard]);
 
     useEffect(() => {
         updateCanScroll();
@@ -129,7 +155,7 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
             {/* Detailed Profile (left side) */}
             {selectedCard && (
                 <div className="hidden 1.5md:block 1.5md:pr-12 lg:pr-24 sticky self-start top-14">
-                    <ProfileDetail {...selectedCard}/>
+                    <ProfileDetail {...selectedCard} studies={selectedProfileStudies}/>
                 </div>
             )}
 
@@ -153,7 +179,7 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
                                     &times;
                                 </button>
                                 <div className="flex flex-col items-center justify-center pb-8">
-                                    <ProfileDetail {...selectedCard}/>
+                                    <ProfileDetail {...selectedCard} studies={selectedProfileStudies}/>
                                 </div>
 
                                 {!isAtBottom && (
