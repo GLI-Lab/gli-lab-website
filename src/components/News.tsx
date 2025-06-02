@@ -90,7 +90,7 @@ function renderContentWithProfileLinks(content: string, profiles: any[], newsInd
           key={`${newsIndex}-${lineIndex}-profile-${profileId}`}
           href={`/people/members?slug=${nameSlug}&id=${encodeURIComponent(profileId)}`}
           className="group text-brand-primary underline-offset-4 hover:underline hover:decoration-1"
-          title={`View ${profile.name_ko} (${profile.name_en})`}
+          title={`View ${profile.name_en} (${profile.name_ko})`}
         >
           {displayName}
           <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">

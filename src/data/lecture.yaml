@@ -1,3 +1,12 @@
+- semester: "2025 Fall"
+  courses:
+    - title: "[미정] Data Science (데이터사이언스)"
+      university: "Konkuk University"
+    - title: "[미정] Data Science (데이터사이언스)"
+      university: "Konkuk University"
+    - title: "[미정] Graduation Project 2 (졸업프로젝트2)"
+      university: "Konkuk University"
+
 - semester: "2025 Spring"
   courses:
     - title: "[0249] C Programming (C프로그래밍)"
