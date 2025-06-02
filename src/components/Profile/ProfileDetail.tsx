@@ -6,9 +6,11 @@ import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
 import { Separator } from "@/components/ui/separator"
 import { ProfileDetailProps } from './profiles';
+import { StudyData } from '../Study';
+import Link from 'next/link';
 
 export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
-    const {title, name_en, name_ko, admission, joined, bs, ms, phd, photo, email, interest, current_work, homepage, github, linkedin, academic_year, academic_semester } = props;
+    const {title, name_en, name_ko, admission, joined, bs, ms, phd, photo, email, interest, current_work, homepage, github, linkedin, academic_year, academic_semester, studies = [] } = props;
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30}, [Fade()]);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -27,6 +29,22 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
         setSelectedIndex(0);
         emblaApi?.scrollTo(0); // embla를 초기화하여 첫 번째 슬라이드로 이동
     }, [photo]); // photo 배열이 변경될 때마다 실행
+
+    // 날짜 포맷팅 함수
+    const formatDate = (dateString: string): string => {
+        const date = new Date(dateString);
+        const year = date.getFullYear().toString().slice(-2);
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}.${month}.${day}`;
+    };
+
+    const isOngoingStudy = (endDate: string | null): boolean => {
+        if (!endDate) return true;
+        const end = new Date(endDate);
+        const now = new Date();
+        return end > now;
+    };
 
     return (
         <div className="w-[300px] 1.5md:w-[320px] pt-4 bg-white flex flex-col items-center justify-center">
@@ -114,7 +132,6 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                     </div>
                 </div>
 
-
                 <Separator className="my-3"/>
 
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4`}>
@@ -142,12 +159,16 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1`}>
                     <span className={`text-text-accent font-medium`}>Email</span>
                     <div className="flex flex-col">
-                        {email.map((src, index) => (
-                            <a href={`mailto:${src}`} key={index}
-                               className="hover:text-interactive-hover hover:underline underline-offset-4">{src}</a>
-                        ))}
+                        {email.length > 0 && email.some(e => e.trim() !== '') ? (
+                            email.filter(e => e.trim() !== '').map((src, index) => (
+                                <a href={`mailto:${src}`} key={index}
+                                   className="hover:text-interactive-hover hover:underline underline-offset-4">{src}</a>
+                            ))
+                        ) : (
+                            <span className="text-gray-400">N/A</span>
+                        )}
                     </div>
-                    {homepage && (
+                    {homepage && homepage.trim() !== '' && homepage !== 'Unknown' ? (
                         <>
                             <span className={`text-text-accent font-medium`}>Home</span>
                             <a href={homepage} target="_blank" rel="" title={homepage}
@@ -155,12 +176,17 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                                 {homepage.replace("https://", "").split('/')[0]}
                             </a>
                         </>
+                    ) : (
+                        <>
+                            <span className={`text-text-accent font-medium`}>Home</span>
+                            <span className="text-gray-400">N/A</span>
+                        </>
                     )}
-                    {github.length > 0 && (
+                    {github.length > 0 && github.some(g => g.trim() !== '' && g !== 'Unknown') ? (
                         <>
                             <span className={`text-text-accent font-medium`}>Github</span>
                             <div className="flex flex-col">
-                                {github.map((src, index) => (
+                                {github.filter(g => g.trim() !== '' && g !== 'Unknown').map((src, index) => (
                                     <a href={src} rel="" title={src} key={index} target="_blank"
                                        className="hover:text-interactive-hover hover:underline underline-offset-4 break-all">
                                         {src.replace("https://github.com/", "")}
@@ -168,8 +194,13 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                                 ))}
                             </div>
                         </>
+                    ) : (
+                        <>
+                            <span className={`text-text-accent font-medium`}>Github</span>
+                            <span className="text-gray-400">N/A</span>
+                        </>
                     )}
-                    {linkedin && (
+                    {linkedin && linkedin.trim() !== '' && linkedin !== 'Unknown' ? (
                         <>
                             <span className={`text-text-accent font-medium`}>LinkedIn</span>
                             <a href={linkedin} rel="" title={linkedin} target="_blank"
@@ -177,8 +208,61 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                                 {linkedin.replace("https://www.linkedin.com/in/", "")}
                             </a>
                         </>
+                    ) : (
+                        <>
+                            <span className={`text-text-accent font-medium`}>LinkedIn</span>
+                            <span className="text-gray-400">N/A</span>
+                        </>
                     )}
                 </div>
+
+                {/* Participated Studies */}
+                {studies.length > 0 && (
+                    <>
+                        <Separator className="my-3"/>
+                        <div className={`grid gap-x-4 gap-y-1 my-3`}>
+                            <span className={`text-text-accent font-medium`}>
+                                Activities (
+                                <Link 
+                                    href="/board/study" 
+                                    className="hover:text-interactive-hover hover:underline underline-offset-4"
+                                    title="Go to study page"
+                                >
+                                    Study
+                                </Link>
+                                )
+                            </span>
+                            <div className="">
+                                {studies.map((study: StudyData, index: number) => (
+                                    <div key={study.title} className="mb-2 leading-snug">
+                                        <div className="flex justify-between items-center gap-2">
+                                            <div className="flex-1">
+                                                <Link 
+                                                    href={`/board/study#study-${study.title.replace(/\s+/g, '-').toLowerCase()}`}
+                                                    className="text-[14px] sm:text-[15px] hover:text-interactive-hover hover:underline underline-offset-4"
+                                                    title="View in study page"
+                                                >
+                                                    {study.title}
+                                                </Link>
+                                            </div>
+                                            <div className="flex items-center gap-1 flex-shrink-0">
+                                                <span className="text-[12px] text-text-accent">
+                                                    {formatDate(study.start_date)}
+                                                    {study.end_date ? ` ~ ${formatDate(study.end_date)}` : ' ~ '}
+                                                </span>
+                                                {isOngoingStudy(study.end_date) && (
+                                                    <span className="text-[10px] font-semibold bg-green-100 text-brand-primary px-1 py-0.5 rounded">
+                                                        진행중
+                                                    </span>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </>
+                )}
             </div>
         </div>
     );
