@@ -1,6 +1,9 @@
+import React from 'react';
 import yaml from 'js-yaml'
 import path from 'path';
 import fs from 'fs/promises';
+import Link from 'next/link';
+import { getProfiles } from './Profile';
 
 export interface NewsItem {
   date: string
@@ -32,9 +35,110 @@ export async function getNewsItems(): Promise<NewsItem[]> {
   );
 }
 
+// 영어 이름을 URL 친화적인 slug로 변환하는 함수
+function createSlugFromName(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '') // 특수문자 제거
+    .replace(/\s+/g, '-') // 공백을 하이픈으로
+    .replace(/-+/g, '-') // 연속 하이픈 제거
+    .trim();
+}
+
+// 텍스트에서 프로필 마크업을 찾아서 링크로 변환하는 함수
+function renderContentWithProfileLinks(content: string, profiles: any[], newsIndex: number, lineIndex: number): React.ReactNode {
+  if (!content) return content;
+  
+  // 프로필 ID로 프로필을 찾는 함수
+  const findProfileById = (id: string) => {
+    return profiles.find(profile => profile.id === id);
+  };
+
+  // <profile=ID>이름</> 패턴을 찾는 정규식
+  const profilePattern = /<profile=([^>]+)>([^<]+)<\/>/g;
+  const elements: React.ReactNode[] = [];
+  let lastIndex = 0;
+  let match;
+
+  while ((match = profilePattern.exec(content)) !== null) {
+    const [fullMatch, profileId, displayName] = match;
+    const matchStart = match.index;
+    const matchEnd = match.index + fullMatch.length;
+
+    // 매치 이전의 텍스트
+    if (matchStart > lastIndex) {
+      const beforeText = content.substring(lastIndex, matchStart);
+      if (beforeText) {
+        elements.push(
+          <span key={`${newsIndex}-${lineIndex}-text-${lastIndex}`}>
+            {beforeText}
+          </span>
+        );
+      }
+    }
+
+    // 프로필 찾기
+    const profile = findProfileById(profileId);
+    
+    if (profile) {
+      // 영어 이름을 slug로 변환하고 ID를 백업 파라미터로 추가
+      const nameSlug = createSlugFromName(profile.name_en);
+      
+      // 프로필이 있으면 링크로 변환
+      elements.push(
+        <Link 
+          key={`${newsIndex}-${lineIndex}-profile-${profileId}`}
+          href={`/people/members?slug=${nameSlug}&id=${encodeURIComponent(profileId)}`}
+          className="group text-brand-primary underline-offset-4 hover:underline hover:decoration-1"
+          title={`View ${profile.name_ko} (${profile.name_en})`}
+        >
+          {displayName}
+          <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </Link>
+      );
+    } else {
+      // 프로필이 없으면 경고를 띄우고 강조 표시
+      console.warn(`⚠️ Profile not found for ID: "${profileId}"`);
+      elements.push(
+        <span 
+          key={`${newsIndex}-${lineIndex}-missing-${profileId}`} 
+          className="text-red-500"
+          title={`Profile not found: ${profileId}`}
+        >
+          {displayName}
+        </span>
+      );
+    }
+
+    lastIndex = matchEnd;
+  }
+
+  // 마지막 매치 이후의 텍스트
+  if (lastIndex < content.length) {
+    const remainingText = content.substring(lastIndex);
+    if (remainingText) {
+      elements.push(
+        <span key={`${newsIndex}-${lineIndex}-text-${lastIndex}`}>
+          {remainingText}
+        </span>
+      );
+    }
+  }
+
+  // 매치가 없으면 원본 텍스트 반환
+  if (elements.length === 0) {
+    return content;
+  }
+
+  return <>{elements}</>;
+}
+
 export async function NewsList({ className = '', count = null, newsItems }: NewsListProps) {
   // newsItems가 전달되면 사용, 없으면 직접 가져오기 (하위 호환성)
-  const newsData = newsItems || await getNewsItems();
+  const newsData = await getNewsItems();
+  const profiles = await getProfiles();
   const latestNews = count ? newsData.slice(0, count) : newsData;
 
   return (
@@ -47,40 +151,35 @@ export async function NewsList({ className = '', count = null, newsItems }: News
           const formattedDate = `${year}.${month}`;
 
           const [title, ...description] = news.content.split('\n');
-          const descriptionText = description.length > 0 ? ` - ${description.join(' ')}` : '';
+          const descriptionText = description.length > 0 ? description.join(' ') : '';
 
           return (
-            <>
-              <div key={`${news.date}-${idx}`} className="contents leading-snug">
-                <div className="flex justify-center items-start -mt-0.5">
-                  <div className="relative">
-                    <span className="text-[0.8em] font-semibold bg-gray-100 px-[0.6em] py-[0.3em] rounded">
-                      {formattedDate}
+            <div key={`${news.date}-${idx}`} className="contents leading-snug">
+              <div className="flex justify-center items-start -mt-0.5">
+                <div className="relative">
+                  <span className="text-[0.8em] font-semibold bg-gray-100 px-[0.6em] py-[0.3em] rounded">
+                    {formattedDate}
+                  </span>
+                  {isNewItem(news.date) && (
+                    <span className="absolute -top-[0.65em] -left-1 text-[0.7em] font-semibold text-red-500 transform -rotate-12 inline-flex">
+                      <span className="animate-pulse" style={{animationDelay: '0ms'}}>N</span>
+                      <span className="animate-pulse" style={{animationDelay: '100ms'}}>e</span>
+                      <span className="animate-pulse" style={{animationDelay: '200ms'}}>w</span>
                     </span>
-                    {isNewItem(news.date) && (
-                      <span className="absolute -top-[0.65em] -left-1 text-[0.7em] font-semibold text-red-500 transform -rotate-12 inline-flex">
-                        <span className="animate-pulse" style={{animationDelay: '0ms'}}>N</span>
-                        <span className="animate-pulse" style={{animationDelay: '100ms'}}>e</span>
-                        <span className="animate-pulse" style={{animationDelay: '200ms'}}>w</span>
-                      </span>
-                    )}
-                  </div>
-                </div>
-                <div className="">
-                  {title}
-                  {descriptionText && (
-                    <div className="text-[0.9em] italic text-gray-600 mt-1">
-                      {description.join(' ')}
-                    </div>
                   )}
                 </div>
               </div>
-
-              {/* Divider */}
-              {idx < latestNews.length - 1 && (
-                <div className="col-span-2 border-b border-gray-200 my-1"></div>
-              )}
-            </>
+              <div className={`${idx < latestNews.length - 1 ? 'border-b border-gray-200 pb-1 mb-1' : ''}`}>
+                <div>
+                  {renderContentWithProfileLinks(title, profiles, idx, 0)}
+                </div>
+                {descriptionText && (
+                  <div className="text-[0.9em] italic text-gray-600 mt-1">
+                    {renderContentWithProfileLinks(descriptionText, profiles, idx, 1)}
+                  </div>
+                )}
+              </div>
+            </div>
           );
         })}
       </div>

@@ -2,6 +2,16 @@ import yaml from 'js-yaml';
 import path from 'path';
 import fs from 'fs/promises';
 
+// Study data interface (to avoid importing from Study component)
+export interface StudyData {
+  id: string
+  title: string
+  start_date: string
+  end_date: string | null
+  profile_ids: string[]
+  link?: string
+}
+
 export interface ProfileYAML {
   id: string;
   position: string;
@@ -33,6 +43,7 @@ export interface ProfileYAML {
 }
 
 export interface ProfileData {
+  id: string;
   type: string;
   title: string;
   name_en: string;
@@ -59,7 +70,7 @@ export interface ProfileItemProps extends ProfileData {
 }
 
 export interface ProfileDetailProps extends ProfileData {
-  // ProfileDetail에 특별한 추가 props가 있다면 여기에 정의
+  studies?: StudyData[];
 }
 
 // YAML 프로필을 컴포넌트에서 사용하는 형태로 변환
@@ -76,6 +87,7 @@ function transformProfile(yamlProfile: ProfileYAML): ProfileData {
   }) || [];
 
   return {
+    id: yamlProfile.id,
     type: yamlProfile.position,
     title: yamlProfile.title,
     name_en: yamlProfile.name.en,
