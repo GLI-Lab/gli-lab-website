@@ -5,7 +5,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
 import { Separator } from "@/components/ui/separator"
-import { ProfileDetailProps, parseAuthorString } from './profiles';
+import { ProfileDetailProps, parseAuthorString, findUserRoleInPaper } from './profiles';
 import { StudyData } from '../Study';
 import { PaperData } from './profiles';
 import Link from 'next/link';
@@ -287,29 +287,8 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                         </span>
                         <div className="">
                             {papers.slice(0, 5).map((paper: PaperData, index: number) => {
-                                // Find current user's role in this paper
-                                const getCurrentUserRole = () => {
-                                    const authors = paper.authors.map(author => {
-                                        const parsed = parseAuthorString(author);
-                                        return parsed.profileId;
-                                    });
-                                    
-                                    const currentUserIndex = authors.findIndex(authorId => authorId === id);
-                                    
-                                    if (currentUserIndex === -1) return null; // User not found in authors
-                                    
-                                    if (authors.length === 1) {
-                                        return '단독저자';
-                                    } else if (currentUserIndex === 0) {
-                                        return '1저자';
-                                    } else if (currentUserIndex === authors.length - 1) {
-                                        return '교신저자';
-                                    } else {
-                                        return '공저자';
-                                    }
-                                };
-
-                                const userRole = getCurrentUserRole();
+                                // Find current user's role in this paper using explicit role information
+                                const userRole = findUserRoleInPaper(paper.authors, id);
 
                                 return (
                                     <div key={paper.title} className="mb-1.5 leading-snug">

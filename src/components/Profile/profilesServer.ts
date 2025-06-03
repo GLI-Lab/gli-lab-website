@@ -1,7 +1,7 @@
 import yaml from 'js-yaml';
 import path from 'path';
 import fs from 'fs/promises';
-import { ProfileYAML, ProfileData, PaperData } from './profiles';
+import { ProfileYAML, ProfileData, PaperData, AuthorData, parseAuthorString } from './profiles';
 
 // YAML 프로필을 컴포넌트에서 사용하는 형태로 변환
 function transformProfile(yamlProfile: ProfileYAML): ProfileData {
@@ -86,13 +86,44 @@ export async function getProfiles(): Promise<ProfileData[]> {
   return rawData.map(transformProfile);
 }
 
+// Raw paper data interface (as it comes from YAML)
+interface RawPaperData {
+  title: string;
+  status: string;
+  link: string | null;
+  authors: { [role: string]: string }[];
+}
+
+// Raw paper data를 구조화된 PaperData로 변환
+function transformPaperData(rawPaper: RawPaperData): PaperData {
+  const authors: AuthorData[] = [];
+  
+  rawPaper.authors.forEach(authorObj => {
+    Object.entries(authorObj).forEach(([role, authorString]) => {
+      const parsed = parseAuthorString(authorString);
+      authors.push({
+        role,
+        profileId: parsed.profileId,
+        displayName: parsed.displayName
+      });
+    });
+  });
+
+  return {
+    title: rawPaper.title,
+    status: rawPaper.status,
+    link: rawPaper.link,
+    authors
+  };
+}
+
 // Paper 데이터를 가져오는 함수
 export async function getPapers(): Promise<PaperData[]> {
   try {
     const filePath = path.join(process.cwd(), 'src', 'data', 'paper.yaml');
     const yamlText = await fs.readFile(filePath, 'utf8');
-    const rawData = yaml.load(yamlText) as PaperData[];
-    return rawData;
+    const rawData = yaml.load(yamlText) as RawPaperData[];
+    return rawData.map(transformPaperData);
   } catch (error) {
     console.error('Error loading paper data:', error);
     return [];
