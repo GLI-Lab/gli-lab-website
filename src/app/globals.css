@@ -29,6 +29,17 @@
     }
 }
 
+/* 스크롤바 숨기기 유틸리티 */
+@layer utilities {
+    .scrollbar-hide {
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        scrollbar-width: none;  /* Firefox */
+    }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;  /* Safari and Chrome */
+    }
+}
+
 li {
     line-height: 1.25;
     /*text-indent: -1.5rem; !* 첫 번째 줄을 기본 위치로 되돌림 *!*/

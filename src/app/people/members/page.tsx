@@ -1,6 +1,6 @@
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
-import { ProfileCardList, getProfiles } from "@/components/Profile";
+import { ProfileCardList, getProfiles, getPapers } from "@/components/Profile";
 import { getStudyItems } from "@/components/Study";
 
 const PAGE_TITLE = `Members`
@@ -20,23 +20,30 @@ interface PageProps {
 export default async function Page({ searchParams }: PageProps) {
     const profiles = await getProfiles();
     const studies = await getStudyItems();
+    const papers = await getPapers();
     const resolvedSearchParams = await searchParams;
     const selectedId = resolvedSearchParams.id as string;
     
-    let defaultSelected = profiles.find(profile => profile.name_en === "Byungkook Oh") || profiles[0];
-    
-    // URL 파라미터에서 ID가 전달된 경우
+    // 프로필 찾기
+    let selectedProfile;
     if (selectedId) {
-        const foundProfile = profiles.find(profile => profile.id === selectedId);
-        if (foundProfile) {
-            defaultSelected = foundProfile;
-        }
+        selectedProfile = profiles.find(profile => profile.id === selectedId);
+    }
+    
+    // 기본 프로필 설정 (selectedId가 없거나 프로필을 찾지 못한 경우)
+    if (!selectedProfile) {
+        selectedProfile = profiles.find(profile => profile.id === "[2024.03] 오병국") || profiles[0];
     }
     
     return (
         <div className="max-w-screen-2xl mx-auto">
             <SubCover title={PAGE_TITLE}/>
-            <ProfileCardList profiles={profiles} defaultSelected={defaultSelected} studies={studies} />
+            <ProfileCardList 
+                profiles={profiles} 
+                selectedProfile={selectedProfile}
+                studies={studies} 
+                papers={papers} 
+            />
         </div>
     );
 }
