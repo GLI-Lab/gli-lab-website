@@ -14,28 +14,6 @@ interface ProfileCardListProps {
     papers?: PaperData[];
 }
 
-const defaultProfile: ProfileData = {
-    id: "Unknown",
-    type: "Unknown",
-    title: "Unknown",
-    name_en: "Unknown",
-    name_ko: "Unknown",
-    admission: "Unknown",
-    bs: "Unknown",
-    ms: "Unknown",
-    phd: "Unknown",
-    academic_year: null,
-    academic_semester: null,
-    joined: "Unknown",
-    interest: "Unknown",
-    current_work: [],
-    photo: ["/images/profiles/ku_basic_1_down.png"],
-    email: ["#"],
-    homepage: "#",
-    github: ["#"],
-    linkedin: "#",
-};
-
 // 현재 프로필과 관련된 스터디를 필터링하는 함수
 const filterStudiesForProfile = (allStudies: StudyData[], profile: ProfileData) => {
     return allStudies.filter(study => 
@@ -43,16 +21,14 @@ const filterStudiesForProfile = (allStudies: StudyData[], profile: ProfileData) 
             // <profile=[date] name>Full Name</> 형식 파싱
             const profileMatch = participant.match(/^<profile=(.+?)>(.+?)<\/>$/);
             if (profileMatch) {
-                const [, id, displayName] = profileMatch;
-                return displayName.includes(profile.name_ko) || displayName.includes(profile.name_en);
+                const [, id, ] = profileMatch;
+                return id === profile.id;
             }
-            // 기존 형식 [date] name
-            return participant.includes(profile.name_ko);
         })
     );
 };
 
-export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawProfiles, selectedProfile, studies = [], papers = [] }) => {
+export function ProfileCardList({ profiles, selectedProfile, studies = [], papers = [] }: ProfileCardListProps) {
     const [init, setInit] = useState(true);
     const [isAtBottom, setIsAtBottom] = useState(false);
     const [selectedCard, setSelectedCard] = useState<ProfileData | null>(selectedProfile);
@@ -69,29 +45,6 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
         {title: 'Prospective M.S. Students', type: 'pms'},
         {title: 'Interns', type: 'intern'},
     ];
-
-    const processedProfiles: ProfileData[] = useMemo(() => rawProfiles.map(profile => ({
-        ...defaultProfile,
-        ...profile,
-        id: profile.id ?? defaultProfile.id,
-        type: profile.type ?? defaultProfile.type,
-        name_en: profile.name_en ?? defaultProfile.name_en,
-        name_ko: profile.name_ko ?? defaultProfile.name_ko,
-        admission: profile.admission ?? defaultProfile.admission,
-        bs: profile.bs ?? defaultProfile.bs,
-        ms: profile.ms ?? defaultProfile.ms,
-        phd: profile.phd ?? defaultProfile.phd,
-        academic_year: profile.academic_year ?? defaultProfile.academic_year,
-        academic_semester: profile.academic_semester ?? defaultProfile.academic_semester,
-        joined: profile.joined ?? defaultProfile.joined,
-        interest: profile.interest ?? defaultProfile.interest,
-        current_work: profile.current_work && profile.current_work.length > 0 ? profile.current_work : defaultProfile.current_work,
-        photo: profile.photo && profile.photo.length > 0 ? profile.photo : defaultProfile.photo,
-        email: profile.email && profile.email.length > 0 ? profile.email : defaultProfile.email,
-        homepage: profile.homepage || defaultProfile.homepage,
-        github: profile.github && profile.github.length > 0 ? profile.github : defaultProfile.github,
-        linkedin: profile.linkedin || defaultProfile.linkedin,
-    })), [rawProfiles]);
 
     const handleProfileClick = useCallback((profile: ProfileData) => {
         if (profile !== selectedCard) {
@@ -205,7 +158,7 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
         <div className="max-w-screen-1.5xl mx-auto px-3 sm:px-4 py-8 md:py-12 flex flex-row">
             {/* Detailed Profile (left side) */}
             {selectedCard && (
-                <div className="hidden 1.5md:block w-[320px] 1.5md:w-[350px] 1.5md:mr-12 lg:mr-20 sticky self-start top-16 pt-4">
+                <div className="hidden 1.5md:block 1.5md:w-[350px] 1.5md:mr-12 lg:mr-20 sticky self-start top-16 pt-4">
                     <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pr-8 -mr-8 pb-20">
                         <ProfileDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers}/>
                     </div>
@@ -215,7 +168,7 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
             {/* Detailed Profile (popup) - URL로 접근한 경우 모바일에서는 바로 열지 않음 */}
             {selectedCard && !init && (
                 <div onClick={handleBackdropClick} className="fixed inset-0 z-50 bg-black bg-opacity-75 flex items-center justify-center 1.5md:hidden">
-                    <div className="max-h-[90vh] w-[360px] 1.5md:w-[400px] flex flex-col items-center justify-center rounded-lg bg-white relative overflow-hidden">
+                    <div className="max-h-[90vh] w-[350px] flex flex-col items-center justify-center rounded-lg bg-white relative overflow-hidden">
                         {/* 닫기버튼 */}
                         <button
                             onClick={() => {
@@ -240,10 +193,10 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
                             </svg>
                         </button>
 
-                        {/* 콘텐츠 (주소창 고려해서 -60px) */}
+                        {/* 콘텐츠 (주소창 고려해서 -20px) */}
                         <div 
                             ref={contentRef}
-                            className="overflow-y-auto w-[320px] 1.5md:w-[350px] max-h-[calc(90vh-60px)] relative overscroll-none scrollbar-hide pt-2 pb-10" 
+                            className="overflow-y-auto w-[320px] max-h-[calc(90vh-20px)] relative overscroll-none scrollbar-hide pt-2 pb-10" 
                             onScroll={handleScroll}
                         >
                             <ProfileDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers}/>
@@ -282,7 +235,7 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
                             <div className="w-14 border-b-4 border-border-accent mt-1 mb-6"></div>
                         </div>
                         <div className="grid grid-cols-1 1.5xl:grid-cols-2 gap-x-4 gap-y-3 sm:gap-y-4 mb-10">
-                            {processedProfiles
+                            {profiles
                                 .filter(profile => profile.type === category.type)
                                 .map((profile, index) => (
                                     <div
@@ -303,4 +256,4 @@ export const ProfileCardList: React.FC<ProfileCardListProps> = ({ profiles: rawP
             </div>
         </div>
     );
-}; 
+} 

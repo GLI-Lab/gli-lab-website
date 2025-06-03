@@ -115,7 +115,7 @@ export async function StudyList({ className = '', count = null, studyItems }: St
           id={`study-${study.title.replace(/\s+/g, '-').toLowerCase()}`}
           className="w-full hover:bg-brand-primary/5 bg-white first:rounded-t-lg last:rounded-b-lg px-4 py-3 transition-all duration-300 ease-out"
         >
-          <div className="flex justify-between items-center gap-2 mb-2">
+          <div className="flex justify-between items-start gap-2 mb-2">
             {/* Title */}
             <div className="flex-1 min-w-0">
               {study.link ? (
@@ -141,7 +141,7 @@ export async function StudyList({ className = '', count = null, studyItems }: St
             </div>
             
             {/* 기간 정보 */}
-            <div className="text-[0.9em] text-gray-600 text-right flex-shrink-0 flex items-center gap-1">
+            <div className="text-[0.85em] text-gray-600 text-right flex-shrink-0 flex items-center gap-1 mt-0.5">
               <span>
                 {formatDate(study.start_date)}
                 {study.end_date ? ` ~ ${formatDate(study.end_date)}` : ' ~ '}

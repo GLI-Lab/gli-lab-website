@@ -27,6 +27,7 @@ export default function Page() {
                     <h2 className="font-bold tracking-tighter text-[28px] md:text-[36px]">
                         About GLI Lab.
                     </h2>
+                    
                     <p className="text-home">
                         We strive for technological innovation across various real-world applications
                         such as explainable and conversational recommendations, information retrieval and extraction,

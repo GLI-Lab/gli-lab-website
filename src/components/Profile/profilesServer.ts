@@ -5,41 +5,41 @@ import { ProfileYAML, ProfileData, PaperData } from './profiles';
 
 // YAML 프로필을 컴포넌트에서 사용하는 형태로 변환
 function transformProfile(yamlProfile: ProfileYAML): ProfileData {
-  // GitHub URL 형식 통일
-  const githubUrls = yamlProfile.contacts.github?.map(github => {
-    if (github.startsWith('https://')) {
-      return github;
-    } else if (github.startsWith('github.com/')) {
-      return `https://${github}`;
-    } else {
-      return `https://github.com/${github}`;
-    }
-  }) || [];
+  // GitHub URL 정규화
+  const githubUrls = (yamlProfile.contacts.github || []).map(github => {
+    return github.startsWith('https://') ? github : `https://github.com/${github}`;
+  });
+
+  // LinkedIn URL 정규화
+  const linkedinUrls = (yamlProfile.contacts.linkedin || []).map(linkedin => {
+    return linkedin.startsWith('https://') ? linkedin : `https://www.linkedin.com/in/${linkedin}`;
+  });
+
+  // Photo 경로 정규화
+  const photoUrls = (yamlProfile.photos || []).map(photo => {
+    return photo.startsWith('/images/profiles/') ? photo : `/images/profiles/${photo}`;
+  });
 
   return {
-    id: yamlProfile.id,
-    type: yamlProfile.position,
-    title: yamlProfile.title,
-    name_en: yamlProfile.name.en,
-    name_ko: yamlProfile.name.ko,
-    admission: yamlProfile.education.admission,
-    bs: yamlProfile.education.bs,
-    ms: yamlProfile.education.ms,
-    phd: yamlProfile.education.phd,
+    id: yamlProfile.id || "",
+    type: yamlProfile.position || "",
+    title: yamlProfile.title || "",
+    name_en: yamlProfile.name.en || "",
+    name_ko: yamlProfile.name.ko || "",
+    admission: yamlProfile.education.admission || "",
+    bs: yamlProfile.education.bs || "",
+    ms: yamlProfile.education.ms || "",
+    phd: yamlProfile.education.phd || "",
     academic_year: yamlProfile.academic.year,
     academic_semester: yamlProfile.academic.semester,
-    joined: yamlProfile.joined,
-    interest: yamlProfile.interests.join(', '),
-    current_work: yamlProfile.current_work,
-    photo: yamlProfile.photos,
-    email: yamlProfile.contacts.emails,
-    homepage: yamlProfile.contacts.homepage,
+    joined: yamlProfile.joined || "",
+    interest: yamlProfile.interests || [],
+    current_work: yamlProfile.current_work || [],
+    photo: photoUrls.length > 0 ? photoUrls : ["/images/profiles/ku_basic_1_down.png"],
+    email: yamlProfile.contacts.emails || [],
+    homepage: yamlProfile.contacts.homepage || [],
     github: githubUrls,
-    linkedin: yamlProfile.contacts.linkedin ? 
-      yamlProfile.contacts.linkedin.startsWith('https://') ? 
-        yamlProfile.contacts.linkedin : 
-        `https://www.linkedin.com/in/${yamlProfile.contacts.linkedin}` 
-      : null,
+    linkedin: linkedinUrls,
   };
 }
 
