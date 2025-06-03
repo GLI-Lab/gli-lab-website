@@ -17,15 +17,15 @@ export interface PaperData {
 
 export interface ProfileYAML {
   id: string;
-  position: string;
-  title: string;
+  position: string | null;
+  title: string | null;
   name: {
-    en: string;
-    ko: string;
+    en: string | null;
+    ko: string | null;
   };
   education: {
     admission: string | null;
-    bs: string;
+    bs: string | null;
     ms: string | null;
     phd: string | null;
   };
@@ -34,14 +34,14 @@ export interface ProfileYAML {
     semester: number | null;
   };
   joined: string | null;
-  interests: string[];
-  current_work: string[];
-  photos: string[];
+  interests: string[] | null;
+  current_work: string[] | null;
+  photos: string[] | null;
   contacts: {
-    emails: string[];
-    homepage: string | null;
+    emails: string[] | null;
+    homepage: string[] | null;
     github: string[] | null;
-    linkedin: string | null;
+    linkedin: string[] | null;
   };
 }
 
@@ -51,20 +51,20 @@ export interface ProfileData {
   title: string;
   name_en: string;
   name_ko: string;
-  admission: string | null;
+  admission: string;
   bs: string;
-  ms: string | null;
-  phd: string | null;
+  ms: string;
+  phd: string;
   academic_year: number | null;
   academic_semester: number | null;
-  joined: string | null;
-  interest: string;
+  joined: string;
+  interest: string[];
   current_work: string[];
   photo: string[];
   email: string[];
-  homepage: string | null;
+  homepage: string[];
   github: string[];
-  linkedin: string | null;
+  linkedin: string[];
 }
 
 export interface ProfileItemProps extends ProfileData {

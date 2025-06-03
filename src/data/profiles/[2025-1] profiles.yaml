@@ -27,21 +27,14 @@
     - Knowledge-based Systems
     - NLP
   current_work:
-    - "Lab Management & Research Direction"
-    - "Mentoring Graduate Students"
-  photos:
-    - /images/profiles/[2024.03] 오병국1.jpg
-    - /images/profiles/[2024.03] 오병국2.jpg
-    - /images/profiles/[2024.03] 오병국3.jpg
+    - Lab Management & Research Direction
+    - Mentoring Graduate Students
+  photos: ["[2024.03] 오병국1.jpg", "[2024.03] 오병국2.jpg", "[2024.03] 오병국3.jpg"]
   contacts:
-    emails:
-      - bkoh@konkuk.ac.kr
-      - bkoh509@gmail.com
-    homepage: https://bkoh509.github.io
-    github:
-      - GLI-Lab
-      - bkoh509
-    linkedin: bkoh509
+    emails: ["bkoh@konkuk.ac.kr", "bkoh509@gmail.com" ]
+    homepage: ["https://bkoh509.github.io"]
+    github: ["GLI-Lab", "bkoh509"]
+    linkedin: ["bkoh509"]
 
 ###############################################
 # MS Students
@@ -68,15 +61,11 @@
   current_work:
     - "논문 작성 (제1저자, 공저자)"
     - "프로젝트 참여 및 심화 연구 훈련"
-  photos:
-    - /images/profiles/[2024.06] 서지명1.jpg
+  photos: ["[2024.06] 서지명1.jpg"]
   contacts:
-    emails:
-      - myungs8562@gmail.com
-      - rfyam8562@konkuk.ac.kr
+    emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"]
     homepage: null
-    github:
-      - seojmm
+    github: ["seojmm"]
     linkedin: null
 
 - id: "[2024.07] 백혜윤"
@@ -101,16 +90,11 @@
   current_work:
     - "논문 작성 (제1저자, 공저자)"
     - "프로젝트 참여 및 심화 연구 훈련"
-  photos:
-    - /images/profiles/[2024.07] 백혜윤1.jpg
-    - /images/profiles/[2024.07] 백혜윤2.jpg
+  photos: ["[2024.07] 백혜윤1.jpg", "[2024.07] 백혜윤2.jpg"]
   contacts:
-    emails:
-      - hyeyoonbaek@gmail.com
-      - hannah100@konkuk.ac.kr
+    emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"]
     homepage: null
-    github:
-      - hannah100-coder
+    github: ["hannah100-coder"]
     linkedin: null
 
 - id: "[2024.11] 이동천"
@@ -135,14 +119,11 @@
   current_work:
     - "논문 작성 (제1저자, 공저자)"
     - "프로젝트 참여 및 심화 연구 훈련"
-  photos:
-    - /images/profiles/[2024.10] 이동천1.jpg
+  photos: ["[2024.10] 이동천1.jpg"]
   contacts:
-    emails:
-      - ehdcjs987@gmail.com
-    homepage: https://lunar-typhoon-5d9.notion.site/13684a9fc4f28073ae0ac3a195697be3?pvs=4
-    github:
-      - leedongcheon
+    emails: ["ehdcjs987@gmail.com"]
+    homepage: ["https://lunar-typhoon-5d9.notion.site/13684a9fc4f28073ae0ac3a195697be3?pvs=4"]
+    github: ["leedongcheon"]
     linkedin: null
 
 ###############################################
@@ -167,14 +148,10 @@
     - Graph ML/DL
   current_work:
     - "스터디 참여 및 기초 연구 훈련"
-  photos:
-    - /images/profiles/[2025.04] 구본유1.jpg
-    - /images/profiles/[2025.04] 구본유2.jpg
-    - /images/profiles/[2025.04] 구본유3.jpg
+  photos: ["[2025.04] 구본유1.jpg", "[2025.04] 구본유2.jpg", "[2025.04] 구본유3.jpg"]
   contacts:
-    emails:
-      - number9you@gmail.com
-    homepage: https://sites.google.com/view/bonyoukoo/home
+    emails: ["number9you@gmail.com"]
+    homepage: ["https://sites.google.com/view/bonyoukoo/home"]
     github: null
     linkedin: null
 
@@ -200,15 +177,11 @@
     - Graph ML/DL
   current_work:
     - "스터디 참여 및 기초 연구 훈련"
-  photos:
-    - /images/profiles/[2025.01] 구해윤1.jpg
-    - /images/profiles/[2025.01] 구해윤2.jpg
+  photos: ["[2025.01] 구해윤1.jpg", "[2025.01] 구해윤2.jpg"]
   contacts:
-    emails:
-      - haeyoonkoo61@gmail.com
+    emails: ["haeyoonkoo61@gmail.com"]
     homepage: null
-    github:
-      - sunyoonk
+    github: ["sunyoonk"]
     linkedin: null
 
 ###############################################
@@ -233,14 +206,11 @@
     - Graph ML/DL
   current_work:
     - "스터디 참여 및 기초 연구 훈련"
-  photos:
-    - /images/profiles/[2024.03] 김윤진1.jpg
+  photos: ["[2024.03] 김윤진1.jpg"]
   contacts:
-    emails:
-      - yj071099@gmail.com
+    emails: ["yj071099@gmail.com"]
     homepage: null
-    github:
-      - ksdjyj071099
+    github: ["ksdjyj071099"]
     linkedin: null
 
 - id: "[2024.06] 이영호"
@@ -262,14 +232,11 @@
     - Graph ML/DL
   current_work:
     - "스터디 참여 및 기초 연구 훈련"
-  photos:
-    - /images/profiles/[2024.06] 이영호1.jpg
+  photos: ["[2024.06] 이영호1.jpg"]
   contacts:
-    emails:
-      - james20042016@gmail.com
+    emails: ["james20042016@gmail.com"]
     homepage: null
-    github:
-      - yhLee205
+    github: ["yhLee205"]
     linkedin: null
 
 - id: "[2024.07] 정우석"
@@ -293,14 +260,11 @@
   current_work:
     - "논문 작성 (제1저자)"
     - "스터디 참여 및 기초 연구 훈련"
-  photos:
-    - /images/profiles/[2024.07] 정우석1.jpg
+  photos: ["[2024.07] 정우석1.jpg"]
   contacts:
-    emails:
-      - oseoko8@gmail.com
+    emails: ["oseoko8@gmail.com"]
     homepage: null
-    github:
-      - oseoko
+    github: ["oseoko"]
     linkedin: null
 
 - id: "[2024.07] 지상준"
@@ -324,16 +288,11 @@
   current_work:
     - "논문 작성 (제1저자)"
     - "스터디 참여 및 기초 연구 훈련"
-  photos:
-    - /images/profiles/[2024.07] 지상준1.jpg
-    - /images/profiles/[2024.07] 지상준2.jpg
+  photos: ["[2024.07] 지상준1.jpg", "[2024.07] 지상준2.jpg"]
   contacts:
-    emails:
-      - wltkdwns0220@naver.com
-      - wltkdwns0220@konkuk.ac.kr
-    homepage: https://approxy02.github.io/homepage/
-    github:
-      - Approxy02
+    emails: ["wltkdwns0220@naver.com", "wltkdwns0220@konkuk.ac.kr"]
+    homepage: ["https://approxy02.github.io/homepage/"]
+    github: ["Approxy02"]
     linkedin: null
 
 - id: "[2024.07] 박지연"
@@ -357,12 +316,9 @@
   current_work:
     - "논문 작성 (공저자)"
     - "스터디 참여 및 기초 연구 훈련"
-  photos:
-    - /images/profiles/[2024.07] 박지연1.jpg
-    - /images/profiles/[2024.07] 박지연2.jpg
+  photos: ["[2024.07] 박지연1.jpg", "[2024.07] 박지연2.jpg"]
   contacts:
-    emails:
-      - yeoniyoui@gmail.com
+    emails: ["yeoniyoui@gmail.com"]
     homepage: null
     github: null
     linkedin: null
@@ -388,15 +344,11 @@
   current_work:
     - "논문 작성 (제1저자)"
     - "스터디 참여 및 기초 연구 훈련"
-  photos:
-    - /images/profiles/[2024.10] 김영진1.jpg
-    - /images/profiles/[2024.10] 김영진2.jpg
+  photos: ["[2024.10] 김영진1.jpg", "[2024.10] 김영진2.jpg"]
   contacts:
-    emails:
-      - ab960119@naver.com
+    emails: ["ab960119@naver.com"]
     homepage: null
-    github:
-      - 0jin03
+    github: ["0jin03"]
     linkedin: null
 
 - id: "[2024.12] 최진호"
@@ -421,13 +373,9 @@
   current_work:
     - "논문 작성 (공저자)"
     - "스터디 참여 및 기초 연구 훈련"
-  photos:
-    - /images/profiles/[2024.12] 최진호1.jpg
-    - /images/profiles/[2024.12] 최진호2.jpeg
+  photos: ["[2024.12] 최진호1.jpg", "[2024.12] 최진호2.jpeg"]
   contacts:
-    emails:
-      - jhc12931293@gmail.com
-      - jinho159@konkuk.ac.kr
+    emails: ["jhc12931293@gmail.com", "jinho159@konkuk.ac.kr"]
     homepage: null
     github: null
     linkedin: null
@@ -454,13 +402,9 @@
   current_work:
     - "논문 작성 (공저자)"
     - "스터디 참여 및 기초 연구 훈련"
-  photos:
-    - /images/profiles/[2025.03] 조은영1.jpg
-    - /images/profiles/[2025.03] 조은영2.jpg
-    - /images/profiles/[2025.03] 조은영3.jpg
+  photos: ["[2025.03] 조은영1.jpg", "[2025.03] 조은영2.jpg", "[2025.03] 조은영3.jpg"]
   contacts:
-    emails:
-      - tina6022@naver.com
+    emails: ["tina6022@naver.com"]
     homepage: null
     github: null
     linkedin: null
@@ -485,14 +429,9 @@
     - Bioinfomatics
   current_work:
     - "스터디 참여 및 기초 연구 훈련"
-  photos:
-    - /images/profiles/[2025.03] 김상준1.jpg
-    - /images/profiles/[2025.03] 김상준2.jpg
-    - /images/profiles/[2025.03] 김상준3.jpg
+  photos: ["[2025.03] 김상준1.jpg", "[2025.03] 김상준2.jpg", "[2025.03] 김상준3.jpg"]
   contacts:
-    emails:
-      - drbug2000@naver.com
+    emails: ["drbug2000@naver.com"]
     homepage: null
-    github:
-      - drbug2000
+    github: ["drbug2000"]
     linkedin: null

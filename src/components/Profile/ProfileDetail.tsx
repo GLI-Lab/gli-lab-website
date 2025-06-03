@@ -5,13 +5,13 @@ import React, { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
 import { Separator } from "@/components/ui/separator"
-import { ProfileDetailProps } from './profiles';
+import { ProfileDetailProps, parseAuthorString } from './profiles';
 import { StudyData } from '../Study';
-import { PaperData, parseAuthorString } from './profiles';
+import { PaperData } from './profiles';
 import Link from 'next/link';
 
 export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
-    const {title, name_en, name_ko, admission, joined, bs, ms, phd, photo, email, interest, current_work, homepage, github, linkedin, academic_year, academic_semester, studies = [], papers = [] } = props;
+    const {id, title, name_en, name_ko, admission, joined, bs, ms, phd, photo, email, interest, current_work, homepage, github, linkedin, academic_year, academic_semester, studies = [], papers = [] } = props;
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30}, [Fade()]);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -45,15 +45,6 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
         const end = new Date(endDate);
         const now = new Date();
         return end > now;
-    };
-
-    // Paper author 문자열을 포맷팅하는 함수
-    const formatAuthors = (authors: string[]): string => {
-        const formattedAuthors = authors.map(author => {
-            const parsed = parseAuthorString(author);
-            return parsed.displayName;
-        });
-        return formattedAuthors.join(' and ');
     };
 
     // Status에 따른 아이콘 반환
@@ -99,151 +90,127 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                     ))}
                 </div>
             </div>
-            <div className="w-full pt-3 text-[16px] sm:text-[17px]">
+            <div className="w-full pt-3 text-[16px] md:text-[17px]">
                 <div className="mb-6">
-                    <h1 className="text-[26px] font-bold leading-none">{name_ko}</h1>
-                    <h1 className="text-[22px]">{name_en}</h1>
+                    <h1 className="text-[24px] md:text-[26px] font-bold leading-none">{name_ko}</h1>
+                    <h1 className="text-[20px] md:text-[22px]">{name_en}</h1>
                 </div>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1`}>
-                    <span className={`text-brand-primary highlight text-[18px] sm:text-[19px]`}>{title}</span>
+                    <span className={`text-brand-primary highlight text-[18px] md:text-[19px]`}>{title}</span>
                 </div>
                 <div className="my-3"></div>
-                <div className={`grid grid-cols-[auto,1fr] gap-x-4`}>
-                    {academic_year !== null && academic_semester !== null && (
-                        <>
-                            <span className={`text-text-accent font-medium`}>Status</span>
-                            <span>{academic_year}학년 {academic_semester}학기</span>
-                        </>
+
+                {/* Status */}
+                <div className="grid grid-cols-[auto,1fr] gap-x-4 items-center">
+                    {academic_year && academic_semester && (
+                        <><span className={`text-text-accent font-medium`}>Status</span><span className="text-[15.5px] md:text-[16.5px]">{academic_year}학년 {academic_semester}학기</span></>
                     )}
-                    {admission && admission !== "Unknown" && (
-                        <>
-                            <span className={`text-text-accent font-medium`}>Admission</span>
-                            <span>{admission}</span>
-                        </>
+                    {admission && (
+                        <><span className={`text-text-accent font-medium`}>Admission</span><span className="text-[15.5px] md:text-[16.5px]">{admission}</span></>
                     )}
-                    {joined && joined !== "Unknown" && (
-                        <>
-                            <span className={`text-text-accent font-medium`}>Joined</span>
-                            <span>{joined}</span>
-                        </>
+                    {joined && (
+                        <><span className={`text-text-accent font-medium`}>Joined</span><span className="text-[15.5px] md:text-[16.5px]">{joined}</span></>
                     )}
                 </div>
                 <Separator className="my-3"/>
 
                 {/* Research Interests */}
-                <div className={`grid gap-x-4 gap-y-1 my-3`}>
-                    <span className={`text-text-accent font-medium`}>Research Interests</span>
-                    <div className="">
-                        {interest.split(',').map((item, index) => (
-                            <React.Fragment key={index}>
-                                <span key={index} className="text-text-accent font-semibold pr-0.5">#</span>
-                                <span className="pr-2">{item.trim()} </span>
-                            </React.Fragment>
-                        ))}
+                {interest.length > 0 && (
+                    <div className={`grid gap-x-4 gap-y-1 my-3`}>
+                        <span className={`text-text-accent font-medium`}>Research Interests</span>
+                        <div className="">
+                            {interest.map((item, index) => (
+                                <React.Fragment key={index}>
+                                    <span key={index} className="text-text-accent font-semibold pr-0.5 text-[15.5px] md:text-[16.5px]">#</span>
+                                    <span className="pr-2 text-[15.5px] md:text-[16.5px]">{item.trim()} </span>
+                                </React.Fragment>
+                            ))}
+                        </div>
                     </div>
-                </div>
+                )}
 
                 {/* Current Work */}
-                <div className={`grid gap-x-4 gap-y-1 my-3`}>
-                    <span className={`text-text-accent font-medium`}>Current Work</span>
-                    <div className="">
-                        {current_work.map((work, index) => (
-                            <div key={index} className="mb-1 leading-snug">
-                                <span className="text-text-accent font-semibold pr-0.5 text-[15px] sm:text-[16px]">-</span>
-                                <span className="">{work}</span>
-                            </div>
-                        ))}
+                {current_work.length > 0 && (
+                    <div className={`grid gap-x-4 gap-y-1 my-3`}>
+                        <span className={`text-text-accent font-medium`}>Current Work</span>
+                        <div className="">
+                            {current_work.map((work, index) => (
+                                <div key={index} className="mb-1 leading-snug">
+                                    <span className="text-text-accent font-semibold pr-0.5 text-[15.5px] md:text-[16.5px]">-</span>
+                                    <span className="text-[15.5px] md:text-[16.5px]">{work}</span>
+                                </div>
+                            ))}
+                        </div>
                     </div>
-                </div>
-
+                )}
                 <Separator className="my-3"/>
 
-                <div className={`grid grid-cols-[auto,1fr] gap-x-4`}>
-                    {bs && bs !== "Unknown" && (
-                        <>
-                            <span className={`text-text-accent font-medium`}>B.S.</span>
-                            <span>{bs}</span>
-                        </>
-                    )}
-                    {ms && ms !== "Unknown" && (
-                        <>
-                            <span className={`text-text-accent font-medium`}>M.S.</span>
-                            <span>{ms}</span>
-                        </>
-                    )}
-                    {phd && phd !== "Unknown" && (
-                        <>
-                            <span className={`text-text-accent font-medium`}>Ph.D.</span>
-                            <span>{phd}</span>
-                        </>
-                    )}
+                {/* Education */}
+                <div className={`grid grid-cols-[auto,1fr] gap-x-4 items-center`}>
+                    {bs && <><span className={`text-text-accent font-medium`}>B.S.</span><span className="text-[15.5px] md:text-[16.5px]">{bs}</span></>}
+                    {ms && <><span className={`text-text-accent font-medium`}>M.S.</span><span className="text-[15.5px] md:text-[16.5px]">{ms}</span></>}
+                    {phd && <><span className={`text-text-accent font-medium`}>Ph.D.</span><span className="text-[15.5px] md:text-[16.5px]">{phd}</span></>}
                 </div>
                 <Separator className="my-3"/>
 
-                <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1`}>
+                {/* Contact */}
+                <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 items-start`}>
                     <span className={`text-text-accent font-medium`}>Email</span>
                     <div className="flex flex-col">
-                        {email.length > 0 && email.some(e => e.trim() !== '' && e !== '#') ? (
-                            email.filter(e => e.trim() !== '' && e !== '#').map((src, index) => (
+                        {email.length > 0 && email.some(e => e.trim() !== '') ? (
+                            email.filter(e => e.trim() !== '').map((src, index) => (
                                 <a href={`mailto:${src}`} key={index}
-                                   className="hover:text-interactive-hover hover:underline underline-offset-4">{src}</a>
+                                   className="hover:text-interactive-hover hover:underline underline-offset-4 text-[15.5px] md:text-[16.5px]">{src}</a>
                             ))
                         ) : (
-                            <span className="">-</span>
+                            <span className="text-[15.5px] md:text-[16.5px]">-</span>
                         )}
                     </div>
-                    {homepage && homepage.trim() !== '' && homepage !== 'Unknown' && homepage !== '#' ? (
-                        <>
-                            <span className={`text-text-accent font-medium`}>Home</span>
-                            <a href={homepage} target="_blank" rel="" title={homepage}
-                               className="hover:text-interactive-hover hover:underline underline-offset-4">
-                                {homepage.replace("https://", "").split('/')[0]}
-                            </a>
-                        </>
-                    ) : (
-                        <>
-                            <span className={`text-text-accent font-medium`}>Home</span>
-                            <span className="">-</span>
-                        </>
-                    )}
-                    {github.length > 0 && github.some(g => g.trim() !== '' && g !== 'Unknown' && g !== '#') ? (
-                        <>
-                            <span className={`text-text-accent font-medium`}>Github</span>
-                            <div className="flex flex-col">
-                                {github.filter(g => g.trim() !== '' && g !== 'Unknown' && g !== '#').map((src, index) => (
-                                    <a href={src} rel="" title={src} key={index} target="_blank"
-                                       className="hover:text-interactive-hover hover:underline underline-offset-4 break-all">
-                                        {src.replace("https://github.com/", "")}
-                                    </a>
-                                ))}
-                            </div>
-                        </>
-                    ) : (
-                        <>
-                            <span className={`text-text-accent font-medium`}>Github</span>
-                            <span className="">-</span>
-                        </>
-                    )}
-                    {linkedin && linkedin.trim() !== '' && linkedin !== 'Unknown' && linkedin !== '#' ? (
-                        <>
-                            <span className={`text-text-accent font-medium`}>LinkedIn</span>
-                            <a href={linkedin} rel="" title={linkedin} target="_blank"
-                               className="hover:text-interactive-hover hover:underline underline-offset-4">
-                                {linkedin.replace("https://www.linkedin.com/in/", "")}
-                            </a>
-                        </>
-                    ) : (
-                        <>
-                            <span className={`text-text-accent font-medium`}>LinkedIn</span>
-                            <span className="">-</span>
-                        </>
-                    )}
+                    <span className={`text-text-accent font-medium`}>Home</span>
+                    <div className="flex flex-col">
+                        {homepage.length > 0 && homepage.some(h => h.trim() !== '') ? (
+                            homepage.filter(h => h.trim() !== '').map((src, index) => (
+                                <a href={src} target="_blank" rel="" title={src} key={index}
+                                   className="hover:text-interactive-hover hover:underline underline-offset-4 text-[15.5px] md:text-[16.5px]">
+                                    {src.replace("https://", "").split('/')[0]}
+                                </a>
+                            ))
+                        ) : (
+                            <span className="text-[15.5px] md:text-[16.5px]">-</span>
+                        )}
+                    </div>
+                    <span className={`text-text-accent font-medium`}>Github</span>
+                    <div className="flex flex-col">
+                        {github.length > 0 && github.some(g => g.trim() !== '') ? (
+                            github.filter(g => g.trim() !== '').map((src, index) => (
+                                <a href={src} rel="" title={src} key={index} target="_blank"
+                                   className="hover:text-interactive-hover hover:underline underline-offset-4 break-all text-[15.5px] md:text-[16.5px]">
+                                    {src.replace("https://github.com/", "")}
+                                </a>
+                            ))
+                        ) : (
+                            <span className="text-[15.5px] md:text-[16.5px]">-</span>
+                        )}
+                    </div>
+                    <span className={`text-text-accent font-medium`}>LinkedIn</span>
+                    <div className="flex flex-col">
+                        {linkedin.length > 0 && linkedin.some(l => l.trim() !== '') ? (
+                            linkedin.filter(l => l.trim() !== '').map((src, index) => (
+                                <a href={src} rel="" title={src} target="_blank" key={index}
+                                   className="hover:text-interactive-hover hover:underline underline-offset-4 text-[15.5px] md:text-[16.5px]">
+                                    {src.replace("https://www.linkedin.com/in/", "")}
+                                </a>
+                            ))
+                        ) : (
+                            <span className="text-[15.5px] md:text-[16.5px]">-</span>
+                        )}
+                    </div>
                 </div>
                 <Separator className="my-3"/>
                 
                 {/* Activities (Study) */}
                 {studies.length > 0 && (
-                    <div className={`grid gap-x-4 gap-y-1 my-3`}>
+                    <div className={`grid gap-x-4 gap-y-1`}>
                         <span className={`text-text-accent font-medium`}>
                             Activities (
                             <Link 
@@ -258,19 +225,19 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                         <div className="">
                             {studies.slice(0, 5).map((study: StudyData, index: number) => (
                                 <div key={study.title} className="mb-1.5 leading-snug">
-                                    <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-center">
+                                    <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-start">
                                         <div className="flex items-start">
-                                            <span className="text-text-accent font-semibold pr-0.5 text-[14px] sm:text-[16px]">-</span>
+                                            <span className="text-text-accent font-semibold pr-0.5 text-[15px] md:text-[16px]">-</span>
                                             <Link 
                                                 href={`/board/study#study-${study.title.replace(/\s+/g, '-').toLowerCase()}`}
-                                                className="text-[14.5px] sm:text-[15.5px] hover:text-interactive-hover hover:underline underline-offset-4"
+                                                className="text-[14.5px] md:text-[15.5px] hover:text-interactive-hover hover:underline underline-offset-4"
                                                 title="View in study page"
                                             >
                                                 {study.title}
                                             </Link>
                                         </div>
                                         <div></div>
-                                        <div className="flex items-center gap-1 flex-shrink-0">
+                                        <div className="flex items-center gap-1 flex-shrink-0 mt-0.5">
                                             <span className="text-[12.5px] text-text-accent">
                                                 {formatDate(study.start_date)}
                                                 {study.end_date ? ` ~ ${formatDate(study.end_date)}` : ' ~ '}
@@ -288,7 +255,8 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                                 <div className="mb-1.5 leading-snug">
                                     <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-center">
                                         <div className="flex items-start">
-                                            <span className="text-[13.5px] sm:text-[14.5px] text-text-secondary">
+                                            <span className="text-text-accent font-semibold pr-0.5 text-[15px] md:text-[16px]">-</span>
+                                            <span className="text-[13.5px] md:text-[14.5px] text-text-secondary">
                                                 ... (+{studies.length - 5} more)
                                             </span>
                                         </div>
@@ -301,10 +269,11 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                         </div>
                     </div>
                 )}
+                <div className="my-2"></div>
                 
                 {/* Activities (Publication) */}
                 {papers.length > 0 && (
-                    <div className={`grid gap-x-4 gap-y-1 my-3`}>
+                    <div className={`grid gap-x-4 gap-y-1 `}>
                         <span className={`text-text-accent font-medium`}>
                             Activities (
                             <Link 
@@ -317,30 +286,64 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                             )
                         </span>
                         <div className="">
-                            {papers.slice(0, 5).map((paper: PaperData, index: number) => (
-                                <div key={paper.title} className="mb-1.5 leading-snug">
-                                    <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-center">
-                                        <div className="flex items-start">
-                                            <span className="text-text-accent font-semibold pr-0.5 text-[14px] sm:text-[16px]">-</span>
-                                            <Link 
-                                                href="https://bkoh509.github.io" 
-                                                className="text-[14px] sm:text-[15px] hover:text-interactive-hover hover:underline underline-offset-4"
-                                                title=""
-                                            >
-                                                {paper.title}
-                                            </Link>
-                                        </div>
-                                        <div className="text-[12.5px] text-text-accent italic whitespace-nowrap">
-                                            {paper.status}
+                            {papers.slice(0, 5).map((paper: PaperData, index: number) => {
+                                // Find current user's role in this paper
+                                const getCurrentUserRole = () => {
+                                    const authors = paper.authors.map(author => {
+                                        const parsed = parseAuthorString(author);
+                                        return parsed.profileId;
+                                    });
+                                    
+                                    const currentUserIndex = authors.findIndex(authorId => authorId === id);
+                                    
+                                    if (currentUserIndex === -1) return null; // User not found in authors
+                                    
+                                    if (authors.length === 1) {
+                                        return '단독저자';
+                                    } else if (currentUserIndex === 0) {
+                                        return '1저자';
+                                    } else if (currentUserIndex === authors.length - 1) {
+                                        return '교신저자';
+                                    } else {
+                                        return '공저자';
+                                    }
+                                };
+
+                                const userRole = getCurrentUserRole();
+
+                                return (
+                                    <div key={paper.title} className="mb-1.5 leading-snug">
+                                        <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-start">
+                                            <div className="flex items-start">
+                                                <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
+                                                <Link 
+                                                    href="https://bkoh509.github.io" 
+                                                    className="text-[14px] md:text-[15px] hover:text-interactive-hover hover:underline underline-offset-4"
+                                                    title=""
+                                                >
+                                                    {paper.title}
+                                                </Link>
+                                            </div>
+                                            <div className="whitespace-nowrap mt-0.5">
+                                                <div className="text-[12.5px] text-text-accent leading-tight">
+                                                    {paper.status}
+                                                </div>
+                                                {userRole && (
+                                                    <div className="text-[11.5px] text-text-secondary italic text-center">
+                                                        ({userRole})
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                             {papers.length > 5 && (
                                 <div className="mb-1.5 leading-snug">
                                     <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-center">
                                         <div className="flex items-start">
-                                            <span className="text-[13px] sm:text-[14px] text-text-secondary">
+                                            <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
+                                            <span className="text-[13px] md:text-[14px] text-text-secondary">
                                                 ... (+{papers.length - 5} more)
                                             </span>
                                         </div>
