@@ -1,14 +1,18 @@
-import yaml from 'js-yaml';
-import path from 'path';
-import fs from 'fs/promises';
-
 // Study data interface (to avoid importing from Study component)
 export interface StudyData {
   title: string
   start_date: string
   end_date: string | null
-  profile_ids: string[]
+  participants: string[]
   link?: string
+}
+
+// Paper data interface
+export interface PaperData {
+  title: string
+  status: string
+  link: string | null
+  authors: string[]
 }
 
 export interface ProfileYAML {
@@ -70,87 +74,30 @@ export interface ProfileItemProps extends ProfileData {
 
 export interface ProfileDetailProps extends ProfileData {
   studies?: StudyData[];
+  papers?: PaperData[];
 }
 
-// YAML 프로필을 컴포넌트에서 사용하는 형태로 변환
-function transformProfile(yamlProfile: ProfileYAML): ProfileData {
-  // GitHub URL 형식 통일
-  const githubUrls = yamlProfile.contacts.github?.map(github => {
-    if (github.startsWith('https://')) {
-      return github;
-    } else if (github.startsWith('github.com/')) {
-      return `https://${github}`;
-    } else {
-      return `https://github.com/${github}`;
-    }
-  }) || [];
-
-  return {
-    id: yamlProfile.id,
-    type: yamlProfile.position,
-    title: yamlProfile.title,
-    name_en: yamlProfile.name.en,
-    name_ko: yamlProfile.name.ko,
-    admission: yamlProfile.education.admission,
-    bs: yamlProfile.education.bs,
-    ms: yamlProfile.education.ms,
-    phd: yamlProfile.education.phd,
-    academic_year: yamlProfile.academic.year,
-    academic_semester: yamlProfile.academic.semester,
-    joined: yamlProfile.joined,
-    interest: yamlProfile.interests.join(', '),
-    current_work: yamlProfile.current_work,
-    photo: yamlProfile.photos,
-    email: yamlProfile.contacts.emails,
-    homepage: yamlProfile.contacts.homepage,
-    github: githubUrls,
-    linkedin: yamlProfile.contacts.linkedin ? 
-      yamlProfile.contacts.linkedin.startsWith('https://') ? 
-        yamlProfile.contacts.linkedin : 
-        `https://www.linkedin.com/in/${yamlProfile.contacts.linkedin}` 
-      : null,
-  };
-}
-
-// 가장 최신 프로필 파일을 찾는 함수
-async function getLatestProfilesFile(): Promise<string> {
-  const dataDir = path.join(process.cwd(), 'src', 'data', 'profiles');
-  const files = await fs.readdir(dataDir);
+// Author 문자열을 파싱하여 profile ID를 추출하는 함수
+export function parseAuthorString(authorString: string): { profileId: string | null; displayName: string } {
+  // <profile=[id] korean>English Name (korean)</> 형식 파싱
+  const profileMatch = authorString.match(/<profile=([^\>]+)>([^<]+)<\/>/);
   
-  // [YYYY-N] profiles.yaml 패턴의 파일들 필터링
-  const profileFiles = files.filter(file => 
-    file.match(/^\[(\d{4})-(\d+)\] profiles\.yaml$/)
-  );
-  
-  if (profileFiles.length === 0) {
-    throw new Error('No profile files found');
+  if (profileMatch) {
+    const profileId = profileMatch[1]; // [2024.07] 지상준 형태의 전체 ID
+    const displayName = profileMatch[2]; // Sang-Jun Ji (지상준) 형태의 표시명
+    return { profileId, displayName };
   }
   
-  // 파일명을 날짜순으로 정렬 (가장 최신이 마지막)
-  profileFiles.sort((a, b) => {
-    const aMatch = a.match(/^\[(\d{4})-(\d+)\]/);
-    const bMatch = b.match(/^\[(\d{4})-(\d+)\]/);
-    
-    if (!aMatch || !bMatch) return 0;
-    
-    const aYear = parseInt(aMatch[1]);
-    const aVersion = parseInt(aMatch[2]);
-    const bYear = parseInt(bMatch[1]);
-    const bVersion = parseInt(bMatch[2]);
-    
-    if (aYear !== bYear) {
-      return aYear - bYear;
-    }
-    return aVersion - bVersion;
-  });
-  
-  return path.join(dataDir, profileFiles[profileFiles.length - 1]);
+  // 일반 텍스트인 경우
+  return { profileId: null, displayName: authorString };
 }
 
-// 현재 프로필 데이터를 가져오는 함수
-export async function getProfiles(): Promise<ProfileData[]> {
-  const filePath = await getLatestProfilesFile();
-  const yamlText = await fs.readFile(filePath, 'utf8');
-  const rawData = yaml.load(yamlText) as ProfileYAML[];
-  return rawData.map(transformProfile);
+// 특정 profile ID와 관련된 논문들을 필터링하는 함수
+export function getPapersForProfile(papers: PaperData[], profileId: string): PaperData[] {
+  return papers.filter(paper => 
+    paper.authors.some(author => {
+      const parsed = parseAuthorString(author);
+      return parsed.profileId === profileId;
+    })
+  );
 }

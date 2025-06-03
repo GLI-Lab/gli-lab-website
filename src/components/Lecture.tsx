@@ -52,7 +52,7 @@ export async function LectureList({ className = '', count = null, lectureItems }
   return (
     <div className={`flex flex-col divide-y divide-gray-200 ${className}`}>
       {semesterData.map((semesterInfo: SemesterData, semesterIdx: number) => (
-        <div key={semesterIdx} className="w-full hover:border-brand-primary/30 hover:bg-slate-50 hover:shadow-sm bg-white first:rounded-t-lg last:rounded-b-lg p-4 last:pb-4 pb-3 transition-all duration-300 ease-out">
+        <div key={semesterIdx} className="w-full hover:bg-brand-primary/5 bg-white first:rounded-t-lg last:rounded-b-lg p-4 last:pb-4 pb-3 transition-all duration-300 ease-out">
           {/* 학기 헤더 */}
           <div className="flex justify-between items-center gap-2 mb-2">
             <div className="relative">
@@ -66,16 +66,19 @@ export async function LectureList({ className = '', count = null, lectureItems }
                   <span className="animate-pulse" style={{animationDelay: '200ms'}}>w</span>
                 </span>
               )}
-
+            </div>
+            
+            {/* 강의 수 정보 */}
+            <div className="text-[0.9em] text-gray-600 text-right flex-shrink-0">
+              <span className="font-semibold text-gray-900">{semesterInfo.courses.length}</span> lectures
             </div>
           </div>
-          
-          
+
           {/* 해당 학기의 강의 목록 */}
           <div className="space-y-1.5 pl-1">
             {semesterInfo.courses.map((course, courseIdx) => (
-              <div key={`${semesterInfo.semester}-${courseIdx}`} className="leading-snug">
-                {course.title}, <span className="text-[0.9em] italic text-gray-600">{course.university}</span>
+              <div key={`${semesterInfo.semester}-${courseIdx}`} className="text-[0.95em] leading-snug">
+                {course.title}, <span className="text-[0.95em] italic text-gray-600">{course.university}</span>
               </div>
             ))}
           </div>

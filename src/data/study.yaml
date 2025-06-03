@@ -2,7 +2,8 @@
   link: "https://bkoh509.notion.site/graph-rl-101-paper-4"
   start_date: "2025-03-21"
   end_date: null
-  profile_ids:
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2025.03] 김상준>Sang-Jun Kim (김상준)</>"
     - "<profile=[2025.03] 조은영>Eun-Yeong Jo (조은영)</>"
     - "<profile=[2025.01] 구해윤>Hae-Yoon Koo (구해윤)</>"
@@ -11,7 +12,8 @@
   link: "https://bkoh509.notion.site/multimodal-rl-paper-2"
   start_date: "2025-01-09"
   end_date: null
-  profile_ids:
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2024.12] 최진호>Jin-Ho Choi (최진호)</>"
     - "<profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</>"
     - "<profile=[2024.11] 이동천>Dong-Cheon Lee (이동천)</>"
@@ -22,7 +24,8 @@
   link: "https://bkoh509.notion.site/graph-rl-101-paper-3"
   start_date: "2024-11-14"
   end_date: null
-  profile_ids:
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2024.11] 이동천>Dong-Cheon Lee (이동천)</>"
     - "<profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>"
     - "<profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</>"
@@ -33,7 +36,8 @@
   link: "https://bkoh509.notion.site/multimodal-rl-paper-1"
   start_date: "2024-10-28"
   end_date: "2025-02-27"
-  profile_ids: 
+  participants: 
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2024.07] 박지연>Ji-Yeon Park (박지연)</>"
     - "<profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</>"
     - "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>"
@@ -42,7 +46,8 @@
   link: "https://bkoh509.notion.site/deep-learning-101-paper-1"
   start_date: "2024-08-14"
   end_date: "2024-11-07"
-  profile_ids:
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>"
     - "<profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</>"
     - "<profile=[2024.06] 이영호>Young-Ho Lee (이영호)</>"
@@ -51,7 +56,8 @@
   link: "https://bkoh509.notion.site/graph-rl-101-paper-2"
   start_date: "2024-07-15"
   end_date: "2024-10-07"
-  profile_ids:
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</>"
     - "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>"
     - "<profile=[2024.03] 김윤진>Yun-Jin Kim (김윤진)</>"
@@ -61,7 +67,8 @@
   link: "https://bkoh509.notion.site/deep-learning-101-1"
   start_date: "2024-07-10"
   end_date: "2024-08-28"
-  profile_ids:
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2024.06] 이영호>Young-Ho Lee (이영호)</>"
     - "<profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>"
     - "<profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</>"
@@ -71,7 +78,8 @@
   link: "https://bkoh509.notion.site/data-analytics-101-1"
   start_date: "2024-07-08"
   end_date: "2024-08-05"
-  profile_ids:
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2024.06] 이영호>Young-Ho Lee (이영호)</>"
     - "<profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>"
     - "<profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</>"
@@ -80,7 +88,8 @@
   link: "https://bkoh509.notion.site/cs224w-graph-ml-1"
   start_date: "2024-07-17"
   end_date: "2025-01-16"
-  profile_ids:
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>"
     - "<profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</>"
     - "<profile=[2024.07] 박지연>Ji-Yeon Park (박지연)</>"
@@ -90,6 +99,7 @@
   link: "https://bkoh509.notion.site/graph-rl-101-paper-1"
   start_date: "2024-03-22"
   end_date: "2024-07-06"
-  profile_ids:
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>"
     - "<profile=[2024.03] 김윤진>Yun-Jin Kim (김윤진)</>"

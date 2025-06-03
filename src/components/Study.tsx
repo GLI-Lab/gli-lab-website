@@ -8,7 +8,7 @@ export interface StudyData {
   title: string
   start_date: string
   end_date: string | null
-  profile_ids: string[]
+  participants: string[]
   link?: string  // 스터디 링크 추가
 }
 
@@ -56,8 +56,8 @@ function createSlugFromName(name: string): string {
 }
 
 // parse profile format and render with member link
-function renderProfileWithLink(profileId: string, profiles: any[]): React.ReactNode {
-  const profileMatch = profileId.match(/^<profile=(.+?)>(.+?)<\/>$/);
+function renderProfileWithLink(participant: string, profiles: any[]): React.ReactNode {
+  const profileMatch = participant.match(/^<profile=(.+?)>(.+?)<\/>$/);
   
   if (profileMatch) {
     const [, profileId, displayName] = profileMatch;
@@ -68,12 +68,12 @@ function renderProfileWithLink(profileId: string, profiles: any[]): React.ReactN
       return (
         <Link 
           href={`/people/members?slug=${nameSlug}&id=${encodeURIComponent(profileId)}`}
-          className="underline-offset-4 hover:underline hover:decoration-1 transition-all duration-200"
+          className="underline-offset-4 hover:underline hover:decoration-1 hover:decoration-brand-primary transition-all duration-200"
           title={`View ${profile.name_ko} (${profile.name_en})`}
         >
           <span className="hover:text-brand-primary transition-colors [&:hover>svg]:text-brand-primary">
             {displayName}
-            <svg className="w-3.5 h-3 ml-0.5 inline text-gray-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-3.5 h-3. ml-0.5 inline text-gray-500 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </span>
@@ -92,7 +92,7 @@ function renderProfileWithLink(profileId: string, profiles: any[]): React.ReactN
     }
   }
   
-  return <span>{profileId}</span>;
+  return <span>{participant}</span>;
 }
 
 // 스터디 데이터를 가져오는 함수
@@ -113,7 +113,7 @@ export async function StudyList({ className = '', count = null, studyItems }: St
         <div 
           key={study.title} 
           id={`study-${study.title.replace(/\s+/g, '-').toLowerCase()}`}
-          className="w-full hover:border-brand-primary/30 hover:bg-slate-50 hover:shadow-sm bg-white first:rounded-t-lg last:rounded-b-lg px-4 py-3 transition-all duration-300 ease-out"
+          className="w-full hover:bg-brand-primary/5 bg-white first:rounded-t-lg last:rounded-b-lg px-4 py-3 transition-all duration-300 ease-out"
         >
           <div className="flex justify-between items-center gap-2 mb-2">
             {/* Title */}
@@ -123,7 +123,7 @@ export async function StudyList({ className = '', count = null, studyItems }: St
                   href={study.link} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="group flex items-center gap-1 w-fit hover:text-brand-primary underline-offset-4 hover:underline hover:decoration-1 transition-all duration-200"
+                  className="group flex items-center gap-1 w-fit hover:text-brand-primary underline-offset-4 hover:underline hover:decoration-1 hover:decoration-brand-primary transition-all duration-200"
                   title="View study details"
                 >
                   <span className="sm:text-[1.05em] leading-snug font-semibold text-gray-800 group-hover:text-brand-primary transition-colors">
@@ -148,19 +148,20 @@ export async function StudyList({ className = '', count = null, studyItems }: St
               </span>
               {isOngoingStudy(study.end_date) && (
                 <span className="text-[0.8em] font-semibold bg-green-100 text-brand-primary px-1 py-0.5 rounded">
-                  진행중
+                  NOW
                 </span>
               )}
             </div>
           </div>
           
           {/* 참여자 정보 */}
-          <div className="text-[0.9em] text-gray-600">
+          <div className="flex items-start text-[0.9em]">
+            <span className="text-text-accent font-semibold pr-0.5">-</span>
             <span className="text-gray-800">
-              - {study.profile_ids.map((profileId, idx) => (
+              {study.participants.map((participant, idx) => (
                 <span key={idx}>
-                  {renderProfileWithLink(profileId, profiles)}
-                  {idx < study.profile_ids.length - 1 ? ', ' : ''}
+                  {renderProfileWithLink(participant, profiles)}
+                  {idx < study.participants.length - 1 ? ', ' : ''}
                 </span>
               ))}
             </span>

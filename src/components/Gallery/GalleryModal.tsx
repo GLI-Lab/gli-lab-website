@@ -23,6 +23,7 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
     setCurrentImageIndex(index);
   };
 
+  // ------------------------------------------------------------
   // 현재 이미지 변경 시 비율 확인
   useEffect(() => {
     const img = new window.Image();
@@ -42,12 +43,13 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
     const shouldDisableZoom = Math.abs(imageRatio - targetRatio) < tolerance;
     setIsZoomEnabled(!shouldDisableZoom);
   };
+  // ------------------------------------------------------------
 
   // ------------------------------------------------------------
   const checkBottom = () => {
     if (contentRef.current) {
       const { scrollHeight, scrollTop, clientHeight } = contentRef.current;
-      const atBottom = scrollHeight - scrollTop <= clientHeight + 20;
+      const atBottom = scrollHeight - scrollTop <= clientHeight + 10;
       setIsAtBottom(atBottom);
     }
   };
@@ -56,10 +58,21 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
     checkBottom();
   };
 
-  // 컴포넌트 마운트 시 스크롤 상태 확인
+  // 컴포넌트 마운트 시 스크롤 상태 확인 및 윈도우 리사이즈 감지
   useEffect(() => {
     const timer = setTimeout(checkBottom, 100);
-    return () => clearTimeout(timer);
+    
+    // 윈도우 리사이즈 이벤트 리스너 추가
+    const handleResize = () => {
+      checkBottom();
+    };
+    
+    window.addEventListener('resize', handleResize);
+    
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+    };
   }, [item]);
   // ------------------------------------------------------------
 
@@ -94,10 +107,10 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
 
   return (
     <div 
-      className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 z-50 bg-black bg-opacity-75 flex items-center justify-center p-4"
       onClick={handleBackdropClick}
     >
-      <div className="bg-white rounded-lg max-w-4xl max-h-[90vh] w-full overflow-hidden relative">
+      <div className="max-h-[90vh] max-w-4xl w-full bg-white rounded-lg overflow-hidden relative">
         {/* 닫기버튼 */}
           <button
             onClick={onClose}
@@ -119,10 +132,10 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
             </svg>
           </button>
 
-        {/* 콘텐츠 */}
+        {/* 콘텐츠 (주소창 고려해서 -60px) */}
         <div 
           ref={contentRef}
-          className="overflow-y-auto max-h-[calc(90vh-80px)] relative overscroll-none" 
+          className="overflow-y-auto max-h-[calc(90vh-60px)] relative overscroll-none" 
           onScroll={handleScroll}
         >
           {/* 이미지 섹션 */}
@@ -244,22 +257,25 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
         </div>
 
         {/* 스크롤 인디케이터 - 모달 전체 하단에 고정 */}
-        {!isAtBottom && (
-          <>
-            <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-white via-white/90 to-transparent pointer-events-none"></div>
-            <div className="absolute bottom-2 left-0 right-0 flex justify-center items-center pointer-events-none">
-              <svg
-                className="w-8 h-4 ml-2 text-interactive-primary animate-bounce"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M2 9l10 10 10-10" />
-              </svg>
-            </div>
-          </>
-        )}
+        <div className={`absolute bottom-0 left-0 right-0 transition-opacity duration-300 ease-in-out ${
+          !isAtBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}>
+          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white/95 via-white/60 to-white/0 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white/100 via-white/80 to-transparent pointer-events-none"></div>
+          <div className={`absolute bottom-1.5 left-0 right-0 flex justify-center items-center pointer-events-none transform transition-all duration-300 ease-in-out ${
+            !isAtBottom ? 'translate-y-0 opacity-100' : 'translate-y-1.5 opacity-0'
+          }`}>
+            <svg
+              className="h-5 text-interactive-primary animate-bounce"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M2 9l10 10 10-10" />
+            </svg>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -3,10 +3,18 @@ export { ProfileCardList } from './ProfileCardList';
 export { ProfileItem } from './ProfileItem';
 export { ProfileDetail } from './ProfileDetail';
 
-// Data functions and types - all from profiles.ts
+// Data functions and types
 export { 
-  getProfiles,
   type ProfileData,
   type ProfileItemProps,
   type ProfileDetailProps,
-} from './profiles'; 
+  type PaperData,
+  parseAuthorString,
+  getPapersForProfile,
+} from './profiles';
+
+// Server-side functions
+export { 
+  getProfiles,
+  getPapers,
+} from './profilesServer'; 

@@ -93,7 +93,7 @@ const config = {
             //
             ////////////////////////////////////////////
             backgroundImage: {
-                'subcover': "url('/images/cover/main4-3-dark.webp')"  // use `bg-subcover`
+                // 'subcover' configuration removed - now using inline styles
             },
             ///////////////////////////////////////////
             // 폰트 정의

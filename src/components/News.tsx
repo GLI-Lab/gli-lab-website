@@ -142,7 +142,7 @@ export async function NewsList({ className = '', count = null, newsItems }: News
   const latestNews = count ? newsData.slice(0, count) : newsData;
 
   return (
-    <div className={className}>
+    <div className={`${className}`}>
       <div className="grid grid-cols-[auto,1fr] gap-x-[0.5em] gap-y-[0.4em]">
         {latestNews.map((news, idx) => {
           const date = new Date(news.date);

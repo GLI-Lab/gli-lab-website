@@ -11,11 +11,10 @@ export const generateMetadata = async (): Promise<Metadata> => {
 import {pretendard} from "./fonts"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import {getMetadata} from "@/lib/GetMetadata";
-import Header from "@/components/Header_v2";
+import { getMetadata } from "@/lib/GetMetadata";
+import Header from "@/components/Header";
 import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
-
 
 // min-h-screen: 클래스를 사용해 최소 높이를 브라우저 창의 높이와 같게 설정
 // flex-grow   : <main>이 부모 컨테이너 <body>의 여유 공간을 모두 차지하도록 함
