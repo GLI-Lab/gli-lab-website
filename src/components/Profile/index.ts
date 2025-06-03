@@ -9,7 +9,9 @@ export {
   type ProfileItemProps,
   type ProfileDetailProps,
   type PaperData,
+  type AuthorData,
   parseAuthorString,
+  findUserRoleInPaper,
   getPapersForProfile,
 } from './profiles';
 

@@ -7,12 +7,19 @@ export interface StudyData {
   link?: string
 }
 
+// Author data interface for papers
+export interface AuthorData {
+  role: string;           // "1저자", "공동저자", "교신저자" etc.
+  profileId: string | null;
+  displayName: string;
+}
+
 // Paper data interface
 export interface PaperData {
   title: string
   status: string
   link: string | null
-  authors: string[]
+  authors: AuthorData[]
 }
 
 export interface ProfileYAML {
@@ -92,12 +99,15 @@ export function parseAuthorString(authorString: string): { profileId: string | n
   return { profileId: null, displayName: authorString };
 }
 
+// AuthorData에서 특정 프로필의 역할을 찾는 함수
+export function findUserRoleInPaper(authors: AuthorData[], profileId: string): string | null {
+  const author = authors.find(author => author.profileId === profileId);
+  return author ? author.role : null;
+}
+
 // 특정 profile ID와 관련된 논문들을 필터링하는 함수
 export function getPapersForProfile(papers: PaperData[], profileId: string): PaperData[] {
   return papers.filter(paper => 
-    paper.authors.some(author => {
-      const parsed = parseAuthorString(author);
-      return parsed.profileId === profileId;
-    })
+    paper.authors.some(author => author.profileId === profileId)
   );
 }

@@ -2,42 +2,43 @@
   status: "In Progress"
   link: null
   authors:
-    - "<profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</>"
-    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
+    - 1저자: "<profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</>"
+    - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
 
 - title: "Graph Tokenization for Knowledge-Enhanced LLM"
   status: "In Progress"
   link: null
   authors:
-    - "<profile=[2024.11] 이동천>Dong-Cheon Lee (이동천)</>"
-    - "<profile=[2024.07] 박지연>Ji-Yeon Park (박지연)</>"
-    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
+    - 공1저자: "<profile=[2024.11] 이동천>Dong-Cheon Lee (이동천)</>"
+    - 공동저자: "<profile=[2024.07] 박지연>Ji-Yeon Park (박지연)</>"
+    - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
 
 - title: "Graph-Driven LLM Agent for Recommendation"
   status: "In Progress"
   link: null
   authors:
-    - "<profile=[2024.10] 김영진>Young-Jin Kim (김영진)</>"
-    - "<profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>"
-    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
+    - 1저자: "<profile=[2024.10] 김영진>Young-Jin Kim (김영진)</>"
+    - 1저자: "<profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>"
+    - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
 
 - title: "Distilling Multimodal Knowledge for New Recommendation"
   status: "In Progress"
   link: null
   authors:
-    - "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>"
-    - "<profile=[2025.03] 조은영>Eun-Yeong Jo (조은영)</>"
-    - "<profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</>"
-    - "<profile=[2024.01] 진웅남>Xiongnan Jin (진웅남)</>"
-    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
+    - 1저자: "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>"
+    - 공동저자: "<profile=[2025.03] 조은영>Eun-Yeong Jo (조은영)</>"
+    - 공동저자: "<profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</>"
+    - 공동저자: "<profile=[2024.11] 이동천>Dong-Cheon Lee (이동천)</>"
+    - 공동저자: "Xiongnan Jin (김웅남)"
+    - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
 
 - title: "Text-to-Graph for Joint Information Extraction"
   status: "In Progress"
   link: null
   authors:
-    - "<profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</>"
-    - "<profile=[2024.12] 최진호>Jin-Ho Choi (최진호)</>"
-    - "<profile=[2024.01] 금민석>Minseok Geum (금민석)</>"
-    - "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>"
-    - "<profile=[2024.01] 진웅남>Xiongnan Jin (진웅남)</>"
-    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
+    - 1저자: "<profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</>"
+    - 공동저자: "<profile=[2024.12] 최진호>Jin-Ho Choi (최진호)</>"
+    - 공동저자: "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>"
+    - 공동저자: "<profile=[2024.11] 이동천>Dong-Cheon Lee (이동천)</>"
+    - 공동저자: "Xiongnan Jin (김웅남)"
+    - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
