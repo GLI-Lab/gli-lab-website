@@ -3,14 +3,17 @@
   link: null
   authors:
     - 1저자: "<profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</>"
+    - 공동저자: "<profile=[2024.06] 이영호>Young-Ho Lee (이영호)</>"
     - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
 
 - title: "Graph Tokenization for Knowledge-Enhanced LLM"
   status: "In Progress"
   link: null
   authors:
-    - 공1저자: "<profile=[2024.11] 이동천>Dong-Cheon Lee (이동천)</>"
+    - 1저자: "<profile=[2024.11] 이동천>Dong-Cheon Lee (이동천)</>"
     - 공동저자: "<profile=[2024.07] 박지연>Ji-Yeon Park (박지연)</>"
+    - 공동저자: "<profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</>"
+    - 공동저자: "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>"
     - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
 
 - title: "Graph-Driven LLM Agent for Recommendation"
@@ -19,6 +22,7 @@
   authors:
     - 1저자: "<profile=[2024.10] 김영진>Young-Jin Kim (김영진)</>"
     - 1저자: "<profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>"
+    - 공동저자: "<profile=[2025.01] 구해윤>Hae-Yoon Koo (구해윤)</>"
     - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
 
 - title: "Distilling Multimodal Knowledge for New Recommendation"
