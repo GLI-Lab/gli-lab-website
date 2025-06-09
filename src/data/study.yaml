@@ -1,5 +1,6 @@
 - title: "Graph RL 101 Paper (#4)"
   link: "https://bkoh509.notion.site/graph-rl-101-paper-4"
+  description: "그래프, 지식그래프, 이종그래프 등을 대상으로 <h>그래프 표현학습</h>을 수행하고 이를 자연어처리와 추천시스템에 응용하는 기초 논문을 다루는 스터디입니다."
   start_date: "2025-03-21"
   end_date: null
   participants:
@@ -10,6 +11,7 @@
   
 - title: "Multimodal RL Paper (#2)"
   link: "https://bkoh509.notion.site/multimodal-rl-paper-2"
+  description: "이미지, 텍스트, 행동 정보를 통합한 <h>멀티모달 표현학습</h> 방법론과 이를 자연어처리와 추천시스템에 응용하는 기초 논문 스터디입니다."
   start_date: "2025-01-09"
   end_date: null
   participants:
@@ -22,6 +24,7 @@
   
 - title: "Graph RL 101 Paper (#3)"
   link: "https://bkoh509.notion.site/graph-rl-101-paper-3"
+  description: "그래프, 지식그래프, 이종그래프 등을 대상으로 <h>그래프 표현학습</h>을 수행하고 이를 자연어처리와 추천시스템에 응용하는 기초 논문 스터디입니다."
   start_date: "2024-11-14"
   end_date: "2025-06-02"
   participants:
@@ -34,6 +37,7 @@
   
 - title: "Multimodal RL Paper (#1)"
   link: "https://bkoh509.notion.site/multimodal-rl-paper-1"
+  description: "이미지, 텍스트, 행동 정보를 통합한 <h>멀티모달 표현학습</h> 방법론과 이를 자연어처리와 추천시스템에 응용하는 기초 논문 스터디입니다."
   start_date: "2024-10-28"
   end_date: "2025-02-27"
   participants: 
@@ -44,6 +48,7 @@
   
 - title: "Deep Learning 101 Paper (#1)"
   link: "https://bkoh509.notion.site/deep-learning-101-paper-1"
+  description: "<h>딥러닝</h> 기초 개념부터 주요 아키텍처까지, 핵심 논문들을 통해 학습하는 스터디입니다."
   start_date: "2024-08-14"
   end_date: "2024-11-07"
   participants:
@@ -54,6 +59,7 @@
   
 - title: "Graph RL 101 Paper (#2)"
   link: "https://bkoh509.notion.site/graph-rl-101-paper-2"
+  description: "그래프, 지식그래프, 이종그래프 등을 대상으로 <h>그래프 표현학습</h>을 수행하고 이를 자연어처리와 추천시스템에 응용하는 기초 논문을 다루는 스터디입니다."
   start_date: "2024-07-15"
   end_date: "2024-10-07"
   participants:
@@ -65,6 +71,7 @@
   
 - title: "Deep Learning 101 (#1)"
   link: "https://bkoh509.notion.site/deep-learning-101-1"
+  description: "딥러닝을 아예 모르는 학생들을 대상으로, <h>딥러닝</h>의 기초 개념과 주요 모델들을 체계적으로 학습하는 스터디입니다."
   start_date: "2024-07-10"
   end_date: "2024-08-28"
   participants:
@@ -76,6 +83,7 @@
   
 - title: "Data Analytics 101 (#1)"
   link: "https://bkoh509.notion.site/data-analytics-101-1"
+  description: "데이터 분석의 기본기부터 활용까지, <h>데이터 사이언스</h> 입문을 위한 스터디입니다."
   start_date: "2024-07-08"
   end_date: "2024-08-05"
   participants:
@@ -86,6 +94,7 @@
   
 - title: "CS224W - Graph ML (#1)"
   link: "https://bkoh509.notion.site/cs224w-graph-ml-1"
+  description: "스탠포드 CS224W 강의를 바탕으로 <h>그래프 머신러닝</h> 기초부터 응용까지 다루는 스터디입니다."
   start_date: "2024-07-17"
   end_date: "2025-01-16"
   participants:
@@ -97,6 +106,7 @@
   
 - title: "Graph RL 101 Paper (#1)"
   link: "https://bkoh509.notion.site/graph-rl-101-paper-1"
+  description: "그래프, 지식그래프, 이종그래프 등을 대상으로 <h>그래프 표현학습</h>을 수행하고 이를 자연어처리와 추천시스템에 응용하는 기초 논문을 다루는 스터디입니다."
   start_date: "2024-03-22"
   end_date: "2024-07-06"
   participants:

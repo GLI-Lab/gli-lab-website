@@ -6,7 +6,7 @@ import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
 import { Separator } from "@/components/ui/separator"
 import { ProfileDetailProps, parseAuthorString, findUserRoleInPaper } from './profiles';
-import { StudyData } from '../Study';
+import { StudyData } from '../Study/studyData';
 import { PaperData } from './profiles';
 import Link from 'next/link';
 

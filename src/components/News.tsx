@@ -170,7 +170,7 @@ export async function NewsList({ className = '', count = null, newsItems }: News
                 </div>
               </div>
               <div className={`${idx < latestNews.length - 1 ? 'border-b border-gray-200 pb-1 mb-1' : ''}`}>
-                <div>
+                <div className="text-[0.95em] sm:text-[1em]">
                   {renderContentWithProfileLinks(title, profiles, idx, 0)}
                 </div>
                 {descriptionText && (

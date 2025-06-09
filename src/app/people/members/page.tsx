@@ -1,7 +1,7 @@
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
 import { ProfileCardList, getProfiles, getPapers } from "@/components/Profile";
-import { getStudyItems } from "@/components/Study";
+import { getStudyItems } from "@/components/Study/studyData";
 
 const PAGE_TITLE = `Members`
 
