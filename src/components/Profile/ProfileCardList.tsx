@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ProfileItem } from './ProfileItem';
 import { ProfileDetail } from './ProfileDetail';
 import { type ProfileData, type PaperData, getPapersForProfile } from './profiles';
-import { StudyData } from '../Study';
+import { StudyData } from '../Study/studyData';
 
 interface ProfileCardListProps {
     profiles: ProfileData[];
