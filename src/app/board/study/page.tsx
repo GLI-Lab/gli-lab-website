@@ -1,7 +1,9 @@
 import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
-import {StudyList, getStudyItems} from "@/components/Study";
+import {StudyList} from "@/components/Study";
+import {getStudyItems} from "@/components/Study/studyData";
+import {getProfiles} from "@/components/Profile";
 
 const TITLE = `Study`
 
@@ -13,6 +15,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 export default async function Page() {
     const studies = await getStudyItems();
+    const profiles = await getProfiles();
     const totalStudies = studies.length;
 
     return (
@@ -22,16 +25,13 @@ export default async function Page() {
             </div>
 
             <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
-                {/* 총 스터디 개수 */}
-                <div className="mb-4">
+                <div className="mb-8">
                     <p className="text-gray-600 text-lg">
                         Total <span className="font-semibold text-gray-900">{totalStudies}</span> studies
                     </p>
                 </div>
 
-                <div className="rounded-lg border border-gray-200 shadow-sm">
-                    <StudyList className="" studyItems={studies}/>
-                </div>
+                <StudyList className="" studyItems={studies} profiles={profiles}/>
             </div>
         </>
     )

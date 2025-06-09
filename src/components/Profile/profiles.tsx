@@ -1,11 +1,4 @@
-// Study data interface (to avoid importing from Study component)
-export interface StudyData {
-  title: string
-  start_date: string
-  end_date: string | null
-  participants: string[]
-  link?: string
-}
+import { StudyData } from '../Study/studyData';
 
 // Author data interface for papers
 export interface AuthorData {
