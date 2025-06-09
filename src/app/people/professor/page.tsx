@@ -1,8 +1,6 @@
 import {getMetadata} from "@/lib/GetMetadata";
 import {Metadata} from "next";
 import { SubCover } from "@/components/Covers";
-import IframeWrapper from "@/components/legacy/IframeWrapper";
-import Head from 'next/head';
 
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -16,7 +14,6 @@ export default function Page() {
         // bg-[#f7f7f7]
         <div className="max-w-[1600px] mx-auto">
             <SubCover title="Student"/>
-            <IframeWrapper />
 
             {/*<div className="mt-8 text-left">*/}
             {/*  <h2 className="ml-4 text-xl font-semibold">Professor</h2>*/}
