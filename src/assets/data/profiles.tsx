@@ -32,7 +32,7 @@ export const profiles = [
         email: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"],
         homepage: null,
         github: ["https://github.com/seojmm"],
-        linkedin: "https://www.linkedin.com/in/jimyeung-seo-7b9387359",
+        linkedin: "https://www.linkedin.com/in/jimyeungseo",
     },
     {
         type: "ms",
