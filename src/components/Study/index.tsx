@@ -26,7 +26,7 @@ function isOngoingStudy(endDate: string | null): boolean {
 // format date for display
 function formatDate(dateString: string): string {
   const date = new Date(dateString);
-  const year = date.getFullYear().toString().slice(-2); // 연도를 두 자리로
+  const year = date.getFullYear().toString(); // 연도를 4 자리로
   const month = (date.getMonth() + 1).toString().padStart(2, '0');
   const day = date.getDate().toString().padStart(2, '0');
   
@@ -152,7 +152,7 @@ export async function StudyList({ className = '', count = null, studyItems, prof
               </div>
 
               {/* Description */}
-              <p className="text-gray-500 text-[0.9em] leading-normal mb-4 line-clamp-3">
+              <p className="text-gray-500 text-[0.9em] leading-normal mb-1 line-clamp-3">
                 {parseDescription(study.description)}
               </p>
             </div>
@@ -162,14 +162,15 @@ export async function StudyList({ className = '', count = null, studyItems, prof
               {/* Participants */}
               <div className="flex items-start gap-2">
                 <div className="flex-1 min-w-0">
-                  <p className="text-[0.85em] text-gray-500 leading-normal">
+                  <div className="text-[0.85em] text-gray-500 leading-normal">
                     {study.participants.map((participant, idx) => (
-                      <span key={idx}>
+                      <div key={idx} className="flex items-center">
+                        {/* <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2 flex-shrink-0"></span> */}
+                        <span className="mr-2 flex-shrink-0"> - </span>
                         {renderProfileWithLink(participant, allProfiles || [])}
-                        {idx < study.participants.length - 1 ? ', ' : ''}
-                      </span>
+                      </div>
                     ))}
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>

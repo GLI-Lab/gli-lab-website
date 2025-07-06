@@ -66,7 +66,7 @@
     emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"]
     homepage: null
     github: ["seojmm"]
-    linkedin: null
+    linkedin: ["jimyeungseo"]
 
 - id: "[2024.07] 백혜윤"
   position: ms
@@ -94,8 +94,8 @@
   contacts:
     emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"]
     homepage: null
-    github: ["hannah100-coder"]
-    linkedin: null
+    github: ["hyeyoon100"]
+    linkedin: ["hye-yoon-baek1205"]
 
 - id: "[2024.11] 이동천"
   position: ms
@@ -122,7 +122,7 @@
   photos: ["[2024.10] 이동천1.jpg"]
   contacts:
     emails: ["ehdcjs987@gmail.com"]
-    homepage: ["https://lunar-typhoon-5d9.notion.site/13684a9fc4f28073ae0ac3a195697be3?pvs=4"]
+    homepage: null
     github: ["leedongcheon"]
     linkedin: null
 
