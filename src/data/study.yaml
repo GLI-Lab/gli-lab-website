@@ -1,3 +1,35 @@
+# YAML에서 tab은 금지. 반드시 space 2개 사용
+# end_date: null  # 종료일이 없는 경우
+
+- title: "Graph RL 101 Paper (#5)"
+  link: "https://bkoh509.notion.site/graph-rl-101-paper-5"
+  description: "그래프, 지식그래프, 이종그래프 등을 대상으로 <h>그래프 표현학습</h>을 수행하고 이를 <h>자연어처리</h>, <h>추천시스템</h>, 그리고 <h>이상탐지</h>에 응용하는 기초 논문을 다루는 스터디입니다."
+  start_date: "2025-07-01"
+  end_date: null
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
+    - "<profile=[2024.12] 최진호>Jin-Ho Choi (최진호)</>"
+    - "<profile=[2025.04] 구본유>Bonyou Koo (구본유)</>"
+    - "Yewon Sa (사예원)"
+    - "Yunjin Kang (강유진)"
+    - "Seyeong Kim (김세영)"
+    - "JaeJin Lee (이재진)"
+    - "DongHyun Lee (이동현)"
+    - "Hwan Choi (최환)"
+  
+- title: "Deep Learning 101 Paper (#2)"
+  link: "https://bkoh509.notion.site/deep-learning-101-paper-2"
+  description: "NLP 관점에서의 대표 논문들을 통해 <h>딥러닝</h> 기초 개념부터 주요 아키텍처까지 학습하는 스터디입니다."
+  start_date: "2025-07-01"
+  end_date: null
+  participants:
+    - "Yewon Sa (사예원)"
+    - "Yunjin Kang (강유진)"
+    - "Seyeong Kim (김세영)"
+    - "JaeJin Lee (이재진)"
+    - "DongHyun Lee (이동현)"
+    - "Hwan Choi (최환)"
+
 - title: "Graph RL 101 Paper (#4)"
   link: "https://bkoh509.notion.site/graph-rl-101-paper-4"
   description: "그래프, 지식그래프, 이종그래프 등을 대상으로 <h>그래프 표현학습</h>을 수행하고 이를 자연어처리와 추천시스템에 응용하는 기초 논문을 다루는 스터디입니다."
@@ -13,7 +45,7 @@
   link: "https://bkoh509.notion.site/multimodal-rl-paper-2"
   description: "이미지, 텍스트, 행동 정보를 통합한 <h>멀티모달 표현학습</h> 방법론과 이를 자연어처리와 추천시스템에 응용하는 기초 논문 스터디입니다."
   start_date: "2025-01-09"
-  end_date: null
+  end_date: "2025-06-09"
   participants:
     - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2024.12] 최진호>Jin-Ho Choi (최진호)</>"
