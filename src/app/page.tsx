@@ -120,16 +120,25 @@ export default function Page() {
 
                     <p className="text-home">
                         We are currently seeking <span className="highlight">talented and passionate students (MS/PhD) as well as undergraduate research interns.</span> 
-                        <br />
+                        {' '}<br className="hidden md:inline" />
                         Please feel free to contact us at <span className="font-semibold">bkoh@konkuk.ac.kr (오병국 교수)</span> if you are interested in joining our team.
                     </p>
 
                     <p className="text-home">
-                        우리 연구실은 <span className="highlight">LLM, 추천 시스템, 그래프 머신러닝, 지식 기반 지능형 시스템</span>을 포함한 
-                        다양한 인공지능 분야의 연구를 진행하고 있습니다.
-                        <br />
-                        해당 주제에 관심 있는 대학원 지망생과 학부 연구생은 언제든지 문의해 주세요.
-                        <br />
+                        본 연구실은 <span className="highlight">그래프를 활용한 지식기반 지능형 시스템</span>을 핵심적으로 연구하고 있습니다. 
+                        {' '}<br className="hidden md:inline" />
+                        그래프는 복잡한 데이터와 지식 간의 관계/규칙/제약사항 등을 명확하게 표현하고 탐색하는 핵심 기술로, 
+                        {' '}<br className="hidden md:inline" />
+                        딥러닝 모델의 해석 가능성과 신뢰성을 크게 향상시킬 수 있습니다.
+                        {' '}<br className="hidden md:inline" />
+                        이를 통해 <span className="highlight">자연어처리, 추천시스템, 이상탐지 등 다양한 딥러닝 응용 분야</span>에서 기존 기술의 한계를 극복하고,
+                        {' '}<br className="hidden md:inline" />
+                        데이터와 지식을 효과적으로 통합하여 보다 정교하고 제어 가능한 추론과 의사결정 능력을 제공합니다.
+                    </p>
+
+                    <p className="text-home">
+                        해당 주제에 관심 있는 대학원 지망생과 학부 연구생은 언제든지 <span className="font-semibold">bkoh@konkuk.ac.kr (오병국 교수)</span>로 문의해 주세요.
+                        {' '}<br className="hidden md:inline" />
                         체계적인 연구역량 향상을 위해 선별된 핵심 논문 <Link href="/board/study" className="group text-brand-primary underline-offset-4 hover:underline hover:decoration-1">
                             스터디
                             <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,10 +160,15 @@ export default function Page() {
                             <li>진로 탐색 및 연구 역량 향상을 위한 맞춤형 멘토링</li>
                         </ul>
                     </div>
+
+                    <Link href='/contact?tab=hiring'
+                        className="px-6 py-2 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
+                        Read More
+                    </Link>
                 </div>
             </div>
 
-            <div className="h-40"></div>
+            <div className="h-20"></div>
 
         </div>
     )

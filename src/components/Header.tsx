@@ -4,8 +4,20 @@ import Image from 'next/image'
 import Link from "next/link"
 import { useState, useEffect } from "react"
 
-import { IoChevronDown, IoMenuOutline, IoCloseOutline } from "react-icons/io5";
+import { IoChevronDown } from "react-icons/io5";
 
+interface SubMenu {
+    title: string;
+    path: string;
+    isExternal?: boolean;
+}
+
+interface Menu {
+    title: string;
+    path: string;
+    isExternal?: boolean;
+    subMenus?: SubMenu[];
+}
 
 export default function Header() {
     const [menu, setMenu] = useState (false)
@@ -28,15 +40,10 @@ export default function Header() {
     }, []);
 
     // Menu list (w/ submenu)
-    const menus = [
+    const menus: Menu[] = [
         {
-            title: "About",
-            path: "/about/introduction",
-            subMenus: [
-                {title: "Introduction", path: "/about/introduction"},
-                {title: "Contact", path: "/about/contact"},
-                {title: "Opening", path: "/about/opening"}
-            ]
+            title: "Home",
+            path: "/",
         },
         {
             title: "People",
@@ -57,7 +64,11 @@ export default function Header() {
         {
             title: "Publication",
             path: "https://bkoh509.github.io",
-            isExternal: true
+            isExternal: true,
+            subMenus: [
+                {title: "Papers", path: "https://bkoh509.github.io"},
+                {title: "Patents", path: "https://bkoh509.github.io"},
+            ]
         },
         {
             title: "Board",
@@ -68,24 +79,28 @@ export default function Header() {
                 {title: "News", path: "/board/news"},
                 {title: "Lecture", path: "/board/lecture"}
             ]
-        }
+        },
+        {
+            title: "Contact",
+            path: "/contact",
+        },
     ];
 
     return (
         // fixed top-0: 항상 상단에 고정
-        <nav className={`z-40`}>
-            <div className={`fixed top-0 ${isScrolled ? "bg-[#f4f4f4] shadow-md" : "bg-white shadow-sm"} w-full border-b md:border-b-1`}>
-                <div className="max-w-screen-xl items-center mx-auto md:flex px-4 md:px-6">
+        <nav className="z-50">
+            <div className={`fixed top-0 ${isScrolled ? "bg-[#f4f4f4] shadow-xl" : (menu ? "bg-white shadow-xl md:shadow-none" : "bg-white")} w-full border-b md:border-b-1`}>
+                <div className="max-w-screen-xl items-center mx-auto md:flex px-4">
 
                     {/* ##################################################### */}
                     {/* # 네비게이션 로고/텍스트 + 네비게이션 햄버거 아이콘 # */}
                     {/* ##################################################### */}
                     <div className={`flex items-center justify-between ${isScrolled ? "py-1" : "py-2"}`}>
-                        <Link href="/" className="items-center flex min-w-[270px]">
+                        <Link href="/" className="items-center flex min-w-[250px]">
                             <div className={`transition-all duration-200 ${isScrolled ? "h-[50px] w-[50px]" : "h-[70px] w-[70px]"}`}>
                                 <Image src={`${isScrolled ? "/images/logo/GLI_logo_black.png" : "/images/logo/GLI_logo_green.png"}`} alt="logo" width="96" height="96"/>
                             </div>
-                            <div className={`-space-y-2 ml-3 tracking-tighter ${isScrolled ? "text-[20px]" : "text-[22px] lg:text-[23.5px]"}`}>
+                            <div className={`-space-y-2 ml-3 tracking-tighter ${isScrolled ? "text-[20px]" : "text-[21px] lg:text-[23.5px]"}`}>
                                 <p>Graph & Language</p>
                                 <p>Intelligence Lab.</p>
                             </div>
@@ -93,7 +108,7 @@ export default function Header() {
                         <div className="md:hidden">
                             <button className="pr-2 pt-3" onClick={() => setMenu(!menu)}>
                                 <div className="w-8 h-8 flex flex-col justify-center items-center">
-                                    <div className="w-6 h-0.5 bg-black transition-all duration-500 ease-out mb-1"
+                                    <div className="w-6 h-0.5 bg-black transition-all duration-100 ease-out mb-1"
                                          style={{
                                              transform: menu ? 'rotate(45deg) translate(0, 0.5rem) scale(1.1)' : 'rotate(0) scale(1)',
                                              transformOrigin: 'center',
@@ -120,11 +135,10 @@ export default function Header() {
                     {/* # DESKTOP: 네비게이션 메뉴 (hidden md:block) # */}
                     {/* ############################################## */}
                     <div className="hidden md:block flex-1">
-                        <ul className="justify-end items-center md:flex
-                                       md:space-x-6 lg:space-x-10 xl:space-x-12">
+                        <ul className="justify-end items-center md:flex md:space-x-4 1.5md:space-x-8 lg:space-x-10 xl:space-x-12">
                             {menus.map((item, idx) => (
-                                <li key={idx} className="relative "  // 서브메뉴 리스트 선택할 수 있게
-                                    onMouseEnter={() => setActiveMenu(idx)}  // 호버 시 서브메뉴 활성화
+                                <li key={idx} className="relative "           // 서브메뉴 리스트 선택할 수 있게
+                                    onMouseEnter={() => setActiveMenu(idx)}   // 호버 시 서브메뉴 활성화
                                     onMouseLeave={() => setActiveMenu(null)}  // 호버 해제 시 서브메뉴 비활성화
                                 >
 
@@ -163,7 +177,7 @@ export default function Header() {
                                     {activeMenu === idx && item.subMenus && (
                                         <ul className={`absolute animate-fade-up w-[140px] lg:w-[160px] -mt-1 
                                                         ${idx == menus.length - 1 ? "-left-24" : "-left-6"}
-                                                        border-t-4 border-green-900 divide-y divide-gray-200  shadow-xl z-10
+                                                        border-t-4 border-green-900 divide-y divide-gray-200 shadow-xl z-10
                                                         tracking-tight ${isScrolled ? "bg-[#f4f4f4] text-[15px]" : "bg-white text-[15.5px] lg:text-[16.5px]"}`}>
                                             {item.subMenus.map((subItem, subIdx) => (
                                                 <li key={subIdx}
@@ -204,7 +218,7 @@ export default function Header() {
                             // 모바일 네비게이션
                             // items-center space-y-6
                             <ul
-                                className="flex-col justify-between divide-y divide-gray-400 my-1.5 border-t-4 border-green-900">
+                                className="flex-col justify-between divide-y divide-gray-400 border-t-2 border-green-900">
                                 {menus.map((item, idx) => (
                                     <li key={idx} className={`py-3 cursor-pointer px-5`}
                                         onClick={() => setActiveMenu(activeMenu === idx ? null : idx)}

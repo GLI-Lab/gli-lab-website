@@ -49,20 +49,11 @@ npm config get prefix
 
 #### 개발 서버 시작
 ```bash
-# Yarn 사용
-pm2 start "yarn dev" --name "gli-lab-dev"
+pm2 start "yarn dev -p 3000" --name "glilab"
+pm2 start "npm run dev" --name "glilab"
 
-# npm 사용
-pm2 start "npm run dev" --name "gli-lab-dev"
-```
-
-#### 프로덕션 서버 시작
-```bash
-# Next.js 프로덕션 모드
-pm2 start "yarn start" --name "gli-lab-prod"
-
-# 또는 직접 실행
-pm2 start npm --name "gli-lab-prod" -- start
+pm2 start "yarn start" --name "glilab"
+pm2 start npm --name "glilab" -- start
 ```
 
 ### 2. 프로세스 관리
@@ -70,44 +61,30 @@ pm2 start npm --name "gli-lab-prod" -- start
 #### 실행 중인 프로세스 확인
 ```bash
 pm2 list
-# 또는
 pm2 ls
 ```
 
 #### 프로세스 상세 정보 확인
 ```bash
 pm2 show <app-name>
-# 예시
 pm2 show gli-lab-dev
 ```
 
 #### 프로세스 중지
 ```bash
 pm2 stop <app-name>
-# 예시
-pm2 stop gli-lab-dev
-
-# 모든 프로세스 중지
 pm2 stop all
 ```
 
 #### 프로세스 재시작
 ```bash
 pm2 restart <app-name>
-# 예시
-pm2 restart gli-lab-dev
-
-# 모든 프로세스 재시작
 pm2 restart all
 ```
 
 #### 프로세스 삭제
 ```bash
 pm2 delete <app-name>
-# 예시
-pm2 delete gli-lab-dev
-
-# 모든 프로세스 삭제
 pm2 delete all
 ```
 

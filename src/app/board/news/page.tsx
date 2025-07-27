@@ -3,11 +3,11 @@ import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
 import { NewsList, getNewsItems } from "@/components/News";
 
-const PAGE_TITLE = 'News'
+const TITLE = 'News'
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
-        title: PAGE_TITLE,
+        title: TITLE,
         description: "Latest news and updates from GLI Lab - Graph Learning and Intelligence Laboratory at Konkuk University",
         asPath: '/board/news'
     });
@@ -19,7 +19,7 @@ export default async function Page() {
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
-                <SubCover title={PAGE_TITLE}/>
+                <SubCover title={TITLE} showBreadcrumb={false}/>
             </div>
             
             <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
