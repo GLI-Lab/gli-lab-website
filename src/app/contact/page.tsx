@@ -14,11 +14,12 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 interface PageProps {
-    searchParams: { tab?: string }
+    searchParams: Promise<{ tab?: string }>
 }
 
-export default function Page({ searchParams }: PageProps) {
-    const activeTab = searchParams.tab || 'contact';
+export default async function Page({ searchParams }: PageProps) {
+    const params = await searchParams;
+    const activeTab = params.tab || 'contact';
 
     return (
         <>
