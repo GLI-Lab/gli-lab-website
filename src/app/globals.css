@@ -14,21 +14,66 @@
         text-[16px] sm:text-[17.5px] md:text-[18px] lg:text-[18.5px] xl:text-[19px];
     }
 
-    .text-home {
+    .text-home {  /* home */
         @apply font-sans text-[#333] leading-[1.8] font-normal tracking-normal
         text-[16px] sm:text-[17px] md:text-[18px] lg:text-[19px] xl:text-[20px];
     }
 
-    .text-body {
+    .text-body {  /* all pages */
         @apply font-sans text-[#333] font-normal tracking-normal
         text-[16px] sm:text-[16.5px] md:text-[17px] lg:text-[17.5px] xl:text-[18px];
+    }
+
+    .text-section {  /* all pages */
+        @apply font-sans text-[#333] font-normal tracking-normal
+        text-[18px] sm:text-[18.5px] md:text-[19px] lg:text-[19.5px] xl:text-[20px];
     }
 
     .highlight {
         @apply font-semibold bg-[#ffff99] px-1; /* 배경색과 약간의 패딩을 적용하여 하이라이트 효과 */
     }
+
 }
 
+/* =============================== */
+/*          Animation              */
+/* =============================== */
+/* 하이라이터 칠하기 키프레임 애니메이션 */
+@keyframes highlightPaint {
+    0% {
+        width: 0%;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+/* 하이라이터 칠하기 애니메이션 - 활성 탭 */
+.animate-highlight span {
+    position: relative;
+    z-index: 2;
+}
+
+.animate-highlight span::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 60%;
+    width: 0%;
+    background: linear-gradient(to bottom, 
+        rgba(253, 224, 71, 0.2) 0%,
+        rgba(253, 224, 71, 0.8) 40%,
+        rgba(253, 224, 71, 0.9) 70%,
+        rgba(253, 224, 71, 0.2) 100%
+    );
+    z-index: -1;
+    animation: highlightPaint 0.6s ease-out forwards;
+}
+
+/* =============================== */
+/*                                 */
+/* =============================== */
 /* 스크롤바 숨기기 유틸리티 */
 @layer utilities {
     .scrollbar-hide {

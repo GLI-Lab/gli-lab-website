@@ -12,7 +12,7 @@ export default function Footer() {
             <div className="px-3 md:px-10 mx-auto">
                 <div className="flex justify-center text-white/85
                                 gap-3 sm:gap-5 pt-6 pb-3">
-                    <Link className="hover:underline underline-offset-4" href="/about/contact">Contact Us</Link>
+                    <Link className="hover:underline underline-offset-4" href="/contact?tab=contact">Contact Us</Link>
                     <p>|</p>
                     <Link className="hover:underline underline-offset-4" href="https://github.com/GLI-Lab/GLI-Lab">Terms of Service</Link>
                     <p>|</p>
