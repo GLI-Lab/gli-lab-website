@@ -79,7 +79,7 @@ export const ProfileDetail: React.FC<ProfileDetailProps> = (props) => {
                     <h1 className="text-[20px] md:text-[22px]">{name_en}</h1>
                 </div>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 mb-1`}>
-                    <span className={`text-brand-primary highlight text-[18px] md:text-[19px]`}>{title}</span>
+                    <span className={`text-brand-primary highlight text-[18px] md:text-[19px] whitespace-nowrap`}>{title}</span>
                 </div>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 mb-1`}>
                     <span className={`text-brand-primary highlight-2 text-[18px] md:text-[19px]`}>{affiliation}</span>

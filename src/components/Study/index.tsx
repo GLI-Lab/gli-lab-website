@@ -48,16 +48,6 @@ function parseDescription(description: string): React.ReactNode {
   });
 }
 
-// 영어 이름을 URL 친화적인 slug로 변환하는 함수
-function createSlugFromName(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '') // 특수문자 제거
-    .replace(/\s+/g, '-') // 공백을 하이픈으로
-    .replace(/-+/g, '-') // 연속 하이픈 제거
-    .trim();
-}
-
 // parse profile format and render with member link
 function renderProfileWithLink(participant: string, profiles: any[], alumniProfiles: any[]): React.ReactNode {
   const profileMatch = participant.match(/^<profile=(.+?)>(.+?)<\/>$/);
@@ -68,7 +58,6 @@ function renderProfileWithLink(participant: string, profiles: any[], alumniProfi
     const profile = profiles.find(p => p.id === profileId) || alumniProfiles.find(p => p.id === profileId);
     
     if (profile) {
-      const nameSlug = createSlugFromName(profile.name_en);
       const isAlumniProfile = alumniProfiles.some(p => p.id === profileId);
       const basePath = isAlumniProfile ? '/people/alumni' : '/people/members';
       
@@ -76,7 +65,7 @@ function renderProfileWithLink(participant: string, profiles: any[], alumniProfi
       
       return (
         <Link 
-          href={`${basePath}?slug=${nameSlug}&id=${encodeURIComponent(profileId)}`}
+          href={`${basePath}?id=${profileId.replace(/\s/g, '%20')}`}
           className="underline-offset-4 hover:underline hover:decoration-1 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
           title={`View ${profile.name_ko} (${profile.name_en})`}
         >
