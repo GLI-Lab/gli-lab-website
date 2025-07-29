@@ -13,19 +13,20 @@
 ###############################################
 # M.S. Graduate
 ###############################################
-- id: "[2024.06] 서지명"
-  role: {type: ms, title: M.S. Graduate}
-  name: {en: Jimyeung Seo, ko: 서지명}
-  education: {bs: Computer Science & Engineering, ms: Computer Science & Engineering, phd: null}
-  academic: {year: 1, semester: 1}
-  interests: [Graph ML/DL, LLM Optimization, Multimodal News Recommendation]
-  current_work: ["논문 작성 (제1저자, 공저자)", "프로젝트 참여 및 심화 연구 훈련"]
-  photos: ["[2024.06] 서지명1.jpg"]
-  contacts: {emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"], homepage: null, github: ["seojmm"], linkedin: ["jimyeungseo"]}
-  status: 
-    period: {admission: "2025.03", graduation: "2027.02"}
-    joined: {start: "2024.06", end: "2027.02"}
-    affiliation: "Samsung Research"
+# TEST
+# - id: "[2024.06] 서지명"
+#   role: {type: ms, title: M.S. Graduate}
+#   name: {en: Jimyeung Seo, ko: 서지명}
+#   education: {bs: Computer Science & Engineering, ms: Computer Science & Engineering, phd: null}
+#   academic: {year: 1, semester: 1}
+#   interests: [Graph ML/DL, LLM Optimization, Multimodal News Recommendation]
+#   current_work: ["논문 작성 (제1저자, 공저자)", "프로젝트 참여 및 심화 연구 훈련"]
+#   photos: ["[2024.06] 서지명1.jpg"]
+#   contacts: {emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"], homepage: null, github: ["seojmm"], linkedin: ["jimyeungseo"]}
+#   status: 
+#     period: {admission: "2025.03", graduation: "2027.02"}
+#     joined: {start: "2024.06", end: "2027.02"}
+#     affiliation: "Samsung Research"
 
 ###############################################
 # Researchers
