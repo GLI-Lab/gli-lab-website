@@ -19,18 +19,6 @@ function isNewItem(date?: string): boolean {
   return itemDate >= sixMonthsAgo;
 }
 
-
-
-// 영어 이름을 URL 친화적인 slug로 변환하는 함수
-function createSlugFromName(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9\s-]/g, '') // 특수문자 제거
-    .replace(/\s+/g, '-') // 공백을 하이픈으로
-    .replace(/-+/g, '-') // 연속 하이픈 제거
-    .trim();
-}
-
 // 텍스트에서 프로필 마크업을 찾아서 링크로 변환하는 함수
 function renderContentWithProfileLinks(content: string, profiles: any[], alumniProfiles: any[], newsIndex: number, lineIndex: number): React.ReactNode {
   if (!content) return content;
@@ -67,8 +55,6 @@ function renderContentWithProfileLinks(content: string, profiles: any[], alumniP
     const profile = findProfileById(profileId);
     
     if (profile) {
-      // 영어 이름을 slug로 변환하고 ID를 백업 파라미터로 추가
-      const nameSlug = createSlugFromName(profile.name_en);
       // alumni 프로필인지 확인해서 적절한 경로 설정
       const isAlumniProfile = alumniProfiles.some(p => p.id === profileId);
       const basePath = isAlumniProfile ? '/people/alumni' : '/people/members';
@@ -77,7 +63,7 @@ function renderContentWithProfileLinks(content: string, profiles: any[], alumniP
       elements.push(
         <Link 
           key={`${newsIndex}-${lineIndex}-profile-${profileId}`}
-          href={`${basePath}?slug=${nameSlug}&id=${encodeURIComponent(profileId)}`}
+          href={`${basePath}?id=${profileId.replace(/\s/g, '%20')}`}
           className="group text-brand-primary underline-offset-4 hover:underline hover:decoration-1"
           title={`View ${profile.name_en} (${profile.name_ko})`}
         >

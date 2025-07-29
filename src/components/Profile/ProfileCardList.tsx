@@ -177,10 +177,11 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
                 </div>
             )}
 
-            {/* Detailed Profile (popup) - URL로 접근한 경우 모바일에서는 바로 열지 않음 */}
+            {/* Detailed Profile (popup) - URL로 접근한 경우 모바일에서는 바로 열지 않음 -> {selectedCard && !init && (  */}
+            {/* Detailed Profile (popup) - 모바일에서 팝업으로 표시                    -> {selectedCard && (           */}
             {selectedCard && !init && (
                 <div onClick={handleBackdropClick} className="fixed inset-0 z-50 bg-black bg-opacity-75 flex items-center justify-center 1.5md:hidden">
-                    <div className="max-h-[90vh] w-[350px] flex flex-col items-center justify-center rounded-lg bg-white relative overflow-hidden">
+                    <div className="max-h-[90vh] w-[90vw] max-w-[350px] flex flex-col items-center justify-center rounded-lg bg-white relative overflow-hidden">
                         {/* 닫기버튼 */}
                         <button
                             onClick={() => {
@@ -240,16 +241,22 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
 
             {/* Profile List */}
             <div className="flex-1">
-                {categories.map((category) => (
-                    <div key={category.type}>
-                        <div>
-                            <h2 className="font-medium tracking-tight text-[26px] md:text-[30px]">{category.title}</h2>
-                            <div className="w-14 border-b-4 border-border-accent mt-1 mb-6"></div>
-                        </div>
-                        <div className="grid grid-cols-1 1.5xl:grid-cols-2 gap-x-4 gap-y-3 sm:gap-y-4 mb-10">
-                            {profiles
-                                .filter(profile => profile.type === category.type)
-                                .map((profile, index) => (
+                {categories.map((category) => {
+                    const categoryProfiles = profiles.filter(profile => profile.type === category.type);
+                    
+                    // 해당 카테고리에 프로필이 없으면 렌더링하지 않음
+                    if (categoryProfiles.length === 0) {
+                        return null;
+                    }
+                    
+                    return (
+                        <div key={category.type}>
+                            <div>
+                                <h2 className="font-medium tracking-tight text-[26px] md:text-[30px]">{category.title}</h2>
+                                <div className="w-14 border-b-4 border-border-accent mt-1 mb-6"></div>
+                            </div>
+                            <div className="grid grid-cols-1 1.5xl:grid-cols-2 gap-x-4 gap-y-3 sm:gap-y-4 mb-10">
+                                {categoryProfiles.map((profile, index) => (
                                     <div
                                         key={index}
                                         ref={el => { profileRefs.current[profile.id] = el; }}
@@ -261,11 +268,11 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
                                             {...profile}
                                         />
                                     </div>
-                                ))
-                            }
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );

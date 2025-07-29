@@ -45,8 +45,6 @@ npm config get prefix
 
 ## 기본 사용법
 
-### 1. 애플리케이션 시작
-
 #### 개발 서버 시작
 ```bash
 pm2 start "yarn dev -p 3000" --name "glilab"
@@ -54,7 +52,12 @@ pm2 start "npm run dev" --name "glilab"
 
 pm2 start "yarn start" --name "glilab"
 pm2 start npm --name "glilab" -- start
+
+pm2 start "yarn start -p 3001" --name "glilab-prod"
 ```
+
+
+
 
 ### 2. 프로세스 관리
 

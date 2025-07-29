@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 import { ProfileYAML, ProfileData } from './types';
 
 // YAML 프로필을 컴포넌트에서 사용하는 형태로 변환
-function transformProfile(yamlProfile: ProfileYAML): ProfileData {
+function transformProfile(yamlProfile: ProfileYAML, isAlumni: boolean = false): ProfileData {
   // GitHub URL 정규화
   const githubUrls = (yamlProfile.contacts.github || []).map(github => {
     return github.startsWith('https://') ? github : `https://github.com/${github}`;
@@ -15,9 +15,13 @@ function transformProfile(yamlProfile: ProfileYAML): ProfileData {
     return linkedin.startsWith('https://') ? linkedin : `https://www.linkedin.com/in/${linkedin}`;
   });
 
-  // Photo 경로 정규화
+  // Photo 경로 정규화 - alumni인 경우 public/images/alumni에서 찾기
   const photoUrls = (yamlProfile.photos || []).map(photo => {
-    return photo.startsWith('/images/profiles/') ? photo : `/images/profiles/${photo}`;
+    if (isAlumni) {
+      return photo.startsWith('/images/alumni/') ? photo : `/images/profiles/alumni/${photo}`;
+    } else {
+      return photo.startsWith('/images/profiles/') ? photo : `/images/profiles/${photo}`;
+    }
   });
 
   return {
@@ -65,7 +69,7 @@ export async function getProfiles(): Promise<ProfileData[]> {
     const filePath = await findProfileFile('profiles.yaml');
     const yamlText = await fs.readFile(filePath, 'utf8');
     const rawData = yaml.load(yamlText) as ProfileYAML[];
-    return rawData.map(transformProfile);
+    return rawData.map(profile => transformProfile(profile, false));
   } catch (error) {
     console.error('Error loading profiles data:', error);
     return [];
@@ -78,7 +82,7 @@ export async function getAlumniProfiles(): Promise<ProfileData[]> {
     const filePath = await findProfileFile('profiles-alumni.yaml');
     const yamlText = await fs.readFile(filePath, 'utf8');
     const rawData = yaml.load(yamlText) as ProfileYAML[];
-    return rawData.map(transformProfile);
+    return rawData.map(profile => transformProfile(profile, true));
   } catch (error) {
     console.error('Error loading alumni data:', error);
     return [];
