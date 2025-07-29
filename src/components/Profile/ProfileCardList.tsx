@@ -33,7 +33,7 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
     const [init, setInit] = useState(true);
     const [isAtBottom, setIsAtBottom] = useState(false);
     const [selectedCard, setSelectedCard] = useState<ProfileData | null>(selectedProfile || null);
-    const contentRef = useRef<HTMLDivElement>(null);
+    const mobilePopupRef = useRef<HTMLDivElement>(null);
     const profileRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
     const router = useRouter();
 
@@ -92,8 +92,8 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
     }, [selectedProfile]); // selectedProfile이 변경될 때마다 실행
 
     const checkBottom = useCallback(() => {
-        if (contentRef.current) {
-            const { scrollHeight, scrollTop, clientHeight } = contentRef.current;
+        if (mobilePopupRef.current) {
+            const { scrollHeight, scrollTop, clientHeight } = mobilePopupRef.current;
             const atBottom = scrollHeight - scrollTop <= clientHeight + 10;
             setIsAtBottom(atBottom);
         }
@@ -208,7 +208,7 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
 
                         {/* 콘텐츠 (주소창 고려해서 -20px) */}
                         <div 
-                            ref={contentRef}
+                            ref={mobilePopupRef}
                             className="overflow-y-auto w-[320px] max-h-[calc(90vh-20px)] relative overscroll-none scrollbar-hide pt-2 pb-10" 
                             onScroll={handleScroll}
                         >
@@ -273,6 +273,8 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
                         </div>
                     );
                 })}
+                {/* Sticky positioning을 위한 하단 여백 */}
+                {selectedCard && <div className="h-[50vh]"></div>}
             </div>
         </div>
     );
