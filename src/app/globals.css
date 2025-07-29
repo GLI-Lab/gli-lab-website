@@ -30,9 +30,12 @@
     }
 
     .highlight {
-        @apply font-semibold bg-[#ffff99] px-1; /* 배경색과 약간의 패딩을 적용하여 하이라이트 효과 */
+        @apply font-semibold bg-[#ffff99] px-1;
     }
 
+    .highlight-2 {
+        @apply font-semibold bg-[#ffe2a2] px-1;
+    }
 }
 
 /* =============================== */

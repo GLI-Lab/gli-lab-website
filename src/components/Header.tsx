@@ -49,8 +49,9 @@ export default function Header() {
             title: "People",
             path: "/people/members",
             subMenus: [
+                {title: "Professor", path: "https://bkoh509.github.io", isExternal: true},
                 {title: "Members", path: "/people/members"},
-                {title: "Professor", path: "https://bkoh509.github.io", isExternal: true}
+                {title: "Alumni", path: "/people/alumni"}
             ]
         },
         {

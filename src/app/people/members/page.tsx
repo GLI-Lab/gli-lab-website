@@ -1,7 +1,9 @@
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
-import { ProfileCardList, getProfiles, getPapers } from "@/components/Profile";
-import { getStudyItems } from "@/components/Study/studyData";
+import { ProfileCardList } from "@/components/Profile";
+import { getProfiles } from "@/data/loaders/profileLoader";
+import { getPapers } from "@/data/loaders/paperLoader";
+import { getStudies } from "@/data/loaders/studyLoader";
 
 const PAGE_TITLE = `Members`
 
@@ -19,7 +21,7 @@ interface PageProps {
 
 export default async function Page({ searchParams }: PageProps) {
     const profiles = await getProfiles();
-    const studies = await getStudyItems();
+    const studies = await getStudies();
     const papers = await getPapers();
     const resolvedSearchParams = await searchParams;
     const selectedId = resolvedSearchParams.id as string;
@@ -43,6 +45,7 @@ export default async function Page({ searchParams }: PageProps) {
                 selectedProfile={selectedProfile}
                 studies={studies} 
                 papers={papers} 
+                isAlumniPage={false}
             />
         </div>
     );

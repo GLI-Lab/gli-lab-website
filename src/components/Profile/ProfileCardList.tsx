@@ -4,14 +4,15 @@ import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/navigation';
 import { ProfileItem } from './ProfileItem';
 import { ProfileDetail } from './ProfileDetail';
-import { type ProfileData, type PaperData, getPapersForProfile } from './profiles';
-import { StudyData } from '../Study/studyData';
+import { type ProfileData, type PaperData, type StudyData } from '@/data/loaders/types';
+import { getPapersForProfile } from '@/data/loaders/utils';
 
 interface ProfileCardListProps {
     profiles: ProfileData[];
-    selectedProfile: ProfileData; // page에서 찾아서 넘겨준 프로필
+    selectedProfile?: ProfileData | null; // page에서 찾아서 넘겨준 프로필 (alumni 페이지에서는 null일 수 있음)
     studies?: StudyData[];
     papers?: PaperData[];
+    isAlumniPage?: boolean; // alumni 페이지인지 여부
 }
 
 // 현재 프로필과 관련된 스터디를 필터링하는 함수
@@ -28,21 +29,29 @@ const filterStudiesForProfile = (allStudies: StudyData[], profile: ProfileData) 
     );
 };
 
-export function ProfileCardList({ profiles, selectedProfile, studies = [], papers = [] }: ProfileCardListProps) {
+export function ProfileCardList({ profiles, selectedProfile, studies = [], papers = [], isAlumniPage = false }: ProfileCardListProps) {
     const [init, setInit] = useState(true);
     const [isAtBottom, setIsAtBottom] = useState(false);
-    const [selectedCard, setSelectedCard] = useState<ProfileData | null>(selectedProfile);
+    const [selectedCard, setSelectedCard] = useState<ProfileData | null>(selectedProfile || null);
     const contentRef = useRef<HTMLDivElement>(null);
     const profileRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
     const router = useRouter();
 
     console.log('ProfileCardListClient rendered');
     
-    const categories = [
+    // 카테고리 설정
+    const categories = isAlumniPage ? [
+        {title: 'Ph.D. Graduates', type: 'phd'},
+        {title: 'M.S. Graduates', type: 'ms'},
+        {title: 'Researchers', type: 'researcher'},
+        {title: 'Interns', type: 'intern'},
+    ] : [
         {title: 'Faculty', type: 'faculty'},
+        {title: 'Ph.D. Students', type: 'phd'},
         {title: 'M.S. Students', type: 'ms'},
-        {title: 'Prospective Ph.D. Students', type: 'pphd'},
-        {title: 'Prospective M.S. Students', type: 'pms'},
+        // {title: 'Prospective Ph.D. Students', type: 'pphd'},
+        // {title: 'Prospective M.S. Students', type: 'pms'},
+        {title: 'Researchers', type: 'researcher'},
         {title: 'Interns', type: 'intern'},
     ];
 
@@ -51,33 +60,36 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
             setInit(false);
             setSelectedCard(profile);
             
-            // URL 업데이트
-            router.replace(`/people/members?id=${profile.id}`, { scroll: false });
+            // URL 업데이트 - alumni 페이지 여부에 따라 다르게 처리
+            const basePath = isAlumniPage ? '/people/alumni' : '/people/members';
+            router.replace(`${basePath}?id=${profile.id}`, { scroll: false });
         } else {
             setInit(false);
             setSelectedCard(profile);
         }
-    }, [selectedCard, router]);
+    }, [selectedCard, router, isAlumniPage]);
 
     // selectedProfile이 변경되면 selectedCard 업데이트
     useEffect(() => {
-        setSelectedCard(selectedProfile);
+        setSelectedCard(selectedProfile || null);
     }, [selectedProfile]);
 
-    // 초기 마운트 시 자동 스크롤
+    // 초기 마운트 시 자동 스크롤 (selectedProfile이 있을 때만)
     useEffect(() => {
-        const timer = setTimeout(() => {
-            const profileElement = profileRefs.current[selectedProfile.id];
-            if (profileElement) {
-                profileElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center'
-                });
-            }
-        }, 200);
-        
-        return () => clearTimeout(timer);
-    }, []); // 빈 의존성 배열로 마운트 시에만 실행
+        if (selectedProfile) {
+            const timer = setTimeout(() => {
+                const profileElement = profileRefs.current[selectedProfile.id];
+                if (profileElement) {
+                    profileElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            }, 200);
+            
+            return () => clearTimeout(timer);
+        }
+    }, [selectedProfile]); // selectedProfile이 변경될 때마다 실행
 
     const checkBottom = useCallback(() => {
         if (contentRef.current) {
@@ -160,7 +172,7 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
             {selectedCard && (
                 <div className="hidden 1.5md:block 1.5md:w-[350px] 1.5md:mr-12 lg:mr-20 sticky self-start top-16 pt-4">
                     <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pr-8 -mr-8 pb-20">
-                        <ProfileDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers}/>
+                        <ProfileDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} isAlumniPage={isAlumniPage}/>
                     </div>
                 </div>
             )}
@@ -199,7 +211,7 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
                             className="overflow-y-auto w-[320px] max-h-[calc(90vh-20px)] relative overscroll-none scrollbar-hide pt-2 pb-10" 
                             onScroll={handleScroll}
                         >
-                            <ProfileDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers}/>
+                            <ProfileDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} isAlumniPage={isAlumniPage}/>
                         </div>
 
                         {/* 스크롤 인디케이터 - 모달 전체 하단에 고정 */}
@@ -244,7 +256,8 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
                                     >
                                         <ProfileItem
                                             onClick={() => handleProfileClick(profile)}
-                                            isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || selectedProfile.id !== "[2024.03] 오병국"))}
+                                            isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || (selectedProfile && selectedProfile.id !== "[2024.03] 오병국")))}
+                                            isAlumniPage={isAlumniPage}
                                             {...profile}
                                         />
                                     </div>

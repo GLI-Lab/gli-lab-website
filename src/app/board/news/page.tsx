@@ -1,7 +1,9 @@
 import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
-import { NewsList, getNewsItems } from "@/components/News";
+import { NewsList } from "@/components/News";
+import { getNews } from "@/data/loaders/newsLoader";
+import { getProfiles, getAlumniProfiles } from "@/data/loaders/profileLoader";
 
 const TITLE = 'News'
 
@@ -14,7 +16,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Page() {
-    const newsItems = await getNewsItems();
+    const newsItems = await getNews();
+    const profiles = await getProfiles();
+    const alumniProfiles = await getAlumniProfiles();
 
     return (
         <>
@@ -35,6 +39,8 @@ export default async function Page() {
                         className="w-full text-left"
                         count={50}
                         newsItems={newsItems}
+                        profiles={profiles}
+                        alumniProfiles={alumniProfiles}
                     />
                 </div>
             </div>
