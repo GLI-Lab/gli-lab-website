@@ -4,9 +4,15 @@ import Link from 'next/link';
 import { MainCover } from "@/components/Covers";
 import { FaCheck } from "react-icons/fa";
 import { NewsList } from "@/components/News";
+import { getNews } from "@/data/loaders/newsLoader";
+import { getProfiles, getAlumniProfiles } from "@/data/loaders/profileLoader";
 
+export default async function Page() {
+    // 뉴스와 프로필 데이터 로딩
+    const newsItems = await getNews();
+    const profiles = await getProfiles();
+    const alumniProfiles = await getAlumniProfiles();
 
-export default function Page() {
     return (
         <div className="">
             <div className="max-w-screen-2xl mx-auto">
@@ -89,7 +95,7 @@ export default function Page() {
                                     <span><span className="font-semibold underline underline-offset-4">자연어처리</span>: 질의응답, 정보 검색/추출, 지식/LLM 증류 및 응용</span>
                                 </div>
                             </div>
-                            <div className="ml-6 text-gray-500 text-body">
+                            <div className="ml-6 text-gray-500 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
                                 → 그래프 지식을 통합하여 LLM의 환각 문제를 줄이고, 더 일관된 응답 생성 가능
                             </div>
                         </li>
@@ -100,7 +106,7 @@ export default function Page() {
                                     <span><span className="font-semibold underline underline-offset-4">추천시스템</span>: 지식기반/설명가능한 추천, 멀티모달/대화형 추천, 그래프 기반 추천</span>
                                 </div>
                             </div>
-                            <div className="ml-6 text-gray-500 text-body">
+                            <div className="ml-6 text-gray-500 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
                                 → 그래프 기반의 사용자–아이템 관계 확장을 통해 의도와 맥락 중심의 추천 가능
                             </div>
                         </li>
@@ -112,7 +118,7 @@ export default function Page() {
                                     </span>
                                 </div>
                             </div>
-                            <div className="ml-6 text-gray-500 text-body">
+                            <div className="ml-6 text-gray-500 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
                                 → 그래프 구축/확장 및 다양한 딥러닝 모델과의 통합을 위한 기반 기술로 활용 가능
                             </div>
                         </li>
@@ -123,7 +129,7 @@ export default function Page() {
                                     <span><span className="font-semibold underline underline-offset-4">LLM–그래프 융합</span>: 지식기반/멀티모달 LLM, 텍스트-그래프 변환, LLM 에이전트, GraphRAG</span>
                                 </div>
                             </div>
-                            <div className="ml-6 text-gray-500 text-body">
+                            <div className="ml-6 text-gray-500 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
                                 → 그래프를 통해 LLM에 외부 지식을 입력하여 신뢰성 높고 도메인 특화 응답 생성 가능
                             </div>
                         </li>
@@ -134,7 +140,7 @@ export default function Page() {
                                     <span><span className="font-semibold underline underline-offset-4">이상탐지</span>: 거래 이상탐지, 사용자 행동 기반 이상탐지, 멀티모달 이상탐지</span>
                                 </div>
                             </div>
-                            <div className="ml-6 text-gray-500 text-body">
+                            <div className="ml-6 text-gray-500 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
                                 → 그래프를 통해 행위 간의 상관관계를 모델링하여 상황 맥락에 맞는 이상 탐지 가능
                             </div>
                         </li>
@@ -158,6 +164,9 @@ export default function Page() {
                     <NewsList 
                         className="w-full text-home text-left"
                         count={30}
+                        newsItems={newsItems}
+                        profiles={profiles}
+                        alumniProfiles={alumniProfiles}
                     />
                     <Link href='/board/news'
                         className="px-6 py-2 mt-12 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
@@ -209,7 +218,7 @@ export default function Page() {
                         <p className="font-semibold mb-2">
                             [연구지원]
                         </p>
-                        <ul className="list-inside list-disc space-y-2">
+                        <ul className="list-disc ml-6 space-y-2">
                             <li>최신 연구 주제 중심의 정기적인 논문 스터디 운영</li>
                             <li>연구 주제 참여 및 우수 논문 공동 저자 기회 제공</li>
                             <li>연구 성과에 따른 장려금 및 인센티브 지원</li>

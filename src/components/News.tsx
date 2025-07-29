@@ -1,19 +1,13 @@
 import React from 'react';
-import yaml from 'js-yaml'
-import path from 'path';
-import fs from 'fs/promises';
 import Link from 'next/link';
-import { getProfiles } from './Profile';
-
-export interface NewsItem {
-  date: string
-  content: string
-}
+import { NewsData, ProfileData } from '@/data/loaders/types';
 
 export interface NewsListProps {
   className?: string
   count?: number | null
-  newsItems?: NewsItem[]  // 외부에서 데이터를 전달받을 수 있도록 추가
+  newsItems?: NewsData[]  // 외부에서 데이터를 전달받을 수 있도록 추가
+  profiles?: ProfileData[]  // 현재 멤버 프로필 데이터
+  alumniProfiles?: ProfileData[]  // 졸업생 프로필 데이터
 }
 
 // check if an item is new (within 3 months)
@@ -25,15 +19,7 @@ function isNewItem(date?: string): boolean {
   return itemDate >= sixMonthsAgo;
 }
 
-// 뉴스 데이터를 가져오는 함수 분리
-export async function getNewsItems(): Promise<NewsItem[]> {
-  const filePath = path.join(process.cwd(), 'src', 'data', 'news.yaml');
-  const yamlText = await fs.readFile(filePath, 'utf8');
-  const rawData = yaml.load(yamlText) as NewsItem[];
-  return [...rawData].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-  );
-}
+
 
 // 영어 이름을 URL 친화적인 slug로 변환하는 함수
 function createSlugFromName(name: string): string {
@@ -46,12 +32,12 @@ function createSlugFromName(name: string): string {
 }
 
 // 텍스트에서 프로필 마크업을 찾아서 링크로 변환하는 함수
-function renderContentWithProfileLinks(content: string, profiles: any[], newsIndex: number, lineIndex: number): React.ReactNode {
+function renderContentWithProfileLinks(content: string, profiles: any[], alumniProfiles: any[], newsIndex: number, lineIndex: number): React.ReactNode {
   if (!content) return content;
   
-  // 프로필 ID로 프로필을 찾는 함수
+  // 프로필 ID로 프로필을 찾는 함수 (현재 멤버와 alumni 모두에서 찾기)
   const findProfileById = (id: string) => {
-    return profiles.find(profile => profile.id === id);
+    return profiles.find(profile => profile.id === id) || alumniProfiles.find(profile => profile.id === id);
   };
 
   // <profile=ID>이름</> 패턴을 찾는 정규식
@@ -83,12 +69,15 @@ function renderContentWithProfileLinks(content: string, profiles: any[], newsInd
     if (profile) {
       // 영어 이름을 slug로 변환하고 ID를 백업 파라미터로 추가
       const nameSlug = createSlugFromName(profile.name_en);
+      // alumni 프로필인지 확인해서 적절한 경로 설정
+      const isAlumniProfile = alumniProfiles.some(p => p.id === profileId);
+      const basePath = isAlumniProfile ? '/people/alumni' : '/people/members';
       
       // 프로필이 있으면 링크로 변환
       elements.push(
         <Link 
           key={`${newsIndex}-${lineIndex}-profile-${profileId}`}
-          href={`/people/members?slug=${nameSlug}&id=${encodeURIComponent(profileId)}`}
+          href={`${basePath}?slug=${nameSlug}&id=${encodeURIComponent(profileId)}`}
           className="group text-brand-primary underline-offset-4 hover:underline hover:decoration-1"
           title={`View ${profile.name_en} (${profile.name_ko})`}
         >
@@ -135,10 +124,9 @@ function renderContentWithProfileLinks(content: string, profiles: any[], newsInd
   return <>{elements}</>;
 }
 
-export async function NewsList({ className = '', count = null, newsItems }: NewsListProps) {
-  // newsItems가 전달되면 사용, 없으면 직접 가져오기 (하위 호환성)
-  const newsData = await getNewsItems();
-  const profiles = await getProfiles();
+export function NewsList({ className = '', count = null, newsItems = [], profiles = [], alumniProfiles = [] }: NewsListProps) {
+  // newsItems가 전달되면 사용, 없으면 빈 배열 사용
+  const newsData = newsItems;
   const latestNews = count ? newsData.slice(0, count) : newsData;
 
   return (
@@ -171,11 +159,11 @@ export async function NewsList({ className = '', count = null, newsItems }: News
               </div>
               <div className={`${idx < latestNews.length - 1 ? 'border-b border-gray-200 pb-1 mb-1' : ''}`}>
                 <div className="text-[0.95em] sm:text-[1em]">
-                  {renderContentWithProfileLinks(title, profiles, idx, 0)}
+                  {renderContentWithProfileLinks(title, profiles, alumniProfiles, idx, 0)}
                 </div>
                 {descriptionText && (
                   <div className="text-[0.9em] italic text-gray-600 mt-1">
-                    {renderContentWithProfileLinks(descriptionText, profiles, idx, 1)}
+                    {renderContentWithProfileLinks(descriptionText, profiles, alumniProfiles, idx, 1)}
                   </div>
                 )}
               </div>

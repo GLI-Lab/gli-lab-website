@@ -1,12 +1,10 @@
 import Link from 'next/link';
-import { getProfiles } from '../Profile';
-import { StudyData } from './studyData';
+import { getProfiles } from '../../data/loaders/profileLoader';
+import { getAlumniProfiles } from '../../data/loaders/profileLoader';
+import { StudyData } from '../../data/loaders/types';
 import { StudyHighlightWrapper } from './StudyHighlight';
+export { getStudies } from '@/data/loaders/studyLoader';
 
-// Re-export everything for easy imports
-export type { StudyData } from './studyData';
-export { getStudyItems } from './studyData';
-export { StudyHighlightWrapper } from './StudyHighlight';
 
 export interface StudyListProps {
   className?: string
@@ -61,18 +59,24 @@ function createSlugFromName(name: string): string {
 }
 
 // parse profile format and render with member link
-function renderProfileWithLink(participant: string, profiles: any[]): React.ReactNode {
+function renderProfileWithLink(participant: string, profiles: any[], alumniProfiles: any[]): React.ReactNode {
   const profileMatch = participant.match(/^<profile=(.+?)>(.+?)<\/>$/);
   
   if (profileMatch) {
     const [, profileId, displayName] = profileMatch;
-    const profile = profiles.find(p => p.id === profileId);
+    // 현재 멤버와 alumni 모두에서 프로필 찾기
+    const profile = profiles.find(p => p.id === profileId) || alumniProfiles.find(p => p.id === profileId);
     
     if (profile) {
       const nameSlug = createSlugFromName(profile.name_en);
+      const isAlumniProfile = alumniProfiles.some(p => p.id === profileId);
+      const basePath = isAlumniProfile ? '/people/alumni' : '/people/members';
+      
+
+      
       return (
         <Link 
-          href={`/people/members?slug=${nameSlug}&id=${encodeURIComponent(profileId)}`}
+          href={`${basePath}?slug=${nameSlug}&id=${encodeURIComponent(profileId)}`}
           className="underline-offset-4 hover:underline hover:decoration-1 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
           title={`View ${profile.name_ko} (${profile.name_en})`}
         >
@@ -102,6 +106,16 @@ function renderProfileWithLink(participant: string, profiles: any[]): React.Reac
 
 export async function StudyList({ className = '', count = null, studyItems, profiles }: StudyListProps) {
   const allProfiles = profiles || await getProfiles();
+  
+  // alumni 데이터 로드 시 에러 처리
+  let alumniProfiles: any[] = [];
+  try {
+    alumniProfiles = await getAlumniProfiles();
+  } catch (error) {
+    console.error('Error loading alumni profiles:', error);
+    alumniProfiles = [];
+  }
+  
   const studies = studyItems ? (count ? studyItems.slice(0, count) : studyItems) : [];
 
   return (
@@ -167,7 +181,7 @@ export async function StudyList({ className = '', count = null, studyItems, prof
                       <div key={idx} className="flex items-center">
                         {/* <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2 flex-shrink-0"></span> */}
                         <span className="mr-2 flex-shrink-0"> - </span>
-                        {renderProfileWithLink(participant, allProfiles || [])}
+                        {renderProfileWithLink(participant, allProfiles || [], alumniProfiles)}
                       </div>
                     ))}
                   </div>

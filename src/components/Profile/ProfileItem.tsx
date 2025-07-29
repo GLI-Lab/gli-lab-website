@@ -2,10 +2,10 @@
 
 import Image from 'next/image';
 import React from 'react';
-import { ProfileItemProps } from './profiles';
+import { ProfileItemProps } from '@/data/loaders/types';
 
 export const ProfileItem: React.FC<ProfileItemProps> = (props) => {
-    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined } = props;
+    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage } = props;
     console.log('----ProfileItem rendered:', name_ko);
 
     return (
@@ -29,10 +29,25 @@ export const ProfileItem: React.FC<ProfileItemProps> = (props) => {
                 </div>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-2 sm:gap-x-3 tracking-tighter sm:tracking-normal text-sm sm:text-base
                                  ${isSelected ? 'group-hover:text-white' : 'text-gray-500'}`}>
-                    {(type === "intern") || (type === "pms") || (type === "pphd") ? (
+                    {isAlumniPage && (admission || graduation) ? (
+                        <>
+                            {affiliation && (
+                                <>
+                                    <span className={`${isSelected ? '' : 'group-hover:text-interactive-primary'}`}>Status</span>
+                                    <span className="font-semibold underline">{affiliation}</span>
+                                </>
+                            )}
+                            <span className={`${isSelected ? '' : 'group-hover:text-interactive-primary'}`}>Period</span>
+                            <span>
+                                {admission && graduation ? `${admission} - ${graduation}` : 
+                                 admission ? `${admission} - ` : 
+                                 graduation ? ` - ${graduation}` : 'N/A'}
+                            </span>
+                        </>
+                    ) : (type === "intern") || (type === "pms") || (type === "pphd") ? (
                         <>
                             <span className={`${isSelected ? '' : 'group-hover:text-interactive-primary'}`}>Joined</span>
-                            <span>{joined}</span>
+                            <span>{joined_start && joined_end ? `${joined_start} - ${joined_end}` : 'N/A'}</span>
                         </>
                     ) : type === "faculty" ? (
                         <>
