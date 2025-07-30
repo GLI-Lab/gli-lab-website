@@ -87,7 +87,7 @@
   interests: [Graph ML/DL]
   current_work: ["스터디 참여 및 기초 연구 훈련"]
   photos: ["[2025.01] 구해윤1.jpg", "[2025.01] 구해윤2.jpg"]
-  contacts: {emails: ["haeyoonkoo61@gmail.com"], homepage: null, github: ["sunyoonk"], linkedin: null}
+  contacts: {emails: ["hykoo0601@gmail.com"], homepage: null, github: ["sunyoonk"], linkedin: ["sunyoonk"]}
   status: 
     period: {admission: "2025.09", graduation: null}
     joined: {start: "2025.01", end: "Current"}
