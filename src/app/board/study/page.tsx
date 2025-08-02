@@ -21,7 +21,7 @@ export default async function Page() {
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
-                <SubCover title={TITLE}/>
+                <SubCover title={TITLE} showBreadcrumb={false}/>
             </div>
 
             <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
