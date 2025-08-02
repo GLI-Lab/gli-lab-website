@@ -10,7 +10,7 @@ const nextConfig = {
         formats: ['image/webp', 'image/avif'],
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
         imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-        minimumCacheTTL: 31536000, // 1년 캐시
+        minimumCacheTTL: process.env.NODE_ENV === 'development' ? 0 : 31536000, // 개발모드에서는 캐시 비활성화
     },
     
     // 정적 파일 캐시 설정
@@ -21,7 +21,9 @@ const nextConfig = {
                 headers: [
                     {
                         key: 'Cache-Control',
-                        value: 'public, max-age=31536000, immutable',
+                        value: process.env.NODE_ENV === 'development' 
+                            ? 'no-cache, no-store, must-revalidate' 
+                            : 'public, max-age=31536000, immutable',
                     },
                 ],
             },

@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import yaml from 'js-yaml';
 import { GalleryItem } from './types';
+import { getSortableDate } from './helpers';
 
 // Centralized gallery configuration (fallback when config.json doesn't exist)
 const galleryConfig: Record<string, {
@@ -76,12 +77,11 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
       items.push(item);
     }
 
-    // 날짜순으로 정렬 (최신순)
+    // 날짜순으로 정렬 (최신순) - date range 지원
     return items.sort((a, b) => {
-      if (!a.date && !b.date) return 0;
-      if (!a.date) return 1;
-      if (!b.date) return -1;
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
+      const dateA = getSortableDate(a.date);
+      const dateB = getSortableDate(b.date);
+      return dateB.getTime() - dateA.getTime();
     });
 
   } catch (error) {

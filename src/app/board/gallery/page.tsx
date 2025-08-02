@@ -3,11 +3,11 @@ import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
 import { getGalleryItems, GalleryGrid } from "@/components/Gallery";
 
-const PAGE_TITLE = 'Gallery' as const;
+const TITLE = 'Gallery' as const;
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
-        title: PAGE_TITLE,
+        title: TITLE,
         description: "Photo gallery and visual content from GLI Lab - Graph Learning and Intelligence Laboratory at Konkuk University",
         asPath: '/board/gallery'
     });
@@ -46,7 +46,8 @@ export default async function Page() {
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
-                <SubCover title={PAGE_TITLE}/>
+                <SubCover title={TITLE} showBreadcrumb={false}/>
+                {/* <SubCover title={TITLE} pattern="diagonal-lines-sm" colorVariant="neutral" showBreadcrumb={false}/> */}
             </div>
             
             <div className="max-w-screen-xl mx-auto px-4 md:px-6 py-8 md:py-16">

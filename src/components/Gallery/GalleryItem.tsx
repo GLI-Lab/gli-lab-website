@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { GalleryItem as GalleryItemType } from './types';
 import { ImageCarousel } from './ImageCarousel';
-import { isNewItem } from './helpers';
+import { isNewItem, formatDateForDisplay } from './helpers';
 
 interface GalleryItemProps {
   item: GalleryItemType;
@@ -136,7 +136,7 @@ const GalleryItemComponent = ({
             {item.date && (
               <div className="flex justify-between items-center">
                 <p className="text-sm text-gray-500">
-                  {new Date(item.date).toLocaleDateString('ko-KR')}
+                  {formatDateForDisplay(item.date)}
                 </p>
                 
                 {/* See more 버튼 */}

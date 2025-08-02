@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { GalleryItem } from './types';
 import { Separator } from '../ui/separator';
 import { ImageCarousel } from './ImageCarousel';
-import { isNewItem } from './helpers';
+import { isNewItem, formatDateForDisplay } from './helpers';
 
 interface GalleryModalProps {
   item: GalleryItem;
@@ -203,11 +203,7 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
             
             {item.date && (
                 <p className="text-gray-900">
-                  {new Date(item.date).toLocaleDateString('ko-KR', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                  })}
+                  {formatDateForDisplay(item.date)}
                 </p>
             )}
 
