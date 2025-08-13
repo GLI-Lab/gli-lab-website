@@ -137,7 +137,7 @@ export default async function Page() {
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
                                     <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
-                                    <span><span className="font-semibold underline underline-offset-4">이상탐지</span>: 거래 이상탐지, 사용자 행동 기반 이상탐지, 멀티모달 이상탐지</span>
+                                    <span><span className="font-semibold underline underline-offset-4">이상탐지</span>: 네트워크/그래프 이상탐지, 사용자 행동 기반 이상탐지, 멀티모달 이상탐지</span>
                                 </div>
                             </div>
                             <div className="ml-6 text-gray-500 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
