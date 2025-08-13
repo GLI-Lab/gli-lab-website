@@ -25,6 +25,11 @@ export default function Page() {
     // 프로젝트 데이터를 배열로 정리
     const ongoingProjects: Project[] = [
         {
+            title: "실적 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구 (2025-08-01 ~ 2026-07-31)",
+            organization: "건국대학교 그룹연구인력양성",
+            tags: ["Multi-Modal LLMs", "Graph ML/DL", "LLM Agent"]
+        },
+        {
             title: "LLM 기반 추천을 위한 그래프 기반 컨텍스트 추출 에이전트 (2025-05-01 ~ 2025-11-20)",
             organization: "실감미디어 혁신융합대학(내부 연구과제)",
             tags: ["Graph ML/DL", "LLM Agent"]
@@ -36,7 +41,7 @@ export default function Page() {
         },
         {
             title: "논리적 패턴을 반영할 수 있는 지식그래프 표현학습 (2024-04-01 ~ 2025-09-31)",
-            organization: "KU학술연구비",
+            organization: "건국대학교 KU학술연구비",
             tags: ["Knowledge Representation", "Graph ML/DL"]
         }
     ];
