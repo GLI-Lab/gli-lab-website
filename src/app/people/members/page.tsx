@@ -1,15 +1,15 @@
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
-import { ProfileCardList } from "@/components/Profile";
+import { ProfileCards } from "@/components/Profile";
 import { getProfiles } from "@/data/loaders/profileLoader";
 import { getPapers } from "@/data/loaders/paperLoader";
 import { getStudies } from "@/data/loaders/studyLoader";
 
-const PAGE_TITLE = `Members`
+const TITLE = `Members`
 
 export async function generateMetadata() {
     return getMetadata({
-        title: PAGE_TITLE,
+        title: TITLE,
         description: "Explore the members of GLI Lab - Graph Learning and Intelligence Laboratory",
         asPath: '/people/members'
     });
@@ -25,6 +25,7 @@ export default async function Page({ searchParams }: PageProps) {
     const papers = await getPapers();
     const resolvedSearchParams = await searchParams;
     const selectedId = resolvedSearchParams.id as string;
+    const viewParam = resolvedSearchParams.view as string;
     
     // 프로필 찾기
     let selectedProfile;
@@ -39,13 +40,15 @@ export default async function Page({ searchParams }: PageProps) {
     
     return (
         <div className="max-w-screen-2xl mx-auto">
-            <SubCover title={PAGE_TITLE}/>
-            <ProfileCardList 
+            <SubCover title={TITLE} showBreadcrumb={false}/>
+            {/* <SubCover title={TITLE} pattern="diagonal-lines-sm" colorVariant="neutral" showBreadcrumb={false}/> */}
+            <ProfileCards 
                 profiles={profiles} 
                 selectedProfile={selectedProfile}
                 studies={studies} 
                 papers={papers} 
                 isAlumniPage={false}
+                initialIsCardView={viewParam !== 'list'}
             />
         </div>
     );

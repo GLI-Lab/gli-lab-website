@@ -1,18 +1,20 @@
 "use client"
 
 import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
-import { ProfileItem } from './ProfileItem';
-import { ProfileDetail } from './ProfileDetail';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { ProfileCardItem } from './ProfileCardItem';
+import { ProfileListItem } from './ProfileListItem';
+import { ProfileCardDetail } from './ProfileCardDetail';
 import { type ProfileData, type PaperData, type StudyData } from '@/data/loaders/types';
 import { getPapersForProfile } from '@/data/loaders/utils';
 
-interface ProfileCardListProps {
+interface ProfileCardsProps {
     profiles: ProfileData[];
     selectedProfile?: ProfileData | null; // page에서 찾아서 넘겨준 프로필 (alumni 페이지에서는 null일 수 있음)
     studies?: StudyData[];
     papers?: PaperData[];
     isAlumniPage?: boolean; // alumni 페이지인지 여부
+    initialIsCardView?: boolean; // SSR 단계에서 초기 뷰 모드 지정
 }
 
 // 현재 프로필과 관련된 스터디를 필터링하는 함수
@@ -29,15 +31,27 @@ const filterStudiesForProfile = (allStudies: StudyData[], profile: ProfileData) 
     );
 };
 
-export function ProfileCardList({ profiles, selectedProfile, studies = [], papers = [], isAlumniPage = false }: ProfileCardListProps) {
+export function ProfileCards({ profiles, selectedProfile, studies = [], papers = [], isAlumniPage = false, initialIsCardView = true }: ProfileCardsProps) {
     const [init, setInit] = useState(true);
     const [isAtBottom, setIsAtBottom] = useState(false);
     const [selectedCard, setSelectedCard] = useState<ProfileData | null>(selectedProfile || null);
+    
+    const pathname = usePathname();
+    const searchParams = useSearchParams();
+    // URL 파라미터 'view'의 값으로 첫 렌더링 시 뷰 모드를 설정하여
+    // 클라이언트 사이드 렌더링 시 발생하는 화면 깜빡임(flicker) 방지
+    const [isCardView, setIsCardView] = useState(initialIsCardView);
+    useEffect(() => {
+        const view = searchParams.get('view');
+        if (view === 'list') setIsCardView(false);
+        else if (view === 'card') setIsCardView(true);
+    }, [searchParams]);
+    
     const mobilePopupRef = useRef<HTMLDivElement>(null);
     const profileRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
     const router = useRouter();
 
-    console.log('ProfileCardListClient rendered');
+    console.log('ProfileCards rendered');
     
     // 카테고리 설정
     const categories = isAlumniPage ? [
@@ -55,27 +69,41 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
         {title: 'Interns', type: 'intern'},
     ];
 
+    // 뷰 변경 시 URL 쿼리 파라미터 갱신 (새로고침 유지)
+    const handleViewChange = useCallback((newView: boolean) => {
+        setIsCardView(newView);
+        setInit(true); // 뷰 변경 시 init을 true로 설정
+        const params = new URLSearchParams(searchParams.toString());
+        // 특정 프로필 anchoring을 막기 위해 id 파라미터 제거
+        params.delete('id');
+        params.set('view', newView ? 'card' : 'list');
+        const query = params.toString();
+        const url = query ? `${pathname}?${query}` : pathname;
+        router.replace(url, { scroll: false });
+    }, [pathname, router, searchParams]);
+
     const handleProfileClick = useCallback((profile: ProfileData) => {
         if (profile !== selectedCard) {
             setInit(false);
             setSelectedCard(profile);
-            
-            // URL 업데이트 - alumni 페이지 여부에 따라 다르게 처리
-            const basePath = isAlumniPage ? '/people/alumni' : '/people/members';
-            router.replace(`${basePath}?id=${profile.id}`, { scroll: false });
+            // 기존 쿼리 보존하면서 id만 갱신 (view 등 유지)
+            const params = new URLSearchParams(searchParams.toString());
+            params.set('id', profile.id);
+            router.replace(`${pathname}?${params.toString()}`, { scroll: false });
         } else {
             setInit(false);
             setSelectedCard(profile);
         }
-    }, [selectedCard, router, isAlumniPage]);
+    }, [selectedCard, router, pathname, searchParams]);
 
     // selectedProfile이 변경되면 selectedCard 업데이트
     useEffect(() => {
         setSelectedCard(selectedProfile || null);
     }, [selectedProfile]);
 
-    // 초기 마운트 시 자동 스크롤 (selectedProfile이 있을 때만)
+    // 초기 마운트 시 자동 스크롤 (card view에서만 동작)
     useEffect(() => {
+        if (!isCardView) return;
         if (selectedProfile) {
             const timer = setTimeout(() => {
                 const profileElement = profileRefs.current[selectedProfile.id];
@@ -86,10 +114,9 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
                     });
                 }
             }, 200);
-            
             return () => clearTimeout(timer);
         }
-    }, [selectedProfile]); // selectedProfile이 변경될 때마다 실행
+    }, [selectedProfile, isCardView]);
 
     const checkBottom = useCallback(() => {
         if (mobilePopupRef.current) {
@@ -167,19 +194,66 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
     };
 
     return (
-        <div className="max-w-screen-1.5xl mx-auto px-3 sm:px-4 py-8 md:py-12 flex flex-row">
-            {/* Detailed Profile (left side) */}
-            {selectedCard && (
+        <div className="max-w-screen-1.5xl mx-auto px-3 sm:px-4 py-8 md:py-12 flex flex-row relative">
+            {/* View Toggle Button */}
+            <div className="absolute top-8 md:top-12 right-4 z-10">
+                <div className="bg-white border border-gray-300 rounded-lg p-1 flex">
+                    {/* Card View Button */}
+                    <button
+                        onClick={() => handleViewChange(true)}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-l-md transition-all duration-200 ${
+                            isCardView 
+                                ? 'bg-interactive-primary text-white shadow-md' 
+                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                        title="Card View"
+                    >
+                        <svg 
+                            className="w-4 h-4" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                        <span className="text-sm font-medium">Card View</span>
+                    </button>
+                    
+                    {/* List View Button */}
+                    <button
+                        onClick={() => handleViewChange(false)}
+                        className={`flex items-center gap-2 px-3 py-2 rounded-r-md transition-all duration-200 ${
+                            !isCardView 
+                                ? 'bg-interactive-primary text-white shadow-md' 
+                                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        }`}
+                        title="List View"
+                    >
+                        <svg 
+                            className="w-4 h-4" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                        >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                        </svg>
+                        <span className="text-sm font-medium">List View</span>
+                    </button>
+                </div>
+            </div>
+
+            {/* Detailed Profile (left side) - Card View에서만 표시 */}
+            {selectedCard && isCardView && (
                 <div className="hidden 1.5md:block 1.5md:w-[350px] 1.5md:mr-12 lg:mr-20 sticky self-start top-16 pt-4">
                     <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pr-8 -mr-8 pb-20">
-                        <ProfileDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} isAlumniPage={isAlumniPage}/>
+                        <ProfileCardDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} isAlumniPage={isAlumniPage}/>
                     </div>
                 </div>
             )}
 
             {/* Detailed Profile (popup) - URL로 접근한 경우 모바일에서는 바로 열지 않음 -> {selectedCard && !init && (  */}
             {/* Detailed Profile (popup) - 모바일에서 팝업으로 표시                    -> {selectedCard && (           */}
-            {selectedCard && !init && (
+            {selectedCard && isCardView && !init && (
                 <div onClick={handleBackdropClick} className="fixed inset-0 z-50 bg-black bg-opacity-75 flex items-center justify-center 1.5md:hidden">
                     <div className="max-h-[90vh] w-[90vw] max-w-[350px] flex flex-col items-center justify-center rounded-lg bg-white relative overflow-hidden">
                         {/* 닫기버튼 */}
@@ -212,7 +286,7 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
                             className="overflow-y-auto w-[320px] max-h-[calc(90vh-20px)] relative overscroll-none scrollbar-hide pt-2 pb-10" 
                             onScroll={handleScroll}
                         >
-                            <ProfileDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} isAlumniPage={isAlumniPage}/>
+                            <ProfileCardDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} isAlumniPage={isAlumniPage}/>
                         </div>
 
                         {/* 스크롤 인디케이터 - 모달 전체 하단에 고정 */}
@@ -255,27 +329,55 @@ export function ProfileCardList({ profiles, selectedProfile, studies = [], paper
                                 <h2 className="font-medium tracking-tight text-[26px] md:text-[30px]">{category.title}</h2>
                                 <div className="w-14 border-b-4 border-border-accent mt-1 mb-6"></div>
                             </div>
-                            <div className="grid grid-cols-1 1.5xl:grid-cols-2 gap-x-4 gap-y-3 sm:gap-y-4 mb-10">
-                                {categoryProfiles.map((profile, index) => (
-                                    <div
-                                        key={index}
-                                        ref={el => { profileRefs.current[profile.id] = el; }}
-                                    >
-                                        <ProfileItem
-                                            onClick={() => handleProfileClick(profile)}
-                                            isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || (selectedProfile && selectedProfile.id !== "[2024.03] 오병국")))}
-                                            isAlumniPage={isAlumniPage}
-                                            {...profile}
-                                        />
-                                    </div>
-                                ))}
-                            </div>
+                            
+                            {isCardView ? (
+                                // Card View
+                                <div className="grid grid-cols-1 1.5xl:grid-cols-2 gap-x-4 gap-y-3 sm:gap-y-4 mb-10">
+                                    {categoryProfiles.map((profile, index) => (
+                                        <div
+                                            key={index}
+                                            ref={el => { profileRefs.current[profile.id] = el; }}
+                                        >
+                                            <ProfileCardItem
+                                                onClick={() => handleProfileClick(profile)}
+                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || (selectedProfile && selectedProfile.id !== "[2024.03] 오병국")))}
+                                                isAlumniPage={isAlumniPage}
+                                                {...profile}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                // List View
+                                <div className="space-y-6 pb-10">
+                                    {categoryProfiles.map((profile, index) => (
+                                        <div
+                                            key={index}
+                                            ref={el => { profileRefs.current[profile.id] = el; }}
+                                        >
+                                            <ProfileListItem
+                                                onClick={() => handleProfileClick(profile)}
+                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || (selectedProfile && selectedProfile.id !== "[2024.03] 오병국")))}
+                                                isAlumniPage={isAlumniPage}
+                                                studies={studies}
+                                                papers={papers}
+                                                {...profile}
+                                            />
+                                            {/* Clean Divider - except for last item */}
+                                            <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-8"></div>
+                                            {/* {index < categoryProfiles.length - 1 && (
+                                                <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-8"></div>
+                                            )} */}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     );
                 })}
                 {/* Sticky positioning을 위한 하단 여백 */}
-                {selectedCard && <div className="h-[50vh]"></div>}
+                {isCardView && selectedCard && <div className="h-[50vh]"></div>}
             </div>
         </div>
     );
-} 
+}

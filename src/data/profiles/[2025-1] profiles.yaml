@@ -11,9 +11,8 @@
 - id: "[2024.03] 오병국"
   role: {type: faculty, title: Assistant Professor (조교수)}
   name: {en: Byungkook Oh, ko: 오병국}
-  education: {bs: Computer Science, ms: Computer Science, phd: Computer Science}
+  education: {bs: "Computer Science, Yonsei University", ms: "Computer Science, Yonsei University", phd: "Computer Science, Yonsei University"}
   interests: [Graph ML/DL, Recommender Systems, Knowledge-based Systems, NLP]
-  current_work: ["Lab Management & Research Direction", "Mentoring Graduate Students"]
   photos: ["[2024.03] 오병국1.jpg", "[2024.03] 오병국2.jpg", "[2024.03] 오병국3.jpg"]
   contacts: {emails: ["bkoh@konkuk.ac.kr", "bkoh509@gmail.com"], homepage: ["bkoh509.github.io"], github: ["GLI-Lab", "bkoh509"], linkedin: ["bkoh509"]}
   status: 
@@ -27,9 +26,8 @@
 - id: "[2025.04] 구본유"
   role: {type: phd, title: Pre-Ph.D. Students (1학기)}
   name: {en: Bonyou Koo, ko: 구본유}
-  education: {bs: Computer Science & Engineering, ms: Information Convergence Engineering, phd: null}
-  interests: [Graph ML/DL]
-  current_work: ["스터디 참여 및 기초 연구 훈련"]
+  education: {bs: "Computer Science & Engineering, Pukyong National University", ms: "Information Convergence Engineering, Pusan National University", phd: null}
+  interests: [Graph ML/DL, Graph Anomaly Detection]
   photos: ["[2025.04] 구본유1.jpg", "[2025.04] 구본유2.jpg", "[2025.04] 구본유3.jpg"]
   contacts: {emails: ["number9you@gmail.com"], homepage: ["sites.google.com/view/bonyoukoo/home"], github: ["ninethyou"], linkedin: null}
   status: 
@@ -43,10 +41,9 @@
 - id: "[2024.06] 서지명"
   role: {type: ms, title: M.S. Students (1학기)}
   name: {en: Jimyeung Seo, ko: 서지명}
-  education: {bs: Computer Science & Engineering, ms: Computer Science & Engineering, phd: null}
+  education: {bs: "Computer Science & Engineering, Konkuk University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
   academic: {year: 1, semester: 1}
-  interests: [Graph ML/DL, LLM Optimization, Multimodal News Recommendation]
-  current_work: ["논문 작성 (제1저자, 공저자)", "프로젝트 참여 및 심화 연구 훈련"]
+  interests: [Graph ML/DL, LLM Optimization, Multimodal News Recommendation, Causal Mining]
   photos: ["[2024.06] 서지명1.jpg"]
   contacts: {emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"], homepage: null, github: ["seojmm"], linkedin: ["jimyeungseo"]}
   status: 
@@ -57,9 +54,8 @@
 - id: "[2024.07] 백혜윤"
   role: {type: ms, title: M.S. Students (1학기)}
   name: {en: Hye-Yoon Baek, ko: 백혜윤}
-  education: {bs: English Language & Literature, ms: Computer Science & Engineering, phd: null}
+  education: {bs: "English Language & Literature, Konkuk University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
   interests: [Graph ML/DL, Information Retrieval, LLM Knowledge Distillation]
-  current_work: ["논문 작성 (제1저자, 공저자)", "프로젝트 참여 및 심화 연구 훈련"]
   photos: ["[2024.07] 백혜윤1.jpg", "[2024.07] 백혜윤2.jpg"]
   contacts: {emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"], homepage: null, github: ["hyeyoon100"], linkedin: ["hye-yoon-baek1205"]}
   status: 
@@ -70,9 +66,8 @@
 - id: "[2024.11] 이동천"
   role: {type: ms, title: M.S. Students (1학기)}
   name: {en: Dongcheon Lee, ko: 이동천}
-  education: {bs: Mathematics, ms: Computer Science & Engineering, phd: null}
+  education: {bs: "Mathematics, Gyeongsang National University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
   interests: [Graph ML/DL, Retrieval-Augmented LLM, KG-Based Question Answering]
-  current_work: ["논문 작성 (제1저자, 공저자)", "프로젝트 참여 및 심화 연구 훈련"]
   photos: ["[2024.11] 이동천1.jpg"]
   contacts: {emails: ["ehdcjs987@gmail.com"], homepage: null, github: ["leedongcheon"], linkedin: null}
   status: 
@@ -83,9 +78,8 @@
 - id: "[2025.01] 구해윤"
   role: {type: ms, title: Pre-M.S. Students (1학기)}
   name: {en: Hae-Yoon Koo, ko: 구해윤}
-  education: {bs: Computer Science & Engineering, ms: Computer Science & Engineering, phd: null}
+  education: {bs: "Computer Science & Engineering, Dong-A University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
   interests: [Graph ML/DL]
-  current_work: ["스터디 참여 및 기초 연구 훈련"]
   photos: ["[2025.01] 구해윤1.jpg", "[2025.01] 구해윤2.jpg"]
   contacts: {emails: ["hykoo0601@gmail.com"], homepage: null, github: ["sunyoonk"], linkedin: ["sunyoonk"]}
   status: 
@@ -103,9 +97,8 @@
 - id: "[2024.06] 이영호"
   role: {type: intern, title: Undergraduate Student (2학년 1학기)}
   name: {en: Young-Ho Lee, ko: 이영호}
-  education: {bs: Computer Science & Engineering, ms: null, phd: null}
+  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
   interests: [Graph ML/DL]
-  current_work: ["스터디 참여 및 기초 연구 훈련"]
   photos: ["[2024.06] 이영호1.jpg"]
   contacts: {emails: ["james20042016@gmail.com"], homepage: null, github: ["yhLee205"], linkedin: null}
   status: 
@@ -116,9 +109,8 @@
 - id: "[2024.07] 정우석"
   role: {type: intern, title: Undergraduate Student (3학년 1학기)}
   name: {en: Wooseok Jeong, ko: 정우석}
-  education: {bs: Computer Science & Engineering, ms: null, phd: null}
+  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
   interests: [LLM-Based Recommender Systems, Graph ML/DL]
-  current_work: ["논문 작성 (제1저자)", "스터디 참여 및 기초 연구 훈련"]
   photos: ["[2024.07] 정우석1.jpg"]
   contacts: {emails: ["oseoko8@gmail.com"], homepage: null, github: ["oseoko"], linkedin: null}
   status: 
@@ -129,9 +121,8 @@
 - id: "[2024.07] 지상준"
   role: {type: intern, title: Undergraduate Student (4학년 1학기)}
   name: {en: Sang-Jun Ji, ko: 지상준}
-  education: {bs: Computer Science & Engineering, ms: null, phd: null}
+  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
   interests: [Graph ML/DL, Hyper-Relational KG]
-  current_work: ["논문 작성 (제1저자)", "스터디 참여 및 기초 연구 훈련"]
   photos: ["[2024.07] 지상준1.jpg", "[2024.07] 지상준2.jpg"]
   contacts: {emails: ["wltkdwns0220@naver.com", "wltkdwns0220@konkuk.ac.kr"], homepage: ["approxy02.github.io/homepage/"], github: ["Approxy02"], linkedin: null}
   status: 
@@ -142,9 +133,8 @@
 - id: "[2024.10] 김영진"
   role: {type: intern, title: Undergraduate Student (3학년 1학기)}
   name: {en: Young-Jin Kim, ko: 김영진}
-  education: {bs: Applied Statistics, ms: null, phd: null}
+  education: {bs: "Applied Statistics, Konkuk University", ms: null, phd: null}
   interests: [LLM-Based Recommender Systems, Graph ML/DL]
-  current_work: ["논문 작성 (제1저자)", "스터디 참여 및 기초 연구 훈련"]
   photos: ["[2024.10] 김영진1.jpg", "[2024.10] 김영진2.jpg"]
   contacts: {emails: ["ab960119@naver.com"], homepage: null, github: ["0jin03"], linkedin: null}
   status: 
@@ -155,9 +145,8 @@
 - id: "[2024.12] 최진호"
   role: {type: intern, title: Undergraduate Student (4학년 1학기)}
   name: {en: Jinho Choi, ko: 최진호}
-  education: {bs: Industrial Engineering, ms: null, phd: null}
+  education: {bs: "Industrial Engineering, Konkuk University", ms: null, phd: null}
   interests: [Graph ML/DL, Information Retrieval, LLM Knowledge Distillation]
-  current_work: ["논문 작성 (공저자)", "스터디 참여 및 기초 연구 훈련"]
   photos: ["[2024.12] 최진호1.jpg", "[2024.12] 최진호2.jpeg"]
   contacts: {emails: ["jhc12931293@gmail.com", "jinho159@konkuk.ac.kr"], homepage: null, github: null, linkedin: null}
   status: 
@@ -168,9 +157,8 @@
 - id: "[2025.03] 조은영"
   role: {type: intern, title: Undergraduate Student (4학년 1학기)}
   name: {en: Eun-Yeong Jo, ko: 조은영}
-  education: {bs: Biomedical Science & Engineering, ms: null, phd: null}
+  education: {bs: "Biomedical Science & Engineering, Konkuk University", ms: null, phd: null}
   interests: [Graph ML/DL, LLM Optimization, Multimodal News Recommendation]
-  current_work: ["논문 작성 (공저자)", "스터디 참여 및 기초 연구 훈련"]
   photos: ["[2025.03] 조은영1.jpg", "[2025.03] 조은영2.jpg", "[2025.03] 조은영3.jpg"]
   contacts: {emails: ["tina6022@naver.com"], homepage: null, github: null, linkedin: null}
   status: 
@@ -181,9 +169,8 @@
 - id: "[2025.03] 김상준"
   role: {type: intern, title: Undergraduate Student (4학년 1학기)}
   name: {en: Sang-June Kim, ko: 김상준}
-  education: {bs: Smart ICT Convergence, ms: null, phd: null}
+  education: {bs: "Smart ICT Convergence, Konkuk University", ms: null, phd: null}
   interests: [Graph ML/DL, Bioinfomatics]
-  current_work: ["스터디 참여 및 기초 연구 훈련"]
   photos: ["[2025.03] 김상준1.jpg", "[2025.03] 김상준2.jpg", "[2025.03] 김상준3.jpg"]
   contacts: {emails: ["drbug2000@naver.com"], homepage: null, github: ["drbug2000"], linkedin: null}
   status: 
@@ -194,9 +181,8 @@
 - id: "[2025.07] 박상현"
   role: {type: intern, title: Undergraduate Student (1학년 1학기)}
   name: {en: Sang-Hyun Park, ko: 박상현}
-  education: {bs: Liberal Studies in Engineering, ms: null, phd: null}
+  education: {bs: "Liberal Studies in Engineering, Konkuk University", ms: null, phd: null}
   interests: [Graph ML/DL]
-  current_work: ["스터디 참여 및 기초 연구 훈련"]
   photos: ["[2025.07] 박상현1.jpg"]
   contacts: {emails: ["psh030122@gmail.com"], homepage: null, github: ["geosang122"], linkedin: null}
   status: 

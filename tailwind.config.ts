@@ -39,7 +39,7 @@ const config = {
     ],
     prefix: "",
     theme: {
-        screens: {  // Mobile < 'sm' < 'md' < iPad Mini < '1.5md' < 'lg' < iPad Pro < 'xl' < Desktop < '2xl'
+        screens: {  // Mobile < 'sm' < 'md' < iPad Mini(768px) < '1.5md' < 'lg' < iPad Pro < 'xl' < Desktop < '2xl'
             'sm'   : '640px',  // 기본값
             'md'   : '768px',  // 기본값
             '1.5md': '880px',  // 추가

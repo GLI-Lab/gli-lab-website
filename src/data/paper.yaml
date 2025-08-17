@@ -1,4 +1,10 @@
+# status: "In Progress", "Accepted", "Under Review"
+# Publications (IJ International Journal, DJ Domestic Journal, IC International Conference, DC Domestic Conference, PR Preprint, W Workshop)
+
+# Two-View Hyper-Relational Knowledge Graph Embedding, 2025 (In Progress)
 - title: "Two-View Hyper-Relational Knowledge Graph Embedding"
+  year: 2025
+  venue: ""
   status: "In Progress"
   link: null
   authors:
@@ -6,7 +12,22 @@
     - 공동저자: "<profile=[2024.06] 이영호>Young-Ho Lee (이영호)</>"
     - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
 
-- title: "Graph Tokenization for Knowledge-Enhanced LLM"
+# Graph-Driven LLM Agent for Recommendation, 2025 (In Progress)
+- title: "Graph-Driven LLM Agent for Recommendation"
+  year: 2025
+  venue: ""
+  status: "In Progress"
+  link: null
+  authors:
+    - 1저자: "<profile=[2024.10] 김영진>Young-Jin Kim (김영진)</>"
+    - 1저자: "<profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>"
+    - 공동저자: "<profile=[2025.01] 구해윤>Hae-Yoon Koo (구해윤)</>"
+    - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
+
+# Diversifying Differentiable Graph Retrieval with Learnable Topic-Adaptive Intent, 2025 (In Progress)
+- title: "Diversifying Differentiable Graph Retrieval with Learnable Topic-Adaptive Intent"
+  year: 2025
+  venue: ""
   status: "In Progress"
   link: null
   authors:
@@ -16,16 +37,10 @@
     - 공동저자: "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>"
     - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
 
-- title: "Graph-Driven LLM Agent for Recommendation"
-  status: "In Progress"
-  link: null
-  authors:
-    - 1저자: "<profile=[2024.10] 김영진>Young-Jin Kim (김영진)</>"
-    - 1저자: "<profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>"
-    - 공동저자: "<profile=[2025.01] 구해윤>Hae-Yoon Koo (구해윤)</>"
-    - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
-
-- title: "Distilling Multimodal Knowledge for New Recommendation"
+# Image-Guided Debiasing Distillation with Preference Alignment Across Multi-News Historiesn, 2025 (In Progress)
+- title: "Image-Guided Debiasing Distillation with Preference Alignment Across Multi-News Histories"
+  year: 2025
+  venue: ""
   status: "In Progress"
   link: null
   authors:
@@ -36,8 +51,11 @@
     - 공동저자: "Xiongnan Jin (김웅남)"
     - 교신저자: "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
 
-- title: "Text-to-Graph for Joint Information Extraction"
-  status: "In Progress"
+# Relation-Faceted Graph Pooling with LLM Guidance for Dynamic Span-Aware Information Extraction, CIKM, 2025 (Accepted)
+- title: "Relation-Faceted Graph Pooling with LLM Guidance for Dynamic Span-Aware Information Extraction"
+  year: 2025
+  venue: "CIKM"
+  status: "Accepted"
   link: null
   authors:
     - 1저자: "<profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</>"

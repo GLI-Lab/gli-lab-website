@@ -24,7 +24,9 @@ function transformPaperData(rawPaper: PaperYAML): PaperData {
     title: rawPaper.title,
     status: rawPaper.status,
     link: rawPaper.link,
-    authors
+    authors,
+    year: rawPaper.year,
+    venue: rawPaper.venue
   };
 }
 
