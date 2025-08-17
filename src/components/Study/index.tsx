@@ -148,7 +148,7 @@ export async function StudyList({ className = '', count = null, studyItems, prof
                   {study.end_date ? ` ~ ${formatDate(study.end_date)}` : ' ~ '}
                 </span>
                 {isOngoingStudy(study.end_date) && (
-                  <span className="text-[0.75em] font-semibold bg-green-100 text-brand-primary px-1 py-0 rounded">
+                  <span className="inline-block font-semibold bg-brand-primary/10 text-brand-primary text-[0.75em] px-2 py-0 rounded-md">
                     NOW
                   </span>
                 )}

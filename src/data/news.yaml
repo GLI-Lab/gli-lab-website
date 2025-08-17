@@ -1,8 +1,13 @@
 - date: "2025-08-05"
-  content: "건국대학교 그룹연구인력양성 사업 선정 👏\n실적 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구"
+  content: |
+    건국대학교 그룹연구인력양성 사업 선정 👏
+    실적 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구
 
 - date: "2025-08-04"
-  content: "One paper accepted at CIKM 2025 ✏️\nRelation-Faceted Graph Pooling with LLM Guidance for Dynamic Span-Aware Information Extraction"
+  content: |
+    One research paper accepted at CIKM 2025 ✏️
+    - <paper>Relation-Faceted Graph Pooling with LLM Guidance for Dynamic Span-Aware Information Extraction</>
+    Hye-Yoon Baek, Jinho Choi, Jimyeung Seo, Dongcheon Lee, Xiongnan Jin, Byungkook Oh
 
 - date: "2025-07-23"
   content: "Welcome to GLI lab, <profile=[2025.07] 박상현>Sang-Hyun Park (박상현)</>!"
@@ -11,10 +16,18 @@
   content: "Welcome to GLI lab, <profile=[2025.01] 구해윤>Hae-Yoon Koo (구해윤)</> as a master student and <profile=[2025.04] 구본유>Bonyou Koo (구본유)</> as a PhD student! 😊"
 
 - date: "2025-05-23"
-  content: "실감미디어 혁신융합대학사업(교원연구과제) 선정 👏\nLLM 기반 추천을 위한 그래프 기반 컨텍스트 추출 에이전트"
+  content: |
+    실감미디어 혁신융합대학사업(교원연구과제) 선정 👏
+    LLM 기반 추천을 위한 그래프 기반 컨텍스트 추출 에이전트
 
 - date: "2025-05-16"
   content: "We introduce a GPU server equipped with 1 X NVIDIA Tesla A100 GPU. (80GB VRAM)"
+
+- date: "2025-04-11"
+  content: |
+    One research paper accepted at AAAI 2025 ✏️
+    - <paper>HLMEA: Unsupervised Entity Alignment Based on Hybrid Language Models</>
+    Xiongnan Jin, Zhilin Wang, Jinpeng Chen, Liu Yang, Byungkook Oh, Seung-won Hwang, Jianqiang Li
 
 - date: "2025-04-01"
   content: "Welcome to GLI lab, <profile=[2025.04] 구본유>Bonyou Koo (구본유)</>!"
@@ -22,8 +35,26 @@
 - date: "2025-03-01"
   content: "Welcome to GLI lab, <profile=[2025.03] 조은영>Eun-Yeong Jo (조은영)</> and <profile=[2025.03] 김상준>Sang-June Kim (김상준)</>!"
 
+- date: "2025-02-01"
+  content: |
+    One paper accepted at Information Sciences ✏️
+    - <paper>Knowledge-constrained Interest-aware Multi-behavior Recommendation with Behavior Pattern Identification</>
+    Gayeon Park, Hyeongjun Yang, Kyuhwan Yeom, Myeongheon Jeon, Yunjeong Ko, Byungkook Oh, Kyong-Ho Lee
+
+- date: "2025-01-01"
+  content: |
+    One paper accepted at International Journal of Web and Grid Services ✏️
+    - <paper>A survey on knowledge graph evolution  proliferation, dynamic embedding, and versioning</>
+    Xiongnan Jin, Zhilin Wang, Manni Duan, Yan Shao, Xingyun Hong, Yongheng Wang, Byungkook Oh
+
 - date: "2025-01-01"
   content: "Welcome to GLI lab, Minseok Geum and <profile=[2025.01] 구해윤>Hae-Yoon Koo (구해윤)</>!"
+
+- date: "2024-12-20"
+  content: |
+    One paper accepted at Knowledge-Based Systems ✏️
+    - <paper>Granular Intents Learning via Mutual Information Maximization for Knowledge-aware Recommendation</>
+    Hyeongjun Yang, Yerim Lee, Gayeon Park, TaeYoung Kim, Heesun Kim, Kyong-Ho Lee, Byungkook Oh
 
 - date: "2024-12-15"
   content: "Welcome to GLI lab, <profile=[2024.12] 최진호>Jinho Choi (최진호)</>!"
@@ -37,8 +68,16 @@
 - date: "2024-11-01"
   content: "Welcome to GLI lab, <profile=[2024.10] 김영진>Young-Jin Kim (김영진)</>!"
 
+- date: "2024-08-25"
+  content: |
+    One research paper accepted at KDD 2024 ✏️
+    - <paper>Embedding Two-View Knowledge Graphs with Class Inheritance and Structural Similarity</>
+    Kyuhwan Yeom, Hyeongjun Yang, Gayeon Park, Myeongheon Jeon, Yunjeong Ko, Byungkook Oh, Kyong-Ho Lee
+
 - date: "2024-08-01"
-  content: "한국연구재단 중견연구(유형1) 사업 선정 👏\n멀티모달 생성모델의 신뢰성 및 제어가능성 향상을 위한 그래프 구조 기반의 상호작용"
+  content: |
+    한국연구재단 중견연구(유형1) 사업 선정 👏
+    멀티모달 생성모델의 신뢰성 및 제어가능성 향상을 위한 그래프 구조 기반의 상호작용
 
 - date: "2024-07-01"
   content: "Welcome to GLI lab, <profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</>, <profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>, <profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</> and <profile=[2024.07] 박지연>Ji-Yeon Park (박지연)</>!"
@@ -47,7 +86,9 @@
   content: "Welcome to GLI lab, <profile=[2024.06] 서지명>Jimyeung Seo (서지명)</> and <profile=[2024.06] 이영호>Young-Ho Lee (이영호)</>!"
 
 - date: "2024-04-01"
-  content: "건국대학교 KU학술연구비 사업 선정 👏\n논리적 패턴을 반영할 수 있는 지식그래프 표현학습"
+  content: |
+    건국대학교 KU학술연구비 사업 선정 👏
+    논리적 패턴을 반영할 수 있는 지식그래프 표현학습
 
 - date: "2024-03-15"
   content: "Welcome to GLI lab, <profile=[2024.03] 김윤진>Yunjin Kim (김윤진)</>!"

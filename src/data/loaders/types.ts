@@ -20,7 +20,6 @@ export interface ProfileYAML {
     phd: string | null;
   };
   interests: string[] | null;
-  current_work: string[] | null;
   photos: string[] | null;
   contacts: {
     emails: string[] | null;
@@ -56,7 +55,6 @@ export interface ProfileData {
   graduation?: string;
   affiliation?: string;
   interest: string[];
-  current_work: string[];
   photo: string[];
   email: string[];
   homepage: string[];
@@ -86,6 +84,8 @@ export interface PaperYAML {
   status: string;
   link: string | null;
   authors: { [role: string]: string }[];
+  year?: string;
+  venue?: string;
 }
 
 export interface AuthorData {
@@ -99,6 +99,8 @@ export interface PaperData {
   status: string
   link: string | null
   authors: AuthorData[]
+  year?: string
+  venue?: string
 }
 
 // =====================================================

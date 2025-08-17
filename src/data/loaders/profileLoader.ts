@@ -39,7 +39,6 @@ function transformProfile(yamlProfile: ProfileYAML, isAlumni: boolean = false): 
     joined_end: yamlProfile.status.joined.end || "",
     affiliation: yamlProfile.status.affiliation || "",
     interest: yamlProfile.interests || [],
-    current_work: yamlProfile.current_work || [],
     photo: photoUrls.length > 0 ? photoUrls : ["/images/profiles/ku_basic_1_down.png"],
     email: yamlProfile.contacts.emails || [],
     homepage: yamlProfile.contacts.homepage || [],

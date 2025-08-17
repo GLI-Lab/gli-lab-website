@@ -1,4 +1,6 @@
 // Components
-export { ProfileCardList } from './ProfileCardList';
-export { ProfileItem } from './ProfileItem';
-export { ProfileDetail } from './ProfileDetail'; 
+export { ProfileCards } from './ProfileCards';
+export { ProfileCardItem } from './ProfileCardItem';
+export { ProfileListItem } from './ProfileListItem';
+export { ProfileCardDetail } from './ProfileCardDetail';
+export { ProfileListDetail } from './ProfileListDetail'; 
