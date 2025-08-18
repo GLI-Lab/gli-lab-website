@@ -19,6 +19,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
     
     // Ref for scrolling to top when expanded
     const profileRef = useRef<HTMLDivElement>(null);
+    const detailRef = useRef<HTMLDivElement>(null);
     
     // Embla carousel setup
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30}, [Fade()]);
@@ -40,11 +41,23 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
         emblaApi?.scrollTo(0);
     }, [photo, emblaApi]);
 
+    // Scroll to detail section on mobile after expansion
+    useEffect(() => {
+        if (isExpanded) {
+            const isMobile = window.innerWidth < 768;
+            if (isMobile && detailRef.current) {
+                detailRef.current?.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        }
+    }, [isExpanded]);
+
     const handleToggle = (e: React.MouseEvent) => {
         e.stopPropagation();
         setIsExpanded(!isExpanded);
         
-        // Scroll to top when expanding
         if (!isExpanded && profileRef.current) {
             profileRef.current.scrollIntoView({ 
                 behavior: 'smooth', 
@@ -55,11 +68,12 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
 
     return (
         // <div className="bg-white border border-gray-200 rounded-lg  transition-all duration-300 hover:shadow-md">
-        <div className="scroll-mt-24" ref={profileRef}>
+        <div className="">
             {/* Main Row */}
             <div
                 onClick={onClick}
-                className="px-1 py-1 sm:px-2 sm:py-2 flex flex-col md:flex-row gap-6 md:gap-10 mb-0 md:mb-6 group transition-all duration-200"
+                className="px-2 pt-4 pb-0 md:py-2 flex flex-col md:flex-row gap-6 md:gap-10 group transition-all duration-200 scroll-mt-24"
+                ref={profileRef}
             >
                 {/* Profile Image */}
                 <div className="w-[280px] h-[330px] md:w-[250px] md:h-[300px] relative flex-shrink-0 mx-auto md:mx-0">
@@ -80,9 +94,9 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                             </div>
                         </div>
                         
-                        {/* Image indicators - only show if multiple photos */}
+                        {/* 이미지 인디케이터 */}
                         {photo.length > 1 && (
-                            <div className="flex justify-center pt-1">
+                            <div className="flex justify-center pt-2">
                                 {photo.map((_, index) => (
                                     <button
                                         key={index}
@@ -97,7 +111,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                 </div>
                 
                 {/* Profile Info */}
-                <div className="flex-1 py-3 md:pr-1 flex flex-col space-y-3 md:space-y-0 justify-between">
+                <div className="flex-1 py-3 md:pr-1 flex flex-col space-y-3 md:space-y-0 justify-between scroll-mt-16" ref={detailRef}>
                     <div>
                         <div className={`text-2xl md:text-2xl font-semibold mb-3 md:mb-0 text-center md:text-left`}>
                             {name_en} ({name_ko})
@@ -267,7 +281,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
             
             {/* Expandable Detail Section */}
             {isExpanded && (
-                <div className="bg-gray-100 px-4 md:px-8 py-4 md:py-8 transition-all duration-300 rounded-xl">
+                <div className="bg-gray-100 px-4 md:px-8 py-5 md:py-8 md:mt-6 transition-all duration-300 rounded-xl">
                     <ProfileListDetail 
                         {...props} 
                         studies={studies} 

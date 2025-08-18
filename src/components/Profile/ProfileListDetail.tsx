@@ -237,7 +237,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                                             return null;
                                                         })()}
                                                     </div>
-                                                    <div className="text-[12.5px] md:text-[13.5px] text-text-secondary">
+                                                    <div className="text-[13px] md:text-[14px] text-text-secondary">
                                                         {(() => {
                                                             // 제1저자들을 그룹화
                                                             const firstAuthors = paper.authors?.filter(author => author.role === '1저자') || [];
