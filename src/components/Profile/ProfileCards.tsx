@@ -349,7 +349,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                 </div>
                             ) : (
                                 // List View
-                                <div className="pb-10">
+                                <div className="pb-5 md:pb-10">
                                     {categoryProfiles.map((profile, index) => (
                                         <div
                                             key={index}
@@ -364,7 +364,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                                 {...profile}
                                             />
                                             {/* Clean Divider - except for last item */}
-                                            <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-4 md:my-8"></div>
+                                            <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-5 md:my-10"></div>
                                             {/* {index < categoryProfiles.length - 1 && (
                                                 <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-8"></div>
                                             )} */}
