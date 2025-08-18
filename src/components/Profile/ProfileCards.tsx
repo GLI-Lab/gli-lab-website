@@ -55,8 +55,8 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     
     // 카테고리 설정
     const categories = isAlumniPage ? [
-        {title: 'Ph.D. Graduates', type: 'phd'},
-        {title: 'M.S. Graduates', type: 'ms'},
+        {title: 'Ph.D.', type: 'phd'},
+        {title: 'M.S.', type: 'ms'},
         {title: 'Researchers', type: 'researcher'},
         {title: 'Interns', type: 'intern'},
     ] : [
@@ -201,7 +201,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                     {/* Card View Button */}
                     <button
                         onClick={() => handleViewChange(true)}
-                        className={`flex items-center gap-2 px-3 py-2 rounded-l-md transition-all duration-200 ${
+                        className={`flex items-center gap-2 px-2 md:px-3 py-2 rounded-l-md transition-all duration-200 ${
                             isCardView 
                                 ? 'bg-interactive-primary text-white shadow-md' 
                                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -222,7 +222,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                     {/* List View Button */}
                     <button
                         onClick={() => handleViewChange(false)}
-                        className={`flex items-center gap-2 px-3 py-2 rounded-r-md transition-all duration-200 ${
+                        className={`flex items-center gap-2 px-2 md:px-3 py-2 rounded-r-md transition-all duration-200 ${
                             !isCardView 
                                 ? 'bg-interactive-primary text-white shadow-md' 
                                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
@@ -349,7 +349,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                 </div>
                             ) : (
                                 // List View
-                                <div className="space-y-6 pb-10">
+                                <div className="pb-10">
                                     {categoryProfiles.map((profile, index) => (
                                         <div
                                             key={index}
@@ -364,7 +364,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                                 {...profile}
                                             />
                                             {/* Clean Divider - except for last item */}
-                                            <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-8"></div>
+                                            <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-4 md:my-8"></div>
                                             {/* {index < categoryProfiles.length - 1 && (
                                                 <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-8"></div>
                                             )} */}
