@@ -59,7 +59,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
             {/* Main Row */}
             <div
                 onClick={onClick}
-                className="px-1 py-1 sm:px-2 sm:py-2 flex flex-col md:flex-row gap-6 md:gap-10 mb-6 group transition-all duration-200"
+                className="px-1 py-1 sm:px-2 sm:py-2 flex flex-col md:flex-row gap-6 md:gap-10 mb-0 md:mb-6 group transition-all duration-200"
             >
                 {/* Profile Image */}
                 <div className="w-[280px] h-[330px] md:w-[250px] md:h-[300px] relative flex-shrink-0 mx-auto md:mx-0">
@@ -97,37 +97,42 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                 </div>
                 
                 {/* Profile Info */}
-                <div className="flex-1 py-3 md:pr-1 flex flex-col justify-between">
+                <div className="flex-1 py-3 md:pr-1 flex flex-col space-y-3 md:space-y-0 justify-between">
                     <div>
-                        <div className={`text-2xl md:text-2xl font-semibold mb-6 md:mb-10 text-center md:text-left`}>
+                        <div className={`text-2xl md:text-2xl font-semibold mb-3 md:mb-0 text-center md:text-left`}>
                             {name_en} ({name_ko})
                         </div>
                     </div>
                     
                     {/* Faculty Information */}
-                    {type === "faculty" && (
-                        <div className="mt-1 space-y-3 text-left">
-                            <div className={`text-base md:text-lg font-medium`}>
-                                {title}, Konkuk University
+                    {type === "faculty" ? (
+                        <div className="space-y-3 text-left tracking-normal sm:tracking-normal">
+                            <div className={`text-lg font-medium`}>
+                                {title}
                             </div>
                             <div className={`grid grid-cols-[auto,1fr] gap-x-4 text-base md:text-lg font-medium`}>
                                 <span>Affiliation:</span>
                                 <span className="font-normal text-gray-600">Dept. of Computer Science & Engineering</span>
                             </div>
                         </div>
+                    ) : (
+                        <div className="text-left">
+                            <div className={`text-lg font-medium`}>{title}</div>
+                        </div>
                     )}
+                    
 
                     {/* Status */}
-                    <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 tracking-tighter sm:tracking-normal text-base md:text-lg ${type === "faculty" ? "mt-3" : ""} text-left`}>
+                    <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-0 tracking-normal sm:tracking-normal text-base md:text-lg ${type === "faculty" ? "mt-3" : ""} text-left`}>
                         {isAlumniPage && (admission || graduation) ? (
                             <>
                                 {affiliation && (
                                     <>
-                                        <span className={`${isSelected ? 'text-interactive-primary' : 'group-hover:text-interactive-primary'}`}>Status</span>
+                                        <span className={`font-medium`}>Status</span>
                                         <span className="font-semibold underline">{affiliation}</span>
                                     </>
                                 )}
-                                <span className={`${isSelected ? 'text-interactive-primary' : 'group-hover:text-interactive-primary'}`}>Period</span>
+                                <span className={`font-medium`}>Period</span>
                                 <span>
                                     {admission && graduation ? `${admission} - ${graduation}` : 
                                      admission ? `${admission} - ` : 
@@ -156,23 +161,23 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                     
                     {/* Research Interests */}
                     {type !== "faculty" && interest && interest.length > 0 && (
-                        <div className="mt-1 text-base md:text-lg text-left">
+                        <div className="text-base md:text-lg text-left tracking-normal">
                             <div className={`font-medium`}>
                                 Research Interests:
                             </div>
-                            <div className="">
+                            <div className="flex flex-wrap gap-2 gap-y-0 tracking-normal">
                                 {interest.map((item, index) => (
-                                    <React.Fragment key={index}>
-                                        <span key={index} className="text-gray-500 font-semibold pr-0.5 text-lg">#</span>
-                                        <span className="pr-2 text-gray-500 leading-none">{item.trim()} </span>
-                                    </React.Fragment>
+                                    <div key={index} className="flex items-center text-base">
+                                        <span className="text-gray-500 font-semibold pr-0.5">#</span>
+                                        <span className="text-gray-500">{item.trim()}</span>
+                                    </div>
                                 ))}
                             </div>
                         </div>
                     )}
                     
                     {/* Social Links - positioned at the bottom */}
-                    <div className="mt-4 flex flex-row gap-2 items-center justify-between">
+                    <div className="flex flex-row gap-2 items-center justify-between">
                         <div className="flex gap-3">
                             {/* Email */}
                             {email.length > 0 && email[0].trim() !== '' && (
@@ -258,13 +263,11 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                         </button>
                     </div>
                 </div>
-                
-
             </div>
             
             {/* Expandable Detail Section */}
             {isExpanded && (
-                <div className="bg-gray-100 px-6 py-6 transition-all duration-300 rounded-xl">
+                <div className="bg-gray-100 px-4 md:px-8 py-4 md:py-8 transition-all duration-300 rounded-xl">
                     <ProfileListDetail 
                         {...props} 
                         studies={studies} 

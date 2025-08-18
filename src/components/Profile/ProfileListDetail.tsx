@@ -7,7 +7,7 @@ import { ProfileDetailProps, type StudyData, type PaperData } from '@/data/loade
 import Link from 'next/link';
 
 export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
-    const {id, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, graduation, affiliation, studies = [], papers = [], isAlumniPage = false } = props;
+    const {id, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, graduation, affiliation, studies = [], papers = [], isAlumniPage = false } = props;
     const [displayedStudiesCount, setDisplayedStudiesCount] = useState(5);
 
     // 현재 프로필과 관련된 스터디를 필터링하는 함수
@@ -55,7 +55,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
     return (
         <div className="flex flex-col">
             <div className="w-full text-[16px] md:text-[17px]">
-                <div className="mb-6">
+                {/* <div className="mb-6">
                     <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 mb-1`}>
                         <span className={`text-brand-primary highlight text-[18px] md:text-[19px] whitespace-nowrap`}>{title}</span>
                     </div>
@@ -63,7 +63,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                         <span className={`text-brand-primary highlight-2 text-[18px] md:text-[19px]`}>{affiliation}</span>
                     </div>
                     <div className="my-3"></div>
-                </div>
+                </div> */}
 
                 {/* Status */}
                 <div className="grid grid-cols-[auto,1fr] gap-x-4 items-center">
@@ -78,7 +78,9 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                     )}
                 </div>
                 
-                <Separator className="my-3"/>
+                {type !== "faculty" && (
+                    <Separator className="my-3"/>
+                )}
 
                 {/* Education */}
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4 items-start`}>

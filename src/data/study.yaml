@@ -21,7 +21,7 @@
   link: "https://bkoh509.notion.site/deep-learning-101-paper-2"
   description: "NLP 관점에서의 대표 논문들을 통해 <h>딥러닝</h> 기초 개념부터 주요 아키텍처까지 학습하는 스터디입니다."
   start_date: "2025-07-01"
-  end_date: null
+  end_date: "2025-07-25"
   participants:
     - "Yewon Sa (사예원)"
     - "Yunjin Kang (강유진)"
@@ -34,7 +34,7 @@
   link: "https://bkoh509.notion.site/graph-rl-101-paper-4"
   description: "그래프, 지식그래프, 이종그래프 등을 대상으로 <h>그래프 표현학습</h>을 수행하고 이를 자연어처리와 추천시스템에 응용하는 기초 논문을 다루는 스터디입니다."
   start_date: "2025-03-21"
-  end_date: null
+  end_date: "2025-08-13"
   participants:
     - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2025.03] 김상준>Sang-Jun Kim (김상준)</>"
