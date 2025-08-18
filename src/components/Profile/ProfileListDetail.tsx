@@ -184,7 +184,12 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                                                         , {paper.year}
                                                                         {paper.status && (
                                                                             <span>
-                                                                                , <span className="inline-block bg-brand-primary/10 text-brand-primary text-xs px-2 py-1/2 rounded-full">
+                                                                                , <span className={`inline-block text-[13px] px-2 py-1/2 rounded-full ${
+                                                                                    paper.status === 'Accepted' ? 'bg-green-100 text-green-800' :
+                                                                                    paper.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                                                                                    paper.status === 'Under Review' ? 'bg-yellow-100 text-yellow-800' :
+                                                                                    'bg-brand-primary/10 text-brand-primary'
+                                                                                }`}>
                                                                                     {paper.status}
                                                                                 </span>
                                                                             </span>
@@ -199,7 +204,12 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                                                         , {paper.venue}, {paper.year}
                                                                         {paper.status && (
                                                                             <span>
-                                                                                , <span className="inline-block bg-brand-primary/10 text-brand-primary text-xs px-2 py-1/2 rounded-full">
+                                                                                , <span className={`inline-block text-[13px] px-2 py-1/2 rounded-full ${
+                                                                                    paper.status === 'Accepted' ? 'bg-green-100 text-green-800' :
+                                                                                    paper.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                                                                                    paper.status === 'Under Review' ? 'bg-yellow-100 text-yellow-800' :
+                                                                                    'bg-brand-primary/10 text-brand-primary'
+                                                                                }`}>
                                                                                     {paper.status}
                                                                                 </span>
                                                                             </span>
@@ -211,7 +221,12 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                                             else if (paper.status) {
                                                                 return (
                                                                     <span className="text-[15px] md:text-[16px] text-text-secondary font-normal">
-                                                                        , <span className="inline-block bg-brand-primary/10 text-brand-primary text-xs px-2 py-1/2 rounded-full">
+                                                                        , <span className={`inline-block text-[13px] px-2 py-1/2 rounded-full ${
+                                                                            paper.status === 'Accepted' ? 'bg-green-100 text-green-800' :
+                                                                            paper.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                                                                            paper.status === 'Under Review' ? 'bg-yellow-100 text-yellow-800' :
+                                                                            'bg-brand-primary/10 text-brand-primary'
+                                                                        }`}>
                                                                             {paper.status}
                                                                         </span>
                                                                     </span>

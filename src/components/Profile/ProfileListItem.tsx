@@ -99,7 +99,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                 {/* Profile Info */}
                 <div className="flex-1 py-3 md:pr-1 flex flex-col justify-between">
                     <div>
-                        <div className={`text-2xl md:text-3xl font-medium text-interactive-primary mb-6 md:mb-10 text-center md:text-left`}>
+                        <div className={`text-2xl md:text-2xl font-semibold mb-6 md:mb-10 text-center md:text-left`}>
                             {name_en} ({name_ko})
                         </div>
                     </div>
