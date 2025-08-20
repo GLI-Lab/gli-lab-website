@@ -1,17 +1,31 @@
 import {getMetadata} from "@/lib/GetMetadata";
+import { Metadata } from "next";
 import { SubCover } from "@/components/Covers";
 import { ProfileCards } from "@/components/Profile";
-import { getPapers } from "@/data/loaders/paperLoader";
 import { getAlumniProfiles } from "@/data/loaders/profileLoader";
+import { getPapers } from "@/data/loaders/paperLoader";
 import { getStudies } from "@/data/loaders/studyLoader";
 
 const TITLE = `Alumni`
 
-export async function generateMetadata() {
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }): Promise<Metadata> {
+    const profiles = await getAlumniProfiles();
+    const resolved = await searchParams;
+    const id = resolved?.id as string | undefined;
+    const view = (resolved?.view as string | undefined) ?? 'card';
+    const selected = id ? profiles.find((p: any) => p.id === id) : undefined;
+    const ogImage = selected?.photo?.[0];
+
+    const asPath = id ? `/people/alumni?view=${view}&id=${id}` : '/people/alumni';
+
     return getMetadata({
         title: TITLE,
         description: "Explore the alumni of GLI Lab - Graph Learning and Intelligence Laboratory",
-        asPath: '/people/alumni'
+        asPath,
+        ogImage,
     });
 };
 

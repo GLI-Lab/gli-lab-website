@@ -1,4 +1,5 @@
 import {getMetadata} from "@/lib/GetMetadata";
+import { Metadata } from "next";
 import { SubCover } from "@/components/Covers";
 import { ProfileCards } from "@/components/Profile";
 import { getProfiles } from "@/data/loaders/profileLoader";
@@ -7,11 +8,24 @@ import { getStudies } from "@/data/loaders/studyLoader";
 
 const TITLE = `Members`
 
-export async function generateMetadata() {
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
+
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }): Promise<Metadata> {
+    const profiles = await getProfiles();
+    const resolved = await searchParams;
+    const id = resolved?.id as string | undefined;
+    const view = (resolved?.view as string | undefined) ?? 'card';
+    const selected = id ? profiles.find((p: any) => p.id === id) : undefined;
+    const ogImage = selected?.photo?.[0];
+
+    const asPath = id ? `/people/members?view=${view}&id=${id}` : '/people/members';
+
     return getMetadata({
         title: TITLE,
         description: "Explore the members of GLI Lab - Graph Learning and Intelligence Laboratory",
-        asPath: '/people/members'
+        asPath,
+        ogImage,
     });
 };
 
