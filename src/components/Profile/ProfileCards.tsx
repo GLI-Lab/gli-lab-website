@@ -69,42 +69,40 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
         {title: 'Interns', type: 'intern'},
     ];
 
-    // 뷰 변경 시 URL 쿼리 파라미터 갱신 (새로고침 유지)
     const handleViewChange = useCallback((newView: boolean) => {
         setIsCardView(newView);
         setInit(true); // 뷰 변경 시 init을 true로 설정
-        const params = new URLSearchParams(searchParams.toString());
+
         // 특정 프로필 anchoring을 막기 위해 id 파라미터 제거
-        params.delete('id');
+        // 즉, id 파라미터를 제거하니깐 selectedCard를 초기화하여 detailed에 표시되는 정보도 초기화를 해야함
+        // -> 이걸 수행하는 함수가 아래아래 useEffect에 있음
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete('id');  
         params.set('view', newView ? 'card' : 'list');
         const query = params.toString();
         const url = query ? `${pathname}?${query}` : pathname;
-        router.replace(url, { scroll: false });
+        router.replace(url, { scroll: false });  // 현재 프로필 클릭 시 스크롤 유지
     }, [pathname, router, searchParams]);
 
     const handleProfileClick = useCallback((profile: ProfileData) => {
-        if (profile !== selectedCard) {
-            setInit(false);
-            setSelectedCard(profile);
-            // 기존 쿼리 보존하면서 id만 갱신 (view 등 유지)
-            const params = new URLSearchParams(searchParams.toString());
-            params.set('id', profile.id);
-            router.replace(`${pathname}?${params.toString()}`, { scroll: false });
-        } else {
-            setInit(false);
-            setSelectedCard(profile);
-        }
+        setInit(false);
+        setSelectedCard(profile);
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('id', profile.id);
+        router.replace(`${pathname}?${params.toString()}`, { scroll: false });  // 현재 프로필 클릭 시 스크롤 유지
+
     }, [selectedCard, router, pathname, searchParams]);
 
-    // selectedProfile이 변경되면 selectedCard 업데이트
+    // view가 바뀔때 이전에 클릭했던 프로필을 초기화
     useEffect(() => {
         setSelectedCard(selectedProfile || null);
     }, [selectedProfile]);
 
-    // 초기 마운트 시 자동 스크롤 (card view에서만 동작)
+    // 초기 마운트 시 자동 스크롤
     useEffect(() => {
-        if (!isCardView) return;
-        if (selectedProfile) {
+        // 접속 후(또는 view가 바뀐 후) 아무 카드를 선택하면 init이 아니게 되는데, 이때는 무조건 이동되도록
+        // 접속 후(또는 view가 바뀐 후) "[2024.03] 오병국"로 초기화 될텐데, 이때 자동스크롤이 되지 않도록
+        if (selectedProfile && (!init || selectedProfile.id !== "[2024.03] 오병국")) {
             const timer = setTimeout(() => {
                 const profileElement = profileRefs.current[selectedProfile.id];
                 if (profileElement) {
@@ -116,7 +114,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
             }, 200);
             return () => clearTimeout(timer);
         }
-    }, [selectedProfile, isCardView]);
+    }, [selectedProfile]);
 
     const checkBottom = useCallback(() => {
         if (mobilePopupRef.current) {
@@ -144,7 +142,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
 
     // 배경 스크롤 방지 및 ESC 키 처리
     useEffect(() => {
-        if (!init && selectedCard && window.innerWidth < 880) {
+        if (!init && selectedCard && window.innerWidth < 880 && isCardView) {
             // 모달이 열릴 때 배경 스크롤 방지
             document.body.style.overflow = 'hidden';
             
@@ -166,7 +164,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
             // 모달이 열리지 않은 경우 스크롤 복원
             document.body.style.overflow = 'auto';
         }
-    }, [init, selectedCard]);
+    }, [init, selectedCard, isCardView]);
 
     // 컴포넌트 마운트 시 스크롤 상태 확인 및 윈도우 리사이즈 감지
     useEffect(() => {
@@ -354,6 +352,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                         <div
                                             key={index}
                                             ref={el => { profileRefs.current[profile.id] = el; }}
+                                            className=""
                                         >
                                             <ProfileListItem
                                                 onClick={() => handleProfileClick(profile)}
