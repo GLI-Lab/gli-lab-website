@@ -75,10 +75,11 @@ function createCard({ photoUrl, nameEn, nameKo }: { photoUrl: string; nameEn?: s
   )
 }
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   try {
     const profiles = await getProfiles()
-    const rawId = params.id || ''
+    const resolvedParams = await params
+    const rawId = resolvedParams.id || ''
     const id = decodeURIComponent(rawId.replace(/\+/g, ' '))
     console.log('[OG][members] params.id:', rawId, 'decoded:', id)
     
