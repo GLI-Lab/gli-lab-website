@@ -112,10 +112,57 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                 
                 {/* Profile Info */}
                 <div className="flex-1 py-3 md:pr-1 flex flex-col space-y-3 md:space-y-0 justify-between scroll-mt-16" ref={detailRef}>
-                    <div>
-                        <div className={`text-2xl md:text-2xl font-semibold mb-3 md:mb-0 text-center md:text-left`}>
-                            {name_en} ({name_ko})
-                        </div>
+                    <div className={`text-2xl md:text-2xl font-semibold mb-3 md:mb-0 text-center md:text-left flex items-center gap-1.5`}>
+                        <span>{name_en} ({name_ko})</span>
+                        {/* URL 복사 링크 아이콘 */}
+                        <button
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                const currentUrl = window.location.origin + window.location.pathname + '?view=list&id=' + encodeURIComponent(props.id || '');
+
+                                // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
+                                const selectionlessCopy = () => {
+                                    try {
+                                        const listener = (event: any) => {
+                                            event.preventDefault();
+                                            if (event.clipboardData) {
+                                                event.clipboardData.setData('text/plain', currentUrl);
+                                            }
+                                        };
+                                        document.addEventListener('copy', listener);
+                                        document.execCommand('copy');
+                                        document.removeEventListener('copy', listener);
+                                    } catch (err) {
+                                        // 마지막 수단: 아무 동작 안 함 (iOS에서 입력 포커스 회피)
+                                    }
+                                };
+
+                                if (navigator.clipboard && navigator.clipboard.writeText) {
+                                    navigator.clipboard.writeText(currentUrl).catch(selectionlessCopy);
+                                } else {
+                                    selectionlessCopy();
+                                }
+
+                                // 중앙 토스트 (배경 없음, 작은 고정 요소만 추가)
+                                const toast = document.createElement('div');
+                                toast.textContent = 'Link copied!';
+                                toast.className = 'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-600 text-white px-6 py-3 rounded-lg shadow-lg text-base font-medium z-[1000] pointer-events-none';
+                                document.body.appendChild(toast);
+
+                                // 1초 후 토스트 제거
+                                setTimeout(() => {
+                                    if (toast.parentNode) {
+                                        toast.parentNode.removeChild(toast);
+                                    }
+                                }, 1000);
+                            }}
+                            className="w-5 h-5 text-gray-400 hover:text-interactive-primary transition-colors duration-200 flex-shrink-0"
+                            title="Copy profile link"
+                        >
+                            <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                            </svg>
+                        </button>
                     </div>
                     
                     {/* Faculty Information */}

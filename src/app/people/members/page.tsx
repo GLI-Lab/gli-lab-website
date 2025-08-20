@@ -35,6 +35,7 @@ export default async function Page({ searchParams }: PageProps) {
     
     // 기본 프로필 설정 (selectedId가 없거나 프로필을 찾지 못한 경우)
     if (!selectedProfile) {
+        console.log('selectedProfile not found', selectedId);
         selectedProfile = profiles.find(profile => profile.id === "[2024.03] 오병국") || profiles[0];
     }
     
