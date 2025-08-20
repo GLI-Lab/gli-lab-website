@@ -27,7 +27,7 @@ export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
                         <div className={`text-xs sm:text-sm ${isSelected ? 'text-interactive-primary underline 1.5md:hidden' : 'text-gray-600 group-hover:underline group-hover:text-interactive-primary'}`}>See more</div>
                     </div>
                 </div>
-                <div className={`grid grid-cols-[auto,1fr] gap-x-2 sm:gap-x-3 tracking-tighter sm:tracking-normal text-sm sm:text-base
+                <div className={`grid grid-cols-[auto,1fr] gap-x-2 sm:gap-x-3 tracking-tight sm:tracking-normal text-sm sm:text-base
                                  ${isSelected ? 'text-gray-600 1.5md:text-white' : 'text-gray-600'}`}>
                     {isAlumniPage && (admission || graduation) ? (
                         <>

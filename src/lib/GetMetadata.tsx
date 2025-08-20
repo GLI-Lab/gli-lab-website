@@ -59,7 +59,7 @@ export const META: MetaConfig = {
   ] as const,
   url: 'https://gli.konkuk.ac.kr',
   googleVerification: 'WDBVed74Us47Rx02wLK1aQ6vmJdddImm1sQl2NRnihs',  // Google Search Console → 속성 추가 → HTML 태그에서 content 값 복사
-  ogImage: '/GLI_opengraph_2000x1050.jpg',
+  ogImage: '/images/logo/GLI_opengraph_2000x1050.jpg',
 } as const;
 
 /**
@@ -126,12 +126,14 @@ export const getMetadata = (metadataProps?: GenerateMetadataProps): Metadata => 
       locale: 'ko_KR',
       type: 'website',
       url: PAGE_URL,
-      images: {
-        url: OG_IMAGE,
-        width: 2000,
-        height: 1050,
-        alt: TITLE,
-      },
+      images: [
+        {
+          url: OG_IMAGE,
+          width: 2000,
+          height: 1050,
+          alt: TITLE,
+        },
+      ],
     },
     
     // 검색 엔진 소유권 확인 태그들
