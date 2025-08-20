@@ -26,7 +26,7 @@ function createCard({ photoUrl, nameEn, nameKo }: { photoUrl: string; nameEn?: s
     >
       <div
         style={{
-          width: 1120,
+          width: 1130,
           height: 580,
           display: 'flex',
           borderRadius: 24,
@@ -37,7 +37,7 @@ function createCard({ photoUrl, nameEn, nameKo }: { photoUrl: string; nameEn?: s
       >
         <div
           style={{
-            width: 580,
+            width: 520,
             height: '100%',
             backgroundColor: '#f1f5f9',
             display: 'flex',
@@ -47,7 +47,7 @@ function createCard({ photoUrl, nameEn, nameKo }: { photoUrl: string; nameEn?: s
         >
           <img
             src={photoUrl}
-            width={580}
+            width={520}
             height={580}
             style={{ objectFit: 'contain' }}
           />
@@ -62,11 +62,11 @@ function createCard({ photoUrl, nameEn, nameKo }: { photoUrl: string; nameEn?: s
             color: '#0f172a',
           }}
         >
-          <div style={{ fontSize: 54, fontWeight: 700, lineHeight: 1.1 }}>{nameEn || 'GLI Lab Member'}</div>
+          <div style={{ fontSize: 58, fontWeight: 700, lineHeight: 1.1 }}>{nameEn || 'GLI Lab Member'}</div>
           {nameKo && (
-            <div style={{ fontSize: 36, marginTop: 12, color: '#334155' }}>{nameKo}</div>
+            <div style={{ fontSize: 46, marginTop: 12, color: '#334155' }}>{nameKo}</div>
           )}
-          <div style={{ marginTop: 28, fontSize: 24, color: '#475569' }}>
+          <div style={{ marginTop: 28, fontSize: 30, color: '#475569' }}>
             Graph & Language Intelligence Lab
           </div>
         </div>
