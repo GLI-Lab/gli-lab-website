@@ -25,7 +25,7 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
 
     return getMetadata({
         title: TITLE,
-        description: "Explore the alumni of GLI Lab - Graph Learning and Intelligence Laboratory",
+        description: "Explore the alumni of GLI Lab",
         asPath,
         ogImage,
     });
