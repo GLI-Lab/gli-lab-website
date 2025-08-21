@@ -25,6 +25,11 @@ export default function Page() {
     // 프로젝트 데이터를 배열로 정리
     const ongoingProjects: Project[] = [
         {
+            title: "추천시스템 모델 설계 자문 및 사례연구 (2025-09-01 ~ 2027-08-31)",
+            organization: "국방과학연구소 - 한화시스템",
+            tags: ["Recommender Systems", "Graph ML/DL"]
+        },
+        {
             title: "실적 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구 (2025-08-01 ~ 2026-07-31)",
             organization: "건국대학교 그룹연구인력양성",
             tags: ["Multi-Modal LLMs", "Graph ML/DL", "LLM Agent"]
