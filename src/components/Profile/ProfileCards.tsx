@@ -72,7 +72,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     const handleViewChange = useCallback((newView: boolean) => {
         setIsCardView(newView);
         setInit(true); // 뷰 변경 시 init을 true로 설정
-        setSelectedCard(null);
+        // setSelectedCard(null);
 
         // 특정 프로필 anchoring을 막기 위해 id 파라미터 제거
         // 즉, id 파라미터를 제거하니깐 selectedCard를 초기화하여 detailed에 표시되는 정보도 초기화를 해야함
@@ -101,10 +101,9 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
 
     // 초기 마운트 시 자동 스크롤
     useEffect(() => {
-        // prevent moving when view type changed
-        // init이 true이거나 selectedCard가 null이면 자동 스크롤하지 않음
-        // 이는 뷰 변경 시나 초기 로딩 시 자동 스크롤을 방지하기 위함
-        if (selectedProfile && !init && selectedCard && selectedProfile.id === selectedCard.id) {
+        // 접속 후(또는 view가 바뀐 후) 아무 카드를 선택하면 init이 아니게 되는데, 이때는 무조건 이동되도록
+        // 접속 후(또는 view가 바뀐 후) "[2024.03] 오병국"로 초기화 될텐데, 이때 자동스크롤이 되지 않도록
+        if (selectedProfile && (!init || selectedProfile.id !== "[2024.03] 오병국")) {
             const timer = setTimeout(() => {
                 const profileElement = profileRefs.current[selectedProfile.id];
                 if (profileElement) {
@@ -116,7 +115,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
             }, 200);
             return () => clearTimeout(timer);
         }
-    }, [selectedProfile, selectedCard, isCardView, init]);
+    }, [selectedProfile, isCardView, init]);
 
     const checkBottom = useCallback(() => {
         if (mobilePopupRef.current) {
