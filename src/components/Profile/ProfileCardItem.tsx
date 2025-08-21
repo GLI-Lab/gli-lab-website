@@ -6,7 +6,7 @@ import { ProfileItemProps } from '@/data/loaders/types';
 
 export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
     const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage } = props;
-    console.log('----ProfileCardItem rendered:', name_ko);
+    // console.log('----ProfileCardItem rendered:', name_ko);
 
     return (
         <div
