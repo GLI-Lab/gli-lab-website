@@ -21,15 +21,10 @@ async function findProfileFile(suffix) {
     throw error;
   }
 }
-
 // YAML 프로필을 변환하는 함수
 function transformProfile(yamlProfile, isAlumni = false) {
   const photoUrls = (yamlProfile.photos || []).map(photo => {
-    if (isAlumni) {
-      return photo.startsWith('/images/alumni/') ? photo : `/images/profiles/alumni/${photo}`;
-    } else {
-      return photo.startsWith('/images/profiles/') ? photo : `/images/profiles/${photo}`;
-    }
+    return isAlumni ? `/images/profiles/alumni/${photo}.webp` : `/images/profiles/${photo}.webp`;
   });
 
   return {
