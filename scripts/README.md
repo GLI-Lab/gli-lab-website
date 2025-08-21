@@ -58,6 +58,9 @@ npm run build
 
 `package.json`의 `prebuild` 스크립트가 빌드 전에 자동으로 실행됩니다.
 
+> **⚠️ 주의사항**: `prebuild`를 사용하면 빌드 시간이 길어집니다. 
+> 프로덕션 환경에서는 서버에서 스크립트를 실행하고 GitHub에 결과물을 올리는 것을 권장합니다.
+
 ### 실행 모드
 
 #### 🔄 증분 모드 (기본값)
@@ -76,6 +79,7 @@ npm run build
 
 ### 새로운 이미지 추가 시 권장 순서
 
+#### 🚀 개발 환경 (빠른 테스트용)
 ```bash
 # 1. 이미지 최적화 (갤러리 + 프로필 → WebP)
 node scripts/optimize-gallery.js
@@ -87,13 +91,45 @@ node scripts/generate-og-images.js
 npm run build
 ```
 
+#### 🏭 프로덕션 환경 (권장)
+```bash
+# 1. 서버에서 이미지 최적화 및 OG 생성
+node scripts/optimize-gallery.js
+node scripts/generate-og-images.js
+
+# 2. 생성된 파일들을 GitHub에 커밋
+git add public/images/
+git commit -m "Update optimized images and OpenGraph images"
+git push
+
+# 3. 빌드 (이미지 생성 과정 생략되어 빠름)
+npm run build
+```
+
 ### 스크립트 통합 실행
 
+#### 🔄 prebuild 자동 실행
 ```bash
 # prebuild에서 두 스크립트 모두 실행됨
 npm run prebuild
 # 실행 순서: generate-og-images.js → optimize-gallery.js
 ```
+
+#### ⚡ 수동 실행 (빌드 시간 단축)
+```bash
+# 1. 이미지 최적화 및 OG 생성
+node scripts/optimize-gallery.js
+node scripts/generate-og-images.js
+
+# 2. 생성된 파일들을 Git에 추가
+git add public/images/
+
+# 3. 빠른 빌드 (이미지 생성 과정 생략)
+npm run build
+```
+
+> **💡 팁**: CI/CD 파이프라인에서는 prebuild를 비활성화하고, 
+> 이미지 생성은 별도 단계에서 실행하는 것이 효율적입니다.
 
 ### 파일 포맷 정리
 
