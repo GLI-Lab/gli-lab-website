@@ -41,7 +41,7 @@
   name: {en: Yunjin Kim, ko: 김윤진}
   education: {bs: "Biological Engineering, Konkuk University", ms: null, phd: null}
   interests: [Graph ML/DL]
-  photos: ["[2024.03] 김윤진1.jpg"]
+  photos: ["[2024.03] 김윤진1"]
   contacts: {emails: ["yj071099@gmail.com"], homepage: null, github: ["ksdjyj071099"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
@@ -53,7 +53,7 @@
   name: {en: Ji-Yeon Park, ko: 박지연}
   education: {bs: "Food Science and Biotechnology of Animal Resources, Konkuk University", ms: null, phd: null}
   interests: [Graph ML/DL, Recommender Systems]
-  photos: ["[2024.07] 박지연1.jpg", "[2024.07] 박지연2.jpg"]
+  photos: ["[2024.07] 박지연1", "[2024.07] 박지연2"]
   contacts: {emails: ["yeoniyoui@gmail.com"], homepage: null, github: null, linkedin: null}
   status: 
     period: {admission: null, graduation: null}
@@ -65,7 +65,7 @@
   name: {en: Minseok Geum, ko: 금민석}
   education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
   interests: [Graph ML/DL]
-  photos: ["[2025.01] 금민석1.jpg", "[2025.01] 금민석2.jpg"]
+  photos: ["[2025.01] 금민석1", "[2025.01] 금민석2"]
   contacts: {emails: ["rmaalstjr1445@gmail.com"], homepage: null, github: ["minseokgeum"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}

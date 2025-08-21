@@ -17,11 +17,7 @@ function transformProfile(yamlProfile: ProfileYAML, isAlumni: boolean = false): 
 
   // Photo 경로 정규화 - alumni인 경우 public/images/alumni에서 찾기
   const photoUrls = (yamlProfile.photos || []).map(photo => {
-    if (isAlumni) {
-      return photo.startsWith('/images/alumni/') ? photo : `/images/profiles/alumni/${photo}`;
-    } else {
-      return photo.startsWith('/images/profiles/') ? photo : `/images/profiles/${photo}`;
-    }
+    return isAlumni ? `/images/profiles/alumni/${photo}.webp` : `/images/profiles/${photo}.webp`;
   });
 
   return {
