@@ -122,19 +122,19 @@ async function generateOGImageWebP({ photoUrl, nameEn, nameKo }) {
     const labY = nameKo ? 455 : 400;
     
     let textSvg = `<svg width="${width}" height="${height}">
-      <text x="592" y="${textY}" font-family="Arial, sans-serif" font-size="66" font-weight="700" fill="#0f172a" text-anchor="start">
+      <text x="560" y="${textY}" font-family="Arial, sans-serif" font-size="66" font-weight="700" fill="#0f172a" text-anchor="start">
         ${nameEn || 'GLI Lab Member'}
       </text>`;
     
     if (nameKo) {
       textSvg += `
-      <text x="592" y="${koreanY}" font-family="Arial, sans-serif" font-size="54" fill="#334155" text-anchor="start">
+      <text x="560" y="${koreanY}" font-family="Arial, sans-serif" font-size="54" fill="#334155" text-anchor="start">
         ${nameKo}
       </text>`;
     }
     
     textSvg += `
-      <text x="592" y="${labY}" font-family="Arial, sans-serif" font-size="38" fill="#475569" text-anchor="start">
+      <text x="560" y="${labY}" font-family="Arial, sans-serif" font-size="38" fill="#475569" text-anchor="start">
         Graph &amp; Language Intelligence Lab
       </text>
     </svg>`;
