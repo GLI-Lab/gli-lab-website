@@ -189,3 +189,15 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.07", end: "Current"}
     affiliation: null
+
+- id: "[2025.07] 사예원"
+  role: {type: intern, title: Undergraduate Student (2학년 1학기)}
+  name: {en: Yewon Sa, ko: 사예원}
+  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
+  interests: [Graph ML/DL]
+  photos: ["[2025.07] 사예원1"]
+  contacts: {emails: ["bear100152@gmail.com"], homepage: null, github: ["BearYeWon"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2025.07", end: "Current"}
+    affiliation: null
