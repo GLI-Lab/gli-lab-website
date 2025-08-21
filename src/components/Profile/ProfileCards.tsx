@@ -59,7 +59,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     const profileRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
     const router = useRouter();
 
-    console.log('ProfileCards rendered');
+    // console.log('ProfileCards rendered');
     
     // 카테고리 설정
     const categories = isAlumniPage ? [
@@ -78,6 +78,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     ];
 
     const handleViewChange = useCallback((newView: boolean) => {
+        // console.log('----handleViewChange:', selectedProfile, selectedCard, init);
         setIsCardView(newView);
         setInit(true); // 뷰 변경 시 init을 true로 설정
         
@@ -109,13 +110,13 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
         setSelectedCard(selectedProfile || null);
     }, [selectedProfile]);
 
-    // 초기 마운트 시 자동 스크롤
+    // 자동 스크롤
     useEffect(() => {
-        // 접속 후(또는 view가 바뀐 후) 아무 카드를 선택하면 init이 아니게 되는데, 이때는 무조건 이동되도록
-        // 접속 후(또는 view가 바뀐 후) "[2024.03] 오병국"로 초기화 될텐데, 이때 자동스크롤이 되지 않도록
-        if (selectedProfile && (!init || selectedProfile.id !== "[2024.03] 오병국")) {
+        // console.log('----scroll useEffect:', selectedProfile, selectedCard, init);
+        if (selectedCard && (!init || selectedCard.id !== "[2024.03] 오병국")) {
+            // console.log('scroll!!!');
             const timer = setTimeout(() => {
-                const profileElement = profileRefs.current[selectedProfile.id];
+                const profileElement = profileRefs.current[selectedCard.id];
                 if (profileElement) {
                     profileElement.scrollIntoView({
                         behavior: 'smooth',
@@ -125,7 +126,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
             }, 200);
             return () => clearTimeout(timer);
         }
-    }, [selectedProfile, isCardView, init]);
+    }, [selectedCard, isCardView, init]);
 
     const checkBottom = useCallback(() => {
         if (mobilePopupRef.current) {
