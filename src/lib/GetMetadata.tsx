@@ -97,6 +97,11 @@ export const getMetadata = (metadataProps?: GenerateMetadataProps): Metadata => 
   const PAGE_URL = asPath || '/';
   // 이미지: 페이지별 이미지가 있으면 사용, 없으면 기본 이미지
   const OG_IMAGE = ogImage || META.ogImage;
+  
+  // 이미지 크기 결정 (WebP는 1200x630, 기본 로고는 2000x1050)
+  const isCustomOGImage = OG_IMAGE.includes('/images/profiles-og/');
+  const imageWidth = isCustomOGImage ? 1200 : 2000;
+  const imageHeight = isCustomOGImage ? 630 : 1050;
 
   // Next.js Metadata 객체 생성
   const metadata: Metadata = {
@@ -129,8 +134,8 @@ export const getMetadata = (metadataProps?: GenerateMetadataProps): Metadata => 
       images: [
         {
           url: OG_IMAGE,
-          width: 2000,
-          height: 1050,
+          width: imageWidth,
+          height: imageHeight,
           alt: TITLE,
         },
       ],

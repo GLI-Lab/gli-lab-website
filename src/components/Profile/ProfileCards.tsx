@@ -108,13 +108,13 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                 if (profileElement) {
                     profileElement.scrollIntoView({
                         behavior: 'smooth',
-                        block: 'center'
+                        block: (!isCardView && window.innerWidth < 768) ? 'start' : 'center'
                     });
                 }
             }, 200);
             return () => clearTimeout(timer);
         }
-    }, [selectedProfile]);
+    }, [selectedProfile, isCardView]);
 
     const checkBottom = useCallback(() => {
         if (mobilePopupRef.current) {
@@ -352,7 +352,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                         <div
                                             key={index}
                                             ref={el => { profileRefs.current[profile.id] = el; }}
-                                            className=""
+                                            className="scroll-mt-20"
                                         >
                                             <ProfileListItem
                                                 onClick={() => handleProfileClick(profile)}

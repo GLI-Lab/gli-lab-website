@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/optimize-images.js && node scripts/generate-og-images.js",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "optimize-gallery": "node scripts/optimize-gallery.js"
+    "lint": "next lint"
   },
   "dependencies": {
     "@vercel/analytics": "^1.4.1",
