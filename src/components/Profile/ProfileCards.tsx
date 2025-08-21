@@ -41,6 +41,14 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     // URL 파라미터 'view'의 값으로 첫 렌더링 시 뷰 모드를 설정하여
     // 클라이언트 사이드 렌더링 시 발생하는 화면 깜빡임(flicker) 방지
     const [isCardView, setIsCardView] = useState(initialIsCardView);
+    
+    // members 페이지에서는 default 프로필을 useMemo로 캐싱 (profiles가 변경될 때만 재계산)
+    // alumni 페이지에서는 null로, 특정 프로필이 선택되지 않은 상태
+    const defaultProfile = useMemo(() => 
+        profiles.find(p => p.id === "[2024.03] 오병국"), 
+        [profiles]
+    );
+    
     useEffect(() => {
         const view = searchParams.get('view');
         if (view === 'list') setIsCardView(false);
@@ -72,7 +80,9 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     const handleViewChange = useCallback((newView: boolean) => {
         setIsCardView(newView);
         setInit(true); // 뷰 변경 시 init을 true로 설정
-        // setSelectedCard(null);
+        
+        // 뷰 변경 시 default 프로필로 설정 (화면 깜빡임 방지)
+        setSelectedCard(defaultProfile || null);
 
         // 특정 프로필 anchoring을 막기 위해 id 파라미터 제거
         // 즉, id 파라미터를 제거하니깐 selectedCard를 초기화하여 detailed에 표시되는 정보도 초기화를 해야함
@@ -83,7 +93,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
         const query = params.toString();
         const url = query ? `${pathname}?${query}` : pathname;
         router.replace(url, { scroll: false });  // 현재 프로필 클릭 시 스크롤 유지
-    }, [pathname, router, searchParams]);
+    }, [pathname, router, searchParams, profiles]);
 
     const handleProfileClick = useCallback((profile: ProfileData) => {
         setInit(false);
