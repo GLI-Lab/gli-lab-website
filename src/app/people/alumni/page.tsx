@@ -17,9 +17,8 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
     const id = resolved?.id as string | undefined;
     const view = (resolved?.view as string | undefined) ?? 'card';
     const selected = id ? profiles.find((p: any) => p.id === id) : undefined;
-    // 동적 세그먼트 OG 이미지 URL 사용
-    // const ogImage = selected?.photo?.[0];
-    const ogImage = selected ? `/people/alumni/opengraph-image/${encodeURIComponent(selected.id)}` : undefined;
+    // 정적 OG 이미지 URL 사용 (fallback: 기본 로고)
+    const ogImage = selected ? `/images/profiles-og/alumni/${selected.id}.webp` : '/images/logo/GLI_opengraph_2000x1050.jpg';
 
     const asPath = id ? `/people/alumni?view=${view}&id=${id}` : '/people/alumni';
 

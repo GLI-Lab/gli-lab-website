@@ -2,6 +2,20 @@ const sharp = require('sharp');
 const fs = require('fs');
 const path = require('path');
 
+async function optimizeImages() {
+  console.log('🎯 이미지 최적화 시작!\n');
+  
+  // 1. 갤러리 이미지 최적화
+  await optimizeGalleryImages();
+  
+  console.log('─'.repeat(50) + '\n');
+  
+  // 2. 프로필 이미지 최적화
+  await optimizeProfileImages();
+  
+  console.log('🎉 모든 이미지 최적화 완료!\n');
+}
+
 async function optimizeGalleryImages() {
   const galleryPath = 'public/images/gallery';
   
@@ -189,5 +203,115 @@ function getFolderSize(folderPath) {
   return totalSize;
 }
 
+async function optimizeProfileImages() {
+  console.log('🚀 프로필 이미지 최적화 시작...\n');
+  
+  // 프로필 이미지 폴더들
+  const profileFolders = [
+    { path: 'public/images/profiles', name: 'Members' },
+    { path: 'public/images/profiles/alumni', name: 'Alumni' }
+  ];
+  
+  let totalProcessed = 0;
+  let totalOriginalSize = 0;
+  let totalOptimizedSize = 0;
+  
+  for (const folder of profileFolders) {
+    const { path: profilesPath, name: folderName } = folder;
+    
+    try {
+      // 프로필 폴더 확인
+      if (!fs.existsSync(profilesPath)) {
+        console.log(`⏭️  ${folderName} 폴더가 존재하지 않습니다: ${profilesPath}`);
+        continue;
+      }
+      
+      console.log(`📁 처리 중: ${folderName} (${profilesPath})`);
+      
+      // 이미지 파일들 찾기 (WebP가 아닌 원본 파일만)
+      const files = fs.readdirSync(profilesPath)
+        .filter(file => /\.(jpg|jpeg|png)$/i.test(file))
+        .filter(file => {
+          // 동일한 이름의 WebP 파일이 이미 존재하면 스킵
+          const webpPath = path.join(profilesPath, file.replace(/\.(jpg|jpeg|png)$/i, '.webp'));
+          const exists = fs.existsSync(webpPath);
+          if (exists) {
+            console.log(`  ⏭️  ${file} - 이미 WebP로 변환됨`);
+          }
+          return !exists;
+        });
+    
+      if (files.length === 0) {
+        console.log(`  ✨ ${folderName} - 변환할 이미지가 없습니다.`);
+        continue;
+      }
+      
+      let folderProcessed = 0;
+      
+      for (const file of files) {
+        const inputPath = path.join(profilesPath, file);
+        const outputPath = path.join(profilesPath, file.replace(/\.(jpg|jpeg|png)$/i, '.webp'));
+        
+        try {
+          // 파일 크기 확인
+          const stats = fs.statSync(inputPath);
+          const fileSizeMB = (stats.size / (1024 * 1024)).toFixed(2);
+          
+          console.log(`  📷 ${file} (${fileSizeMB}MB) → WebP 변환 중...`);
+          
+          // WebP로 변환 (프로필용 최적화 설정)
+          await sharp(inputPath)
+            .rotate() // EXIF 회전 정보 자동 적용
+                      .webp({ 
+            quality: 100,
+            effort: 6,
+            smartSubsample: true
+          })
+            .toFile(outputPath);
+          
+          // 원본 파일 삭제
+          fs.unlinkSync(inputPath);
+          
+          // 최적화된 파일 크기 확인
+          const optimizedStats = fs.statSync(outputPath);
+          const optimizedSizeMB = (optimizedStats.size / (1024 * 1024)).toFixed(2);
+          const reduction = ((stats.size - optimizedStats.size) / stats.size * 100).toFixed(1);
+          
+          totalOriginalSize += stats.size;
+          totalOptimizedSize += optimizedStats.size;
+          
+          console.log(`    ✅ 변환 완료: ${optimizedSizeMB}MB (${reduction}% 감소)`);
+          folderProcessed++;
+          totalProcessed++;
+          
+        } catch (error) {
+          console.error(`    ❌ 오류 발생: ${file}`, error.message);
+        }
+      }
+      
+      if (folderProcessed > 0) {
+        console.log(`  📁 ${folderName} - ${folderProcessed}개 이미지 변환됨\n`);
+      }
+      
+    } catch (error) {
+      console.error(`❌ ${folderName} 최적화 중 오류 발생:`, error);
+    }
+  }
+  
+  // 전체 결과 출력
+  if (totalProcessed > 0) {
+    const totalOriginalMB = (totalOriginalSize / (1024 * 1024)).toFixed(1);
+    const totalOptimizedMB = (totalOptimizedSize / (1024 * 1024)).toFixed(1);
+    const totalSavedMB = ((totalOriginalSize - totalOptimizedSize) / (1024 * 1024)).toFixed(1);
+    const totalReduction = ((totalOriginalSize - totalOptimizedSize) / totalOriginalSize * 100).toFixed(1);
+    
+    console.log(`🎉 총 ${totalProcessed}개의 프로필 이미지 WebP 변환 완료!`);
+    console.log(`  원본: ${totalOriginalMB}MB → 최적화: ${totalOptimizedMB}MB`);
+    console.log(`  절약: ${totalSavedMB}MB (${totalReduction}% 감소)\n`);
+  } else {
+    console.log('✨ 모든 프로필 이미지가 이미 최적화되어 있습니다!\n');
+  }
+}
+
 // 스크립트 실행
-optimizeGalleryImages(); 
+optimizeImages(); 
