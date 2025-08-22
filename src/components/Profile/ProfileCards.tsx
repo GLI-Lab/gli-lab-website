@@ -83,6 +83,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
         setInit(true); // 뷰 변경 시 init을 true로 설정
         
         // 뷰 변경 시 default 프로필로 설정 (화면 깜빡임 방지)
+        // console.log(init);
         setSelectedCard(defaultProfile || null);
 
         // 특정 프로필 anchoring을 막기 위해 id 파라미터 제거
@@ -350,7 +351,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                         >
                                             <ProfileCardItem
                                                 onClick={() => handleProfileClick(profile)}
-                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || (selectedProfile && selectedProfile.id !== "[2024.03] 오병국")))}
+                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || (selectedCard && selectedCard.id !== "[2024.03] 오병국")))}
                                                 isAlumniPage={isAlumniPage}
                                                 {...profile}
                                             />
@@ -368,7 +369,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                         >
                                             <ProfileListItem
                                                 onClick={() => handleProfileClick(profile)}
-                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || (selectedProfile && selectedProfile.id !== "[2024.03] 오병국")))}
+                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || (selectedCard && selectedCard.id !== "[2024.03] 오병국")))}
                                                 isAlumniPage={isAlumniPage}
                                                 studies={studies}
                                                 papers={papers}
