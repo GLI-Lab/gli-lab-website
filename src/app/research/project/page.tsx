@@ -30,7 +30,7 @@ export default function Page() {
             tags: ["Recommender Systems", "Graph ML/DL"]
         },
         {
-            title: "실적 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구 (2025-08-01 ~ 2026-07-31)",
+            title: "실전 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구 (2025-08-01 ~ 2026-07-31)",
             organization: "건국대학교 그룹연구인력양성",
             tags: ["Multi-Modal LLMs", "Graph ML/DL", "LLM Agent"]
         },

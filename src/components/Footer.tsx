@@ -22,11 +22,12 @@ export default function Footer() {
                 </div>
                 <div className="pt-3 pb-6 text-white/85 border-t border-t-white border-opacity-20">
                 <p>
-                        Copyright © {currentYear}
-                        <Link className="hover:text-white hover:underline underline-offset-4 font-semibold" href="/">
-                            <span> Graph Intelligence Lab. </span></Link>
-                        <span className="block w-full md:w-auto md:inline">All Rights Reserved.</span>
-                    </p>
+                <span className="block w-full md:w-auto md:inline">Copyright © {currentYear}</span>
+                    <Link className="hover:text-white hover:underline underline-offset-4 font-semibold" href="/">
+                        <span> Graph & Language Intelligence Lab. </span>
+                    </Link>
+                    <span className="block w-full md:w-auto md:inline">All Rights Reserved.</span>
+                </p>
                 </div>
             </div>
         </footer>

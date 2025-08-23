@@ -1,6 +1,20 @@
 # YAML에서 tab은 금지. 반드시 space 2개 사용
 # end_date: null  # 종료일이 없는 경우
 
+  
+- title: "Multimodal RL Paper (#3)"
+  link: "https://bkoh509.notion.site/multimodal-rl-paper-3"
+  description: "이미지, 텍스트, 행동 정보를 통합한 <h>멀티모달 표현학습</h> 방법론과 이를 자연어처리와 추천시스템에 응용하는 기초 논문 스터디입니다."
+  start_date: "2025-08-27"
+  end_date: null
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
+    - "<profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>"
+    - "<profile=[2024.10] 김영진>Young-Jin Kim (김영진)</>"
+    - "<profile=[2025.03] 김상준>Sang-Jun Kim (김상준)</>"
+    - "<profile=[2025.03] 조은영>Eun-Yeong Jo (조은영)</>"
+    - "<profile=[2025.07] 박상현>Sang-Hyun Park (박상현)</>"
+
 - title: "Graph RL 101 Paper (#5)"
   link: "https://bkoh509.notion.site/graph-rl-101-paper-5"
   description: "그래프, 지식그래프, 이종그래프 등을 대상으로 <h>그래프 표현학습</h>을 수행하고 이를 <h>자연어처리</h>, <h>추천시스템</h>, 그리고 <h>이상탐지</h>에 응용하는 기초 논문을 다루는 스터디입니다."
@@ -11,9 +25,9 @@
     - "<profile=[2024.12] 최진호>Jin-Ho Choi (최진호)</>"
     - "<profile=[2025.04] 구본유>Bonyou Koo (구본유)</>"
     - "<profile=[2025.07] 사예원>Yewon Sa (사예원)</>"
+    - "<profile=[2025.07] 김세영>Seyeong Kim (김세영)</>"
+    - "<profile=[2025.07] 이재진>Jaejin Lee (이재진)</>"
     - "Yunjin Kang (강유진)"
-    - "Seyeong Kim (김세영)"
-    - "Jaejin Lee (이재진)"
     - "Donghyun Lee (이동현)"
     - "Hwan Choi (최환)"
   
@@ -23,10 +37,11 @@
   start_date: "2025-07-01"
   end_date: "2025-07-25"
   participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2025.07] 사예원>Yewon Sa (사예원)</>"
+    - "<profile=[2025.07] 김세영>Seyeong Kim (김세영)</>"
+    - "<profile=[2025.07] 이재진>Jaejin Lee (이재진)</>"
     - "Yunjin Kang (강유진)"
-    - "Seyeong Kim (김세영)"
-    - "Jaejin Lee (이재진)"
     - "Donghyun Lee (이동현)"
     - "Hwan Choi (최환)"
 
