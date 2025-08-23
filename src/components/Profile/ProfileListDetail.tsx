@@ -9,6 +9,7 @@ import Link from 'next/link';
 export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
     const {id, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, graduation, affiliation, studies = [], papers = [], isAlumniPage = false } = props;
     const [displayedStudiesCount, setDisplayedStudiesCount] = useState(5);
+    const [displayedPapersCount, setDisplayedPapersCount] = useState(5);
 
     // 현재 프로필과 관련된 스터디를 필터링하는 함수
     const filterStudiesForProfile = (allStudies: any[], profile: any) => {
@@ -160,7 +161,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                             )
                         </span>
                         <div className="">
-                            {filteredPapers.slice(0, 5).map((paper: PaperData, index: number) => {
+                            {filteredPapers.slice(0, displayedPapersCount).map((paper: PaperData, index: number) => {
                                 // Find current user's role in this paper using explicit role information
                                 const userRole = findUserRoleInPaper(paper.authors, id);
 
@@ -293,14 +294,17 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                     </div>
                                 );
                             })}
-                            {filteredPapers.length > 5 && (
+                            {filteredPapers.length > displayedPapersCount && (
                                 <div className="mb-1.5 leading-snug">
                                     <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-center">
                                         <div className="flex items-start">
                                             <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
-                                            <span className="text-[13px] md:text-[14px] text-text-secondary">
-                                                ... (+{filteredPapers.length - 5} more)
-                                            </span>
+                                            <button 
+                                                onClick={() => setDisplayedPapersCount(prev => Math.min(prev + 5, filteredPapers.length))}
+                                                className="text-[13.5px] md:text-[14.5px] text-text-secondary hover:text-interactive-primary hover:underline cursor-pointer"
+                                            >
+                                                See more ({displayedPapersCount} / {filteredPapers.length})
+                                            </button>
                                         </div>
                                         <div className="text-[12.5px] text-text-accent italic whitespace-nowrap">
                                         </div>

@@ -14,6 +14,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30}, [Fade()]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [displayedStudiesCount, setDisplayedStudiesCount] = useState(5);
+    const [displayedPapersCount, setDisplayedPapersCount] = useState(5);
 
     const onSelect = useCallback(() => {
         if (!emblaApi) return;
@@ -250,7 +251,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                             )
                         </span>
                         <div className="">
-                            {papers.slice(0, 5).map((paper: PaperData, index: number) => {
+                            {papers.slice(0, displayedPapersCount).map((paper: PaperData, index: number) => {
                                 // Find current user's role in this paper using explicit role information
                                 const userRole = findUserRoleInPaper(paper.authors, id);
 
@@ -383,14 +384,17 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                                     </div>
                                 );
                             })}
-                            {papers.length > 5 && (
+                            {papers.length > displayedPapersCount && (
                                 <div className="mb-1.5 leading-snug">
                                     <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-center">
                                         <div className="flex items-start">
                                             <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
-                                            <span className="text-[13px] md:text-[14px] text-text-secondary">
-                                                ... (+{papers.length - 5} more)
-                                            </span>
+                                            <button 
+                                                onClick={() => setDisplayedPapersCount(prev => Math.min(prev + 5, papers.length))}
+                                                className="text-[13.5px] md:text-[14.5px] text-text-secondary hover:text-interactive-primary hover:underline cursor-pointer"
+                                            >
+                                                See more ({displayedPapersCount} / {papers.length})
+                                            </button>
                                         </div>
                                         <div className="text-[12.5px] text-text-accent italic whitespace-nowrap">
                                         </div>

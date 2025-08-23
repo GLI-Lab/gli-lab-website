@@ -201,3 +201,27 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.07", end: "Current"}
     affiliation: null
+
+- id: "[2025.07] 이재진"
+  role: {type: intern, title: Undergraduate Student (3학년 1학기)}
+  name: {en: Jaejin Lee, ko: 이재진}
+  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
+  interests: [Graph ML/DL]
+  photos: ["[2025.07] 이재진1"]
+  contacts: {emails: ["y62945@naver.com"], homepage: null, github: ["jin1ee-02"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2025.07", end: "Current"}
+    affiliation: null
+
+- id: "[2025.07] 김세영"
+  role: {type: intern, title: Undergraduate Student (3학년 1학기)}
+  name: {en: Seyeong Kim, ko: 김세영}
+  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
+  interests: [Graph ML/DL]
+  photos: ["[2025.07] 김세영1"]
+  contacts: {emails: ["people7261@naver.com"], homepage: null, github: ["k-seyeong"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2025.07", end: "Current"}
+    affiliation: null
