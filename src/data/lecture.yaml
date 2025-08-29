@@ -1,10 +1,10 @@
 - semester: "2025 Fall"
   courses:
-    - title: "[미정] Data Science (데이터사이언스)"
+    - title: "[3203] Data Science (데이터사이언스)"
       university: "Konkuk University"
-    - title: "[미정] Data Science (데이터사이언스)"
+    - title: "[3204] Data Science (데이터사이언스)"
       university: "Konkuk University"
-    - title: "[미정] Graduation Project 2 (졸업프로젝트2)"
+    - title: "[3193] Graduation Project 2 (졸업프로젝트2)"
       university: "Konkuk University"
 
 - semester: "2025 Spring"
