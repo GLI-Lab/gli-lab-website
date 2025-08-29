@@ -12,19 +12,6 @@ yarn global add pm2
 ### npm을 사용한 설치
 ```bash
 npm install -g pm2
-```
-
-### Yarn vs npm 설치 차이점
-
-| 항목 | Yarn | npm |
-|------|------|-----|
-| **설치 명령어** | `yarn global add pm2` | `npm install -g pm2` |
-| **설치 위치** | `~/.yarn/` | `~/.nvm/versions/node/버전/` (NVM 사용시) |
-| **바이너리 위치** | `~/.yarn/bin/` | `~/.nvm/versions/node/버전/bin/` |
-| **PATH 자동 추가** | ❌ (수동 설정 필요) | ✅ (NVM이 자동 관리) |
-| **권한 문제** | ❌ (사용자 디렉토리) | ❌ (NVM 사용시) |
-| **속도** | 빠름 | 상대적으로 느림 |
-| **캐시 관리** | 효율적 | 기본적 |
 
 #### 설치 위치 확인 방법
 ```bash
@@ -122,39 +109,6 @@ pm2 monit
 pm2 status
 ```
 
-## 고급 사용법
-
-### 1. 클러스터 모드 (로드 밸런싱)
-
-```bash
-# CPU 코어 수만큼 인스턴스 생성
-pm2 start app.js -i max
-
-# 특정 개수의 인스턴스 생성
-pm2 start app.js -i 4
-```
-
-### 2. 환경 변수 설정
-
-```bash
-pm2 start app.js --env production
-```
-
-### 3. 메모리 제한 설정
-
-```bash
-pm2 start app.js --max-memory-restart 1G
-```
-
-### 4. 자동 재시작 설정
-
-```bash
-# 파일 변경 시 자동 재시작 (개발 환경)
-pm2 start app.js --watch
-
-# 특정 폴더 제외
-pm2 start app.js --watch --ignore-watch="node_modules"
-```
 
 ## 시스템 시작 시 자동 실행
 
@@ -270,6 +224,41 @@ pm2 save
 ```
 
 ## 문제 해결
+
+### Tailwind v4 + PostCSS 에러: "You're trying to use `tailwindcss` directly as a PostCSS plugin"
+
+Tailwind CSS 4부터는 PostCSS 플러그인이 별도 패키지로 분리되었습니다. 다음 단계로 해결하세요:
+
+```bash
+# 1) 플러그인 설치 (devDependencies)
+yarn add -D @tailwindcss/postcss
+
+# 2) PostCSS 설정 업데이트 (postcss.config.js)
+# 기존
+#   plugins: { tailwindcss: {}, autoprefixer: {} }
+# 변경
+#   plugins: { '@tailwindcss/postcss': {}, autoprefixer: {} }
+
+# 3) PM2 재시작으로 반영
+pm2 restart glilab --update-env
+```
+
+설정 예시 (`postcss.config.js`):
+
+```js
+module.exports = {
+  plugins: {
+    '@tailwindcss/postcss': {},
+    autoprefixer: {},
+  },
+};
+```
+
+재시작 후 로그에서 에러가 사라졌는지 확인하세요:
+
+```bash
+pm2 logs glilab --lines 100
+```
 
 ### PM2 명령어를 찾을 수 없는 경우
 
