@@ -54,7 +54,7 @@
 - id: "[2024.07] 백혜윤"
   role: {type: ms, title: M.S. Students (2학기)}
   name: {en: Hye-Yoon Baek, ko: 백혜윤}
-  education: {bs: "English Language & Literature, Konkuk University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
+  education: {bs: ["English Language & Literature, Konkuk University", "Smart ICT Convergence, Konkuk University"], ms: "Computer Science & Engineering, Konkuk University", phd: null}
   interests: [Graph ML/DL, Information Retrieval, LLM Knowledge Distillation]
   photos: ["[2024.07] 백혜윤1", "[2024.07] 백혜윤2"]
   contacts: {emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"], homepage: null, github: ["hyeyoon100"], linkedin: ["hye-yoon-baek1205"]}
@@ -157,7 +157,7 @@
 - id: "[2025.03] 조은영"
   role: {type: intern, title: Undergraduate Student (4학년 2학기)}
   name: {en: Eun-Yeong Jo, ko: 조은영}
-  education: {bs: "Biomedical Science & Engineering, Konkuk University", ms: null, phd: null}
+  education: {bs: ["Biomedical Science & Engineering, Konkuk University", "Computer Science & Engineering, Konkuk University"], ms: null, phd: null}
   interests: [Graph ML/DL, LLM Optimization, Multimodal News Recommendation]
   photos: ["[2025.03] 조은영1", "[2025.03] 조은영2", "[2025.03] 조은영3"]
   contacts: {emails: ["tina6022@naver.com"], homepage: null, github: null, linkedin: null}

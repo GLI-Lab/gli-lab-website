@@ -16,6 +16,7 @@ interface ProfileListItemProps extends ProfileItemProps {
 export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
     const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage, studies = [], papers = [], bs, ms, phd, interest, homepage, github, linkedin, title } = props;
     const [isExpanded, setIsExpanded] = useState(false);
+    const [copied, setCopied] = useState(false);
     
     // Ref for scrolling to top when expanded
     const profileRef = useRef<HTMLDivElement>(null);
@@ -143,10 +144,14 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                                     selectionlessCopy();
                                 }
 
-                                // 중앙 토스트 (배경 없음, 작은 고정 요소만 추가)
+                                // 버튼 옆 토스트 (고정 위치, 버튼 오른쪽에 표시)
+                                const buttonRect = (e.currentTarget as HTMLElement).getBoundingClientRect();
                                 const toast = document.createElement('div');
                                 toast.textContent = 'Link copied!';
-                                toast.className = 'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 bg-gray-600 text-white px-6 py-3 rounded-lg shadow-lg text-base font-medium z-[1000] pointer-events-none';
+                                toast.className = 'fixed bg-gray-600 text-white px-3 py-1.5 rounded-md shadow-md text-[15px] font-medium z-[1000] pointer-events-none';
+                                toast.style.left = `${buttonRect.right + 10}px`;
+                                toast.style.top = `${buttonRect.top + buttonRect.height / 2}px`;
+                                toast.style.transform = 'translateY(-50%)';
                                 document.body.appendChild(toast);
 
                                 // 1초 후 토스트 제거
@@ -155,13 +160,23 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                                         toast.parentNode.removeChild(toast);
                                     }
                                 }, 1000);
+
+                                // 아이콘을 1초 동안 체크표시로 변경
+                                setCopied(true);
+                                setTimeout(() => setCopied(false), 1000);
                             }}
-                            className="w-5 h-5 text-gray-400 hover:text-interactive-primary transition-colors duration-200 flex-shrink-0"
+                            className={`mt-0.5 w-5 h-5 transition-colors duration-200 flex-shrink-0 ${copied ? 'text-brand-primary' : 'text-gray-400 hover:text-interactive-primary'}`}
                             title="Copy profile link"
                         >
-                            <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                            </svg>
+                            {copied ? (
+                                <svg className="w-full h-full origin-center scale-125" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                                </svg>
+                            ) : (
+                                <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                                </svg>
+                            )}
                         </button>
                     </div>
                     

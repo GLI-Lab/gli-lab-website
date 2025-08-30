@@ -11,6 +11,31 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
     const [displayedStudiesCount, setDisplayedStudiesCount] = useState(5);
     const [displayedPapersCount, setDisplayedPapersCount] = useState(5);
 
+    const renderEducation = (
+        label: string,
+        edu: string[],
+        addTopMargin: boolean = false
+    ) => {
+        const items = (edu || []).filter(item => typeof item === 'string' && item.trim() !== '');
+        if (items.length === 0) return null;
+        return items.map((item, idx) => {
+            const commaIndex = item.indexOf(',');
+            const before = commaIndex >= 0 ? item.slice(0, commaIndex).trim() : item.trim();
+            const after = commaIndex >= 0 ? item.slice(commaIndex + 1).trim() : '';
+            const groupTopMargin = addTopMargin && idx === 0 ? ' mt-1' : '';
+            return (
+                <React.Fragment key={idx}>
+                    <span className={`text-text-accent font-medium${groupTopMargin}`}>{idx === 0 ? label : ''}</span>
+                    <span className={`text-[15.5px] md:text-[16.5px] leading-snug pt-0.5${groupTopMargin}`}>
+                        {before}
+                        {after && (
+                            <span className="text-text-secondary italic text-[14.5px] md:text-[15.5px]">, {after}</span>
+                        )}
+                    </span>
+                </React.Fragment>
+            );
+        });
+    };
     // 현재 프로필과 관련된 스터디를 필터링하는 함수
     const filterStudiesForProfile = (allStudies: any[], profile: any) => {
         return allStudies.filter(study => 
@@ -85,9 +110,9 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
 
                 {/* Education */}
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4 items-start`}>
-                    {bs && <><span className={`text-text-accent font-medium`}>B.S.</span><span className="text-[15.5px] md:text-[16.5px]">{bs}</span></>}
-                    {ms && <><span className={`text-text-accent font-medium`}>M.S.</span><span className="text-[15.5px] md:text-[16.5px]">{ms}</span></>}
-                    {phd && <><span className={`text-text-accent font-medium`}>Ph.D.</span><span className="text-[15.5px] md:text-[16.5px]">{phd}</span></>}
+                    {renderEducation('B.S.', bs)}
+                    {renderEducation('M.S.', ms, true)}
+                    {renderEducation('Ph.D.', phd, true)}
                 </div>
                 <Separator className="my-3"/>
 

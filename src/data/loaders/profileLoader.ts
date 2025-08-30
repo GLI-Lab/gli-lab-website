@@ -5,6 +5,16 @@ import { ProfileYAML, ProfileData } from './types';
 
 // YAML 프로필을 컴포넌트에서 사용하는 형태로 변환
 function transformProfile(yamlProfile: ProfileYAML, isAlumni: boolean = false): ProfileData {
+  const normalizeToArray = (value: string | string[] | null | undefined): string[] => {
+    if (Array.isArray(value)) {
+      return value.filter(v => typeof v === 'string' && v.trim() !== '');
+    }
+    if (typeof value === 'string') {
+      const trimmed = value.trim();
+      return trimmed ? [trimmed] : [];
+    }
+    return [];
+  };
   // GitHub URL 정규화
   const githubUrls = (yamlProfile.contacts.github || []).map(github => {
     return github.startsWith('https://') ? github : `https://github.com/${github}`;
@@ -26,9 +36,9 @@ function transformProfile(yamlProfile: ProfileYAML, isAlumni: boolean = false): 
     title: yamlProfile.role.title || "",
     name_en: yamlProfile.name.en || "",
     name_ko: yamlProfile.name.ko || "",
-    bs: yamlProfile.education.bs || "",
-    ms: yamlProfile.education.ms || "",
-    phd: yamlProfile.education.phd || "",
+    bs: normalizeToArray(yamlProfile.education.bs),
+    ms: normalizeToArray(yamlProfile.education.ms),
+    phd: normalizeToArray(yamlProfile.education.phd),
     admission: yamlProfile.status.period.admission || "",
     graduation: yamlProfile.status.period.graduation || "",
     joined_start: yamlProfile.status.joined.start || "",
