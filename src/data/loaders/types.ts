@@ -15,9 +15,9 @@ export interface ProfileYAML {
     ko: string | null;
   };
   education: {
-    bs: string | null;
-    ms: string | null;
-    phd: string | null;
+    bs: string | string[] | null;
+    ms: string | string[] | null;
+    phd: string | string[] | null;
   };
   interests: string[] | null;
   photos: string[] | null;
@@ -47,9 +47,9 @@ export interface ProfileData {
   name_en: string;
   name_ko: string;
   admission: string;
-  bs: string;
-  ms: string;
-  phd: string;
+  bs: string[];
+  ms: string[];
+  phd: string[];
   joined_start: string;
   joined_end: string;
   graduation?: string;
