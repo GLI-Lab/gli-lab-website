@@ -78,7 +78,8 @@ export default function Header() {
                 {title: "Gallery", path: "/board/gallery"},
                 {title: "Study", path: "/board/study"},
                 {title: "News", path: "/board/news"},
-                {title: "Lecture", path: "/board/lecture"}
+                {title: "Lecture", path: "/board/lecture"},
+                {title: "Resource", path: "/board/resource"}
             ]
         },
         {
