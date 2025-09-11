@@ -1,0 +1,73 @@
+# YAML에서 tab은 금지. 반드시 space 2개 사용
+# role.type  : phd, ms, researcher, intern
+# role.title : Undergraduate Student, M.S. Graduate, B.S. Graduate
+# homepage   : https://[THIS]
+# github     : https://github.com/[THIS]
+# linkedin   : https://www.linkedin.com/in/[THIS]
+
+###############################################
+# Ph.D. Graduate
+###############################################
+
+
+###############################################
+# M.S. Graduate
+###############################################
+# TEST
+# - id: "[2024.06] 서지명"
+#   role: {type: ms, title: M.S. Graduate}
+#   name: {en: Jimyeung Seo, ko: 서지명}
+#   education: {bs: "Computer Science & Engineering, Konkuk University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
+#   academic: {year: 1, semester: 1}
+#   interests: [Graph ML/DL, LLM Optimization, Multimodal News Recommendation]
+#   # photos: ["[2024.06] 서지명1.jpg"]
+#   photos: []
+#   contacts: {emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"], homepage: null, github: ["seojmm"], linkedin: ["jimyeungseo"]}
+#   status: 
+#     period: {admission: "2025.03", graduation: "2027.02"}
+#     joined: {start: "2024.06", end: "2027.02"}
+#     affiliation: "Samsung Research"
+
+###############################################
+# Researchers
+###############################################
+
+
+###############################################
+# Interns
+###############################################
+- id: "[2024.03] 김윤진"
+  role: {type: intern, title: Undergraduate Student}
+  name: {en: Yunjin Kim, ko: 김윤진}
+  education: {bs: "Biological Engineering, Konkuk University", ms: null, phd: null}
+  interests: [Graph ML/DL]
+  photos: ["[2024.03] 김윤진1"]
+  contacts: {emails: ["yj071099@gmail.com"], homepage: null, github: ["ksdjyj071099"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2024.03", end: "2025.06"}
+    affiliation: null
+
+- id: "[2024.07] 박지연"
+  role: {type: intern, title: Undergraduate Student}
+  name: {en: Ji-Yeon Park, ko: 박지연}
+  education: {bs: "Food Science and Biotechnology of Animal Resources, Konkuk University", ms: null, phd: null}
+  interests: [Graph ML/DL, Recommender Systems]
+  photos: ["[2024.07] 박지연1", "[2024.07] 박지연2"]
+  contacts: {emails: ["yeoniyoui@gmail.com"], homepage: null, github: null, linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2024.07", end: "2025.07"}
+    affiliation: null
+
+- id: "[2025.01] 금민석"
+  role: {type: intern, title: Undergraduate Student}
+  name: {en: Minseok Geum, ko: 금민석}
+  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
+  interests: [Graph ML/DL]
+  photos: ["[2025.01] 금민석1", "[2025.01] 금민석2"]
+  contacts: {emails: ["rmaalstjr1445@gmail.com"], homepage: null, github: ["minseokgeum"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2025.01", end: "2025.04"}
+    affiliation: null
