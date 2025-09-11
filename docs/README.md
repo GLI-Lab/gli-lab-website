@@ -1,13 +1,10 @@
 
-# GLI-Lab 문서
+## 
 
-이 폴더에는 GLI-Lab 프로젝트와 관련된 다양한 문서들이 포함되어 있습니다.
+```bash
+npm run prebuild
+```
 
-## 문서 목록
-
-- [PM2 사용법 가이드](./pm2-usage.md) - PM2 프로세스 매니저 사용법 및 서버 관리 가이드
-
-## 개발관련 지식
 
 ### Dependencies vs DevDependencies
 
