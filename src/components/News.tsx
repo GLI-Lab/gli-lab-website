@@ -19,8 +19,8 @@ function isNewItem(date?: string): boolean {
   return itemDate >= sixMonthsAgo;
 }
 
-// 텍스트에서 프로필 마크업과 페이퍼 마크업을 찾아서 링크로 변환하는 함수
-function renderContentWithProfileLinks(content: string, profiles: any[], alumniProfiles: any[], newsIndex: number, lineIndex: number): React.ReactNode {
+// 텍스트에서 프로필 마크업, 페이퍼 마크업, bold 태그를 찾아서 변환하는 함수
+function renderContentWithMarkup(content: string, profiles: any[], alumniProfiles: any[], newsIndex: number, lineIndex: number): React.ReactNode {
   if (!content) return content;
   
   // 프로필 ID로 프로필을 찾는 함수 (현재 멤버와 alumni 모두에서 찾기)
@@ -28,15 +28,16 @@ function renderContentWithProfileLinks(content: string, profiles: any[], alumniP
     return profiles.find(profile => profile.id === id) || alumniProfiles.find(profile => profile.id === id);
   };
 
-  // <profile=ID>이름</> 패턴과 <paper>제목</> 패턴을 찾는 정규식
+  // <profile=ID>이름</>, <paper>제목</>, <b>텍스트</b> 패턴을 찾는 정규식
   const profilePattern = /<profile=([^>]+)>([^<]+)<\/>/g;
   const paperPattern = /<paper>([^<]+)<\/>/g;
+  const boldPattern = /<b>([^<]+)<\/b>/g;
   
   const elements: React.ReactNode[] = [];
   let lastIndex = 0;
   
-  // 프로필과 페이퍼 패턴을 모두 찾아서 정렬
-  const allMatches: Array<{type: 'profile' | 'paper', match: RegExpExecArray, index: number}> = [];
+  // 모든 패턴을 찾아서 정렬
+  const allMatches: Array<{type: 'profile' | 'paper' | 'bold', match: RegExpExecArray, index: number}> = [];
   
   // 프로필 매치 찾기
   let profileMatch;
@@ -55,6 +56,16 @@ function renderContentWithProfileLinks(content: string, profiles: any[], alumniP
       type: 'paper',
       match: paperMatch,
       index: paperMatch.index
+    });
+  }
+  
+  // bold 매치 찾기
+  let boldMatch;
+  while ((boldMatch = boldPattern.exec(content)) !== null) {
+    allMatches.push({
+      type: 'bold',
+      match: boldMatch,
+      index: boldMatch.index
     });
   }
   
@@ -133,6 +144,20 @@ function renderContentWithProfileLinks(content: string, profiles: any[], alumniP
       );
       
       lastIndex = index + fullMatch.length;
+    } else if (type === 'bold') {
+      const [fullMatch, boldText] = match;
+      
+      // bold 텍스트를 <strong> 태그로 변환
+      elements.push(
+        <strong 
+          key={`${newsIndex}-${lineIndex}-bold-${index}`}
+          className="font-semibold"
+        >
+          {boldText}
+        </strong>
+      );
+      
+      lastIndex = index + fullMatch.length;
     }
   });
 
@@ -192,7 +217,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
               </div>
               <div className={`${idx < latestNews.length - 1 ? 'border-b border-gray-200 pt-0.5 pb-2.5' : ''}`}>
                 <div className="text-[0.95em] sm:text-[1em]">
-                  {renderContentWithProfileLinks(title, profiles, alumniProfiles, idx, 0)}
+                  {renderContentWithMarkup(title, profiles, alumniProfiles, idx, 0)}
                 </div>
                 {descriptionLines.length > 0 && (
                   <div className="text-[0.9em] italic text-gray-600 mt-1 space-y-1.5">
@@ -224,7 +249,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                             <div key={lineIdx} className="flex items-start gap-2 not-italic font-medium">
                               -
                               <div className="flex-1">
-                                {renderContentWithProfileLinks(content, profiles, alumniProfiles, idx, lineIdx + 1)}
+                                {renderContentWithMarkup(content, profiles, alumniProfiles, idx, lineIdx + 1)}
                               </div>
                             </div>
                           );
@@ -233,14 +258,14 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                             // bullet group 내의 일반 텍스트 (같은 indentation)
                             currentBulletGroup.push(
                               <div key={lineIdx} className="ml-4 text-[0.95em]">
-                                {renderContentWithProfileLinks(content, profiles, alumniProfiles, idx, lineIdx + 1)}
+                                {renderContentWithMarkup(content, profiles, alumniProfiles, idx, lineIdx + 1)}
                               </div>
                             );
                           } else {
                             // bullet group 밖의 일반 텍스트
                             elements.push(
                               <div key={lineIdx}>
-                                {renderContentWithProfileLinks(content, profiles, alumniProfiles, idx, lineIdx + 1)}
+                                {renderContentWithMarkup(content, profiles, alumniProfiles, idx, lineIdx + 1)}
                               </div>
                             );
                           }
