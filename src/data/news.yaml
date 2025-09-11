@@ -3,7 +3,7 @@
 
 - date: "2025-09-01"
   content: |
-    국방과학연구소 - 한화시스템 과제 착수 👏
+    Our team has been supported by <b>국방과학연구소 - 한화시스템 </b> 👏
     추천시스템 모델 설계 자문 및 사례연구
 
 - date: "2025-08-27"
@@ -14,12 +14,12 @@
 
 - date: "2025-08-05"
   content: |
-    건국대학교 그룹연구인력양성 사업 선정 👏
+    Our team has been supported by 건국대학교 through <b>그룹연구인력양성 사업</b> 👏
     실전 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구
 
 - date: "2025-08-04"
   content: |
-    One full research paper accepted at CIKM 2025 ✏️
+    One full research paper has been accepted at <b>CIKM 2025</b> ✏️
     - <paper>Relation-Faceted Graph Pooling with LLM Guidance for Dynamic Span-Aware Information Extraction</>
     Hye-Yoon Baek, Jinho Choi, Jimyeung Seo, Dongcheon Lee, Xiongnan Jin, Byungkook Oh
 
@@ -31,7 +31,7 @@
 
 - date: "2025-05-23"
   content: |
-    실감미디어 혁신융합대학사업(교원연구과제) 선정 👏
+    Our team has been supported by 실감미디어 혁신융합대학사업 through <b>교원연구과제</b> 👏
     LLM 기반 추천을 위한 그래프 기반 컨텍스트 추출 에이전트
 
 - date: "2025-05-16"
@@ -39,7 +39,7 @@
 
 - date: "2025-04-11"
   content: |
-    One full research paper accepted at AAAI 2025 ✏️
+    One full research paper has been accepted at <b>AAAI 2025</b> ✏️
     - <paper>HLMEA: Unsupervised Entity Alignment Based on Hybrid Language Models</>
     Xiongnan Jin, Zhilin Wang, Jinpeng Chen, Liu Yang, Byungkook Oh, Seung-won Hwang, Jianqiang Li
 
@@ -51,13 +51,13 @@
 
 - date: "2025-02-01"
   content: |
-    One paper accepted at Information Sciences ✏️
+    One paper has been accepted at <b>Information Sciences</b> ✏️
     - <paper>Knowledge-constrained Interest-aware Multi-behavior Recommendation with Behavior Pattern Identification</>
     Gayeon Park, Hyeongjun Yang, Kyuhwan Yeom, Myeongheon Jeon, Yunjeong Ko, Byungkook Oh, Kyong-Ho Lee
 
 - date: "2025-01-01"
   content: |
-    One paper accepted at International Journal of Web and Grid Services ✏️
+    One paper has been accepted at <b>International Journal of Web and Grid Services</b> ✏️
     - <paper>A survey on knowledge graph evolution  proliferation, dynamic embedding, and versioning</>
     Xiongnan Jin, Zhilin Wang, Manni Duan, Yan Shao, Xingyun Hong, Yongheng Wang, Byungkook Oh
 
@@ -66,7 +66,7 @@
 
 - date: "2024-12-20"
   content: |
-    One paper accepted at Knowledge-Based Systems ✏️
+    One paper has been accepted at <b>Knowledge-Based Systems</b> ✏️
     - <paper>Granular Intents Learning via Mutual Information Maximization for Knowledge-aware Recommendation</>
     Hyeongjun Yang, Yerim Lee, Gayeon Park, TaeYoung Kim, Heesun Kim, Kyong-Ho Lee, Byungkook Oh
 
@@ -84,13 +84,13 @@
 
 - date: "2024-08-25"
   content: |
-    One full research paper accepted at KDD 2024 ✏️
+    One full research paper has been accepted at <b>KDD 2024</b> ✏️
     - <paper>Embedding Two-View Knowledge Graphs with Class Inheritance and Structural Similarity</>
     Kyuhwan Yeom, Hyeongjun Yang, Gayeon Park, Myeongheon Jeon, Yunjeong Ko, Byungkook Oh, Kyong-Ho Lee
 
 - date: "2024-08-01"
   content: |
-    한국연구재단 중견연구(유형1) 사업 선정 👏
+    Our team has been supported by 한국연구재단 through <b>중견연구(유형1) 사업</b> 👏
     멀티모달 생성모델의 신뢰성 및 제어가능성 향상을 위한 그래프 구조 기반의 상호작용
 
 - date: "2024-07-01"
@@ -101,7 +101,7 @@
 
 - date: "2024-04-01"
   content: |
-    건국대학교 KU학술연구비 사업 선정 👏
+    Our team has been supported by 건국대학교 through <b>KU학술연구비 사업</b> 👏
     논리적 패턴을 반영할 수 있는 지식그래프 표현학습
 
 - date: "2024-03-15"
