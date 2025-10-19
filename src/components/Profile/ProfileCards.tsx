@@ -63,16 +63,16 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     
     // 카테고리 설정
     const categories = isAlumniPage ? [
-        {title: 'Ph.D.', type: 'phd'},
-        {title: 'M.S.', type: 'ms'},
+        {title: 'PhD Alumni', type: 'phd'},
+        {title: 'MS Alumni', type: 'ms'},
         {title: 'Researchers', type: 'researcher'},
         {title: 'Interns', type: 'intern'},
     ] : [
         {title: 'Faculty', type: 'faculty'},
-        {title: 'Ph.D. Students', type: 'phd'},
-        {title: 'M.S. Students', type: 'ms'},
-        // {title: 'Prospective Ph.D. Students', type: 'pphd'},
-        // {title: 'Prospective M.S. Students', type: 'pms'},
+        {title: 'PhD Students', type: 'phd'},
+        {title: 'MS Students', type: 'ms'},
+        // {title: 'Incoming PhD Students', type: 'iphd'},
+        {title: 'Incoming MS Students', type: 'ims'},
         {title: 'Researchers', type: 'researcher'},
         {title: 'Interns', type: 'intern'},
     ];

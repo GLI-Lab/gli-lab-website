@@ -1,5 +1,5 @@
 # YAML에서 tab은 금지. 반드시 space 2개 사용
-# role.type  : phd, ms, researcher, intern
+# role.type  : faculty, phd, ms, iphd, ims, researcher, intern
 # role.title : Pre-Ph.D. Students (X학기), Ph.D. Students (X학기), Joint M.S./Ph.D. Students (X학기), 
 #              Pre-M.S. Students (X학기), M.S. Students (X학기), Undergraduate Student (X학년 X학기)
 # homepage   : https://[THIS]
@@ -22,10 +22,10 @@
     affiliation: null
 
 ###############################################
-# Ph.D. Students
+# PhD Students
 ###############################################
 - id: "[2025.04] 구본유"
-  role: {type: phd, title: Ph.D. Students (1학기)}
+  role: {type: phd, title: Ph.D. Student (1학기)}
   name: {en: Bonyou Koo, ko: 구본유}
   education: {bs: "Computer Science & Engineering, Pukyong National University", ms: "Information Convergence Engineering, Pusan National University", phd: null}
   interests: [Graph ML/DL, Graph Anomaly Detection, Text-Attributed Graph]
@@ -37,14 +37,14 @@
     affiliation: null
     
 ###############################################
-# M.S. Students
+# MS Students
 ###############################################
 - id: "[2024.06] 서지명"
-  role: {type: ms, title: M.S. Students (2학기)}
+  role: {type: ms, title: M.S. Student (2학기)}
   name: {en: Jimyeung Seo, ko: 서지명}
   education: {bs: "Computer Science & Engineering, Konkuk University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
   academic: {year: 1, semester: 1}
-  interests: [Graph ML/DL, LLM Optimization, Multimodal News Recommendation, Causal Mining]
+  interests: [Graph ML/DL, LLM Optimization, Multimodal News Recommendation, Causal Mining, Reinforcement Learning]
   photos: ["[2024.06] 서지명1"]
   contacts: {emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"], homepage: null, github: ["seojmm"], linkedin: ["jimyeungseo"]}
   status: 
@@ -53,7 +53,7 @@
     affiliation: null
 
 - id: "[2024.07] 백혜윤"
-  role: {type: ms, title: M.S. Students (2학기)}
+  role: {type: ms, title: M.S. Student (2학기)}
   name: {en: Hye-Yoon Baek, ko: 백혜윤}
   education: {bs: ["English Language & Literature, Konkuk University", "Smart ICT Convergence, Konkuk University"], ms: "Computer Science & Engineering, Konkuk University", phd: null}
   interests: [Graph ML/DL, Information Retrieval, LLM Knowledge Distillation]
@@ -65,7 +65,7 @@
     affiliation: null
 
 - id: "[2024.11] 이동천"
-  role: {type: ms, title: M.S. Students (2학기)}
+  role: {type: ms, title: M.S. Student (2학기)}
   name: {en: Dongcheon Lee, ko: 이동천}
   education: {bs: "Mathematics, Gyeongsang National University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
   interests: [Graph ML/DL, Retrieval-Augmented LLM, KG-Based Question Answering]
@@ -77,17 +77,32 @@
     affiliation: null
 
 - id: "[2025.01] 구해윤"
-  role: {type: ms, title: M.S. Students (1학기)}
+  role: {type: ms, title: M.S. Student (1학기)}
   name: {en: Hae-Yoon Koo, ko: 구해윤}
   education: {bs: "Computer Science & Engineering, Dong-A University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
   interests: [Graph ML/DL, Sequential Recommender Systems, LLM-Based Recommender Systems]
-  photos: ["[2025.01] 구해윤1", "[2025.01] 구해윤2"]
+  photos: ["[2025.01] 구해윤1", "[2025.01] 구해윤2", "[2025.01] 구해윤3"]
   contacts: {emails: ["hykoo0601@gmail.com"], homepage: null, github: ["sunyoonk"], linkedin: ["sunyoonk"]}
   status: 
     period: {admission: "2025.09", graduation: null}
     joined: {start: "2025.01", end: "Current"}
     affiliation: null
-    
+  
+###############################################
+# Incoming MS Students
+###############################################
+- id: "[2024.12] 최진호"
+  role: {type: ims, title: Undergraduate Student (4학년 2학기)}
+  name: {en: Jinho Choi, ko: 최진호}
+  education: {bs: "Industrial Engineering, Konkuk University", ms: null, phd: null}
+  interests: [Graph ML/DL, Information Retrieval, Retrieval-Augmented LLM, KG-Based Question Answering]
+  photos: ["[2024.12] 최진호1", "[2024.12] 최진호2"]
+  contacts: {emails: ["jhc12931293@gmail.com", "jinho159@konkuk.ac.kr"], homepage: null, github: null, linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2024.12", end: "Current"}
+    affiliation: null
+
 ###############################################
 # Researchers
 ###############################################
@@ -137,22 +152,10 @@
   education: {bs: "Applied Statistics, Konkuk University", ms: null, phd: null}
   interests: [LLM-Based Recommender Systems, Graph ML/DL]
   photos: ["[2024.10] 김영진1", "[2024.10] 김영진2"]
-  contacts: {emails: ["ab960119@naver.com"], homepage: null, github: ["0jin03"], linkedin: null}
+  contacts: {emails: ["dudwls960119@gmail.com"], homepage: null, github: ["0jin03"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2024.10", end: "Current"}
-    affiliation: null
-
-- id: "[2024.12] 최진호"
-  role: {type: intern, title: Undergraduate Student (4학년 2학기)}
-  name: {en: Jinho Choi, ko: 최진호}
-  education: {bs: "Industrial Engineering, Konkuk University", ms: null, phd: null}
-  interests: [Graph ML/DL, Information Retrieval, LLM Knowledge Distillation]
-  photos: ["[2024.12] 최진호1", "[2024.12] 최진호2"]
-  contacts: {emails: ["jhc12931293@gmail.com", "jinho159@konkuk.ac.kr"], homepage: null, github: null, linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2024.12", end: "Current"}
     affiliation: null
 
 - id: "[2025.03] 조은영"
@@ -261,4 +264,16 @@
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2025.08", end: "Current"}
+    affiliation: null
+
+- id: "[2025.10] 박규민"
+  role: {type: intern, title: Undergraduate Student (2학년 2학기)}
+  name: {en: Gyumin Park, ko: 박규민}
+  education: {bs: ["Industrial Engineering, Konkuk University", "Computer Science & Engineering, Konkuk University"], ms: null, phd: null}
+  interests: [Graph ML/DL]
+  photos: ["[2025.10] 박규민1", "[2025.10] 박규민2"]
+  contacts: {emails: ["km02020995@gmail.com", "qkrrbals1212@konkuk.ac.kr"], homepage: null, github: ["KMPAR"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2025.10", end: "Current"}
     affiliation: null
