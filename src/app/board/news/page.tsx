@@ -3,7 +3,7 @@ import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
 import { NewsList } from "@/components/News";
 import { getNews } from "@/data/loaders/newsLoader";
-import { getProfiles, getAlumniProfiles } from "@/data/loaders/profileLoader";
+import { getMemberIds, getAlumniIds } from "@/data/loaders/profileLoader";
 
 const TITLE = 'News'
 
@@ -16,9 +16,10 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Page() {
+    // 뉴스와 프로필 ID 리스트 데이터 로딩
     const newsItems = await getNews();
-    const profiles = await getProfiles();
-    const alumniProfiles = await getAlumniProfiles();
+    const memberIds = await getMemberIds();
+    const alumniIds = await getAlumniIds();
 
     return (
         <>
@@ -39,8 +40,8 @@ export default async function Page() {
                         className="w-full text-left"
                         count={50}
                         newsItems={newsItems}
-                        profiles={profiles}
-                        alumniProfiles={alumniProfiles}
+                        memberIds={memberIds}
+                        alumniIds={alumniIds}
                     />
                 </div>
             </div>

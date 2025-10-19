@@ -120,4 +120,30 @@ export async function getAlumniProfiles(): Promise<ProfileData[]> {
     console.error('Error loading alumni data:', error);
     return [];
   }
+}
+
+// 현재 멤버 ID 리스트만 가져오는 함수 (성능 최적화)
+export async function getMemberIds(): Promise<string[]> {
+  try {
+    const filePath = await findProfileFile('profiles.yaml');
+    const yamlText = await fs.readFile(filePath, 'utf8');
+    const rawData = yaml.load(yamlText) as ProfileYAML[];
+    return rawData.map(profile => profile.id).filter(id => id);
+  } catch (error) {
+    console.error('Error loading member IDs:', error);
+    return [];
+  }
+}
+
+// Alumni ID 리스트만 가져오는 함수 (성능 최적화)
+export async function getAlumniIds(): Promise<string[]> {
+  try {
+    const filePath = await findProfileFile('profiles-alumni.yaml');
+    const yamlText = await fs.readFile(filePath, 'utf8');
+    const rawData = yaml.load(yamlText) as ProfileYAML[];
+    return rawData.map(profile => profile.id).filter(id => id);
+  } catch (error) {
+    console.error('Error loading alumni IDs:', error);
+    return [];
+  }
 } 

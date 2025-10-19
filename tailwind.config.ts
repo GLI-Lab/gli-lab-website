@@ -1,33 +1,39 @@
-// text-xs: 아주 작은 텍스트 크기 (0.75rem, 12px)
-// text-sm: 작은 텍스트 크기 (0.875rem, 14px)
-// text-base: 기본 텍스트 크기 (1rem, 16px)
-// text-lg: 약간 큰 텍스트 크기 (1.125rem, 18px)
-// text-xl: 큰 텍스트 크기 (1.25rem, 20px)
-// text-2xl: 더 큰 텍스트 크기 (1.5rem, 24px)
-// text-3xl: 매우 큰 텍스트 크기 (1.875rem, 30px)
-// text-4xl: 엄청 큰 텍스트 크기 (2.25rem, 36px)
-// text-5xl: 매우 큰 텍스트 크기 (3rem, 48px)
-// text-6xl: 굉장히 큰 텍스트 크기 (3.75rem, 60px)
-// text-7xl: 초대형 텍스트 크기 (4.5rem, 72px)
-// text-8xl: 거대한 텍스트 크기 (6rem, 96px)
-// text-9xl: 최대 크기의 텍스트 (8rem, 128px)
+// text-xs   (12px, 0.75rem)     
+// text-sm   (14px, 0.875rem) : (모바일) 일반 보조
+// text-base (16px, 1rem)     : (모바일) 홈/일반 기본값, (데스크탑) 일반 보조
+// text-lg   (18px, 1.125rem) : (데스크탑) 일반 기본값
+// text-xl   (20px, 1.25rem)  : (데스크탑) 홈 기본값     
+// text-2xl  (24px, 1.5rem)     
+// text-3xl  (30px, 1.875rem)     
+// text-4xl  (36px, 2.25rem)     
+// text-5xl  (48px, 3rem)     
+// text-6xl  (60px, 3.75rem)     
+// text-7xl  (72px, 4.5rem)     
+// text-8xl  (96px, 6rem)     
+// text-9xl  (128px, 8rem)     
 
-// font-thin: 폰트 두께를 100으로 설정
-// font-extralight: 폰트 두께를 200으로 설정
-// font-light: 폰트 두께를 300으로 설정
-// font-normal: 폰트 두께를 400으로 설정 (기본값)
-// font-medium: 폰트 두께를 500으로 설정
-// font-semibold: 폰트 두께를 600으로 설정
-// font-bold: 폰트 두께를 700으로 설정
-// font-extrabold: 폰트 두께를 800으로 설정
-// font-black: 폰트 두께를 900으로 설정
+// font-thin       : 100
+// font-extralight : 200
+// font-light      : 300
+// font-normal     : 400 기본값
+// font-medium     : 500
+// font-semibold   : 600 기본값 강조, 필터
+// font-bold       : 700 커버 타이틀, Home 타이틀
+// font-extrabold  : 800
+// font-black      : 900
 
-// leading-none      /* line-height: 1 */
-// leading-tight     /* line-height: 1.25 */
-// leading-snug      /* line-height: 1.375 */
-// leading-normal    /* line-height: 1.5 */
-// leading-relaxed   /* line-height: 1.625 */
-// leading-loose     /* line-height: 2 */
+// leading-none    : line-height: 1 
+// leading-tight   : line-height: 1.25 
+// leading-snug    : line-height: 1.375 
+// leading-normal  : line-height: 1.5 
+// leading-relaxed : line-height: 1.625 
+// leading-loose   : line-height: 2 
+
+// gray-800: 타이틀
+// gray-700: 본문, 필터
+// gray-600: 설명
+// gray-500: 데코레이션
+// text-red-600: 빨강 강조
 
 const config = {
     darkMode: ["class"],
@@ -39,7 +45,7 @@ const config = {
     ],
     prefix: "",
     theme: {
-        screens: {  // Mobile < 'sm' < 'md' < iPad Mini(768px) < '1.5md' < 'lg' < iPad Pro < 'xl' < Desktop < '2xl'
+        screens: {  // Mobile < 'sm' < ⭐'md' < iPad Mini(768px) < '1.5md' < ⭐'lg' < iPad Pro < ⭐'xl' < Desktop < '2xl'
             'sm'   : '640px',  // 기본값
             'md'   : '768px',  // 기본값
             '1.5md': '880px',  // 추가

@@ -3,13 +3,13 @@ import Image from "next/image";
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
 
-const PAGE_TITLE = `Research Topic`
+const TITLE = `Research Topics`
 
 export async function generateMetadata() {
     return getMetadata({
-        title: PAGE_TITLE,
+        title: TITLE,
         description: "Research topics and approaches from GLI Lab - Graph Learning and Intelligence Laboratory focusing on Graph ML/DL, LLMs, and their applications",
-        asPath: '/research/topic'
+        asPath: '/research/topics'
     });
 };
 
@@ -102,7 +102,7 @@ export default function Page() {
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
-                <SubCover title={PAGE_TITLE}/>
+                <SubCover title={TITLE} showBreadcrumb={false}/>
             </div>
 
             <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">

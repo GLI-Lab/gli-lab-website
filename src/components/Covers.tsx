@@ -260,6 +260,7 @@ export function SubCover({
   const isPattern = pattern && pattern !== 'none';
   const patternStyle = isPattern ? getPatternStyle(pattern, colorVariant) : {};
   const imageStyle = !isPattern ? { backgroundImage: `url('${backgroundImage}')` } : {};
+
   
   return (
     <div 
@@ -268,10 +269,10 @@ export function SubCover({
                  ${isPattern ? '' : '[background-size:175%] md:[background-size:cover]'}`}
       style={{ ...patternStyle, ...imageStyle }}
     >
-      <div className="bg-white bg-opacity-50 rounded-md leading-none space-y-0 mx-auto
-                      w-[200px] md:w-[300px] lg:w-[400px] py-3 md:py-4 lg:py-5">
-        <p className={`tracking-tighter font-bold
-                      ${showBreadcrumb ? 'text-[30px] md:text-[34px] lg:text-[38px] xl:text-[40px]' : 'text-[34px] md:text-[38px] lg:text-[40px] xl:text-[44px] py-1'}`}>
+      <div className={`bg-white bg-opacity-50 rounded-md leading-none space-y-0 mx-auto
+                      w-auto min-w-[200px] md:min-w-[300px] lg:min-w-[400px] inline-block px-8 md:px-10 lg:px-12 xl:px-14 py-3 md:py-4 lg:py-5`}>
+        <p className={`tracking-tight font-bold
+                      ${showBreadcrumb ? 'text-[30px] md:text-[34px] lg:text-[38px] xl:text-[40px]' : 'text-[32px] md:text-[36px] lg:text-[40px] xl:text-[44px] py-1'}`}>
           {title}
         </p>
         {showBreadcrumb && (
@@ -309,10 +310,10 @@ export function MainCover() {
         <div className="w-full bg-white bg-opacity-55 font-bold leading-none md:whitespace-nowrap
                         space-y-1 lg:space-y-2
                         p-2 md:p-3 lg:p-4">
-          <p className="tracking-tighter text-[36px] md:text-[44px] lg:text-[54px] xl:text-[60px]">
+          <p className="tracking-tight text-[36px] md:text-[44px] lg:text-[54px] xl:text-[60px]">
             Graph & Language Intelligence Lab.
           </p>
-          <p className="tracking-tighter text-[#888] text-[30px] md:text-[36px] lg:text-[42px] xl:text-[48px]">
+          <p className="tracking-tight text-[#777] text-[30px] md:text-[36px] lg:text-[42px] xl:text-[48px]">
             @ Konkuk Univ.
           </p>
         </div>

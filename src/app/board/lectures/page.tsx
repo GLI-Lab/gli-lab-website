@@ -3,7 +3,7 @@ import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
 import { LectureList, getLectureItems } from "@/components/Lecture";
 
-const TITLE = 'Lecture'
+const TITLE = 'Lectures'
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
