@@ -5,7 +5,6 @@ import React, { useState, useEffect, useCallback } from 'react';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
 import { Separator } from "@/components/ui/separator"
-import { findUserRoleInPaper } from '@/data/loaders/utils';
 import { ProfileDetailProps, type StudyData, type PaperData } from '@/data/loaders/types';
 import Link from 'next/link';
 
@@ -48,6 +47,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
         const now = new Date();
         return end > now;
     };
+
 
     const renderEducation = (
         label: string,
@@ -277,7 +277,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                 </div>
                 <Separator className="my-3"/>
 
-                {/* Activities (Publication) */}
+                {/* Activities (Publications) */}
                 {papers.length > 0 && (
                     <div className={`grid gap-x-4 gap-y-2 `}>
                         <span className={`text-text-accent font-medium`}>
@@ -287,15 +287,12 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                                 className="hover:text-interactive-hover hover:underline underline-offset-4"
                                 title=""
                             >
-                                Publication
+                                Publications
                             </Link>
                             )
                         </span>
                         <div className="">
                             {papers.slice(0, displayedPapersCount).map((paper: PaperData, index: number) => {
-                                // Find current user's role in this paper using explicit role information
-                                const userRole = findUserRoleInPaper(paper.authors, id);
-
                                 return (
                                     <div key={paper.title} className="mb-4 leading-snug">
                                         <div className="grid grid-cols-[auto,1fr] gap-x-4 items-start">
@@ -311,113 +308,46 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                                                             {paper.title}
                                                         </Link>
                                                         {(() => {
-                                                            // year만 있는 경우
-                                                            if (paper.year && !paper.venue) {
-                                                                return (
-                                                                    <span className="text-[15px] md:text-[16px] text-text-secondary font-normal">
-                                                                        , {paper.year}
-                                                                        {paper.status && (
-                                                                            <span>
-                                                                                , <span className={`inline-block text-[13px] px-2 py-1/2 rounded-full ${
-                                                                                    paper.status === 'Accepted' ? 'bg-green-100 text-green-800' :
-                                                                                    paper.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                                                                                    paper.status === 'Under Review' ? 'bg-yellow-100 text-yellow-800' :
-                                                                                    'bg-brand-primary/10 text-brand-primary'
-                                                                                }`}>
-                                                                                    {paper.status}
-                                                                                </span>
+                                                            const isAccepted = paper.status === 'Accepted';
+                                                            const showVenueYear = isAccepted && paper.venue && paper.year;
+                                                            const venueName = paper.venue?.acronym || paper.venue?.name;
+                                                            
+                                                            return (
+                                                                <span className="text-[15px] md:text-[16px] text-text-secondary font-normal">
+                                                                    {showVenueYear && `, ${venueName}, ${paper.year}`}
+                                                                    {paper.status && (
+                                                                        <span>
+                                                                            , <span className={`inline-block text-[13px] px-2 py-1/2 rounded-full ${
+                                                                                paper.status === 'Accepted' ? 'bg-green-100 text-green-800' :
+                                                                                paper.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                                                                                paper.status === 'Under Review' ? 'bg-yellow-100 text-yellow-800' :
+                                                                                'bg-brand-primary/10 text-brand-primary'
+                                                                            }`}>
+                                                                                {paper.status}
                                                                             </span>
-                                                                        )}
-                                                                    </span>
-                                                                );
-                                                            }
-                                                            // year와 venue가 모두 있는 경우
-                                                            else if (paper.year && paper.venue) {
-                                                                return (
-                                                                    <span className="text-[15px] md:text-[16px] text-text-secondary font-normal">
-                                                                        , {paper.venue}, {paper.year}
-                                                                        {paper.status && (
-                                                                            <span>
-                                                                                , <span className={`inline-block text-[13px] px-2 py-1/2 rounded-full ${
-                                                                                    paper.status === 'Accepted' ? 'bg-green-100 text-green-800' :
-                                                                                    paper.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                                                                                    paper.status === 'Under Review' ? 'bg-yellow-100 text-yellow-800' :
-                                                                                    'bg-brand-primary/10 text-brand-primary'
-                                                                                }`}>
-                                                                                    {paper.status}
-                                                                                </span>
-                                                                            </span>
-                                                                        )}
-                                                                    </span>
-                                                                );
-                                                            }
-                                                            // year와 venue가 모두 없는 경우
-                                                            else if (paper.status) {
-                                                                return (
-                                                                    <span className="text-[15px] md:text-[16px] text-text-secondary font-normal">
-                                                                        , <span className={`inline-block text-[13px] px-2 py-1/2 rounded-full ${
-                                                                            paper.status === 'Accepted' ? 'bg-green-100 text-green-800' :
-                                                                            paper.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                                                                            paper.status === 'Under Review' ? 'bg-yellow-100 text-yellow-800' :
-                                                                            'bg-brand-primary/10 text-brand-primary'
-                                                                        }`}>
-                                                                            {paper.status}
                                                                         </span>
-                                                                    </span>
-                                                                );
-                                                            }
-                                                            return null;
+                                                                    )}
+                                                                </span>
+                                                            );
                                                         })()}
                                                     </div>
                                                     <div className="text-[13px] md:text-[14px] text-text-secondary">
-                                                        {(() => {
-                                                            // 제1저자들을 그룹화
-                                                            const firstAuthors = paper.authors?.filter(author => author.role === '1저자') || [];
-                                                            const otherAuthors = paper.authors?.filter(author => author.role !== '1저자') || [];
+                                                        {paper.authors?.map((author, idx) => {
+                                                            const isFirstAuthor = author.position === 'first';
+                                                            const isCorresponding = author.isCorresponding;
+                                                            const hasMultipleFirstAuthors = paper.authors?.filter(a => a.position === 'first').length > 1;
                                                             
                                                             return (
-                                                                <>
-                                                                    {/* 제1저자들 */}
-                                                                    {firstAuthors.length > 0 && (
-                                                                        <>
-                                                                            {firstAuthors.length === 1 ? (
-                                                                                <span className={firstAuthors[0].profileId === id ? 'font-semibold text-black italic' : 'italic'}>
-                                                                                    {firstAuthors[0].displayName.replace(/\([^)]*\)/g, '').trim()}
-                                                                                </span>
-                                                                            ) : (
-                                                                                <span>
-                                                                                    {'{'}
-                                                                                    {firstAuthors.map((author, idx) => (
-                                                                                        <span key={idx}>
-                                                                                            <span className={author.profileId === id ? 'font-semibold text-black italic' : 'italic'}>
-                                                                                                {author.displayName.replace(/\([^)]*\)/g, '').trim()}
-                                                                                            </span>
-                                                                                            {idx < firstAuthors.length - 1 ? ', ' : ''}
-                                                                                        </span>
-                                                                                    ))}
-                                                                                    {'}'}
-                                                                                </span>
-                                                                            )}
-                                                                        </>
-                                                                    )}
-                                                                    
-                                                                    {/* 다른 저자들 */}
-                                                                    {otherAuthors.length > 0 && (
-                                                                        <>
-                                                                            {firstAuthors.length > 0 && ', '}
-                                                                            {otherAuthors.map((author, idx) => (
-                                                                                <span key={idx}>
-                                                                                    <span className={author.profileId === id ? 'font-semibold text-black italic' : 'italic'}>
-                                                                                        {author.displayName.replace(/\([^)]*\)/g, '').trim()}
-                                                                                    </span>
-                                                                                    {idx < otherAuthors.length - 1 ? ', ' : ''}
-                                                                                </span>
-                                                                            ))}
-                                                                        </>
-                                                                    )}
-                                                                </>
+                                                                <span key={idx}>
+                                                                    <span className={author.ID === id ? 'font-semibold text-black italic' : 'italic'}>
+                                                                        {author.name.replace(/\([^)]*\)/g, '').trim()}
+                                                                        {isCorresponding && '*'}
+                                                                        {isFirstAuthor && hasMultipleFirstAuthors && <sup> ‡</sup>}
+                                                                    </span>
+                                                                    {idx < paper.authors.length - 1 ? ', ' : ''}
+                                                                </span>
                                                             );
-                                                        })()}
+                                                        })}
                                                     </div>
                                                 </div>
                                             </div>

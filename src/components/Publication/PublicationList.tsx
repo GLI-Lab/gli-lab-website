@@ -1,0 +1,332 @@
+"use client";
+
+import { useState, useMemo } from "react";
+import Link from "next/link";
+import SectionHeader from "@/components/ui/SectionHeader";
+import { PaperData } from '@/data/loaders/types';
+
+
+interface PublicationListProps {
+    papers: PaperData[];
+    memberIds?: string[];
+    alumniIds?: string[];
+}
+
+export default function PublicationList({ papers, memberIds = [], alumniIds = [] }: PublicationListProps) {
+    const [showInProgress, setShowInProgress] = useState(false);
+    const [showUnderReview, setShowUnderReview] = useState(true);
+    const [filterType, setFilterType] = useState<'all' | 'journal' | 'conference'>('all');
+    const [filterScope, setFilterScope] = useState<'all' | 'international' | 'domestic'>('international');
+
+    // Filter publications based on current filters
+    const filteredPublications = useMemo(() => {
+        return papers.filter(publication => {
+            const typeMatch = filterType === 'all' || publication.filter.type === filterType;
+            const scopeMatch = filterScope === 'all' || publication.filter.scope === filterScope;
+            return typeMatch && scopeMatch;
+        });
+    }, [papers, filterType, filterScope]);
+
+    // Group publications by year (only Accepted papers)
+    const publicationsByYear = filteredPublications
+        .filter(pub => pub.status === 'Accepted')
+        .reduce((acc, publication) => {
+            const year = publication.year || 'Unknown';
+            if (!acc[year]) {
+                acc[year] = [];
+            }
+            acc[year].push(publication);
+            return acc;
+        }, {} as Record<string, PaperData[]>);
+
+    // Get years in reverse order (newest first)
+    const years = Object.keys(publicationsByYear).reverse();
+
+    // Render venue with acronym in semibold
+    const renderVenue = (venue: { name: string; acronym: string } | null) => {
+        if (!venue) return null;
+        if (!venue.name) return null;
+        if (!venue.acronym) return venue.name;
+        return (
+            <>
+                {/* {venue.name} (<span className="font-semibold">{venue.acronym}</span>) */}
+                {venue.name} (<span className="font-semibold">{venue.acronym}</span>)
+            </>
+        );
+    };
+
+    // ID 리스트를 사용한 빠른 검증 함수들
+    const isValidProfileId = (id: string) => memberIds.includes(id) || alumniIds.includes(id);
+    const isAlumniProfile = (id: string) => alumniIds.includes(id);
+
+    // Render author with appropriate symbols (optimized with useMemo per publication)
+    const renderAuthors = (publication: PaperData) => {
+        const firstAuthors = publication.authors.filter(a => a.position === 'first');
+        const hasMultipleFirstAuthors = firstAuthors.length > 1;
+        
+        return publication.authors.map((author, i) => {
+            const isFirstAuthor = author.position === 'first';
+            const hasId = !!author.ID;
+            const hasValidId = hasId && author.ID && isValidProfileId(author.ID);
+            
+            const authorName = (
+                <span className={hasValidId ? 'decoration-gray-500 hover:decoration-brand-primary underline underline-offset-[3px]' : ''}>
+                    {author.name}
+                </span>
+            );
+            
+            return (
+                <span key={i}>
+                    {hasValidId ? (
+                        <Link 
+                            href={`/people/${author.ID && isAlumniProfile(author.ID) ? 'alumni' : 'members'}/?id=${encodeURIComponent(author.ID!)}`}
+                            className="hover:text-brand-primary transition-colors"
+                        >
+                            {authorName}
+                        </Link>
+                    ) : hasId ? (
+                        <span 
+                            className="text-red-500"
+                            title={`Profile not found: ${author.ID}`}
+                        >
+                            {authorName}
+                        </span>
+                    ) : (
+                        authorName
+                    )}
+                    {author.isCorresponding && '*'}
+                    {isFirstAuthor && hasMultipleFirstAuthors && <sup className="pl-[1px]">‡</sup>}
+                    {i < publication.authors.length - 1 && ', '}
+                </span>
+            );
+        });
+    };
+
+
+    return (
+        <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-4 md:py-6">
+            <div className="mb-8 md:mb-12 space-y-3 text-sm md:text-base font-medium">
+                {/* Controls */}
+                <div className="bg-white border border-gray-200 rounded-lg px-4 py-2 md:px-6 md:py-4 shadow-sm flex items-center justify-between gap-x-6 gap-y-2 md:gap-y-3 flex-wrap">
+                    {/* Filter Buttons  */}
+                    <div className="flex gap-x-4 md:gap-x-8 gap-y-2 flex-wrap">
+                        {/* Type Filter */}
+                        <div className="flex items-center gap-1 pl-0">
+                            <span className="text-gray-700 min-w-[50px] md:min-w-[0px] md:pr-2">Type:</span>
+                            <div className="flex bg-gray-100 rounded-lg p-1">
+                                <button
+                                    onClick={() => setFilterType('all')}
+                                    className={`px-3 py-1 md:py-1.5 font-medium rounded-md transition-all duration-200 ${
+                                        filterType === 'all'
+                                            ? 'bg-brand-primary text-white shadow-sm'
+                                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                                    }`}
+                                >
+                                    All
+                                </button>
+                                <button
+                                    onClick={() => setFilterType('journal')}
+                                    className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                                        filterType === 'journal'
+                                            ? 'bg-brand-primary text-white shadow-sm'
+                                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                                    }`}
+                                >
+                                    Journal
+                                </button>
+                                <button
+                                    onClick={() => setFilterType('conference')}
+                                    className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                                        filterType === 'conference'
+                                            ? 'bg-brand-primary text-white shadow-sm'
+                                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                                    }`}
+                                >
+                                    Conference
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* Scope Filter */}
+                        <div className="flex items-center gap-1">
+                            <span className="font-medium text-gray-700 min-w-[50px] md:min-w-[0px] md:pr-2">Scope:</span>
+                            <div className="flex bg-gray-100 rounded-lg p-1">
+                                <button
+                                    onClick={() => setFilterScope('all')}
+                                    className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                                        filterScope === 'all'
+                                            ? 'bg-brand-primary text-white shadow-sm'
+                                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                                    }`}
+                                >
+                                    All
+                                </button>
+                                <button
+                                    onClick={() => setFilterScope('international')}
+                                    className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                                        filterScope === 'international'
+                                            ? 'bg-brand-primary text-white shadow-sm'
+                                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                                    }`}
+                                >
+                                    International
+                                </button>
+                                <button
+                                    onClick={() => setFilterScope('domestic')}
+                                    className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                                        filterScope === 'domestic'
+                                            ? 'bg-brand-primary text-white shadow-sm'
+                                            : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                                    }`}
+                                >
+                                    Domestic
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* Ongoing Work Toggles */}
+                    <div className="flex gap-x-4 md:gap-x-8 gap-y-2 flex-wrap flex-shrink-0 pr-0">
+                        {/* In Progress Toggle */}
+                        <div className="flex items-center gap-3">
+                            <span className="text-gray-700">In Progress</span>
+                            <button
+                                onClick={() => setShowInProgress(!showInProgress)}
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out ${
+                                    showInProgress ? 'bg-brand-primary' : 'bg-gray-200'
+                                }`}
+                                role="switch"
+                                aria-checked={showInProgress}
+                            >
+                                <span
+                                    className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-lg transition-transform duration-200 ease-in-out ${
+                                        showInProgress ? 'translate-x-6' : 'translate-x-1'
+                                    }`}
+                                />
+                            </button>
+                        </div>
+
+                        {/* Under Review Toggle */}
+                        <div className="flex items-center gap-3">
+                            <span className="text-gray-700">Under Review</span>
+                            <button
+                                onClick={() => setShowUnderReview(!showUnderReview)}
+                                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out ${
+                                    showUnderReview ? 'bg-brand-primary' : 'bg-gray-200'
+                                }`}
+                                role="switch"
+                                aria-checked={showUnderReview}
+                            >
+                                <span
+                                    className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-lg transition-transform duration-200 ease-in-out ${
+                                        showUnderReview ? 'translate-x-6' : 'translate-x-1'
+                                    }`}
+                                />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Legend */}
+                <div className="flex justify-end items-center gap-4 md:gap-6 gap-y-1 mr-2 md:mr-4 text-gray-600 flex-wrap">
+                    <span>‡ Equal Contribution</span>
+                    <span>* Corresponding Author</span>
+                    <span className="order-last">
+                        <span className="decoration-gray-500 underline underline-offset-[3px]">Name</span>
+                        : GLI Lab (
+                        <span>Click for detailed profile</span>
+                        )
+                    </span>
+                </div>
+            </div>
+
+            {/* In Progress (🛠) */}
+            {showInProgress && (
+                <div className="text-base md:text-lg mb-8 md:mb-12">
+                    <SectionHeader title="In Progress" className="" underline={true} size="small"/>
+                    <ul className="list-disc space-y-6 md:space-y-8 pl-4 md:pl-6">
+                        {papers
+                            .filter(pub => pub.status === 'In Progress')
+                            .map((publication, index) => (
+                                <li key={index} className="leading-normal">
+                                    <div className="text-gray-700 mb-1">
+                                        <span className="font-normal">(🛠)</span> <span className="font-semibold">{publication.title}</span>
+                                    </div>
+                                    <div className="text-gray-600 mb-1">
+                                        {renderAuthors(publication)}
+                                    </div>
+                                </li>
+                            ))}
+                    </ul>
+                </div>
+            )}
+
+            {/* Under Review */}
+            {showUnderReview && (
+                <div className="text-base md:text-lg mb-8 md:mb-12">
+                    <SectionHeader title="Under Review" className="" underline={true} size="small"/>
+                    <ul className="list-disc space-y-6 md:space-y-8 pl-4 md:pl-6">
+                        {papers
+                            .filter(pub => pub.status === 'Under Review')
+                            .map((publication, index) => (
+                                <li key={index} className="leading-normal">
+                                    <div className="text-gray-700 font-semibold mb-1">
+                                        {publication.title}
+                                    </div>
+                                    <div className="text-gray-600 mb-1">
+                                        {renderAuthors(publication)}
+                                    </div>
+                                </li>
+                            ))}
+                    </ul>
+                </div>
+            )}
+
+            {/* Publications by Year */}
+            {years.map(year => (
+                <div key={year} className="text-base md:text-lg mb-8 md:mb-12">
+                    <SectionHeader title={year} className="" underline={true} size="small"/>
+                    <ul className="list-disc space-y-6 md:space-y-8 pl-4 md:pl-6">
+                        {publicationsByYear[year].map((publication, index) => (
+                            <li key={index} className="leading-normal">
+                                <div className="text-gray-700 font-semibold mb-1">
+                                    {publication.title}
+                                </div>
+                                <div className="text-gray-600 mb-1">
+                                    {renderAuthors(publication)}
+                                </div>
+                                <div className="italic leading-snug text-gray-600 mb-1">
+                                    <>{renderVenue(publication.venue)}, {publication.year}{publication.notes?.normal ? ` — ${publication.notes.normal}` : ''}</>
+                                </div>
+                                {publication.links && Object.entries(publication.links).some(([_, url]) => url) && (
+                                    <div className="flex items-center gap-2 mt-2">
+                                        {Object.entries(publication.links)
+                                            .filter((entry): entry is [string, string] => {
+                                                const [_, url] = entry;
+                                                return typeof url === 'string' && url.length > 0;
+                                            })
+                                            .map(([key, url]) => (
+                                                <a 
+                                                    key={key}
+                                                    href={url}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="px-3 py-0.25 text-xs md:text-sm bg-white border border-gray-700 hover:bg-gray-50 transition-colors"
+                                                >
+                                                    {key}
+                                                </a>
+                                            ))
+                                        }
+                                        {publication.notes?.important && (
+                                            <span className="text-sm md:text-base font-semibold italic text-red-600">{publication.notes.important}</span>
+                                        )}
+                                    </div>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            ))}
+        </div>
+    );
+}

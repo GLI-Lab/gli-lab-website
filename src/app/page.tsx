@@ -5,13 +5,13 @@ import { MainCover } from "@/components/Covers";
 import { FaCheck } from "react-icons/fa";
 import { NewsList } from "@/components/News";
 import { getNews } from "@/data/loaders/newsLoader";
-import { getProfiles, getAlumniProfiles } from "@/data/loaders/profileLoader";
+import { getMemberIds, getAlumniIds } from "@/data/loaders/profileLoader";
 
 export default async function Page() {
-    // 뉴스와 프로필 데이터 로딩
+    // 뉴스와 프로필 ID 리스트 데이터 로딩
     const newsItems = await getNews();
-    const profiles = await getProfiles();
-    const alumniProfiles = await getAlumniProfiles();
+    const memberIds = await getMemberIds();
+    const alumniIds = await getAlumniIds();
 
     return (
         <div className="">
@@ -165,8 +165,8 @@ export default async function Page() {
                         className="w-full text-home text-left"
                         count={30}
                         newsItems={newsItems}
-                        profiles={profiles}
-                        alumniProfiles={alumniProfiles}
+                        memberIds={memberIds}
+                        alumniIds={alumniIds}
                     />
                     <Link href='/board/news'
                         className="px-6 py-2 mt-12 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">

@@ -2,7 +2,7 @@ import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
 
-const TITLE = 'Resource'
+const TITLE = 'Resources'
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({

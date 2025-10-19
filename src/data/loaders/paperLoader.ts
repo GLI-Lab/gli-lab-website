@@ -2,31 +2,25 @@ import yaml from 'js-yaml';
 import path from 'path';
 import fs from 'fs/promises';
 import { PaperYAML, PaperData, AuthorData } from './types';
-import { parseAuthorString } from './utils';
 
 // Raw paper data를 구조화된 PaperData로 변환
 function transformPaperData(rawPaper: PaperYAML): PaperData {
-  const authors: AuthorData[] = [];
-  
-  rawPaper.authors.forEach((authorGroup: any) => {
-    Object.entries(authorGroup).forEach(([role, authorString]) => {
-      const { profileId, displayName } = parseAuthorString(authorString as string);
-      
-      authors.push({
-        role,
-        profileId,
-        displayName
-      });
-    });
-  });
+  const authors: AuthorData[] = rawPaper.authors.map(author => ({
+    ID: author.ID,
+    name: author.name,
+    position: author.position,
+    isCorresponding: author.isCorresponding
+  }));
 
   return {
     title: rawPaper.title,
+    filter: rawPaper.filter,
     status: rawPaper.status,
-    link: rawPaper.link,
-    authors,
     year: rawPaper.year,
-    venue: rawPaper.venue
+    venue: rawPaper.venue,
+    links: rawPaper.links,
+    notes: rawPaper.notes,
+    authors
   };
 }
 

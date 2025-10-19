@@ -1,13 +1,13 @@
 import React from 'react';
 import Link from 'next/link';
-import { NewsData, ProfileData } from '@/data/loaders/types';
+import { NewsData } from '@/data/loaders/types';
 
 export interface NewsListProps {
   className?: string
   count?: number | null
-  newsItems?: NewsData[]  // 외부에서 데이터를 전달받을 수 있도록 추가
-  profiles?: ProfileData[]  // 현재 멤버 프로필 데이터
-  alumniProfiles?: ProfileData[]  // 졸업생 프로필 데이터
+  newsItems?: NewsData[]
+  memberIds?: string[]
+  alumniIds?: string[]
 }
 
 // check if an item is new (within 3 months)
@@ -20,13 +20,11 @@ function isNewItem(date?: string): boolean {
 }
 
 // 텍스트에서 프로필 마크업, 페이퍼 마크업, bold 태그를 찾아서 변환하는 함수
-function renderContentWithMarkup(content: string, profiles: any[], alumniProfiles: any[], newsIndex: number, lineIndex: number): React.ReactNode {
+function renderContentWithMarkup(content: string, memberIds: string[], alumniIds: string[], newsIndex: number, lineIndex: number): React.ReactNode {
   if (!content) return content;
   
-  // 프로필 ID로 프로필을 찾는 함수 (현재 멤버와 alumni 모두에서 찾기)
-  const findProfileById = (id: string) => {
-    return profiles.find(profile => profile.id === id) || alumniProfiles.find(profile => profile.id === id);
-  };
+  const isValidProfileId = (id: string) => memberIds.includes(id) || alumniIds.includes(id);
+  const isAlumniProfile = (id: string) => alumniIds.includes(id);
 
   // <profile=ID>이름</>, <paper>제목</>, <b>텍스트</b> 패턴을 찾는 정규식
   const profilePattern = /<profile=([^>]+)>([^<]+)<\/>/g;
@@ -91,21 +89,15 @@ function renderContentWithMarkup(content: string, profiles: any[], alumniProfile
     if (type === 'profile') {
       const [fullMatch, profileId, displayName] = match;
       
-      // 프로필 찾기
-      const profile = findProfileById(profileId);
-      
-      if (profile) {
-        // alumni 프로필인지 확인해서 적절한 경로 설정
-        const isAlumniProfile = alumniProfiles.some(p => p.id === profileId);
-        const basePath = isAlumniProfile ? '/people/alumni' : '/people/members';
+      if (isValidProfileId(profileId)) {
+        const basePath = isAlumniProfile(profileId) ? '/people/alumni' : '/people/members';
         
-        // 프로필이 있으면 링크로 변환
         elements.push(
           <Link 
             key={`${newsIndex}-${lineIndex}-profile-${profileId}`}
             href={`${basePath}?id=${profileId.replace(/\s/g, '%20')}`}
             className="group underline-offset-4 hover:underline hover:decoration-1"
-            title={`View ${profile.name_en} (${profile.name_ko})`}
+            title={`View ${displayName}`}
           >
             {displayName}
             <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -181,7 +173,7 @@ function renderContentWithMarkup(content: string, profiles: any[], alumniProfile
   return <>{elements}</>;
 }
 
-export function NewsList({ className = '', count = null, newsItems = [], profiles = [], alumniProfiles = [] }: NewsListProps) {
+export function NewsList({ className = '', count = null, newsItems = [], memberIds = [], alumniIds = [] }: NewsListProps) {
   // newsItems가 전달되면 사용, 없으면 빈 배열 사용
   const newsData = newsItems;
   const latestNews = count ? newsData.slice(0, count) : newsData;
@@ -217,7 +209,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
               </div>
               <div className={`${idx < latestNews.length - 1 ? 'border-b border-gray-200 pt-0.5 pb-2.5' : ''}`}>
                 <div className="text-[0.95em] sm:text-[1em]">
-                  {renderContentWithMarkup(title, profiles, alumniProfiles, idx, 0)}
+                  {renderContentWithMarkup(title, memberIds, alumniIds, idx, 0)}
                 </div>
                 {descriptionLines.length > 0 && (
                   <div className="text-[0.9em] italic text-gray-600 mt-1 space-y-1.5">
@@ -249,7 +241,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                             <div key={lineIdx} className="flex items-start gap-2 not-italic font-medium">
                               -
                               <div className="flex-1">
-                                {renderContentWithMarkup(content, profiles, alumniProfiles, idx, lineIdx + 1)}
+                                {renderContentWithMarkup(content, memberIds, alumniIds, idx, lineIdx + 1)}
                               </div>
                             </div>
                           );
@@ -258,14 +250,14 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                             // bullet group 내의 일반 텍스트 (같은 indentation)
                             currentBulletGroup.push(
                               <div key={lineIdx} className="ml-4 text-[0.95em]">
-                                {renderContentWithMarkup(content, profiles, alumniProfiles, idx, lineIdx + 1)}
+                                {renderContentWithMarkup(content, memberIds, alumniIds, idx, lineIdx + 1)}
                               </div>
                             );
                           } else {
                             // bullet group 밖의 일반 텍스트
                             elements.push(
                               <div key={lineIdx}>
-                                {renderContentWithMarkup(content, profiles, alumniProfiles, idx, lineIdx + 1)}
+                                {renderContentWithMarkup(content, memberIds, alumniIds, idx, lineIdx + 1)}
                               </div>
                             );
                           }

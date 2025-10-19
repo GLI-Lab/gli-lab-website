@@ -4,7 +4,7 @@ import {SubCover} from "@/components/Covers";
 import React from "react";
 import {FaCheck} from "react-icons/fa";
 
-const PAGE_TITLE = `Project`
+const PAGE_TITLE = `Projects`
 
 // 프로젝트 타입 정의
 interface Project {
@@ -60,7 +60,7 @@ export default function Page() {
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
-                <SubCover title={PAGE_TITLE}/>
+                <SubCover title={PAGE_TITLE} showBreadcrumb={false}/>
             </div>
 
             <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">

@@ -81,26 +81,40 @@ export interface ProfileDetailProps extends ProfileData {
 // Raw paper data interface (as it comes from YAML)
 export interface PaperYAML {
   title: string;
+  filter: { type: string; scope: string };
   status: string;
-  link: string | null;
-  authors: { [role: string]: string }[];
-  year?: string;
-  venue?: string;
+  year: number;
+  venue: { name: string; acronym: string };
+  links?: {
+    [key: string]: string | null | undefined;
+  };
+  notes: {normal: string; important: string;};
+  authors: {
+    ID?: string;
+    name: string;
+    position: 'first' | 'co';
+    isCorresponding?: boolean;
+  }[];
 }
 
 export interface AuthorData {
-  role: string;           // "1저자", "공동저자", "교신저자" etc.
-  profileId: string | null;
-  displayName: string;
+  ID?: string;
+  name: string;
+  position: 'first' | 'co';
+  isCorresponding?: boolean;
 }
 
 export interface PaperData {
-  title: string
-  status: string
-  link: string | null
-  authors: AuthorData[]
-  year?: string
-  venue?: string
+  title: string;
+  filter: { type: string; scope: string };
+  status: string;
+  year: number;
+  venue: { name: string; acronym: string };
+  links?: {
+    [key: string]: string | null | undefined;
+  };
+  notes: { normal: string; important: string };
+  authors: AuthorData[];
 }
 
 // =====================================================

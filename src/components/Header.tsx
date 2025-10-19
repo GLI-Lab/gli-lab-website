@@ -9,13 +9,11 @@ import { IoChevronDown } from "react-icons/io5";
 interface SubMenu {
     title: string;
     path: string;
-    isExternal?: boolean;
 }
 
 interface Menu {
     title: string;
     path: string;
-    isExternal?: boolean;
     subMenus?: SubMenu[];
 }
 
@@ -23,6 +21,15 @@ export default function Header() {
     const [menu, setMenu] = useState (false)
     const [activeMenu, setActiveMenu] = useState<number | null>(null);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+    // Detect touch device
+    useEffect(() => {
+        const checkTouchDevice = () => {
+            setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
+        };
+        checkTouchDevice();
+    }, []);
 
     // To resize header
     useEffect(() => {
@@ -39,6 +46,28 @@ export default function Header() {
         };
     }, []);
 
+    // Close submenu when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (event: MouseEvent) => {
+            const target = event.target as HTMLElement;
+            if (!target.closest('li.relative')) {
+                setActiveMenu(null);
+            }
+        };
+
+        if (activeMenu !== null) {
+            document.addEventListener('click', handleClickOutside);
+            return () => {
+                document.removeEventListener('click', handleClickOutside);
+            };
+        }
+    }, [activeMenu]);
+
+    // Helper function to check if URL is external
+    const isExternalUrl = (url: string) => {
+        return url.startsWith('http://') || url.startsWith('https://');
+    };
+
     // Menu list (w/ submenu)
     const menus: Menu[] = [
         {
@@ -49,25 +78,24 @@ export default function Header() {
             title: "People",
             path: "/people/members",
             subMenus: [
-                {title: "Professor", path: "https://bkoh509.github.io", isExternal: true},
+                {title: "Professor", path: "https://bkoh509.github.io"},
                 {title: "Members", path: "/people/members"},
                 {title: "Alumni", path: "/people/alumni"}
             ]
         },
         {
             title: "Research",
-            path: "/research/topic",
+            path: "/research/topics",
             subMenus: [
-                {title: "Research Topic", path: "/research/topic"},
-                {title: "Project", path: "/research/project"}
+                {title: "Research Topics", path: "/research/topics"},
+                {title: "Projects", path: "/research/projects"}
             ]
         },
         {
-            title: "Publication",
-            path: "https://bkoh509.github.io",
-            isExternal: true,
+            title: "Publications",
+            path: "/publications/papers",
             subMenus: [
-                {title: "Papers", path: "https://bkoh509.github.io"},
+                {title: "Papers", path: "/publications/papers"},
                 {title: "Patents", path: "https://bkoh509.github.io"},
             ]
         },
@@ -78,8 +106,8 @@ export default function Header() {
                 {title: "Gallery", path: "/board/gallery"},
                 {title: "Study", path: "/board/study"},
                 {title: "News", path: "/board/news"},
-                {title: "Lecture", path: "/board/lecture"},
-                {title: "Resource", path: "/board/resource"}
+                {title: "Lectures", path: "/board/lectures"},
+                {title: "Resources", path: "/board/resources"}
             ]
         },
         {
@@ -99,7 +127,7 @@ export default function Header() {
                     {/* ##################################################### */}
                     <div className={`flex items-center justify-between ${isScrolled ? "py-1" : "py-2"}`}>
                         <Link href="/" className="items-center flex min-w-[250px]">
-                            <div className={`transition-all duration-200 ${isScrolled ? "h-[50px] w-[50px]" : "h-[70px] w-[70px]"}`}>
+                            <div className={`transition-all duration-200 ${isScrolled ? "h-[50px] w-[50px]" : "h-[60px] w-[60px] lg:h-[70px] lg:w-[70px]"}`}>
                                 <Image src={`${isScrolled ? "/images/logo/GLI_logo_black.png" : "/images/logo/GLI_logo_green.png"}`} alt="logo" width="96" height="96"/>
                             </div>
                             <div className={`-space-y-2 ml-3 tracking-tighter ${isScrolled ? "text-[20px]" : "text-[21px] lg:text-[23.5px]"}`}>
@@ -140,69 +168,58 @@ export default function Header() {
                         <ul className="justify-end items-center md:flex md:space-x-4 1.5md:space-x-8 lg:space-x-10 xl:space-x-12">
                             {menus.map((item, idx) => (
                                 <li key={idx} className="relative "           // 서브메뉴 리스트 선택할 수 있게
-                                    onMouseEnter={() => setActiveMenu(idx)}   // 호버 시 서브메뉴 활성화
-                                    onMouseLeave={() => setActiveMenu(null)}  // 호버 해제 시 서브메뉴 비활성화
+                                    onMouseEnter={() => !isTouchDevice && setActiveMenu(idx)}   // 호버 시 서브메뉴 활성화 (터치 디바이스 제외)
+                                    onMouseLeave={() => !isTouchDevice && setActiveMenu(null)}  // 호버 해제 시 서브메뉴 비활성화 (터치 디바이스 제외)
                                 >
 
                                     {/* 메인 메뉴 */}
-                                    {item.isExternal ? (
-                                        <a href={item.path}
-                                           target="_blank"
-                                           rel="noopener noreferrer"
-                                           className={`flex tracking-tight items-center transition-all duration-200 pb-5 mt-5 ${
-                                               activeMenu === idx ? "text-green-900" : ""}
-                                               ${isScrolled ? "text-[16px]" : "text-[16.5px] lg:text-[17.5px]"} `}>
+                                    {item.subMenus ? (
+                                        <div 
+                                            className={`flex tracking-tight items-center transition-all duration-200 pb-5 mt-5 cursor-pointer ${
+                                                activeMenu === idx ? "text-green-900" : ""}
+                                                ${isScrolled ? "text-[16.5px]" : "text-[16.5px] 1.5md:text-[17px] lg:text-[18px]"} `}
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                setActiveMenu(activeMenu === idx ? null : idx);
+                                            }}
+                                        >
                                             {item.title}
-                                            {item.subMenus && !menu && (
-                                                <IoChevronDown
-                                                    size={16}
-                                                    className={`ml-0.5 mt-0.5 transition duration-200 ${
-                                                        activeMenu === idx ? "rotate-180" : "rotate-0"}`}
-                                                />)}
-                                        </a>
+                                            <IoChevronDown
+                                                size={16}
+                                                className={`ml-0.5 mt-0.5 transition duration-200 ${
+                                                    activeMenu === idx ? "rotate-180" : "rotate-0"}`}
+                                            />
+                                        </div>
                                     ) : (
                                         <Link href={item.path}
+                                              {...(isExternalUrl(item.path) && {target: "_blank", rel: "noopener noreferrer"})}
                                               className={`flex tracking-tight items-center transition-all duration-200 pb-5 mt-5 ${
                                                   activeMenu === idx ? "text-green-900" : ""}
-                                                  ${isScrolled ? "text-[16px]" : "text-[16.5px] lg:text-[17.5px]"} `}>
+                                                  ${isScrolled ? "text-[16.5px]" : "text-[16.5px] 1.5md:text-[17px] lg:text-[18px]"} `}>
                                             {item.title}
-                                            {item.subMenus && !menu && (
-                                                <IoChevronDown
-                                                    size={16}
-                                                    className={`ml-0.5 mt-0.5 transition duration-200 ${
-                                                        activeMenu === idx ? "rotate-180" : "rotate-0"}`}
-                                                />)}
                                         </Link>
                                     )}
 
                                     {/* 서브 메뉴 리스트 */}
                                     {activeMenu === idx && item.subMenus && (
-                                        <ul className={`absolute animate-fade-up w-[140px] lg:w-[160px] -mt-1 
+                                        <ul className={`absolute animate-fade-up w-auto min-w-[140px] lg:min-w-[160px] -mt-1 
                                                         ${idx == menus.length - 1 ? "-left-24" : "-left-6"}
                                                         border-t-4 border-green-900 divide-y divide-gray-200 shadow-xl z-10
-                                                        tracking-tight ${isScrolled ? "bg-[#f4f4f4] text-[15px]" : "bg-white text-[15.5px] lg:text-[16.5px]"}`}>
+                                                        tracking-tight ${isScrolled ? "bg-[#f4f4f4] text-[15.5px]" : "bg-white text-[16px] lg:text-[17px]"}`}>
                                             {item.subMenus.map((subItem, subIdx) => (
                                                 <li key={subIdx}
                                                     className="whitespace-nowrap hover:bg-gray-100 hover:text-green-900">
-                                                    {subItem.isExternal ? (
-                                                        <a
-                                                            href={subItem.path}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="block px-5 py-3"
-                                                            onClick={() => setActiveMenu(null)}
-                                                        >
-                                                            {subItem.title}
-                                                        </a>
-                                                    ) : (
-                                                        <Link
-                                                            href={subItem.path}
-                                                            className="block px-5 py-3"
-                                                            onClick={() => setActiveMenu(null)}
-                                                        >
-                                                            {subItem.title}
-                                                        </Link>
-                                                    )}
+                                                    <Link
+                                                        href={subItem.path}
+                                                        {...(isExternalUrl(subItem.path) && { 
+                                                          target: "_blank", 
+                                                          rel: "noopener noreferrer" 
+                                                        })}
+                                                        className="block px-5 py-3 pr-10"
+                                                        onClick={() => setActiveMenu(null)}
+                                                    >
+                                                        {subItem.title}
+                                                    </Link>
                                                 </li>
                                             ))}
                                         </ul>
@@ -238,19 +255,13 @@ export default function Header() {
                                                     aria-hidden="true"
                                                 />
                                             </div>
-                                        ) : item.isExternal ? (
-                                            <a
-                                                href={item.path}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className={`flex justify-between hover:font-semibold hover:text-green-900 ${activeMenu === idx ? "font-semibold text-green-900" : ""}`}
-                                                onClick={() => setMenu(false)}
-                                            >
-                                                {item.title}
-                                            </a>
                                         ) : (
                                             <Link
                                                 href={item.path}
+                                                {...(isExternalUrl(item.path) && { 
+                                                  target: "_blank", 
+                                                  rel: "noopener noreferrer" 
+                                                })}
                                                 className={`flex justify-between hover:font-semibold hover:text-green-900 ${activeMenu === idx ? "font-semibold text-green-900" : ""}`}
                                                 onClick={() => setMenu(false)}
                                             >
@@ -263,25 +274,14 @@ export default function Header() {
                                             <ul className="justify-between divide-y divide-gray-400 mt-2.5 -mb-2.5 border-t-2 border-green-900 animate-drop-in-25">
                                                 {item.subMenus.map((subItem, subIdx) => (
                                                     <li key={subIdx} className="">
-                                                        {subItem.isExternal ? (
-                                                            <a
-                                                                href={subItem.path}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
-                                                                className="block pl-8 py-2.5 hover:font-semibold hover:text-green-900 hover:bg-gray-100"
-                                                                onClick={() => setMenu(false)}
-                                                            >
-                                                                {subItem.title}
-                                                            </a>
-                                                        ) : (
-                                                            <Link
-                                                                href={subItem.path}
-                                                                className="block pl-8 py-2.5 hover:font-semibold hover:text-green-900 hover:bg-gray-100"
-                                                                onClick={() => setMenu(false)}
-                                                            >
-                                                                {subItem.title}
-                                                            </Link>
-                                                        )}
+                                                        <Link
+                                                            href={subItem.path}
+                                                            {...(isExternalUrl(subItem.path) && {target: "_blank", rel: "noopener noreferrer"})}
+                                                            className="block pl-8 py-2.5 hover:font-semibold hover:text-green-900 hover:bg-gray-100"
+                                                            onClick={() => setMenu(false)}
+                                                        >
+                                                            {subItem.title}
+                                                        </Link>
                                                     </li>
                                                 ))}
                                             </ul>
@@ -293,7 +293,7 @@ export default function Header() {
                     </div>
                 </div>
             </div>
-            <div className={`transition-all duration-300 ${isScrolled ? "h-[70px]" : "h-[86px]"}`}></div>
+            <div className={`transition-all duration-300 ${isScrolled ? "h-[74px]" : "h-[76px] lg:h-[86px]"}`}></div>
         </nav>
 )
 }
