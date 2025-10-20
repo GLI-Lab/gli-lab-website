@@ -25,14 +25,11 @@ export default async function Page() {
             <div className="max-w-screen-2xl mx-auto">
                 <SubCover title={TITLE} showBreadcrumb={false}/>
             </div>
-
             <PublicationList 
                 papers={papers} 
                 memberIds={memberIds}
                 alumniIds={alumniIds}
             />
-
-            <div className="h-40"></div>
         </>
     )
 }

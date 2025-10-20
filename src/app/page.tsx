@@ -88,29 +88,29 @@ export default async function Page() {
                     </p>
 
                     <ul className="list-none list-inside space-y-6 md:space-y-10 text-left text-home">
-                        <li className="space-y-2">
+                        <li className="space-y-2 leading-snug">
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
                                     <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
                                     <span><span className="font-semibold underline underline-offset-4">자연어처리</span>: 질의응답, 정보 검색/추출, 지식/LLM 증류 및 응용</span>
                                 </div>
                             </div>
-                            <div className="ml-6 text-gray-500 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
+                            <div className="ml-6 text-gray-600 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
                                 → 그래프 지식을 통합하여 LLM의 환각 문제를 줄이고, 더 일관된 응답 생성 가능
                             </div>
                         </li>
-                        <li className="space-y-2">
+                        <li className="space-y-2 leading-snug">
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
                                     <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
                                     <span><span className="font-semibold underline underline-offset-4">추천시스템</span>: 지식기반/설명가능한 추천, 멀티모달/대화형 추천, 그래프 기반 추천</span>
                                 </div>
                             </div>
-                            <div className="ml-6 text-gray-500 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
+                            <div className="ml-6 text-gray-600 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
                                 → 그래프 기반의 사용자–아이템 관계 확장을 통해 의도와 맥락 중심의 추천 가능
                             </div>
                         </li>
-                        <li className="space-y-2">
+                        <li className="space-y-2 leading-snug">
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
                                     <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
@@ -118,29 +118,29 @@ export default async function Page() {
                                     </span>
                                 </div>
                             </div>
-                            <div className="ml-6 text-gray-500 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
+                            <div className="ml-6 text-gray-600 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
                                 → 그래프 구축/확장 및 다양한 딥러닝 모델과의 통합을 위한 기반 기술로 활용 가능
                             </div>
                         </li>
-                        <li className="space-y-2">
+                        <li className="space-y-2 leading-snug">
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
                                     <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
                                     <span><span className="font-semibold underline underline-offset-4">LLM–그래프 융합</span>: 지식기반/멀티모달 LLM, 텍스트-그래프 변환, LLM 에이전트, GraphRAG</span>
                                 </div>
                             </div>
-                            <div className="ml-6 text-gray-500 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
+                            <div className="ml-6 text-gray-600 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
                                 → 그래프를 통해 LLM에 외부 지식을 입력하여 신뢰성 높고 도메인 특화 응답 생성 가능
                             </div>
                         </li>
-                        <li className="space-y-2">
+                        <li className="space-y-2 leading-snug">
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
                                     <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
                                     <span><span className="font-semibold underline underline-offset-4">이상탐지</span>: 네트워크/그래프 이상탐지, 사용자 행동 기반 이상탐지, 멀티모달 이상탐지</span>
                                 </div>
                             </div>
-                            <div className="ml-6 text-gray-500 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
+                            <div className="ml-6 text-gray-600 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
                                 → 그래프를 통해 행위 간의 상관관계를 모델링하여 상황 맥락에 맞는 이상 탐지 가능
                             </div>
                         </li>
