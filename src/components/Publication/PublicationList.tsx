@@ -15,8 +15,32 @@ interface PublicationListProps {
 export default function PublicationList({ papers, memberIds = [], alumniIds = [] }: PublicationListProps) {
     const [showInProgress, setShowInProgress] = useState(false);
     const [showUnderReview, setShowUnderReview] = useState(true);
+    const [isInProgressExpanded, setIsInProgressExpanded] = useState(false);
+    const [isUnderReviewExpanded, setIsUnderReviewExpanded] = useState(true);
     const [filterType, setFilterType] = useState<'all' | 'journal' | 'conference'>('all');
     const [filterScope, setFilterScope] = useState<'all' | 'international' | 'domestic'>('international');
+    const [triggerAnimation, setTriggerAnimation] = useState(0);
+
+    // Animation trigger functions
+    const triggerFilterAnimation = () => {
+        setTriggerAnimation(prev => prev + 1);
+    };
+
+    const handleFilterTypeChange = (type: 'all' | 'journal' | 'conference') => {
+        setFilterType(type);
+        // Type 필터 변경 시 섹션들 접기 (show 상태는 유지)
+        setIsInProgressExpanded(false);
+        setIsUnderReviewExpanded(false);
+        triggerFilterAnimation();
+    };
+
+    const handleFilterScopeChange = (scope: 'all' | 'international' | 'domestic') => {
+        setFilterScope(scope);
+        // Scope 필터 변경 시 섹션들 접기 (show 상태는 유지)
+        setIsInProgressExpanded(false);
+        setIsUnderReviewExpanded(false);
+        triggerFilterAnimation();
+    };
 
     // Filter publications based on current filters
     const filteredPublications = useMemo(() => {
@@ -41,6 +65,14 @@ export default function PublicationList({ papers, memberIds = [], alumniIds = []
 
     // Get years in reverse order (newest first)
     const years = Object.keys(publicationsByYear).reverse();
+
+    // Calculate total visible papers count (filtered)
+    const visiblePapersCount = useMemo(() => {
+        const acceptedCount = filteredPublications.filter(pub => pub.status === 'Accepted').length;
+        const underReviewCount = showUnderReview ? papers.filter(pub => pub.status === 'Under Review').length : 0;
+        const inProgressCount = showInProgress ? papers.filter(pub => pub.status === 'In Progress').length : 0;
+        return acceptedCount + underReviewCount + inProgressCount;
+    }, [filteredPublications, showUnderReview, showInProgress, papers]);
 
     // Render venue with acronym in semibold
     const renderVenue = (venue: { name: string; acronym: string } | null) => {
@@ -115,7 +147,7 @@ export default function PublicationList({ papers, memberIds = [], alumniIds = []
                             <span className="text-gray-700 min-w-[50px] md:min-w-[0px] md:pr-2">Type:</span>
                             <div className="flex bg-gray-100 rounded-lg p-1">
                                 <button
-                                    onClick={() => setFilterType('all')}
+                                    onClick={() => handleFilterTypeChange('all')}
                                     className={`px-3 py-1 md:py-1.5 font-medium rounded-md transition-all duration-200 ${
                                         filterType === 'all'
                                             ? 'bg-brand-primary text-white shadow-sm'
@@ -125,7 +157,7 @@ export default function PublicationList({ papers, memberIds = [], alumniIds = []
                                     All
                                 </button>
                                 <button
-                                    onClick={() => setFilterType('journal')}
+                                    onClick={() => handleFilterTypeChange('journal')}
                                     className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
                                         filterType === 'journal'
                                             ? 'bg-brand-primary text-white shadow-sm'
@@ -135,7 +167,7 @@ export default function PublicationList({ papers, memberIds = [], alumniIds = []
                                     Journal
                                 </button>
                                 <button
-                                    onClick={() => setFilterType('conference')}
+                                    onClick={() => handleFilterTypeChange('conference')}
                                     className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
                                         filterType === 'conference'
                                             ? 'bg-brand-primary text-white shadow-sm'
@@ -152,7 +184,7 @@ export default function PublicationList({ papers, memberIds = [], alumniIds = []
                             <span className="font-medium text-gray-700 min-w-[50px] md:min-w-[0px] md:pr-2">Scope:</span>
                             <div className="flex bg-gray-100 rounded-lg p-1">
                                 <button
-                                    onClick={() => setFilterScope('all')}
+                                    onClick={() => handleFilterScopeChange('all')}
                                     className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
                                         filterScope === 'all'
                                             ? 'bg-brand-primary text-white shadow-sm'
@@ -162,7 +194,7 @@ export default function PublicationList({ papers, memberIds = [], alumniIds = []
                                     All
                                 </button>
                                 <button
-                                    onClick={() => setFilterScope('international')}
+                                    onClick={() => handleFilterScopeChange('international')}
                                     className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
                                         filterScope === 'international'
                                             ? 'bg-brand-primary text-white shadow-sm'
@@ -172,7 +204,7 @@ export default function PublicationList({ papers, memberIds = [], alumniIds = []
                                     International
                                 </button>
                                 <button
-                                    onClick={() => setFilterScope('domestic')}
+                                    onClick={() => handleFilterScopeChange('domestic')}
                                     className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
                                         filterScope === 'domestic'
                                             ? 'bg-brand-primary text-white shadow-sm'
@@ -191,7 +223,13 @@ export default function PublicationList({ papers, memberIds = [], alumniIds = []
                         <div className="flex items-center gap-3">
                             <span className="text-gray-700">In Progress</span>
                             <button
-                                onClick={() => setShowInProgress(!showInProgress)}
+                                onClick={() => {
+                                    setShowInProgress(!showInProgress);
+                                    // 토글 ON일 때 섹션도 펼치기
+                                    if (!showInProgress) {
+                                        setIsInProgressExpanded(true);
+                                    }
+                                }}
                                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out ${
                                     showInProgress ? 'bg-brand-primary' : 'bg-gray-200'
                                 }`}
@@ -210,7 +248,13 @@ export default function PublicationList({ papers, memberIds = [], alumniIds = []
                         <div className="flex items-center gap-3">
                             <span className="text-gray-700">Under Review</span>
                             <button
-                                onClick={() => setShowUnderReview(!showUnderReview)}
+                                onClick={() => {
+                                    setShowUnderReview(!showUnderReview);
+                                    // 토글 ON일 때 섹션도 펼치기
+                                    if (!showUnderReview) {
+                                        setIsUnderReviewExpanded(true);
+                                    }
+                                }}
                                 className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out ${
                                     showUnderReview ? 'bg-brand-primary' : 'bg-gray-200'
                                 }`}
@@ -242,49 +286,77 @@ export default function PublicationList({ papers, memberIds = [], alumniIds = []
 
             {/* In Progress (🛠) */}
             {showInProgress && (
-                <div className="text-base md:text-lg mb-8 md:mb-12">
-                    <SectionHeader title="In Progress" className="" underline={true} size="small"/>
-                    <ul className="list-disc space-y-6 md:space-y-8 pl-4 md:pl-6">
-                        {papers
-                            .filter(pub => pub.status === 'In Progress')
-                            .map((publication, index) => (
-                                <li key={index} className="leading-normal">
-                                    <div className="text-gray-700 mb-1">
-                                        <span className="font-normal">(🛠)</span> <span className="font-semibold">{publication.title}</span>
-                                    </div>
-                                    <div className="text-gray-600 mb-1">
-                                        {renderAuthors(publication)}
-                                    </div>
-                                </li>
-                            ))}
-                    </ul>
+                <div className={`text-base md:text-lg ${isInProgressExpanded ? 'mb-10 md:mb-14' : 'mb-3 md:mb-6'}`}>
+                    <SectionHeader 
+                        title="In Progress" 
+                        className="" 
+                        underline={true} 
+                        size="small"
+                        expandable={true}
+                        isExpanded={isInProgressExpanded}
+                        onToggle={() => setIsInProgressExpanded(!isInProgressExpanded)}
+                    />
+                    <div className={`transition-all duration-500 ease-out ${
+                        isInProgressExpanded 
+                            ? 'opacity-100 max-h-screen overflow-visible transform translate-y-0 animate-in slide-in-from-top-2 fade-in' 
+                            : 'opacity-0 max-h-0 overflow-hidden transform -translate-y-4'
+                    }`} key={`inprogress-${triggerAnimation}-${filterType}-${filterScope}`}>
+                <ul className="list-disc space-y-6 md:space-y-8 pl-4 md:pl-6">
+                    {papers
+                        .filter(pub => pub.status === 'In Progress')
+                        .map((publication, index) => (
+                            <li key={index} className="leading-normal">
+                                <div className="text-gray-700 mb-1">
+                                    <span className="font-normal">(🛠)</span> <span className="font-semibold">{publication.title}</span>
+                                </div>
+                                <div className="text-gray-600 mb-1">
+                                    {renderAuthors(publication)}
+                                </div>
+                            </li>
+                        ))}
+                </ul>
+                </div>
                 </div>
             )}
 
             {/* Under Review */}
             {showUnderReview && (
-                <div className="text-base md:text-lg mb-8 md:mb-12">
-                    <SectionHeader title="Under Review" className="" underline={true} size="small"/>
-                    <ul className="list-disc space-y-6 md:space-y-8 pl-4 md:pl-6">
-                        {papers
-                            .filter(pub => pub.status === 'Under Review')
-                            .map((publication, index) => (
-                                <li key={index} className="leading-normal">
-                                    <div className="text-gray-700 font-semibold mb-1">
-                                        {publication.title}
-                                    </div>
-                                    <div className="text-gray-600 mb-1">
-                                        {renderAuthors(publication)}
-                                    </div>
-                                </li>
-                            ))}
-                    </ul>
+                <div className={`text-base md:text-lg ${isUnderReviewExpanded ? 'mb-10 md:mb-14' : 'mb-3 md:mb-6'}`}>
+                    <SectionHeader 
+                        title="Under Review" 
+                        className="" 
+                        underline={true} 
+                        size="small"
+                        expandable={true}
+                        isExpanded={isUnderReviewExpanded}
+                        onToggle={() => setIsUnderReviewExpanded(!isUnderReviewExpanded)}
+                    />
+                    <div className={`transition-all duration-500 ease-out ${
+                        isUnderReviewExpanded 
+                            ? 'opacity-100 max-h-screen overflow-visible transform translate-y-0 animate-in slide-in-from-top-2 fade-in' 
+                            : 'opacity-0 max-h-0 overflow-hidden transform -translate-y-4'
+                    }`} key={`underreview-${triggerAnimation}-${filterType}-${filterScope}`}>
+                <ul className="list-disc space-y-6 md:space-y-8 pl-4 md:pl-6">
+                    {papers
+                        .filter(pub => pub.status === 'Under Review')
+                        .map((publication, index) => (
+                            <li key={index} className="leading-normal">
+                                <div className="text-gray-700 font-semibold mb-1">
+                                    {publication.title}
+                                </div>
+                                <div className="text-gray-600 mb-1">
+                                    {renderAuthors(publication)}
+                                </div>
+                            </li>
+                        ))}
+                </ul>
+                </div>
                 </div>
             )}
 
             {/* Publications by Year */}
             {years.map(year => (
-                <div key={year} className="text-base md:text-lg mb-8 md:mb-12">
+                <div key={`${year}-${triggerAnimation}-${filterType}-${filterScope}`} className="text-base md:text-lg mb-10 md:mb-14 transform transition-all duration-500 ease-out animate-in slide-in-from-top-2 fade-in">
                     <SectionHeader title={year} className="" underline={true} size="small"/>
                     <ul className="list-disc space-y-6 md:space-y-8 pl-4 md:pl-6">
                         {publicationsByYear[year].map((publication, index) => (
@@ -327,6 +399,9 @@ export default function PublicationList({ papers, memberIds = [], alumniIds = []
                     </ul>
                 </div>
             ))}
+            
+            {/* Sticky positioning을 위한 하단 여백 */}
+            <div className={visiblePapersCount < 10 ? "h-[50vh]" : "h-[10vh]"}></div>
         </div>
     );
 }
