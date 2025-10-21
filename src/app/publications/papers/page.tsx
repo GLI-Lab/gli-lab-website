@@ -10,7 +10,7 @@ const TITLE = `Papers`
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
         title: TITLE,
-        description: "Papers from GLI Lab",
+        description: "Papers from GLI Lab - Graph Learning and Intelligence Laboratory at Konkuk University",
         asPath: '/publications/papers'
     });
 };
@@ -25,11 +25,15 @@ export default async function Page() {
             <div className="max-w-screen-2xl mx-auto">
                 <SubCover title={TITLE} showBreadcrumb={false}/>
             </div>
-            <PublicationList 
-                papers={papers} 
-                memberIds={memberIds}
-                alumniIds={alumniIds}
-            />
+            <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
+                <PublicationList 
+                    className="w-full text-left"
+                    papers={papers} 
+                    memberIds={memberIds}
+                    alumniIds={alumniIds}
+                />
+            </div>
+            <div className="h-40"></div>
         </>
     )
 }

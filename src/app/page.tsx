@@ -24,7 +24,7 @@ export default async function Page() {
             {/* =============================== */}
             <div className="max-w-screen-2xl mx-auto bg-white">
                 <div className="max-w-screen-xl mx-auto flex flex-col items-center justify-center text-center space-y-8
-                                py-8 md:py-16 px-4 md:px-6">
+                                py-8 md:py-16 px-3 md:px-5">
                     <h2 className="font-bold tracking-tighter text-[28px] md:text-[36px]">
                         About GLI Lab.
                     </h2>
@@ -77,7 +77,7 @@ export default async function Page() {
             {/* =============================== */}
             <div className="max-w-screen-2xl mx-auto bg-gray-100">
                 <div className="max-w-screen-xl mx-auto flex flex-col items-center justify-center text-center space-y-8
-                                py-8 md:py-16 px-4 md:px-6">
+                                py-8 md:py-16 px-3 md:px-5">
                     <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
                         Explore Our Research Topic
                     </p>
@@ -157,7 +157,7 @@ export default async function Page() {
             {/* =============================== */}
             <div className="max-w-screen-2xl mx-auto bg-white">
                 <div className="max-w-screen-xl mx-auto flex flex-col items-center text-center space-y-8
-                                py-8 md:py-16 px-4 md:px-6">
+                                py-8 md:py-16 px-3 md:px-5">  
                     <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
                         Latest News
                     </p>
@@ -180,7 +180,7 @@ export default async function Page() {
             {/* =============================== */}
             <div className="max-w-screen-2xl mx-auto bg-gray-100">
                 <div className="max-w-screen-xl mx-auto flex flex-col items-center justify-center text-center space-y-8
-                                py-8 md:py-16 px-4 md:px-6">
+                                py-8 md:py-16 px-3 md:px-5">
                     <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
                         Now Hiring ✨
                     </p>

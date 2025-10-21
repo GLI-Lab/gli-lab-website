@@ -138,6 +138,7 @@ export interface StudyData {
 
 export interface NewsData {
   date: string;
+  type: 'Member' | 'Publication' | 'Funding' | 'General';
   content: string;
 }
 

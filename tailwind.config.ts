@@ -16,7 +16,7 @@
 // font-extralight : 200
 // font-light      : 300
 // font-normal     : 400 기본값
-// font-medium     : 500
+// font-medium     : 500 컨트롤러
 // font-semibold   : 600 기본값 강조, 필터
 // font-bold       : 700 커버 타이틀, Home 타이틀
 // font-extrabold  : 800
@@ -33,6 +33,7 @@
 // gray-700: 본문, 필터
 // gray-600: 설명
 // gray-500: 데코레이션
+// gray-200: 박스 border
 // text-red-600: 빨강 강조
 
 const config = {

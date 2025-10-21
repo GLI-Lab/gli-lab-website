@@ -1,4 +1,6 @@
-import React from 'react';
+"use client";
+
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { NewsData } from '@/data/loaders/types';
 
@@ -8,6 +10,8 @@ export interface NewsListProps {
   newsItems?: NewsData[]
   memberIds?: string[]
   alumniIds?: string[]
+  filterType?: 'Member' | 'Publication' | 'Funding' | 'General' | 'All'
+  showFilters?: boolean
 }
 
 // check if an item is new (within 3 months)
@@ -17,6 +21,39 @@ function isNewItem(date?: string): boolean {
   const sixMonthsAgo = new Date();
   sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 3);
   return itemDate >= sixMonthsAgo;
+}
+
+// 뉴스 타입별 카운트를 가져오는 함수
+export function getNewsTypeCounts(newsItems: NewsData[]): Record<string, number> {
+  const counts: Record<string, number> = {
+    'All': newsItems.length,
+    'Member': 0,
+    'Publication': 0,
+    'Funding': 0,
+    'General': 0
+  };
+  
+  newsItems.forEach(news => {
+    if (news.type in counts) {
+      counts[news.type]++;
+    }
+  });
+  
+  return counts;
+}
+
+// 사용 가능한 뉴스 타입들
+export const NEWS_TYPES = ['All', 'Member', 'Publication', 'Funding', 'General'] as const;
+export type NewsType = typeof NEWS_TYPES[number];
+
+// 뉴스 데이터에서 연도 추출하는 함수
+export function getAvailableYears(newsItems: NewsData[]): number[] {
+  const years = new Set<number>();
+  newsItems.forEach(news => {
+    const year = new Date(news.date).getFullYear();
+    years.add(year);
+  });
+  return Array.from(years).sort((a, b) => b - a); // 최신 연도부터 정렬
 }
 
 // 텍스트에서 프로필 마크업, 페이퍼 마크업, bold 태그를 찾아서 변환하는 함수
@@ -34,7 +71,6 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
   const elements: React.ReactNode[] = [];
   let lastIndex = 0;
   
-  // 모든 패턴을 찾아서 정렬
   const allMatches: Array<{type: 'profile' | 'paper' | 'bold', match: RegExpExecArray, index: number}> = [];
   
   // 프로필 매치 찾기
@@ -173,14 +209,233 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
   return <>{elements}</>;
 }
 
-export function NewsList({ className = '', count = null, newsItems = [], memberIds = [], alumniIds = [] }: NewsListProps) {
+export function NewsList({ className = '', count = null, newsItems = [], memberIds = [], alumniIds = [], filterType = 'All', showFilters = false }: NewsListProps) {
+  const [selectedTypes, setSelectedTypes] = useState<Set<NewsType>>(new Set(['All']));
+  const [selectedYears, setSelectedYears] = useState<Set<number>>(new Set());
+  const [selectedYearPeriod, setSelectedYearPeriod] = useState<string>('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  
+  
   // newsItems가 전달되면 사용, 없으면 빈 배열 사용
-  const newsData = newsItems;
+  let newsData = newsItems;
+  
+  if (showFilters) {
+    // 타입 필터링
+    if (selectedTypes.has('All')) {
+      // All이 선택된 경우 모든 뉴스 표시
+      newsData = newsItems;
+    } else {
+      // 선택된 타입들만 필터링
+      newsData = newsItems.filter(news => selectedTypes.has(news.type as NewsType));
+    }
+    
+    // 연도 필터링 (해당 연도부터)
+    if (selectedYears.size > 0) {
+      const minYear = Math.min(...Array.from(selectedYears));
+      newsData = newsData.filter(news => {
+        const year = new Date(news.date).getFullYear();
+        return year >= minYear;
+      });
+    }
+  } else {
+    if (filterType !== 'All') {
+      newsData = newsData.filter(news => news.type === filterType);
+    }
+  }
+  
   const latestNews = count ? newsData.slice(0, count) : newsData;
+  
+  // 필터 변경 핸들러
+  const handleFilterTypeChange = (type: NewsType) => {
+    setSelectedTypes(prev => {
+      const newSet = new Set(prev);
+      
+      if (type === 'All') {
+        // All을 클릭한 경우: All만 선택하고 나머지 모두 해제
+        return new Set(['All']);
+      } else {
+        // 개별 타입을 클릭한 경우
+        if (newSet.has('All')) {
+          // All이 선택되어 있으면 All을 제거하고 해당 타입만 선택
+          newSet.delete('All');
+          newSet.add(type);
+        } else {
+          // All이 선택되어 있지 않으면 토글
+          if (newSet.has(type)) {
+            newSet.delete(type);
+            // 모든 개별 타입이 해제되면 All 선택
+            if (newSet.size === 0) {
+              newSet.add('All');
+            }
+          } else {
+            newSet.add(type);
+          }
+        }
+      }
+      
+      return newSet;
+    });
+  };
+
+  // 연도 기간 선택 핸들러
+  const handleYearPeriodChange = (value: string) => {
+    setSelectedYearPeriod(value);
+    setIsDropdownOpen(false);
+    
+    if (value === '') {
+      setSelectedYears(new Set());
+    } else {
+      const currentYear = new Date().getFullYear();
+      const years = parseInt(value);
+      const fromYear = currentYear - years + 1;
+      
+      // 해당 기간의 모든 연도를 selectedYears에 추가
+      const yearSet = new Set<number>();
+      for (let year = fromYear; year <= currentYear; year++) {
+        yearSet.add(year);
+      }
+      setSelectedYears(yearSet);
+    }
+  };
+
+  // 드롭다운 옵션들
+  const periodOptions = [
+    { value: '', label: 'All' },
+    { value: '1', label: '1 year' },
+    { value: '2', label: '2 years' },
+    { value: '3', label: '3 years' },
+    { value: '5', label: '5 years' }
+  ];
+
+  const selectedOption = periodOptions.find(option => option.value === selectedYearPeriod) || periodOptions[0];
+
+  // 외부 클릭 시 드롭다운 닫기
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    if (isDropdownOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isDropdownOpen]);
 
   return (
     <div className={`${className}`}>
-      <div className="grid grid-cols-[auto,1fr] gap-x-[0.5em] gap-y-[0.4em]">
+      {showFilters && (
+        // Controls + News Count
+        <div className="mb-8 md:mb-14 space-y-3 text-sm md:text-base font-normal">
+          {/* Controls */}
+          <div className="bg-white border border-gray-200 rounded-lg px-4 py-2 md:px-6 md:py-4 shadow-sm flex items-center gap-x-10 gap-y-2 md:gap-y-3 flex-wrap font-medium">
+            {/* (1) Type Filter */}
+            <div className="flex items-center gap-x-1 gap-y-1 pl-0 flex-wrap">
+              <span className="text-gray-700 min-w-[50px] md:min-w-[0px] md:pr-2 flex-shrink-0">Categories:</span>
+              <div className="flex bg-gray-100 rounded-lg p-1 flex-wrap">
+                {NEWS_TYPES.map((type) => (
+                  <button
+                    key={type}
+                    onClick={() => handleFilterTypeChange(type)}
+                    className={`px-2 md:px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                      selectedTypes.has(type)
+                        ? 'bg-brand-primary text-white shadow-sm'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
+                    }`}
+                  >
+                    {type}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* (2) Recent Filter */}
+            <div className="flex items-center gap-1 flex-wrap">
+              <label
+                className="text-gray-700 min-w-[50px] md:min-w-[0px] md:pr-2 flex-shrink-0"
+              >
+                Recent:
+              </label>
+
+              {/* chip group 컨테이너: Type과 동일 */}
+              <div className="flex bg-gray-100 rounded-lg p-1 flex-wrap">
+                {/* 커스텀 드롭다운 */}
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    type="button"
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="px-2 md:px-3 py-1 md:py-1.5 rounded-md
+                              transition-all duration-200
+                              bg-white border border-transparent
+                              hover:bg-gray-50
+                              focus:outline-none focus:ring-2 focus:ring-brand-primary focus:border-brand-primary
+                              min-w-[100px] flex items-center justify-between gap-2"
+                  >
+                    <span>{selectedOption.label}</span>
+                    <svg
+                      className={`absolute right-1.5 h-5 w-5 text-gray-500 transition-transform duration-200 ${
+                        isDropdownOpen ? 'rotate-180' : ''
+                      }`}
+                      viewBox="0 0 20 20" fill="currentColor"
+                    >
+                      <path d="M5.23 7.21a.75.75 0 011.06.02L10 11.17l3.71-3.94a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" />
+                    </svg>
+                  </button>
+
+                  {/* 드롭다운 메뉴 */}
+                  {isDropdownOpen && (
+                    <div className="absolute top-full left-0 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg z-10">
+                      {periodOptions.map((option) => (
+                        <button
+                          key={option.value}
+                          type="button"
+                          onClick={() => handleYearPeriodChange(option.value)}
+                          className={`w-full px-3 py-2 text-left hover:bg-gray-50 transition-colors ${
+                            selectedYearPeriod === option.value
+                              ? 'bg-brand-primary text-white hover:bg-brand-primary'
+                              : 'text-gray-700'
+                          }`}
+                        >
+                          {option.label}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {selectedYearPeriod && (
+                  <button
+                    type="button"
+                    onClick={() => handleYearPeriodChange('')}
+                    className="ml-1 px-2 md:px-3 py-1 md:py-1.5 rounded-md
+                              text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-all duration-200"
+                    title="Clear recent filter"
+                    aria-label="Clear recent filter"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* News Count */}
+          <div className="mx-2 md:mx-4">
+            <div className="text-base md:text-lg flex items-center gap-3">
+              <span>
+                Total <span className="font-semibold text-gray-900">{newsData.length}</span> of <span className="font-semibold text-gray-900">{newsItems.length}</span> news
+              </span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <div className="grid grid-cols-[auto,1fr] gap-x-[0.5em] md:gap-x-[0.6em] gap-y-[0.4em] md:gap-y-[0.6em]">
         {latestNews.map((news, idx) => {
           const date = new Date(news.date);
           const year = date.getFullYear();
