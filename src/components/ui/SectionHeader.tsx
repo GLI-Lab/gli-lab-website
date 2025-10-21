@@ -22,7 +22,7 @@ export default function SectionHeader({ title, className, underline = true, size
           {expandable && onToggle && (
             <button
               onClick={onToggle}
-              className="flex items-center justify-center w-[26px] h-[26px] md:w-7 md:h-7 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-md transition-all duration-200 mt-0.5"
+              className="flex items-center justify-center w-[26px] h-[26px] md:w-7 md:h-7 text-gray-600 hover:text-gray-800 hover:bg-gray-100 rounded-md transition-all duration-200 mt-0.5 -ml-1"
               aria-label={isExpanded ? 'Collapse section' : 'Expand section'}
             >
               <svg
