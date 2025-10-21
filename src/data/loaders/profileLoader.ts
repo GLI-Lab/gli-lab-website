@@ -25,6 +25,14 @@ function transformProfile(yamlProfile: ProfileYAML, isAlumni: boolean = false): 
     return linkedin.startsWith('https://') ? linkedin : `https://www.linkedin.com/in/${linkedin}`;
   });
 
+  // Homepage URL 정규화
+  const homepageUrls = (yamlProfile.contacts.homepage || []).map(homepage => {
+    if (homepage.startsWith('http://') || homepage.startsWith('https://')) {
+      return homepage;
+    }
+    return `https://${homepage}`;
+  });
+
   // Photo 경로 정규화 - alumni인 경우 public/images/alumni에서 찾기
   const photoUrls = (yamlProfile.photos || []).map(photo => {
     return isAlumni ? `/images/profiles/alumni/${photo}.webp` : `/images/profiles/${photo}.webp`;
@@ -47,7 +55,7 @@ function transformProfile(yamlProfile: ProfileYAML, isAlumni: boolean = false): 
     interest: yamlProfile.interests || [],
     photo: photoUrls.length > 0 ? photoUrls : ["/images/profiles/ku_basic_1_down.png"],
     email: yamlProfile.contacts.emails || [],
-    homepage: yamlProfile.contacts.homepage || [],
+    homepage: homepageUrls,
     github: githubUrls,
     linkedin: linkedinUrls,
   };

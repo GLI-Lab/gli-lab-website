@@ -283,7 +283,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                         <span className={`text-text-accent font-medium`}>
                             Activities (
                             <Link 
-                                href="https://bkoh509.github.io" 
+                                href="/publications/papers" 
                                 className="hover:text-interactive-hover hover:underline underline-offset-4"
                                 title=""
                             >
@@ -301,7 +301,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                                                 <div className="flex-1">
                                                     <div className="text-[15.5px] md:text-[16.5px] font-medium mb-1">
                                                         <Link 
-                                                            href="https://bkoh509.github.io" 
+                                                            href="/publications/papers" 
                                                             className="hover:text-interactive-hover hover:underline underline-offset-4"
                                                             title="View publication details"
                                                         >
