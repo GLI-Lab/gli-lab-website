@@ -4,6 +4,16 @@
 #   content: string;
 # }
 
+########################################################################################
+# 2025
+########################################################################################
+- date: "2025-10-24"
+  type: Publication
+  content: |
+    One full paper has been accepted at <b>WSDM 2026</b> ✏️
+    - <paper>Image-Guided Debiasing Distillation with Preference Alignment Across Multi-News Histories</>
+    Jimyeung Seo, Eun-Yeong Jo, Hye-Yoon Baek, Dongcheon Lee, Xiongnan Jin, Byungkook Oh
+
 - date: "2025-10-14"
   type: Member
   content: "Welcome to GLI lab, <profile=[2025.10] 박규민>Gyumin Park (박규민)</>!"

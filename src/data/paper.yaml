@@ -129,15 +129,18 @@
     - { ID: "[2025.07] 김세영", name: "Seyeong Kim", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
+########################################################################################
+# Accepted
+########################################################################################
 - title: "Image-Guided Debiasing Distillation with Preference Alignment Across Multi-News Histories"
-  filter: {"type": "", "scope": ""}
-  status: "Under Review"
-  year: 2025
-  venue: { name: "", acronym: "" }
+  filter: {"type": "conference", "scope": "international"}
+  status: "Accepted"
+  year: 2026
+  venue: { name: "To Appear in ACM International Conference on Web Search and Data Mining", acronym: "WSDM" }
   links: 
     Link: null
     Code: null
-  notes: {"normal": "", "important": ""}
+  notes: {"normal": "Full Paper (Acceptance Rate: 16.3% = 100/613)", "important": ""}
   authors:
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: first }
     - { ID: "[2025.03] 조은영", name: "Eun-Yeong Jo", position: co }
@@ -146,9 +149,6 @@
     - { name: "Xiongnan Jin", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-########################################################################################
-# Accepted
-########################################################################################
 - title: "Relation-Faceted Graph Pooling with LLM Guidance for Dynamic Span-Aware Information Extraction"
   filter: {"type": "conference", "scope": "international"}
   status: "Accepted"

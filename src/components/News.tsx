@@ -163,7 +163,7 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
       elements.push(
         <Link 
           key={`${newsIndex}-${lineIndex}-paper-${index}`}
-          href="https://bkoh509.github.io"
+          href="/publications/papers"
           className="hover:text-interactive-hover hover:underline underline-offset-4"
           title="View publication details"
         >
