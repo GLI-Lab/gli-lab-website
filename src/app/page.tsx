@@ -79,7 +79,7 @@ export default async function Page() {
                 <div className="max-w-screen-xl mx-auto flex flex-col items-center justify-center text-center space-y-8
                                 py-8 md:py-16 px-3 md:px-5">
                     <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
-                        Explore Our Research Topic
+                        Explore Our Research Topics
                     </p>
 
                     <p className="text-home">
@@ -145,7 +145,7 @@ export default async function Page() {
                             </div>
                         </li>
                     </ul>
-                    <Link href='/research/topic'
+                    <Link href='/research/topics'
                           className="px-6 py-2 mt-12 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
                         Read More
                     </Link>
