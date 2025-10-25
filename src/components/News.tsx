@@ -132,13 +132,13 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
           <Link 
             key={`${newsIndex}-${lineIndex}-profile-${profileId}`}
             href={`${basePath}?id=${profileId.replace(/\s/g, '%20')}`}
-            className="group underline-offset-4 hover:underline hover:decoration-1"
+            className="group hover:text-brand-primary underline-offset-4 hover:underline hover:decoration-2"
             title={`View ${displayName}`}
           >
             {displayName}
             <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
           </Link>
         );
       } else {
@@ -164,10 +164,13 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
         <Link 
           key={`${newsIndex}-${lineIndex}-paper-${index}`}
           href="/publications/papers"
-          className="hover:text-interactive-hover hover:underline underline-offset-4"
+          className="group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-2"
           title="View publication details"
         >
           {paperTitle}
+          <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
         </Link>
       );
       
