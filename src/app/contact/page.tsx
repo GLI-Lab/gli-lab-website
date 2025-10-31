@@ -153,14 +153,25 @@ export default async function Page({ searchParams }: PageProps) {
 
                         <div className="space-y-2">
                             <div className="font-semibold text-brand-primary text-section">Culture & Philosophy</div>
-                            <p className="">
-                                I believe that it is essential to build a passionate atmosphere in our lab, where all members can inspire and motivate one another. 
+                            {/* <p className="mb-4">
+                                Our lab focuses on research-oriented activities in computer science and artificial intelligence, primarily targeting top-tier conferences such as WWW, CIKM, WSDM, KDD, AAAI, and ACL. 
+                                Rather than pursuing a large-scale lab, I prioritize maintaining a <span className="underline">manageable team size that allows for meaningful, personalized mentorship</span>. 
+                                I conduct individual lab meetings with each student 1-2 times per week, ensuring close guidance and support tailored to their research progress and goals.
+                            </p>
+                            <p className="mb-8">
+                                I believe that it is essential to build a <span className="underline">passionate atmosphere in our lab, where all members can inspire and motivate one another</span>. 
                                 The growth of each individual directly contributes to the collective growth of our team, enabling us to achieve even more than we thought possible. 
                                 Personally, I feel deeply motivated and inspired by witnessing the personal and professional growth of our lab members. 
-                                I warmly welcome undergraduate and graduate students who share this passion and are eager to embrace ambitious challenges, actively contributing to our lab’s culture. 
+                                I warmly welcome undergraduate and graduate students who share this passion and are eager to embrace ambitious challenges, actively contributing to our lab's culture. 
                                 As your mentor and fellow team member, I promise to fully support your growth.
-                                <br /><br />
-                                저는 연구실에서 열정적인 분위기 속에서 서로가 영감과 동기를 나눌 수 있는 환경을 만드는 것이 무엇보다 중요하다고 생각합니다. 
+                            </p> */}
+                            <p className="">
+                                우리 연구실은 인공지능 및 데이터 마이닝 분야에서 연구 중심의 활동을 목표로 하며, WWW, CIKM, WSDM, KDD, AAAI, ACL, EMNLP 등의 탑티어 학회를 최우선 목표로 합니다. 
+                                거대한 규모의 연구실을 지향하기보다는, <span className="underline">실질적으로 밀착된 지도가 가능한 적정 규모</span>를 우선시합니다. 
+                                이를 통해 각 대학원생과 주 1~2회의 개별 랩미팅을 진행하며, 연구의 전 과정에서 구체적인 피드백과 지원을 제공합니다.
+                            </p>
+                            <p className="">
+                                저는 연구실에서 <span className="underline">열정적인 분위기 속에서 서로가 영감과 동기를 나눌 수 있는 환경을 만드는 것이 무엇보다 중요</span>하다고 생각합니다. 
                                 각 연구실 구성원의 성장은 곧 팀 전체의 성장으로 이어지고, 이러한 선순환을 통해 처음 생각했던 것보다 훨씬 더 큰 성취를 이룰 수 있다고 믿습니다. 
                                 저 또한 구성원 여러분이 성장하는 모습을 가까이에서 지켜보며 큰 보람과 동기를 얻고 있습니다. 
                                 이러한 문화를 함께 만들어 갈 열정과 도전정신을 지닌 학부연구생과 대학원생 여러분을 진심으로 환영합니다. 
@@ -170,24 +181,28 @@ export default async function Page({ searchParams }: PageProps) {
 
                         <div className="space-y-2">
                             <div className="font-semibold text-brand-primary text-section">Roles & Expectations</div>
-                            <div className="font-medium underline">Undergraduate Interns</div>
+                            <p className="">
+                                우리 연구실에서는 학부생과 대학원생을 3~4명 단위로 구성하여 교수 주도형 기초 학술 스터디를 운영하고, 대학원생-학부생 간 매칭을 통해 함께 연구개발을 수행합니다. 
+                                이를 통해 <span className="underline">대학원생은 리더십을 향상시키고 연구 효율성을 높이며, 학부생은 실질적인 연구 경험과 학술적 역량을 쌓을 수 있습니다</span>. 
+                                저는 지도교수로서 적절한 업무를 배정하고 랩미팅을 통해 진행상황을 트래킹하며, 각 구성원에게 필요한 지원과 가이드를 제공합니다. 
+                                이러한 협업 환경을 통해 의미 있는 연구 성과와 함께 모든 구성원의 성장을 지원합니다.
+                            </p>
+                            <div className="font-medium underline pb-1">Graduate Students (MS/PhD)</div>
                             <ul className="list-disc ml-6 space-y-2">
-                                <li>자신의 관심 분야를 능동적으로 탐색하고, 스터디 및 멘토링 활동을 통해 심도 있게 학습합니다.</li>
-                                <li>연구실에서 진행하는 프로젝트에 적극 참여하며, 기존 연구 분석 또는 새로운 아이디어 개발을 수행합니다.</li>
-                                <li>국내학술대회 또는 국제우수학술대회/저널 논문의 작성 및 투고를 적극 권장하고 지원합니다.</li>
-                                <li>논문 공저자 참여를 통해 연구 역량을 키우고, 진로 탐색의 기회를 얻습니다.</li>
+                                <li>명확한 연구 목표 설정 및 체계적 발전</li>
+                                <li>독창적이고 의미 있는 연구 주제 발굴을 통한 국제우수학술대회 및 탑티어 저널 논문 게재</li>
+                                <li>국내외 우수 대학/연구기관/글로벌 산업체 공동연구 참여를 통한 전문성 확대</li>
+                                <li>연구과제 및 제안서 작성 참여를 통한 연구기획 역량 향상</li>
+                                <li>학위 과정 연구 종합·정리를 통한 우수 학위논문 완성</li>
                             </ul>
-                            <div className="font-medium underline">Graduate Students (MS/PhD)</div>
-                            <ul className="list-disc ml-6 space-y-2">
-                                <li>대학원 과정 동안 자신이 명확하게 설정한 연구 목표를 설계하고 발전시킵니다.</li>
-                                <li>독창적이고 의미 있는 연구 주제를 발굴하여, 국제우수학술대회와 탑티어 저널 논문 게재를 목표로 합니다.</li>
-                                <li>국내외 우수 대학, 연구기관 또는 글로벌 산업체와의 공동연구 프로젝트에 참여하며, 본인의 연구 목표와 연계하여 전문성을 넓힙니다.</li>
-                                <li>다양한 연구과제 및 제안서 작성에 참여하여 연구기획 역량을 지속적으로 향상시킵니다.</li>
-                                <li>학위 과정 동안 수행한 연구를 종합·정리하여 우수한 학위논문을 완성합니다.</li>
+                            <div className="font-medium underline pb-1">Undergraduate Interns</div>
+                            <ul className="list-disc ml-6 space-y-2 pb-1">
+                                <li>관심 분야 능동적 탐색 및 스터디/멘토링을 통한 심도 있는 학습</li>
+                                <li>관련 연구 탐색·실험·분석 수행 (하이퍼파라미터 조절, 데이터 전처리, 케이스 분석)</li>
+                                <li>제1저자 국내학술대회 또는 국제학술대회/저널 논문 작성 및 투고 (학회 등록 및 출판비용 지원)</li>
+                                <li>공동저자 참여를 통한 연구 역량 강화 및 진로 탐색</li>
                             </ul>
                         </div>
-
-
                     </div>
                 </div>
 
