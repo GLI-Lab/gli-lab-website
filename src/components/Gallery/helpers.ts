@@ -30,28 +30,7 @@ export function getStartDateFromRange(dateRange?: string): string {
 export function formatDateForDisplay(date?: string): string {
   if (!date) return '';
   
-  // Check if it's a date range
-  if (date.includes('~')) {
-    const parts = date.split('~').map(part => part.trim());
-    if (parts.length === 2) {
-      const startDate = new Date(parts[0]);
-      const endDate = new Date(parts[1]);
-      
-      // Check if both dates are valid
-      if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
-        return `${parts[0]} ~ ${parts[1]}`;
-      }
-    }
-    // If parsing fails, return the original string
-    return date;
-  }
-  
-  // Single date - format as Korean locale
-  const dateObj = new Date(date);
-  if (!isNaN(dateObj.getTime())) {
-    return dateObj.toLocaleDateString('ko-KR');
-  }
-  
+  // Return the date string as-is from config.yaml
   return date;
 }
 
