@@ -15,10 +15,16 @@ export const generateMetadata = async (): Promise<Metadata> => {
     });
 };
 
-export default async function Page() {
+interface PageProps {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
+
+export default async function Page({ searchParams }: PageProps) {
     const papers = await getPapers();
     const memberIds = await getMemberIds();
     const alumniIds = await getAlumniIds();
+    const resolvedSearchParams = await searchParams;
+    const showInProgress = resolvedSearchParams?.showInProgress === 'true';
     
     return (
         <>
@@ -31,6 +37,7 @@ export default async function Page() {
                     papers={papers} 
                     memberIds={memberIds}
                     alumniIds={alumniIds}
+                    initialShowInProgress={showInProgress}
                 />
             </div>
             <div className="h-40"></div>
