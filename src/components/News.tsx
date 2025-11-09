@@ -63,15 +63,16 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
   const isValidProfileId = (id: string) => memberIds.includes(id) || alumniIds.includes(id);
   const isAlumniProfile = (id: string) => alumniIds.includes(id);
 
-  // <profile=ID>이름</>, <paper>제목</>, <b>텍스트</b> 패턴을 찾는 정규식
+  // <profile=ID>이름</>, <paper>제목</>, <patent>제목</>, <b>텍스트</b> 패턴을 찾는 정규식
   const profilePattern = /<profile=([^>]+)>([^<]+)<\/>/g;
   const paperPattern = /<paper>([^<]+)<\/>/g;
+  const patentPattern = /<patent>([^<]+)<\/>/g;
   const boldPattern = /<b>([^<]+)<\/b>/g;
   
   const elements: React.ReactNode[] = [];
   let lastIndex = 0;
   
-  const allMatches: Array<{type: 'profile' | 'paper' | 'bold', match: RegExpExecArray, index: number}> = [];
+  const allMatches: Array<{type: 'profile' | 'paper' | 'patent' | 'bold', match: RegExpExecArray, index: number}> = [];
   
   // 프로필 매치 찾기
   let profileMatch;
@@ -90,6 +91,16 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
       type: 'paper',
       match: paperMatch,
       index: paperMatch.index
+    });
+  }
+  
+  // 특허 매치 찾기
+  let patentMatch;
+  while ((patentMatch = patentPattern.exec(content)) !== null) {
+    allMatches.push({
+      type: 'patent',
+      match: patentMatch,
+      index: patentMatch.index
     });
   }
   
@@ -168,6 +179,25 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
           title="View publication details"
         >
           {paperTitle}
+          <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </Link>
+      );
+      
+      lastIndex = index + fullMatch.length;
+    } else if (type === 'patent') {
+      const [fullMatch, patentTitle] = match;
+      
+      // 특허 제목을 링크로 변환 (paper와 동일한 스타일)
+      elements.push(
+        <Link 
+          key={`${newsIndex}-${lineIndex}-patent-${index}`}
+          href="/publications/patents"
+          className="group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-2"
+          title="View patent details"
+        >
+          {patentTitle}
           <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>

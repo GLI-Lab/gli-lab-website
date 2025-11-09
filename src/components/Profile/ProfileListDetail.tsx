@@ -179,7 +179,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                 </div>
                 <Separator className="my-3"/>
 
-                {/* Activities (Publications) */}
+                {/* Activities (Papers) */}
                 {filteredPapers.length > 0 && (
                     <div className={`grid gap-x-4 gap-y-2 `}>
                         <span className={`text-text-accent font-medium`}>
@@ -260,7 +260,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                 );
                             })}
                             {filteredPapers.length > 5 && (
-                                <div className="mb-1.5 leading-snug">
+                                <div className="mb-2 leading-snug">
                                     <div className="flex items-center gap-2">
                                         <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
                                         <div className="flex items-center gap-3">
@@ -380,7 +380,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                 );
                             })}
                             {filteredPatents.length > 5 && (
-                                <div className="mb-1.5 leading-snug">
+                                <div className="mb-2 leading-snug">
                                     <div className="flex items-center gap-2">
                                         <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
                                         <div className="flex items-center gap-3">
@@ -472,7 +472,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                 </div>
                             ))}
                             {filteredStudies.length > 5 && (
-                                <div className="mb-1.5 leading-snug">
+                                <div className="mb-2 leading-snug">
                                     <div className="flex items-center gap-2">
                                         <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
                                         <div className="flex items-center gap-3">
