@@ -219,7 +219,25 @@ export default function Header() {
                                                         className="block px-5 py-3 pr-10"
                                                         onClick={() => setActiveMenu(null)}
                                                     >
-                                                        {subItem.title}
+                                                        <span className="flex items-center">
+                                                            {subItem.title}
+                                                            {isExternalUrl(subItem.path) && (
+                                                                <svg 
+                                                                    className="ml-1.5 w-4 h-4 inline-block" 
+                                                                    fill="none" 
+                                                                    stroke="currentColor" 
+                                                                    viewBox="0 0 24 24"
+                                                                    aria-hidden="true"
+                                                                >
+                                                                    <path 
+                                                                        strokeLinecap="round" 
+                                                                        strokeLinejoin="round" 
+                                                                        strokeWidth={2} 
+                                                                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                                                                    />
+                                                                </svg>
+                                                            )}
+                                                        </span>
                                                     </Link>
                                                 </li>
                                             ))}
@@ -281,7 +299,25 @@ export default function Header() {
                                                             className="block pl-8 py-2.5 hover:font-semibold hover:text-green-900 hover:bg-gray-100"
                                                             onClick={() => setMenu(false)}
                                                         >
-                                                            {subItem.title}
+                                                            <span className="flex items-center">
+                                                                {subItem.title}
+                                                                {isExternalUrl(subItem.path) && (
+                                                                    <svg 
+                                                                        className="ml-1.5 w-4 h-4 inline-block" 
+                                                                        fill="none" 
+                                                                        stroke="currentColor" 
+                                                                        viewBox="0 0 24 24"
+                                                                        aria-hidden="true"
+                                                                    >
+                                                                        <path 
+                                                                            strokeLinecap="round" 
+                                                                            strokeLinejoin="round" 
+                                                                            strokeWidth={2} 
+                                                                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" 
+                                                                        />
+                                                                    </svg>
+                                                                )}
+                                                            </span>
                                                         </Link>
                                                     </li>
                                                 ))}
