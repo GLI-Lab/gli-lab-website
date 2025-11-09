@@ -87,6 +87,31 @@ export default async function Page() {
                         다음과 같은 최신 기술들을 연구개발하고 있습니다.
                     </p>
 
+                    <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center justify-center !mt-6">
+                        <a 
+                            href="/pdf/Graph-based AI_part1_v251028.pdf" 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-4 py-2 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-300 flex items-center gap-2"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Graph-based AI (Part 1)
+                        </a>
+                        <a 
+                            href="/pdf/Graph-based AI_part2_v251104.pdf" 
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="px-4 py-2 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-300 flex items-center gap-2"
+                        >
+                            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            Graph-based AI (Part 2)
+                        </a>
+                    </div>
+
                     <ul className="list-none list-inside space-y-6 md:space-y-10 text-left text-home">
                         <li className="space-y-2 leading-snug">
                             <div className="space-y-1">
