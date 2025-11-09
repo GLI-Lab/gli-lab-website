@@ -2,13 +2,14 @@
 
 import React, { useState } from 'react';
 import { Separator } from "@/components/ui/separator"
-import { ProfileDetailProps, type StudyData, type PaperData } from '@/data/loaders/types';
+import { ProfileDetailProps, type StudyData, type PaperData, type PatentData } from '@/data/loaders/types';
 import Link from 'next/link';
 
 export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
-    const {id, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, graduation, affiliation, studies = [], papers = [], isAlumniPage = false } = props;
+    const {id, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, graduation, affiliation, studies = [], papers = [], patents = [], isAlumniPage = false } = props;
     const [displayedStudiesCount, setDisplayedStudiesCount] = useState(5);
     const [displayedPapersCount, setDisplayedPapersCount] = useState(5);
+    const [displayedPatentsCount, setDisplayedPatentsCount] = useState(5);
 
     const renderEducation = (
         label: string,
@@ -57,9 +58,17 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
         );
     };
 
+    // 현재 프로필과 관련된 특허를 필터링하는 함수
+    const getPatentsForProfile = (allPatents: any[], profileId: string) => {
+        return allPatents.filter(patent => 
+            patent.authors.some((author: any) => author.ID === profileId)
+        );
+    };
+
     // 현재 프로필과 관련된 스터디와 논문 필터링
     const filteredStudies = filterStudiesForProfile(studies, { id });
     const filteredPapers = getPapersForProfile(papers, id);
+    const filteredPatents = getPatentsForProfile(patents, id);
 
     // 날짜 포맷팅 함수
     const formatDate = (dateString: string): string => {
@@ -180,7 +189,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                 className="hover:text-interactive-hover hover:underline underline-offset-4"
                                 title=""
                             >
-                                Publications
+                                Papers
                             </Link>
                             )
                         </span>
@@ -188,7 +197,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                             {filteredPapers.slice(0, displayedPapersCount).map((paper: PaperData, index: number) => {
                                 return (
                                     <div key={paper.title} className="mb-4 leading-snug">
-                                        <div className="grid grid-cols-[auto,1fr] gap-x-4 items-start">
+                                        <div className="grid grid-cols-[auto,1fr] items-start">
                                             <div className="flex items-start">
                                                 <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
                                                 <div className="flex-1">
@@ -200,29 +209,18 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                                         >
                                                             {paper.title}
                                                         </Link>
-                                                        {(() => {
-                                                            const isAccepted = paper.status === 'Accepted';
-                                                            const showVenueYear = isAccepted && paper.venue && paper.year;
-                                                            const venueName = paper.venue?.acronym || paper.venue?.name;
-                                                            
-                                                            return (
-                                                                <span className="text-[15px] md:text-[16px] text-text-secondary font-normal">
-                                                                    {showVenueYear && `, ${venueName}, ${paper.year}`}
-                                                                    {paper.status && (
-                                                                        <span>
-                                                                            , <span className={`inline-block text-[13px] px-2 py-1/2 rounded-full ${
-                                                                                paper.status === 'Accepted' ? 'bg-green-100 text-green-800' :
-                                                                                paper.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                                                                                paper.status === 'Under Review' ? 'bg-yellow-100 text-yellow-800' :
-                                                                                'bg-brand-primary/10 text-brand-primary'
-                                                                            }`}>
-                                                                                {paper.status}
-                                                                            </span>
-                                                                        </span>
-                                                                    )}
+                                                        {paper.status && (
+                                                            <span>
+                                                                , <span className={`inline-block text-[13px] px-2 py-1/2 rounded-full ${
+                                                                    paper.status === 'Accepted' ? 'bg-green-100 text-green-800' :
+                                                                    paper.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
+                                                                    paper.status === 'Under Review' ? 'bg-yellow-100 text-yellow-800' :
+                                                                    'bg-brand-primary/10 text-brand-primary'
+                                                                }`}>
+                                                                    {paper.status}
                                                                 </span>
-                                                            );
-                                                        })()}
+                                                            </span>
+                                                        )}
                                                     </div>
                                                     <div className="text-[13px] md:text-[14px] text-text-secondary">
                                                         {paper.authors?.map((author, idx) => {
@@ -242,25 +240,185 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                                             );
                                                         })}
                                                     </div>
+                                                    {(() => {
+                                                        const isAccepted = paper.status === 'Accepted';
+                                                        const showVenueYear = isAccepted && paper.venue && paper.year;
+                                                        const venueName = paper.venue?.acronym 
+                                                            ? `${paper.venue.name} (${paper.venue.acronym})`
+                                                            : paper.venue?.name;
+                                                        
+                                                        return showVenueYear ? (
+                                                            <div className="text-[13px] md:text-[14px] text-text-secondary mt-1">
+                                                                {venueName}, {paper.year}
+                                                            </div>
+                                                        ) : null;
+                                                    })()}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 );
                             })}
-                            {filteredPapers.length > displayedPapersCount && (
+                            {filteredPapers.length > 5 && (
                                 <div className="mb-1.5 leading-snug">
-                                    <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-center">
-                                        <div className="flex items-start">
-                                            <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
-                                            <button 
-                                                onClick={() => setDisplayedPapersCount(prev => Math.min(prev + 5, filteredPapers.length))}
-                                                className="text-[13.5px] md:text-[14.5px] text-text-secondary hover:text-interactive-primary hover:underline cursor-pointer"
-                                            >
-                                                See more ({displayedPapersCount} / {filteredPapers.length})
-                                            </button>
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-[13.5px] md:text-[14.5px]">
+                                                {displayedPapersCount} of {filteredPapers.length}
+                                            </span>
+                                            {displayedPapersCount < filteredPapers.length && (
+                                                <button 
+                                                    onClick={() => setDisplayedPapersCount(Math.min(displayedPapersCount + 5, filteredPapers.length))}
+                                                    className="flex items-center gap-1 text-[13.5px] md:text-[14.5px] text-text-secondary hover:text-interactive-primary hover:underline cursor-pointer transition-colors"
+                                                >
+                                                    <span>Show more</span>
+                                                    <svg 
+                                                        className="w-3.5 h-3.5"
+                                                        fill="none" 
+                                                        stroke="currentColor" 
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </button>
+                                            )}
+                                            {displayedPapersCount > 5 && (
+                                                <button 
+                                                    onClick={() => setDisplayedPapersCount(Math.max(5, displayedPapersCount - 5))}
+                                                    className="flex items-center gap-1 text-[13.5px] md:text-[14.5px] text-text-secondary hover:text-interactive-primary hover:underline cursor-pointer transition-colors"
+                                                >
+                                                    <span>Show less</span>
+                                                    <svg 
+                                                        className="w-3.5 h-3.5 rotate-180"
+                                                        fill="none" 
+                                                        stroke="currentColor" 
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </button>
+                                            )}
                                         </div>
-                                        <div className="text-[12.5px] text-text-accent italic whitespace-nowrap">
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+                <div className="my-2"></div>
+                
+                {/* Activities (Patents) */}
+                {filteredPatents.length > 0 && (
+                    <div className={`grid gap-x-4 gap-y-2 `}>
+                        <span className={`text-text-accent font-medium`}>
+                            Activities (
+                            <Link 
+                                href="/publications/patents" 
+                                className="hover:text-interactive-hover hover:underline underline-offset-4"
+                                title=""
+                            >
+                                Patents
+                            </Link>
+                            )
+                        </span>
+                        <div className="">
+                            {filteredPatents.slice(0, displayedPatentsCount).map((patent: PatentData, index: number) => {
+                                const filed = patent.status.filed;
+                                const registered = patent.status.registered;
+                                
+                                // 날짜 포맷팅
+                                const formatPatentDate = (dateStr: string | null): string => {
+                                    if (!dateStr) return '';
+                                    const date = new Date(dateStr);
+                                    const year = date.getFullYear();
+                                    const month = date.getMonth() + 1;
+                                    const day = date.getDate();
+                                    return `${year}년 ${month}월 ${day}일`;
+                                };
+                                
+                                return (
+                                    <div key={patent.title} className="mb-4 leading-snug">
+                                        <div className="grid grid-cols-[auto,1fr] items-start">
+                                            <div className="flex items-start">
+                                                <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
+                                                <div className="flex-1">
+                                                    <div className="text-[15.5px] md:text-[16.5px] font-medium mb-1">
+                                                        <Link 
+                                                            href="/publications/patents" 
+                                                            className="hover:text-interactive-hover hover:underline underline-offset-4"
+                                                            title="View patent details"
+                                                        >
+                                                            {patent.title}
+                                                        </Link>
+                                                    </div>
+                                                    <div className="text-[13px] md:text-[14px] text-text-secondary">
+                                                        {patent.authors?.map((author, idx) => (
+                                                            <span key={idx}>
+                                                                <span className={author.ID === id ? 'font-semibold text-black italic' : 'italic'}>
+                                                                    {author.name}
+                                                                </span>
+                                                                {idx < patent.authors.length - 1 ? ', ' : ''}
+                                                            </span>
+                                                        ))}
+                                                    </div>
+                                                    <div className="text-[13px] md:text-[14px] text-text-secondary mt-1">
+                                                        {filed.date && filed.number && (
+                                                            <span>출원번호 제 {filed.number} 호, 출원일 {formatPatentDate(filed.date)}</span>
+                                                        )}
+                                                        {registered.date && registered.number && (
+                                                            <span>
+                                                                {filed.date && filed.number && ', '}
+                                                                등록번호 제 {registered.number} 호, 등록일 {formatPatentDate(registered.date)}
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                            {filteredPatents.length > 5 && (
+                                <div className="mb-1.5 leading-snug">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-[13.5px] md:text-[14.5px]">
+                                                {displayedPatentsCount} of {filteredPatents.length}
+                                            </span>
+                                            {displayedPatentsCount < filteredPatents.length && (
+                                                <button 
+                                                    onClick={() => setDisplayedPatentsCount(Math.min(displayedPatentsCount + 5, filteredPatents.length))}
+                                                    className="flex items-center gap-1 text-[13.5px] md:text-[14.5px] text-text-secondary hover:text-interactive-primary hover:underline cursor-pointer transition-colors"
+                                                >
+                                                    <span>Show more</span>
+                                                    <svg 
+                                                        className="w-3.5 h-3.5"
+                                                        fill="none" 
+                                                        stroke="currentColor" 
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </button>
+                                            )}
+                                            {displayedPatentsCount > 5 && (
+                                                <button 
+                                                    onClick={() => setDisplayedPatentsCount(Math.max(5, displayedPatentsCount - 5))}
+                                                    className="flex items-center gap-1 text-[13.5px] md:text-[14.5px] text-text-secondary hover:text-interactive-primary hover:underline cursor-pointer transition-colors"
+                                                >
+                                                    <span>Show less</span>
+                                                    <svg 
+                                                        className="w-3.5 h-3.5 rotate-180"
+                                                        fill="none" 
+                                                        stroke="currentColor" 
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -313,20 +471,46 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                     </div>
                                 </div>
                             ))}
-                            {filteredStudies.length > displayedStudiesCount && (
+                            {filteredStudies.length > 5 && (
                                 <div className="mb-1.5 leading-snug">
-                                    <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-center">
-                                        <div className="flex items-start">
-                                            <span className="text-text-accent font-semibold pr-0.5 text-[16px]">-</span>
-                                            <button 
-                                                onClick={() => setDisplayedStudiesCount(prev => Math.min(prev + 5, filteredStudies.length))}
-                                                className="text-[13.5px] md:text-[14.5px] text-text-secondary hover:text-interactive-primary hover:underline cursor-pointer"
-                                            >
-                                                See more ({displayedStudiesCount} / {filteredStudies.length})
-                                            </button>
-                                        </div>
-                                        <div></div>
-                                        <div className="flex items-center gap-1 flex-shrink-0">
+                                    <div className="flex items-center gap-2">
+                                        <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
+                                        <div className="flex items-center gap-3">
+                                            <span className="text-[13.5px] md:text-[14.5px]">
+                                                {displayedStudiesCount} of {filteredStudies.length}
+                                            </span>
+                                            {displayedStudiesCount < filteredStudies.length && (
+                                                <button 
+                                                    onClick={() => setDisplayedStudiesCount(Math.min(displayedStudiesCount + 5, filteredStudies.length))}
+                                                    className="flex items-center gap-1 text-[13.5px] md:text-[14.5px] text-text-secondary hover:text-interactive-primary hover:underline cursor-pointer transition-colors"
+                                                >
+                                                    <span>Show more</span>
+                                                    <svg 
+                                                        className="w-3.5 h-3.5"
+                                                        fill="none" 
+                                                        stroke="currentColor" 
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </button>
+                                            )}
+                                            {displayedStudiesCount > 5 && (
+                                                <button 
+                                                    onClick={() => setDisplayedStudiesCount(Math.max(5, displayedStudiesCount - 5))}
+                                                    className="flex items-center gap-1 text-[13.5px] md:text-[14.5px] text-text-secondary hover:text-interactive-primary hover:underline cursor-pointer transition-colors"
+                                                >
+                                                    <span>Show less</span>
+                                                    <svg 
+                                                        className="w-3.5 h-3.5 rotate-180"
+                                                        fill="none" 
+                                                        stroke="currentColor" 
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                                    </svg>
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 </div>

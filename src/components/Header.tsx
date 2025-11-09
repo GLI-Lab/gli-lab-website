@@ -96,7 +96,8 @@ export default function Header() {
             path: "/publications/papers",
             subMenus: [
                 {title: "Papers", path: "/publications/papers"},
-                {title: "Patents", path: "https://bkoh509.github.io"},
+                {title: "Patents", path: "/publications/patents"},
+                // {title: "Patents", path: "https://bkoh509.github.io"},
             ]
         },
         {
