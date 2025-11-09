@@ -119,10 +119,10 @@
   filter: {"type": "journal", "scope": "international"}
   status: "Accepted"
   year: 2025
-  venue: { name: "IEEE Access", acronym: "" }
+  venue: { name: "To Appear in IEEE Access", acronym: "" }
   links: 
     Link: null
-    Code: null
+    Code: https://github.com/oseoko/IGSRec/
   notes: {"normal": "", "important": ""}
   authors:
     - { ID: "[2024.07] 정우석", name: "Wooseok Jeong", position: first }
@@ -155,8 +155,7 @@
   year: 2025
   venue: { name: "To Appear in ACM International Conference on Information and Knowledge Management", acronym: "CIKM" }
   links:
-    Link: null
-    # Link: https://doi.org/10.1145/3746252.3761243
+    Link: https://doi.org/10.1145/3746252.3761243
     Code: null
   notes: {"normal": "Full Research Paper (Acceptance Rate: 27.2% = 443/1,627)", "important": ""}  # refer: mail
   authors:
