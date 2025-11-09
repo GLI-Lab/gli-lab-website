@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useMemo, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PaperData } from '@/data/loaders/types';
@@ -27,31 +26,19 @@ interface PublicationListProps {
   papers: PaperData[];
   memberIds?: string[];
   alumniIds?: string[];
+  initialShowInProgress?: boolean;
 }
 
-export default function PublicationList({ className = '', papers, memberIds = [], alumniIds = [] }: PublicationListProps) {
-  const searchParams = useSearchParams();
-  
-  // URL 파라미터에서 showInProgress 읽기
-  const showInProgressFromUrl = searchParams.get('showInProgress') === 'true';
-  
-  const [showInProgress, setShowInProgress] = useState(showInProgressFromUrl);
+export default function PublicationList({ className = '', papers, memberIds = [], alumniIds = [], initialShowInProgress = false }: PublicationListProps) {
+  // 서버에서 전달된 초기값 사용
+  const [showInProgress, setShowInProgress] = useState(initialShowInProgress);
   const [showUnderReview, setShowUnderReview] = useState(true);
-  const [isInProgressExpanded, setIsInProgressExpanded] = useState(showInProgressFromUrl);
+  const [isInProgressExpanded, setIsInProgressExpanded] = useState(initialShowInProgress);
   const [isUnderReviewExpanded, setIsUnderReviewExpanded] = useState(true);
   const [filterType, setFilterType] = useState<'all' | 'journal' | 'conference'>('all');
   const [filterScope, setFilterScope] = useState<'all' | 'international' | 'domestic'>('international');
   const [triggerAnimation, setTriggerAnimation] = useState(0);
   const [highlightedPaperId, setHighlightedPaperId] = useState<string | null>(null);
-  
-  // URL 파라미터가 변경되면 상태 업데이트
-  useEffect(() => {
-    const showInProgressParam = searchParams.get('showInProgress') === 'true';
-    if (showInProgressParam !== showInProgress) {
-      setShowInProgress(showInProgressParam);
-      setIsInProgressExpanded(showInProgressParam);
-    }
-  }, [searchParams]);
 
   // Animation trigger functions
   const triggerFilterAnimation = () => {
