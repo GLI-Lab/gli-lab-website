@@ -24,15 +24,17 @@ export default async function Page() {
                 <SubCover title={TITLE} showBreadcrumb={false}/>
             </div>
 
-            <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
-                <div className="mb-8">
+            <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-16">
+                <div className="mb-4">
                     <p className="text-gray-600 text-lg">
                         Total <span className="font-semibold text-gray-900">{totalStudies}</span> studies
                     </p>
                 </div>
 
-                <StudyList className="" studyItems={studies} profiles={profiles}/>
+                <StudyList studyItems={studies} profiles={profiles}/>
             </div>
+
+            <div className="h-[10vh]"></div>
         </>
     )
 }

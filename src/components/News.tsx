@@ -56,6 +56,23 @@ export function getAvailableYears(newsItems: NewsData[]): number[] {
   return Array.from(years).sort((a, b) => b - a); // 최신 연도부터 정렬
 }
 
+// 제목을 URL-safe ID로 변환하는 함수
+function titleToId(title: string, type: 'paper' | 'patent'): string {
+  // 제목을 소문자로 변환하고, 공백을 하이픈으로, 특수문자 제거 (한글 포함)
+  // 한글 유니코드 범위: \uAC00-\uD7A3 (가-힣)
+  // 영문, 숫자, 한글, 공백, 하이픈만 허용
+  // \w는 [a-zA-Z0-9_]를 의미하므로 한글은 별도로 추가
+  // 하이픈(-)을 이스케이프하거나 문자 클래스의 끝에 배치해야 함
+  const id = title
+    .toLowerCase()
+    .replace(/[^\w\s\uAC00-\uD7A3-]/g, '') // 특수문자 제거 (한글은 유지, 하이픈은 끝에 배치)
+    .replace(/\s+/g, '-') // 공백을 하이픈으로
+    .replace(/-+/g, '-') // 연속된 하이픈을 하나로
+    .replace(/^-|-$/g, ''); // 앞뒤 하이픈 제거
+  
+  return id;
+}
+
 // 텍스트에서 프로필 마크업, 페이퍼 마크업, bold 태그를 찾아서 변환하는 함수
 function renderContentWithMarkup(content: string, memberIds: string[], alumniIds: string[], newsIndex: number, lineIndex: number): React.ReactNode {
   if (!content) return content;
@@ -143,7 +160,7 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
           <Link 
             key={`${newsIndex}-${lineIndex}-profile-${profileId}`}
             href={`${basePath}?id=${profileId.replace(/\s/g, '%20')}`}
-            className="group hover:text-brand-primary underline-offset-4 hover:underline hover:decoration-2"
+            className="group hover:text-brand-primary underline-offset-4 hover:underline hover:decoration-1.5"
             title={`View ${displayName}`}
           >
             {displayName}
@@ -169,13 +186,15 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
       lastIndex = index + fullMatch.length;
     } else if (type === 'paper') {
       const [fullMatch, paperTitle] = match;
+      const paperId = titleToId(paperTitle, 'paper');
       
       // 페이퍼 제목을 링크로 변환 (ProfileCardDetail과 동일한 스타일)
+      // URL 해시에 한글이 포함될 수 있으므로 encodeURIComponent 사용
       elements.push(
         <Link 
           key={`${newsIndex}-${lineIndex}-paper-${index}`}
-          href="/publications/papers"
-          className="group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-2"
+          href={`/publications/papers#${encodeURIComponent(paperId)}`}
+          className="group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-1.5"
           title="View publication details"
         >
           {paperTitle}
@@ -188,13 +207,15 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
       lastIndex = index + fullMatch.length;
     } else if (type === 'patent') {
       const [fullMatch, patentTitle] = match;
+      const patentId = titleToId(patentTitle, 'patent');
       
       // 특허 제목을 링크로 변환 (paper와 동일한 스타일)
+      // URL 해시에 한글이 포함될 수 있으므로 encodeURIComponent 사용
       elements.push(
         <Link 
           key={`${newsIndex}-${lineIndex}-patent-${index}`}
-          href="/publications/patents"
-          className="group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-2"
+          href={`/publications/patents#${encodeURIComponent(patentId)}`}
+          className="group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-1.5"
           title="View patent details"
         >
           {patentTitle}

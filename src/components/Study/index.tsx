@@ -39,7 +39,7 @@ function parseDescription(description: string): React.ReactNode {
     const highlightMatch = part.match(/^<h>(.*?)<\/h>$/);
     if (highlightMatch) {
       return (
-        <span key={index} className="underline-offset-2 underline decoration-1 font-medium">
+        <span key={index} className="underline-offset-4 underline decoration-1.5 font-medium">
           {highlightMatch[1]}
         </span>
       );
@@ -66,7 +66,7 @@ function renderProfileWithLink(participant: string, profiles: any[], alumniProfi
       return (
         <Link 
           href={`${basePath}?id=${profileId.replace(/\s/g, '%20')}`}
-          className="underline-offset-4 hover:underline hover:decoration-1 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
+          className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
           title={`View ${profile.name_ko} (${profile.name_en})`}
         >
           <span className=" transition-colors [&:hover>svg]:text-brand-primary">
@@ -108,7 +108,7 @@ export async function StudyList({ className = '', count = null, studyItems, prof
   const studies = studyItems ? (count ? studyItems.slice(0, count) : studyItems) : [];
 
   return (
-    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-4 md:gap-y-8 ${className}`}>
+    <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 md:gap-y-12 ${className}`}>
       {studies.map((study, _) => {
         const studyId = `study-${study.title.replace(/\s+/g, '-').toLowerCase()}`;
         
