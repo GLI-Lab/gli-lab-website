@@ -4,17 +4,18 @@ import Image from 'next/image';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ProfileItemProps } from '@/data/loaders/types';
 import { ProfileListDetail } from './ProfileListDetail';
-import { type StudyData, type PaperData } from '@/data/loaders/types';
+import { type StudyData, type PaperData, type PatentData } from '@/data/loaders/types';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
 
 interface ProfileListItemProps extends ProfileItemProps {
     studies?: StudyData[];
     papers?: PaperData[];
+    patents?: PatentData[];
 }
 
 export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
-    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage, studies = [], papers = [], bs, ms, phd, interest, homepage, github, linkedin, title } = props;
+    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage, studies = [], papers = [], patents = [], bs, ms, phd, interest, homepage, github, linkedin, title } = props;
     const [isExpanded, setIsExpanded] = useState(false);
     const [copied, setCopied] = useState(false);
     
@@ -348,6 +349,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                         {...props} 
                         studies={studies} 
                         papers={papers} 
+                        patents={patents}
                         isAlumniPage={isAlumniPage}
                     />
                 </div>

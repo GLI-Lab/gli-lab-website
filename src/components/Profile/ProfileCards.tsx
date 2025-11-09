@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ProfileCardItem } from './ProfileCardItem';
 import { ProfileListItem } from './ProfileListItem';
 import { ProfileCardDetail } from './ProfileCardDetail';
-import { type ProfileData, type PaperData, type StudyData } from '@/data/loaders/types';
+import { type ProfileData, type PaperData, type StudyData, type PatentData } from '@/data/loaders/types';
 import { getPapersForProfile } from '@/data/loaders/utils';
 
 interface ProfileCardsProps {
@@ -13,6 +13,7 @@ interface ProfileCardsProps {
     selectedProfile?: ProfileData | null; // page에서 찾아서 넘겨준 프로필 (alumni 페이지에서는 null일 수 있음)
     studies?: StudyData[];
     papers?: PaperData[];
+    patents?: PatentData[];
     isAlumniPage?: boolean; // alumni 페이지인지 여부
     initialIsCardView?: boolean; // SSR 단계에서 초기 뷰 모드 지정
 }
@@ -31,7 +32,7 @@ const filterStudiesForProfile = (allStudies: StudyData[], profile: ProfileData) 
     );
 };
 
-export function ProfileCards({ profiles, selectedProfile, studies = [], papers = [], isAlumniPage = false, initialIsCardView = true }: ProfileCardsProps) {
+export function ProfileCards({ profiles, selectedProfile, studies = [], papers = [], patents = [], isAlumniPage = false, initialIsCardView = true }: ProfileCardsProps) {
     const [init, setInit] = useState(true);
     const [isAtBottom, setIsAtBottom] = useState(false);
     const [selectedCard, setSelectedCard] = useState<ProfileData | null>(selectedProfile || null);
@@ -153,6 +154,18 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
         [papers, selectedCard]
     );
 
+    // 현재 선택된 프로필과 관련된 특허 필터링
+    const getPatentsForProfile = (allPatents: PatentData[], profileId: string) => {
+        return allPatents.filter(patent => 
+            patent.authors.some((author) => author.ID === profileId)
+        );
+    };
+
+    const selectedProfilePatents = useMemo(() => 
+        selectedCard ? getPatentsForProfile(patents, selectedCard.id) : [],
+        [patents, selectedCard]
+    );
+
     // 배경 스크롤 방지 및 ESC 키 처리
     useEffect(() => {
         if (!init && selectedCard && window.innerWidth < 880 && isCardView) {
@@ -257,7 +270,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
             {selectedCard && isCardView && (
                 <div className="hidden 1.5md:block 1.5md:w-[350px] 1.5md:mr-12 lg:mr-20 sticky self-start top-16 pt-4">
                     <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pr-8 -mr-8 pb-20">
-                        <ProfileCardDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} isAlumniPage={isAlumniPage}/>
+                        <ProfileCardDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} patents={selectedProfilePatents} isAlumniPage={isAlumniPage}/>
                     </div>
                 </div>
             )}
@@ -297,7 +310,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                             className="overflow-y-auto w-[320px] max-h-[calc(90vh-20px)] relative overscroll-none scrollbar-hide pt-2 pb-10" 
                             onScroll={handleScroll}
                         >
-                            <ProfileCardDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} isAlumniPage={isAlumniPage}/>
+                            <ProfileCardDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} patents={selectedProfilePatents} isAlumniPage={isAlumniPage}/>
                         </div>
 
                         {/* 스크롤 인디케이터 - 모달 전체 하단에 고정 */}
@@ -373,6 +386,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                                 isAlumniPage={isAlumniPage}
                                                 studies={studies}
                                                 papers={papers}
+                                                patents={patents}
                                                 {...profile}
                                             />
                                             {/* Clean Divider - except for last item */}

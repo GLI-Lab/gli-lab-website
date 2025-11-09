@@ -5,6 +5,7 @@ import { ProfileCards } from "@/components/Profile";
 import { getProfiles } from "@/data/loaders/profileLoader";
 import { getPapers } from "@/data/loaders/paperLoader";
 import { getStudies } from "@/data/loaders/studyLoader";
+import { getPatents } from "@/data/loaders/patentLoader";
 
 const TITLE = `Members`
 
@@ -38,6 +39,7 @@ export default async function Page({ searchParams }: PageProps) {
     const profiles = await getProfiles();
     const studies = await getStudies();
     const papers = await getPapers();
+    const patents = await getPatents();
     const resolvedSearchParams = await searchParams;
     const selectedId = resolvedSearchParams.id as string;
     const viewParam = resolvedSearchParams.view as string;
@@ -63,6 +65,7 @@ export default async function Page({ searchParams }: PageProps) {
                 selectedProfile={selectedProfile}
                 studies={studies} 
                 papers={papers} 
+                patents={patents}
                 isAlumniPage={false}
                 initialIsCardView={viewParam !== 'list'}
             />

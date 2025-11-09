@@ -71,6 +71,7 @@ export interface ProfileItemProps extends ProfileData {
 export interface ProfileDetailProps extends ProfileData {
   studies?: StudyData[];
   papers?: PaperData[];
+  patents?: PatentData[];
   isAlumniPage?: boolean;
 }
 
@@ -140,6 +141,39 @@ export interface NewsData {
   date: string;
   type: 'Member' | 'Publication' | 'Funding' | 'General';
   content: string;
+}
+
+// =====================================================
+// Patent Types
+// =====================================================
+
+// Raw patent data interface (as it comes from YAML)
+export interface PatentYAML {
+  title: string;
+  scope: string;
+  status: {
+    filed: { date: string | null; number: string | null };
+    registered: { date: string | null; number: string | null };
+  };
+  authors: {
+    ID?: string;
+    name: string;
+  }[];
+}
+
+export interface PatentAuthorData {
+  ID?: string;
+  name: string;
+}
+
+export interface PatentData {
+  title: string;
+  scope: string;
+  status: {
+    filed: { date: string | null; number: string | null };
+    registered: { date: string | null; number: string | null };
+  };
+  authors: PatentAuthorData[];
 }
 
  
