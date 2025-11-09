@@ -1,9 +1,24 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PatentData } from '@/data/loaders/types';
+
+// 제목을 URL-safe ID로 변환하는 함수
+function titleToId(title: string): string {
+  // 제목을 소문자로 변환하고, 공백을 하이픈으로, 특수문자 제거 (한글 포함)
+  // 한글 유니코드 범위: \uAC00-\uD7A3 (가-힣)
+  // 하이픈(-)을 이스케이프하거나 문자 클래스의 끝에 배치해야 함
+  const id = title
+    .toLowerCase()
+    .replace(/[^\w\s\uAC00-\uD7A3-]/g, '') // 특수문자 제거 (한글은 유지, 하이픈은 끝에 배치)
+    .replace(/\s+/g, '-') // 공백을 하이픈으로
+    .replace(/-+/g, '-') // 연속된 하이픈을 하나로
+    .replace(/^-|-$/g, ''); // 앞뒤 하이픈 제거
+  
+  return id;
+}
 
 interface PatentListProps {
   className?: string
@@ -16,6 +31,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
   const [filterType, setFilterType] = useState<'all' | 'filed' | 'registered'>('all');
   const [filterScope, setFilterScope] = useState<'all' | 'international' | 'domestic'>('all');
   const [triggerAnimation, setTriggerAnimation] = useState(0);
+  const [highlightedPatentId, setHighlightedPatentId] = useState<string | null>(null);
 
   // Animation trigger functions
   const triggerFilterAnimation = () => {
@@ -136,6 +152,65 @@ export default function PatentList({ className = '', patents, memberIds = [], al
     return grouped;
   }, [filteredPatents]);
 
+  // URL 해시를 확인하여 하이라이트 처리
+  useEffect(() => {
+    let highlightTimer: NodeJS.Timeout | null = null;
+
+    const checkHash = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        // # 제거하고 디코딩 (한글이 포함될 수 있음)
+        const targetId = decodeURIComponent(hash.substring(1));
+        
+        // 해당 특허가 필터링된 목록에 있는지 확인
+        const targetPatent = filteredPatents.find(p => titleToId(p.title) === targetId);
+        if (targetPatent) {
+          setHighlightedPatentId(targetId);
+          
+          // 이전 타이머 정리
+          if (highlightTimer) clearTimeout(highlightTimer);
+          
+          // 즉시 중앙으로 스크롤 (애니메이션 없음)
+          // requestAnimationFrame을 사용하여 DOM 렌더링 후 실행
+          let attempts = 0;
+          const maxAttempts = 10; // 최대 10번 시도 (약 160ms, 60fps 기준)
+          const scrollToElement = () => {
+            const element = document.getElementById(targetId);
+            if (element) {
+              element.scrollIntoView({
+                behavior: 'auto',
+                block: 'center'
+              });
+            } else if (attempts < maxAttempts) {
+              attempts++;
+              requestAnimationFrame(scrollToElement);
+            }
+          };
+          requestAnimationFrame(scrollToElement);
+          
+          // 1.5초 후 하이라이트 제거
+          highlightTimer = setTimeout(() => {
+            setHighlightedPatentId(null);
+          }, 1500);
+        }
+      }
+    };
+
+    // 초기 로드 시 확인
+    checkHash();
+
+    // 해시 변경 감지
+    const handleHashChange = () => {
+      checkHash();
+    };
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      if (highlightTimer) clearTimeout(highlightTimer);
+    };
+  }, [filteredPatents]);
+
   // Calculate counts
   const visiblePatentsCount = filteredPatents.length;
   const totalPatentsCount = patents.length;
@@ -191,7 +266,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
                   }`}
                 >
-                  출원
+                  Filed (출원)
                 </button>
                 <button
                   onClick={() => handleFilterTypeChange('registered')}
@@ -201,7 +276,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
                   }`}
                 >
-                  등록
+                  Registered (등록)
                 </button>
               </div>
             </div>
@@ -276,19 +351,33 @@ export default function PatentList({ className = '', patents, memberIds = [], al
             size="small"
           />
           <ul className="list-disc space-y-6 md:space-y-8 pl-5 md:pl-6">
-            {patentsByYear[year].map((patent, index) => (
-              <li key={index} className="leading-normal">
-                <div className="text-gray-700 font-semibold mb-1">
-                  {patent.title}
-                </div>
-                <div className="text-gray-600 mb-1">
-                  {renderAuthors(patent)}
-                </div>
-                <div className="text-gray-600 mb-1">
-                  {renderPatentInfo(patent)}
-                </div>
-              </li>
-            ))}
+            {patentsByYear[year].map((patent, index) => {
+              const patentId = titleToId(patent.title);
+              const isHighlighted = highlightedPatentId === patentId;
+              return (
+                <li 
+                  key={index} 
+                  id={patentId}
+                  className="leading-normal"
+                >
+                  <div className={`transition-colors duration-300 ${
+                    isHighlighted 
+                      ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
+                      : ''
+                  }`}>
+                    <div className="text-gray-700 font-semibold mb-1">
+                      {patent.title}
+                    </div>
+                    <div className="text-gray-600 mb-1">
+                      {renderAuthors(patent)}
+                    </div>
+                    <div className="text-gray-600 mb-1">
+                      {renderPatentInfo(patent)}
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
           </ul>
         </div>
       ))}

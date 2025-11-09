@@ -1,9 +1,25 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PaperData } from '@/data/loaders/types';
+
+// 제목을 URL-safe ID로 변환하는 함수
+function titleToId(title: string): string {
+  // 제목을 소문자로 변환하고, 공백을 하이픈으로, 특수문자 제거 (한글 포함)
+  // 한글 유니코드 범위: \uAC00-\uD7A3 (가-힣)
+  // 하이픈(-)을 이스케이프하거나 문자 클래스의 끝에 배치해야 함
+  const id = title
+    .toLowerCase()
+    .replace(/[^\w\s\uAC00-\uD7A3-]/g, '') // 특수문자 제거 (한글은 유지, 하이픈은 끝에 배치)
+    .replace(/\s+/g, '-') // 공백을 하이픈으로
+    .replace(/-+/g, '-') // 연속된 하이픈을 하나로
+    .replace(/^-|-$/g, ''); // 앞뒤 하이픈 제거
+  
+  return id;
+}
 
 
 interface PublicationListProps {
@@ -14,13 +30,28 @@ interface PublicationListProps {
 }
 
 export default function PublicationList({ className = '', papers, memberIds = [], alumniIds = [] }: PublicationListProps) {
-  const [showInProgress, setShowInProgress] = useState(false);
+  const searchParams = useSearchParams();
+  
+  // URL 파라미터에서 showInProgress 읽기
+  const showInProgressFromUrl = searchParams.get('showInProgress') === 'true';
+  
+  const [showInProgress, setShowInProgress] = useState(showInProgressFromUrl);
   const [showUnderReview, setShowUnderReview] = useState(true);
-  const [isInProgressExpanded, setIsInProgressExpanded] = useState(false);
+  const [isInProgressExpanded, setIsInProgressExpanded] = useState(showInProgressFromUrl);
   const [isUnderReviewExpanded, setIsUnderReviewExpanded] = useState(true);
   const [filterType, setFilterType] = useState<'all' | 'journal' | 'conference'>('all');
   const [filterScope, setFilterScope] = useState<'all' | 'international' | 'domestic'>('international');
   const [triggerAnimation, setTriggerAnimation] = useState(0);
+  const [highlightedPaperId, setHighlightedPaperId] = useState<string | null>(null);
+  
+  // URL 파라미터가 변경되면 상태 업데이트
+  useEffect(() => {
+    const showInProgressParam = searchParams.get('showInProgress') === 'true';
+    if (showInProgressParam !== showInProgress) {
+      setShowInProgress(showInProgressParam);
+      setIsInProgressExpanded(showInProgressParam);
+    }
+  }, [searchParams]);
 
   // Animation trigger functions
   const triggerFilterAnimation = () => {
@@ -79,6 +110,65 @@ export default function PublicationList({ className = '', papers, memberIds = []
       return typeMatch && scopeMatch;
     });
   }, [totalPublications, filterType, filterScope]);
+
+  // URL 해시를 확인하여 하이라이트 처리
+  useEffect(() => {
+    let highlightTimer: NodeJS.Timeout | null = null;
+
+    const checkHash = () => {
+      const hash = window.location.hash;
+      if (hash) {
+        // # 제거하고 디코딩 (한글이 포함될 수 있음)
+        const targetId = decodeURIComponent(hash.substring(1));
+        
+        // 해당 논문이 필터링된 목록에 있는지 확인
+        const targetPaper = filteredPublications.find(p => titleToId(p.title) === targetId);
+        if (targetPaper) {
+          setHighlightedPaperId(targetId);
+          
+          // 이전 타이머 정리
+          if (highlightTimer) clearTimeout(highlightTimer);
+          
+          // 즉시 중앙으로 스크롤 (애니메이션 없음)
+          // requestAnimationFrame을 사용하여 DOM 렌더링 후 실행
+          let attempts = 0;
+          const maxAttempts = 10; // 최대 10번 시도 (약 160ms, 60fps 기준)
+          const scrollToElement = () => {
+            const element = document.getElementById(targetId);
+            if (element) {
+              element.scrollIntoView({
+                behavior: 'auto',
+                block: 'center'
+              });
+            } else if (attempts < maxAttempts) {
+              attempts++;
+              requestAnimationFrame(scrollToElement);
+            }
+          };
+          requestAnimationFrame(scrollToElement);
+          
+          // 1.5초 후 하이라이트 제거
+          highlightTimer = setTimeout(() => {
+            setHighlightedPaperId(null);
+          }, 1500);
+        }
+      }
+    };
+
+    // 초기 로드 시 확인
+    checkHash();
+
+    // 해시 변경 감지
+    const handleHashChange = () => {
+      checkHash();
+    };
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      if (highlightTimer) clearTimeout(highlightTimer);
+    };
+  }, [filteredPublications]);
 
   // Group publications by year (only Accepted papers)
   const publicationsByYear = filteredPublications
@@ -342,16 +432,30 @@ export default function PublicationList({ className = '', papers, memberIds = []
             <ul className="list-disc space-y-6 md:space-y-8 pl-5 md:pl-6">
               {filteredPublications
                 .filter(pub => pub.status === 'In Progress')
-                .map((publication, index) => (
-                  <li key={index} className="leading-normal">
-                    <div className="text-gray-700 mb-1">
-                      <span className="font-normal">(🛠)</span> <span className="font-semibold">{publication.title}</span>
-                    </div>
-                    <div className="text-gray-600 mb-1">
-                      {renderAuthors(publication)}
-                    </div>
-                  </li>
-                ))}
+                .map((publication, index) => {
+                  const paperId = titleToId(publication.title);
+                  const isHighlighted = highlightedPaperId === paperId;
+                  return (
+                    <li 
+                      key={index} 
+                      id={paperId}
+                      className="leading-normal"
+                    >
+                      <div className={`transition-colors duration-300 ${
+                        isHighlighted 
+                          ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
+                          : ''
+                      }`}>
+                        <div className="text-gray-700 mb-1">
+                          <span className="font-normal">(🛠)</span> <span className="font-semibold">{publication.title}</span>
+                        </div>
+                        <div className="text-gray-600 mb-1">
+                          {renderAuthors(publication)}
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
             </ul>
           </div>
         </div>
@@ -377,16 +481,30 @@ export default function PublicationList({ className = '', papers, memberIds = []
             <ul className="list-disc space-y-6 md:space-y-8 pl-5 md:pl-6">
               {filteredPublications
                 .filter(pub => pub.status === 'Under Review')
-                .map((publication, index) => (
-                  <li key={index} className="leading-normal">
-                    <div className="text-gray-700 font-semibold mb-1">
-                      {publication.title}
-                    </div>
-                    <div className="text-gray-600 mb-1">
-                      {renderAuthors(publication)}
-                    </div>
-                  </li>
-                ))}
+                .map((publication, index) => {
+                  const paperId = titleToId(publication.title);
+                  const isHighlighted = highlightedPaperId === paperId;
+                  return (
+                    <li 
+                      key={index} 
+                      id={paperId}
+                      className="leading-normal"
+                    >
+                      <div className={`transition-colors duration-300 ${
+                        isHighlighted 
+                          ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
+                          : ''
+                      }`}>
+                        <div className="text-gray-700 font-semibold mb-1">
+                          {publication.title}
+                        </div>
+                        <div className="text-gray-600 mb-1">
+                          {renderAuthors(publication)}
+                        </div>
+                      </div>
+                    </li>
+                  );
+                })}
             </ul>
           </div>
         </div>
@@ -397,43 +515,57 @@ export default function PublicationList({ className = '', papers, memberIds = []
         <div key={`${year}-${triggerAnimation}-${filterType}-${filterScope}`} className="text-base md:text-lg mb-10 md:mb-14 transform transition-all duration-500 ease-out animate-in slide-in-from-top-2 fade-in">
           <SectionHeader title={year} className="" underline={true} size="small"/>
           <ul className="list-disc space-y-5 md:space-y-7 pl-5 md:pl-6">
-            {publicationsByYear[year].map((publication, index) => (
-              <li key={index} className="leading-normal">
-                <div className="text-gray-700 font-semibold mb-1">
-                  {publication.title}
-                </div>
-                <div className="text-gray-600 mb-1">
-                  {renderAuthors(publication)}
-                </div>
-                <div className="italic leading-snug text-gray-600 mb-1">
-                  <>{renderVenue(publication.venue)}, {publication.year}{publication.notes?.normal ? ` — ${publication.notes.normal}` : ''}</>
-                </div>
-                {publication.links && Object.entries(publication.links).some(([_, url]) => url) && (
-                  <div className="flex items-center gap-2 mt-2">
-                    {Object.entries(publication.links)
-                      .filter((entry): entry is [string, string] => {
-                        const [_, url] = entry;
-                        return typeof url === 'string' && url.length > 0;
-                      })
-                      .map(([key, url]) => (
-                        <a 
-                          key={key}
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="px-3 py-0.25 text-xs md:text-sm bg-white border border-gray-700 hover:bg-gray-50 transition-colors"
-                        >
-                          {key}
-                        </a>
-                      ))
-                    }
-                    {publication.notes?.important && (
-                      <span className="text-sm md:text-base font-semibold italic text-red-600">{publication.notes.important}</span>
+            {publicationsByYear[year].map((publication, index) => {
+              const paperId = titleToId(publication.title);
+              const isHighlighted = highlightedPaperId === paperId;
+              return (
+                <li 
+                  key={index} 
+                  id={paperId}
+                  className="leading-normal"
+                >
+                  <div className={`transition-colors duration-300 ${
+                    isHighlighted 
+                      ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
+                      : ''
+                  }`}>
+                    <div className="text-gray-700 font-semibold mb-1">
+                      {publication.title}
+                    </div>
+                    <div className="text-gray-600 mb-1">
+                      {renderAuthors(publication)}
+                    </div>
+                    <div className="italic leading-snug text-gray-600 mb-1">
+                      <>{renderVenue(publication.venue)}, {publication.year}{publication.notes?.normal ? ` — ${publication.notes.normal}` : ''}</>
+                    </div>
+                    {publication.links && Object.entries(publication.links).some(([_, url]) => url) && (
+                      <div className="flex items-center gap-2 mt-2">
+                        {Object.entries(publication.links)
+                          .filter((entry): entry is [string, string] => {
+                            const [_, url] = entry;
+                            return typeof url === 'string' && url.length > 0;
+                          })
+                          .map(([key, url]) => (
+                            <a 
+                              key={key}
+                              href={url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-3 py-0.25 text-xs md:text-sm bg-white border border-gray-700 hover:bg-gray-50 transition-colors"
+                            >
+                              {key}
+                            </a>
+                          ))
+                        }
+                        {publication.notes?.important && (
+                          <span className="text-sm md:text-base font-semibold italic text-red-600">{publication.notes.important}</span>
+                        )}
+                      </div>
                     )}
                   </div>
-                )}
-              </li>
-            ))}
+                </li>
+              );
+            })}
           </ul>
         </div>
       ))}
