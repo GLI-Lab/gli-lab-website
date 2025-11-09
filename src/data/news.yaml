@@ -7,6 +7,13 @@
 ########################################################################################
 # 2025
 ########################################################################################
+- date: "2025-11-07"
+  type: Publication
+  content: |
+    One paper has been accepted at <b>IEEE Access</b> ✏️
+    - <paper>Interaction-Grounded Semantic Graph Refinement for LLM-based Recommendation</>
+    Wooseok Jeong*, Young-Jin Kim*, Hae-Yoon Koo, Jimyeung Seo, Jinho Choi, Byungkook Oh (*: Equal Contribution)
+
 - date: "2025-10-24"
   type: Publication
   content: |

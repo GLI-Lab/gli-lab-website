@@ -95,23 +95,6 @@
     - { name: "Xiongnan Jin", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-- title: "Interaction-Grounded Semantic Graph Refinement for LLM-based Recommendation"
-  filter: {"type": "", "scope": ""}
-  status: "Under Review"
-  year: 2025
-  venue: { name: "", acronym: "" }
-  links: 
-    Link: null
-    Code: null
-  notes: {"normal": "", "important": ""}
-  authors:
-    - { ID: "[2024.07] 정우석", name: "Wooseok Jeong", position: first }
-    - { ID: "[2024.10] 김영진", name: "Young-Jin Kim", position: first }
-    - { ID: "[2025.01] 구해윤", name: "Hae-Yoon Koo", position: co }
-    - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: co }
-    - { ID: "[2024.12] 최진호", name: "Jinho Choi", position: co }
-    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
-
 - title: "Diversifying Differentiable Graph Retrieval with Topic-Adaptive Multi-Intent Learning"
   filter: {"type": "", "scope": ""}
   status: "Under Review"
@@ -132,6 +115,23 @@
 ########################################################################################
 # Accepted
 ########################################################################################
+- title: "Interaction-Grounded Semantic Graph Refinement for LLM-based Recommendation"
+  filter: {"type": "journal", "scope": "international"}
+  status: "Accepted"
+  year: 2025
+  venue: { name: "IEEE Access", acronym: "" }
+  links: 
+    Link: null
+    Code: null
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2024.07] 정우석", name: "Wooseok Jeong", position: first }
+    - { ID: "[2024.10] 김영진", name: "Young-Jin Kim", position: first }
+    - { ID: "[2025.01] 구해윤", name: "Hae-Yoon Koo", position: co }
+    - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: co }
+    - { ID: "[2024.12] 최진호", name: "Jinho Choi", position: co }
+    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
+
 - title: "Image-Guided Debiasing Distillation with Preference Alignment Across Multi-News Histories"
   filter: {"type": "conference", "scope": "international"}
   status: "Accepted"
