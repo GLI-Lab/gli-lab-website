@@ -25,6 +25,11 @@ export default function Page() {
     // 프로젝트 데이터를 배열로 정리
     const ongoingProjects: Project[] = [
         {
+            title: "그래프기반 위협추적 분석 (2025-11-11 ~ 2027-07-31)",
+            organization: "국방과학연구소 - LIG넥스원",
+            tags: ["Recommender Systems", "Graph ML/DL, Anomaly Detection"]
+        },
+        {
             title: "추천시스템 모델 설계 자문 및 사례연구 (2025-09-01 ~ 2027-08-31)",
             organization: "국방과학연구소 - 한화시스템",
             tags: ["Recommender Systems", "Graph ML/DL"]
@@ -44,15 +49,14 @@ export default function Page() {
             organization: "한국연구재단 중견연구(유형1)",
             tags: ["Multi-Modal LLMs", "Graph ML/DL", "Explainablilty"]
         },
-        {
-            title: "논리적 패턴을 반영할 수 있는 지식그래프 표현학습 (2024-04-01 ~ 2025-09-31)",
-            organization: "건국대학교 KU학술연구비",
-            tags: ["Knowledge Representation", "Graph ML/DL"]
-        }
     ];
 
     const completedProjects: Project[] = [
-        // 완료된 프로젝트들이 있다면 여기에 추가
+        {
+            title: "논리적 패턴을 반영할 수 있는 지식그래프 표현학습 (2024-04-01 ~ 2025-09-31)",
+            organization: "건국대학교 KU학술연구비",
+            tags: ["Knowledge Representation", "Graph ML/DL", "Graph Embedding"]
+        }
     ];
 
     const totalProjects = ongoingProjects.length + completedProjects.length;
