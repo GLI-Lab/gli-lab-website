@@ -6,7 +6,6 @@ import {FaCheck} from "react-icons/fa";
 
 const PAGE_TITLE = `Projects`
 
-// 프로젝트 타입 정의
 interface Project {
     title: string;
     organization: string;
@@ -22,10 +21,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default function Page() {
-    // 프로젝트 데이터를 배열로 정리
     const ongoingProjects: Project[] = [
         {
-            title: "그래프기반 위협추적 분석 (2025-11-11 ~ 2027-07-31)",
+            title: "그래프기반 위협추적 분석 (2025.10.01 ~ 2027.05.31)",
             organization: "국방과학연구소 - LIG넥스원",
             tags: ["Recommender Systems", "Graph ML/DL, Anomaly Detection"]
         },
@@ -42,7 +40,7 @@ export default function Page() {
         {
             title: "LLM 기반 추천을 위한 그래프 기반 컨텍스트 추출 에이전트 (2025-05-01 ~ 2025-11-20)",
             organization: "실감미디어 혁신융합대학(내부 연구과제)",
-            tags: ["Graph ML/DL", "LLM Agent"]
+            tags: ["Graph ML/DL", "LLM Agent", "Recommender Systems"]
         },
         {
             title: "멀티모달 생성모델의 신뢰성 및 제어가능성 향상을 위한 그래프 구조 기반의 상호작용 (2024-09-01 ~ 2028-08-31)",
