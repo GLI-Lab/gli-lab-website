@@ -14,7 +14,8 @@ function transformPatentData(rawPatent: PatentYAML): PatentData {
     title: rawPatent.title,
     scope: rawPatent.scope,
     status: rawPatent.status,
-    authors
+    authors,
+    link: rawPatent.link || null
   };
 }
 
