@@ -159,6 +159,7 @@ export interface PatentYAML {
     ID?: string;
     name: string;
   }[];
+  link?: string | null;
 }
 
 export interface PatentAuthorData {
@@ -174,6 +175,7 @@ export interface PatentData {
     registered: { date: string | null; number: string | null };
   };
   authors: PatentAuthorData[];
+  link?: string | null;
 }
 
  
