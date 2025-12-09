@@ -122,18 +122,6 @@
     joined: {start: "2024.06", end: "Current"}
     affiliation: null
 
-- id: "[2024.07] 정우석"
-  role: {type: intern, title: Undergraduate Student (3학년 2학기)}
-  name: {en: Wooseok Jeong, ko: 정우석}
-  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
-  interests: [LLM-Based Recommender Systems, Graph ML/DL, Fake News Detection]
-  photos: ["[2024.07] 정우석1"]
-  contacts: {emails: ["oseoko8@gmail.com"], homepage: null, github: ["oseoko"], linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2024.07", end: "Current"}
-    affiliation: null
-
 - id: "[2024.07] 지상준"
   role: {type: intern, title: Undergraduate Student (4학년 1학기)}
   name: {en: Sang-Jun Ji, ko: 지상준}
@@ -144,18 +132,6 @@
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2024.07", end: "Current"}
-    affiliation: null
-
-- id: "[2024.10] 김영진"
-  role: {type: intern, title: Undergraduate Student (3학년 2학기)}
-  name: {en: Young-Jin Kim, ko: 김영진}
-  education: {bs: "Applied Statistics, Konkuk University", ms: null, phd: null}
-  interests: [LLM-Based Recommender Systems, Graph ML/DL, Graph-based RAG, KG-Based Question Answering]
-  photos: ["[2024.10] 김영진1", "[2024.10] 김영진2"]
-  contacts: {emails: ["dudwls960119@gmail.com"], homepage: null, github: ["0jin03"], linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2024.10", end: "Current"}
     affiliation: null
 
 - id: "[2025.03] 조은영"
@@ -288,4 +264,16 @@
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2025.11", end: "Current"}
+    affiliation: null
+
+- id: "[2025.12] 최지현"
+  role: {type: intern, title: Undergraduate Student (2학년 2학기)}
+  name: {en: Jihyun Choi, ko: 최지현}
+  education: {bs: ["Computer Science & Engineering, Konkuk University"], ms: null, phd: null}
+  interests: [Graph ML/DL]
+  photos: ["[2025.12] 최지현1"]
+  contacts: {emails: ["august0511@naver.com"], homepage: null, github: ["Bb-jh"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2025.12", end: "Current"}
     affiliation: null
