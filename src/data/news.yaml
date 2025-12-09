@@ -7,6 +7,18 @@
 ########################################################################################
 # 2025
 ########################################################################################
+# - date: "2025-12-05"
+#   type: General
+#   content: "We introduce a GPU server equipped with 1 X NVIDIA RTX Pro 6000 GPU. (GB VRAM)"
+
+- date: "2025-12-09"
+  type: Member
+  content: "Welcome to GLI lab, <profile=[2024.12] 최진호>Jinho Choi (최진호)</> as a master student! 😊"
+
+- date: "2025-12-09"
+  type: Member
+  content: "Welcome to GLI lab, <profile=[2025.12] 최지현>Jihyun Choi (최지현)</>!"
+
 - date: "2025-11-11"
   type: Funding
   content: |
