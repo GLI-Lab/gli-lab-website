@@ -1,11 +1,11 @@
 # YAML에서 tab은 금지. 반드시 space 2개 사용
 # role.type  : phd, ms, researcher, intern
 # role.title : Undergraduate Student, M.S. Graduate, B.S. Graduate
-# CV         : public/pdf/cv/alumni
+# CV         : public/pdf/cv
 # homepage   : https://[THIS]
 # github     : https://github.com/[THIS]
 # linkedin   : https://www.linkedin.com/in/[THIS]
-# photos     : public/images/profiles/alumni
+# photos     : public/images/profiles
 
 ###############################################
 # Ph.D. Graduate
