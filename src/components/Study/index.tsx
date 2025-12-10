@@ -33,7 +33,7 @@ function formatDate(dateString: string): string {
 
 // parse description and apply highlight styling to <h>...</h> tags
 function parseDescription(description: string): React.ReactNode {
-  const parts = description.split(/(<h>.*?<\/h>)/g);
+  const parts = description.split(/(<h>.*?<\/h>|<br\s*\/?>)/gi);
   
   return parts.map((part, index) => {
     const highlightMatch = part.match(/^<h>(.*?)<\/h>$/);
@@ -43,6 +43,10 @@ function parseDescription(description: string): React.ReactNode {
           {highlightMatch[1]}
         </span>
       );
+    }
+    // Handle <br> or <br/> tags
+    if (part.match(/^<br\s*\/?>$/i)) {
+      return <br key={index} />;
     }
     return part;
   });
@@ -155,7 +159,7 @@ export async function StudyList({ className = '', count = null, studyItems, prof
               </div>
 
               {/* Description */}
-              <p className="text-gray-500 text-[0.9em] leading-normal mb-1 line-clamp-3">
+              <p className="text-gray-500 text-[0.9em] leading-normal mb-1">
                 {parseDescription(study.description)}
               </p>
             </div>
