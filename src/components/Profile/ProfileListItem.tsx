@@ -15,7 +15,7 @@ interface ProfileListItemProps extends ProfileItemProps {
 }
 
 export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
-    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage, studies = [], papers = [], patents = [], bs, ms, phd, interest, homepage, github, linkedin, title } = props;
+    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage, studies = [], papers = [], patents = [], bs, ms, phd, interest, homepage, github, linkedin, scholar, cv, title } = props;
     const [isExpanded, setIsExpanded] = useState(false);
     const [copied, setCopied] = useState(false);
     
@@ -166,7 +166,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                                 setCopied(true);
                                 setTimeout(() => setCopied(false), 1000);
                             }}
-                            className={`mt-0.5 w-5 h-5 transition-colors duration-200 flex-shrink-0 ${copied ? 'text-brand-primary' : 'text-gray-400 hover:text-interactive-primary'}`}
+                            className={`ml-0.5 mt-0.5 w-5 h-5 transition-colors duration-200 flex-shrink-0 ${copied ? 'text-brand-primary' : 'text-gray-400 hover:text-interactive-primary'}`}
                             title="Copy profile link"
                         >
                             {copied ? (
@@ -256,6 +256,22 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                     {/* Social Links - positioned at the bottom */}
                     <div className="flex flex-row gap-2 items-center justify-between">
                         <div className="flex gap-3">
+                            {/* CV */}
+                            {cv && (
+                                <a 
+                                    href={cv} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="w-9 h-9 bg-gray-100 hover:bg-interactive-primary hover:text-white text-gray-600 rounded-lg flex items-center justify-center transition-all duration-200 group"
+                                    onClick={(e) => e.stopPropagation()}
+                                    title="CV"
+                                >
+                                    <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                    </svg>
+                                </a>
+                            )}
+
                             {/* Email */}
                             {email.length > 0 && email[0].trim() !== '' && (
                                 <a 
@@ -268,6 +284,14 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                                     </svg>
                                 </a>
+                            )}
+                            
+                            {/* 구분선 - 이후 아이콘이 있을 때만 표시 */}
+                            {((homepage && homepage.length > 0 && homepage.some(h => h.trim() !== '')) ||
+                              (github && github.length > 0 && github.some(g => g.trim() !== '')) ||
+                              (linkedin && linkedin.length > 0 && linkedin.some(l => l.trim() !== '')) ||
+                              (scholar && scholar.length > 0 && scholar.some(s => s.trim() !== ''))) && (
+                                <div className="h-9 w-px bg-gray-300"></div>
                             )}
                             
                             {/* Homepage */}
@@ -314,6 +338,22 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                                 >
                                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                                         <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.047-1.852-3.047-1.853 0-2.136 1.445-2.136 2.939v5.677H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                    </svg>
+                                </a>
+                            )}
+                            
+                            {/* Google Scholar */}
+                            {scholar && scholar.length > 0 && scholar.some(s => s.trim() !== '') && (
+                                <a 
+                                    href={scholar[0]} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="w-9 h-9 bg-gray-100 hover:bg-interactive-primary hover:text-white text-gray-600 rounded-lg flex items-center justify-center transition-all duration-200 group"
+                                    onClick={(e) => e.stopPropagation()}
+                                    title="Google Scholar"
+                                >
+                                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
                                     </svg>
                                 </a>
                             )}

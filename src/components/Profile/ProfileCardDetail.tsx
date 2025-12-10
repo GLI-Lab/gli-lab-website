@@ -9,7 +9,7 @@ import { ProfileDetailProps, type StudyData, type PaperData, type PatentData } f
 import Link from 'next/link';
 
 export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
-    const {id, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, graduation, affiliation, studies = [], papers = [], patents = [], isAlumniPage = false } = props;
+    const {id, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], isAlumniPage = false } = props;
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30}, [Fade()]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [displayedStudiesCount, setDisplayedStudiesCount] = useState(5);
@@ -174,7 +174,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                                 setCopied(true);
                                 setTimeout(() => setCopied(false), 1000);
                             }}
-                            className={`mt-0.5 w-5 h-5 transition-colors duration-200 flex-shrink-0 ${copied ? 'text-brand-primary' : 'text-gray-400 hover:text-interactive-primary'}`}
+                            className={`ml-0.5 mt-0.5 w-5 h-5 transition-colors duration-200 flex-shrink-0 ${copied ? 'text-brand-primary' : 'text-gray-400 hover:text-interactive-primary'}`}
                             title="Copy profile link"
                         >
                             {copied ? (
@@ -242,6 +242,17 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
 
                 {/* Contact */}
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 items-start`}>
+                    <span className={`text-text-accent font-medium`}>CV</span>
+                    <div className="flex flex-col">
+                        {cv ? (
+                            <a href={cv} target="_blank" rel="noopener noreferrer" title="Download CV"
+                               className="hover:text-interactive-hover hover:underline underline-offset-4 text-[15.5px] md:text-[16.5px]">
+                                CV{cvVersion ? ` (${cvVersion})` : ''}
+                            </a>
+                        ) : (
+                            <span className="text-[15.5px] md:text-[16.5px]">-</span>
+                        )}
+                    </div>
                     <span className={`text-text-accent font-medium`}>Email</span>
                     <div className="flex flex-col">
                         {email.length > 0 && email.some(e => e.trim() !== '') ? (
@@ -253,6 +264,11 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                             <span className="text-[15.5px] md:text-[16.5px]">-</span>
                         )}
                     </div>
+                </div>
+                <Separator className="my-3"/>
+
+                {/* Links */}
+                <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 items-start`}>
                     <span className={`text-text-accent font-medium`}>Home</span>
                     <div className="flex flex-col">
                         {homepage.length > 0 && homepage.some(h => h.trim() !== '') ? (
@@ -286,6 +302,19 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                                 <a href={src} rel="" title={src} target="_blank" key={index}
                                    className="hover:text-interactive-hover hover:underline underline-offset-4 text-[15.5px] md:text-[16.5px]">
                                     {src.replace("https://www.linkedin.com/in/", "")}
+                                </a>
+                            ))
+                        ) : (
+                            <span className="text-[15.5px] md:text-[16.5px]">-</span>
+                        )}
+                    </div>
+                    <span className={`text-text-accent font-medium`}>Scholar</span>
+                    <div className="flex flex-col">
+                        {scholar.length > 0 && scholar.some(s => s.trim() !== '') ? (
+                            scholar.filter(s => s.trim() !== '').map((src, index) => (
+                                <a href={src} rel="" title={src} target="_blank" key={index}
+                                   className="hover:text-interactive-hover hover:underline underline-offset-4 text-[15.5px] md:text-[16.5px]">
+                                    {src.replace("https://scholar.google.com/citations?user=", "")}
                                 </a>
                             ))
                         ) : (
