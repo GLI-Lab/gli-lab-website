@@ -26,6 +26,7 @@ export interface ProfileYAML {
     homepage: string[] | null;
     github: string[] | null;
     linkedin: string[] | null;
+    scholar: string[] | null;
   };
   status: {
     period: {
@@ -60,6 +61,9 @@ export interface ProfileData {
   homepage: string[];
   github: string[];
   linkedin: string[];
+  scholar: string[];
+  cv?: string;
+  cvVersion?: string;
 }
 
 export interface ProfileItemProps extends ProfileData {
