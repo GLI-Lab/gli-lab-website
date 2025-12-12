@@ -11,6 +11,15 @@
 #   type: General
 #   content: "We introduce a GPU server equipped with 1 X NVIDIA RTX Pro 6000 GPU. (GB VRAM)"
 
+- date: "2025-12-12"
+  type: Publication
+  content: |
+    Two patents has been filed 💡
+    - <patent>지식 그래프 기반 질의 응답 시스템의 최적화 방법 및 장치</>
+    이동천, 오병국
+    - <patent>하이퍼관계형 지식 그래프 상의 하이퍼관계형 사실에 대한 링크 예측 방법 및 장치</>
+    지상준, 오병국
+
 - date: "2025-12-09"
   type: Member
   content: "Welcome to GLI lab, <profile=[2024.12] 최진호>Jinho Choi (최진호)</> as a master student! 😊"
