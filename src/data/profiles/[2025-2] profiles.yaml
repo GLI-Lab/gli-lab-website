@@ -92,7 +92,7 @@
   name: {en: Jinho Choi, ko: 최진호}
   education: {bs: "Industrial Engineering, Konkuk University", ms: null, phd: null}
   interests: [Graph ML/DL, Information Retrieval, Graph-based RAG, KG-Based Question Answering]
-  contacts: {emails: ["jhc12931293@gmail.com", "jinho159@konkuk.ac.kr"], homepage: null, github: null, linkedin: null}
+  contacts: {emails: ["jhc12931293@gmail.com", "jinho159@konkuk.ac.kr"], homepage: null, github: ["ChoiPi2"], linkedin: ["jinho-choi-ab4916335"], scholar: ["HZX5Eg0AAAAJ"]}
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2024.12", end: "Current"}
