@@ -6,6 +6,30 @@
 # 출원 (filed)
 ###############################################
 - title: |
+    지식 그래프 기반 질의 응답 시스템의 최적화 방법 및 장치
+    Method and Apparatus for Optimization of a Knowledge Graph-based Question Answering System
+  scope: "domestic"
+  status:
+    filed: {date: 2025-12-12, number: "10-2025-0198283"}
+    registered: {date: null, number: null}
+  link: null
+  authors:
+    - { ID: "[2024.11] 이동천", name: "이동천" }
+    - { ID: "[2024.03] 오병국", name: "오병국" }
+
+- title: |
+    하이퍼관계형 지식 그래프 상의 하이퍼관계형 사실에 대한 링크 예측 방법 및 장치
+    Method and Apparatus for Link Prediction of Hyper-Relational Facts on Hyper-Relational Knowledge Graphs
+  scope: "domestic"
+  status:
+    filed: {date: 2025-12-12, number: "10-2025-0198284"}
+    registered: {date: null, number: null}
+  link: null
+  authors:
+    - { ID: "[2024.07] 지상준", name: "지상준" }
+    - { ID: "[2024.03] 오병국", name: "오병국" }
+
+- title: |
     동적 스팬 인식 정보 추출 방법 및 장치
     Dynamic Span-Aware Information Extraction Method and Apparatus
   scope: "domestic"
