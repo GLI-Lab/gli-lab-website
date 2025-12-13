@@ -11,7 +11,10 @@ function transformPatentData(rawPatent: PatentYAML): PatentData {
   }));
 
   return {
-    title: rawPatent.title,
+    title: {
+      ko: rawPatent.title.ko,
+      en: rawPatent.title.en
+    },
     scope: rawPatent.scope,
     status: rawPatent.status,
     authors,

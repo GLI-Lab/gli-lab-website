@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Separator } from "@/components/ui/separator"
 import { ProfileDetailProps, type StudyData, type PaperData, type PatentData } from '@/data/loaders/types';
 import Link from 'next/link';
+import { titleToId } from '@/lib/utils';
 
 export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
     const {id, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], isAlumniPage = false } = props;
@@ -86,22 +87,6 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
         return end > now;
     };
 
-    // 제목을 URL-safe ID로 변환하는 함수
-    const titleToId = (title: string, type: 'paper' | 'patent'): string => {
-        // 제목을 소문자로 변환하고, 공백을 하이픈으로, 특수문자 제거 (한글 포함)
-        // 한글 유니코드 범위: \uAC00-\uD7A3 (가-힣)
-        // 영문, 숫자, 한글, 공백, 하이픈만 허용
-        // \w는 [a-zA-Z0-9_]를 의미하므로 한글은 별도로 추가
-        // 하이픈(-)을 이스케이프하거나 문자 클래스의 끝에 배치해야 함
-        const id = title
-            .toLowerCase()
-            .replace(/[^\w\s\uAC00-\uD7A3-]/g, '') // 특수문자 제거 (한글은 유지, 하이픈은 끝에 배치)
-            .replace(/\s+/g, '-') // 공백을 하이픈으로
-            .replace(/-+/g, '-') // 연속된 하이픈을 하나로
-            .replace(/^-|-$/g, ''); // 앞뒤 하이픈 제거
-        
-        return id;
-    };
 
     return (
         <div className="flex flex-col">
@@ -247,7 +232,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                                 <div className="flex-1">
                                                     <div className="text-[15.5px] md:text-[16.5px] font-medium mb-1">
                                                         <Link 
-                                                            href={`/publications/papers${paper.status === 'In Progress' ? '?showInProgress=true' : ''}#${encodeURIComponent(titleToId(paper.title, 'paper'))}`}
+                                                            href={`/publications/papers${paper.status === 'In Progress' ? '?showInProgress=true' : ''}#${encodeURIComponent(titleToId(paper.title))}`}
                                                             className="hover:text-interactive-hover hover:underline underline-offset-4"
                                                             title="View publication details"
                                                         >
@@ -381,19 +366,31 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                     return `${year}년 ${month}월 ${day}일`;
                                 };
                                 
+                                const patentTitleKey = `${patent.title.ko}\n${patent.title.en}`;
+                                
+                                const renderPatentTitle = () => {
+                                    return (
+                                        <>
+                                            {patent.title.ko}
+                                            <br />
+                                            <span className="text-[14px] md:text-[15px] text-gray-600">{patent.title.en}</span>
+                                        </>
+                                    );
+                                };
+                                
                                 return (
-                                    <div key={patent.title} className="mb-4 leading-snug">
+                                    <div key={patentTitleKey} className="mb-4 leading-snug">
                                         <div className="grid grid-cols-[auto,1fr] items-start">
                                             <div className="flex items-start">
                                                 <span className="text-text-accent font-semibold pr-0.5 text-[14px] md:text-[16px]">-</span>
                                                 <div className="flex-1">
                                                     <div className="text-[15.5px] md:text-[16.5px] font-medium mb-1">
                                                         <Link 
-                                                            href={`/publications/patents#${encodeURIComponent(titleToId(patent.title, 'patent'))}`}
+                                                            href={`/publications/patents#${encodeURIComponent(titleToId(patent.title.ko))}`}
                                                             className="hover:text-interactive-hover hover:underline underline-offset-4"
                                                             title="View patent details"
                                                         >
-                                                            {patent.title}
+                                                            {renderPatentTitle()}
                                                         </Link>
                                                     </div>
                                                     <div className="text-[13px] md:text-[14px] text-text-secondary">

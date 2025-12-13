@@ -4,21 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PaperData } from '@/data/loaders/types';
-
-// 제목을 URL-safe ID로 변환하는 함수
-function titleToId(title: string): string {
-  // 제목을 소문자로 변환하고, 공백을 하이픈으로, 특수문자 제거 (한글 포함)
-  // 한글 유니코드 범위: \uAC00-\uD7A3 (가-힣)
-  // 하이픈(-)을 이스케이프하거나 문자 클래스의 끝에 배치해야 함
-  const id = title
-    .toLowerCase()
-    .replace(/[^\w\s\uAC00-\uD7A3-]/g, '') // 특수문자 제거 (한글은 유지, 하이픈은 끝에 배치)
-    .replace(/\s+/g, '-') // 공백을 하이픈으로
-    .replace(/-+/g, '-') // 연속된 하이픈을 하나로
-    .replace(/^-|-$/g, ''); // 앞뒤 하이픈 제거
-  
-  return id;
-}
+import { titleToId } from '@/lib/utils';
 
 
 interface PublicationListProps {

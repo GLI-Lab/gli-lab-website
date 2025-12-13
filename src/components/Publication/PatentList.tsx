@@ -4,20 +4,10 @@ import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PatentData } from '@/data/loaders/types';
+import { titleToId } from '@/lib/utils';
 
-// 제목을 URL-safe ID로 변환하는 함수
-function titleToId(title: string): string {
-  // 제목을 소문자로 변환하고, 공백을 하이픈으로, 특수문자 제거 (한글 포함)
-  // 한글 유니코드 범위: \uAC00-\uD7A3 (가-힣)
-  // 하이픈(-)을 이스케이프하거나 문자 클래스의 끝에 배치해야 함
-  const id = title
-    .toLowerCase()
-    .replace(/[^\w\s\uAC00-\uD7A3-]/g, '') // 특수문자 제거 (한글은 유지, 하이픈은 끝에 배치)
-    .replace(/\s+/g, '-') // 공백을 하이픈으로
-    .replace(/-+/g, '-') // 연속된 하이픈을 하나로
-    .replace(/^-|-$/g, ''); // 앞뒤 하이픈 제거
-  
-  return id;
+function formatTitle(title: { ko: string; en: string }): string {
+  return `${title.ko}\n${title.en}`;
 }
 
 interface PatentListProps {
@@ -163,7 +153,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
         const targetId = decodeURIComponent(hash.substring(1));
         
         // 해당 특허가 필터링된 목록에 있는지 확인
-        const targetPatent = filteredPatents.find(p => titleToId(p.title) === targetId);
+        const targetPatent = filteredPatents.find(p => titleToId(p.title.ko) === targetId);
         if (targetPatent) {
           setHighlightedPatentId(targetId);
           
@@ -226,11 +216,11 @@ export default function PatentList({ className = '', patents, memberIds = [], al
     const parts: string[] = [];
     
     if (filed.date && filed.number) {
-      parts.push(`출원번호 제 ${filed.number} 호, 출원일 ${formatDate(filed.date)}`);
+      parts.push(`출원번호 ${filed.number}, 출원일 ${formatDate(filed.date)}`);
     }
     
     if (registered.date && registered.number) {
-      parts.push(`등록번호 제 ${registered.number} 호, 등록일 ${formatDate(registered.date)}`);
+      parts.push(`등록번호 ${registered.number}, 등록일 ${formatDate(registered.date)}`);
     }
     
     return parts.join(', ');
@@ -352,7 +342,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
           />
           <ul className="list-disc space-y-6 md:space-y-8 pl-5 md:pl-6">
             {patentsByYear[year].map((patent, index) => {
-              const patentId = titleToId(patent.title);
+              const patentId = titleToId(patent.title.ko);
               const isHighlighted = highlightedPatentId === patentId;
               return (
                 <li 
@@ -366,7 +356,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
                       : ''
                   }`}>
                     <div className="text-gray-700 font-semibold mb-1 whitespace-pre-line">
-                      {patent.title}
+                      {formatTitle(patent.title)}
                     </div>
                     <div className="text-gray-600 mb-1">
                       {renderAuthors(patent)}
