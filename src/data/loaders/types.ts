@@ -153,7 +153,10 @@ export interface NewsData {
 
 // Raw patent data interface (as it comes from YAML)
 export interface PatentYAML {
-  title: string;
+  title: {
+    ko: string;
+    en: string;
+  };
   scope: string;
   status: {
     filed: { date: string | null; number: string | null };
@@ -172,7 +175,10 @@ export interface PatentAuthorData {
 }
 
 export interface PatentData {
-  title: string;
+  title: {
+    ko: string;
+    en: string;
+  };
   scope: string;
   status: {
     filed: { date: string | null; number: string | null };

@@ -5,9 +5,9 @@
 ###############################################
 # 출원 (filed)
 ###############################################
-- title: |
-    지식 그래프 기반 질의 응답 시스템의 최적화 방법 및 장치
-    Method and Apparatus for Optimization of a Knowledge Graph-based Question Answering System
+- title:
+    ko: "지식 그래프 기반 질의 응답 시스템의 최적화 방법 및 장치"
+    en: "Method and Apparatus for Optimization of a Knowledge Graph-based Question Answering System"
   scope: "domestic"
   status:
     filed: {date: 2025-12-12, number: "10-2025-0198283"}
@@ -17,9 +17,9 @@
     - { ID: "[2024.11] 이동천", name: "이동천" }
     - { ID: "[2024.03] 오병국", name: "오병국" }
 
-- title: |
-    하이퍼관계형 지식 그래프 상의 하이퍼관계형 사실에 대한 링크 예측 방법 및 장치
-    Method and Apparatus for Link Prediction of Hyper-Relational Facts on Hyper-Relational Knowledge Graphs
+- title:
+    ko: "하이퍼관계형 지식 그래프 상의 하이퍼관계형 사실에 대한 링크 예측 방법 및 장치"
+    en: "Method and Apparatus for Link Prediction of Hyper-Relational Facts on Hyper-Relational Knowledge Graphs"
   scope: "domestic"
   status:
     filed: {date: 2025-12-12, number: "10-2025-0198284"}
@@ -29,9 +29,9 @@
     - { ID: "[2024.07] 지상준", name: "지상준" }
     - { ID: "[2024.03] 오병국", name: "오병국" }
 
-- title: |
-    동적 스팬 인식 정보 추출 방법 및 장치
-    Dynamic Span-Aware Information Extraction Method and Apparatus
+- title:
+    ko: "동적 스팬 인식 정보 추출 방법 및 장치"
+    en: "Dynamic Span-Aware Information Extraction Method and Apparatus"
   scope: "domestic"
   status:
     filed: {date: 2025-10-31, number: "10-2025-0162443"}
@@ -41,9 +41,9 @@
     - { ID: "[2024.07] 백혜윤", name: "백혜윤" }
     - { ID: "[2024.03] 오병국", name: "오병국" }
 
-- title: |
-    멀티모달 데이터 증류 방법, 트리플 기반 뉴스 정제 및 추천 방법
-    Multimodal Data Distillation Method, and Triple-based News Refinement and Recommendation Method
+- title:
+    ko: "멀티모달 데이터 증류 방법, 트리플 기반 뉴스 정제 및 추천 방법"
+    en: "Multimodal Data Distillation Method, and Triple-based News Refinement and Recommendation Method"
   scope: "domestic"
   status:
     filed: {date: 2025-10-31, number: "10-2025-0161770"}
@@ -53,9 +53,9 @@
     - { ID: "[2024.06] 서지명", name: "서지명" }
     - { ID: "[2024.03] 오병국", name: "오병국" }
 
-- title: |
-    전자 장치 및 전자 장치의 제어 방법
-    Electronic Device and Controlling Method of Electronic Device
+- title:
+    ko: "전자 장치 및 전자 장치의 제어 방법"
+    en: "Electronic Device and Controlling Method of Electronic Device"
   scope: "domestic"
   status:
     filed: {date: 2022-10-28, number: "10-2022-0141545"}
@@ -65,9 +65,9 @@
     - { ID: "[2024.03] 오병국", name: "오병국" }
     - { ID: null, name: "한명희" }
 
-- title: |
-    서버 및 이의 제어 방법
-    Server and Control Method Thereof
+- title:
+    ko: "서버 및 이의 제어 방법"
+    en: "Server and Control Method Thereof"
   scope: "domestic"
   status:
     filed: {date: 2022-02-23, number: "10-2022-0023861"}
@@ -81,9 +81,9 @@
     - { ID: null, name: "김준범" }
     - { ID: null, name: "박고언" }
 
-- title: |
-    개체 간 관계 추출 방법 및 장치
-    Method and Apparatus for Relation Extraction between Entities
+- title:
+    ko: "개체 간 관계 추출 방법 및 장치"
+    en: "Method and Apparatus for Relation Extraction between Entities"
   scope: "domestic"
   status:
     filed: {date: 2020-06-17, number: "10-2020-0073918"}
@@ -97,9 +97,9 @@
     - { ID: null, name: "서승민" }
     - { ID: "[2024.03] 오병국", name: "오병국" }
 
-- title: |
-    멀티 홉 이웃을 이용한 제로샷 지식 그래프 완성 방법 및 장치
-    Method and Apparatus for Completing Zero-Shot Knowledge Graph Using Multi-Hop Neighborhoods
+- title:
+    ko: "멀티 홉 이웃을 이용한 제로샷 지식 그래프 완성 방법 및 장치"
+    en: "Method and Apparatus for Completing Zero-Shot Knowledge Graph Using Multi-Hop Neighborhoods"
   scope: "domestic"
   status:
     filed: {date: 2019-10-17, number: "10-2019-0129123"}
@@ -109,9 +109,9 @@
     - { ID: "[2024.03] 오병국", name: "오병국" }
     - { ID: null, name: "이경호" }
 
-- title: |
-    토픽 기반의 일관성 모델링을 통한 문장 순서 재구성 방법 및 장치
-    Method and Apparatus for Reconstructing Sentence Order through Topic-Guided Coherence Modeling
+- title:
+    ko: "토픽 기반의 일관성 모델링을 통한 문장 순서 재구성 방법 및 장치"
+    en: "Method and Apparatus for Reconstructing Sentence Order through Topic-Guided Coherence Modeling"
   scope: "domestic"
   status:
     filed: {date: 2019-10-30, number: "10-2019-0136138"}
@@ -121,9 +121,9 @@
     - { ID: "[2024.03] 오병국", name: "오병국" }
     - { ID: null, name: "이경호" }
 
-- title: |
-    멀티 홉 이웃을 이용한 컨볼루션 학습 기반의 지식 그래프 완성 방법 및 장치
-    Method and Apparatus for Completing Knowledge Graph Based on Convolutional Learning Using Multi-Hop Neighborhoods
+- title:
+    ko: "멀티 홉 이웃을 이용한 컨볼루션 학습 기반의 지식 그래프 완성 방법 및 장치"
+    en: "Method and Apparatus for Completing Knowledge Graph Based on Convolutional Learning Using Multi-Hop Neighborhoods"
   scope: "domestic"
   status:
     filed: {date: 2019-04-05, number: "10-2019-0040173"}
@@ -133,9 +133,9 @@
     - { ID: "[2024.03] 오병국", name: "오병국" }
     - { ID: null, name: "이경호" }
 
-- title: |
-    다수상황 간의 상관관계를 고려한 추천 시스템 및 방법
-    Recommender System and Method Considering Correlations among Contexts
+- title:
+    ko: "다수상황 간의 상관관계를 고려한 추천 시스템 및 방법"
+    en: "Recommender System and Method Considering Correlations among Contexts"
   scope: "domestic"
   status:
     filed: {date: 2018-01-03, number: "10-2018-0000644"}
