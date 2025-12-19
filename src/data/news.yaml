@@ -9,6 +9,14 @@
 ########################################################################################
 - date: "2025-12-19"
   type: General
+  content: <profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>, <profile=[2024.12] 최진호>Jinho Choi (최진호)</>, <profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</>이 <b>카카오X한국정보과학회 AI 에이전트 경진대회</b>에서 우수상을 수상했습니다 👏
+
+- date: "2025-12-19"
+  type: Member
+  content: "Welcome to GLI lab, <profile=[2025.12] 홍다연>Dayeon Hong (홍다연)</>!"
+
+- date: "2025-12-19"
+  type: General
   content: "We introduce a GPU server equipped with 1 X NVIDIA RTX Pro 6000 GPU. (96GB VRAM)"
 
 - date: "2025-12-12"
