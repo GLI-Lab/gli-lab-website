@@ -258,3 +258,14 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.12", end: "Current"}
     affiliation: null
+
+- id: "[2025.12] 홍다연"
+  role: {type: intern, title: Undergraduate Student (4학년 1학기)}
+  name: {en: Dayeon Hong, ko: 홍다연}
+  education: {bs: ["Computer Science & Engineering, Konkuk University"], ms: null, phd: null}
+  interests: [Graph ML/DL]
+  contacts: {emails: ["yscarlet214@gmail.com"], homepage: null, github: ["yscarlet"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2025.12", end: "Current"}
+    affiliation: null
