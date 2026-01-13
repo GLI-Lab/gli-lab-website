@@ -7,6 +7,13 @@
 ########################################################################################
 # 2025
 ########################################################################################
+- date: "2026-01-14"
+  type: Publication
+  content: |
+    One full research paper has been accepted at <b>WWW 2026</b> ✏️
+    - <paper>Diversifying Differentiable Graph Retrieval with Topic-Adaptive Multi-Intent Learning</>
+    Dongcheon Lee, Ji-Yeon Park, Hye-Yoon Baek, Jimyeung Seo, Seyeong Kim and Byungkook Oh
+    
 - date: "2025-12-19"
   type: General
   content: <profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>, <profile=[2024.12] 최진호>Jinho Choi (최진호)</>, <profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</>이 <b>카카오X한국정보과학회 AI 에이전트 경진대회</b>에서 우수상을 수상했습니다 👏
