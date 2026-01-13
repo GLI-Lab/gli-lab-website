@@ -95,15 +95,18 @@
     - { name: "Xiongnan Jin", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
+########################################################################################
+# Accepted
+########################################################################################
 - title: "Diversifying Differentiable Graph Retrieval with Topic-Adaptive Multi-Intent Learning"
-  filter: {"type": "", "scope": ""}
-  status: "Under Review"
-  year: 2025
-  venue: { name: "", acronym: "" }
+  filter: {"type": "conference", "scope": "international"}
+  status: "Accepted"
+  year: 2026
+  venue: { name: "To Appear in The ACM Web Conference", acronym: "WWW" }
   links: 
     Link: null
     Code: null
-  notes: {"normal": "", "important": ""}
+  notes: {"normal": "Full Research Paper (Acceptance Rate: 20.1% = 676/3,370)", "important": ""}  # refer: mail
   authors:
     - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: first }
     - { ID: "[2024.07] 박지연", name: "Ji-Yeon Park", position: co }
@@ -111,10 +114,7 @@
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: co }
     - { ID: "[2025.07] 김세영", name: "Seyeong Kim", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
-
-########################################################################################
-# Accepted
-########################################################################################
+    
 - title: "Image-Guided Debiasing Distillation with Preference Alignment Across Multi-News Histories"
   filter: {"type": "conference", "scope": "international"}
   status: "Accepted"
