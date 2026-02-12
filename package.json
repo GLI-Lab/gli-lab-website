@@ -17,6 +17,7 @@
     "embla-carousel-react": "^8.6.0",
     "js-yaml": "^4.1.0",
     "next": "15.5.7",
+    "sharp": "^0.34.5",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-icons": "^5.5.0"
