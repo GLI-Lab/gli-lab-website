@@ -7,6 +7,12 @@
 ########################################################################################
 # 2025
 ########################################################################################
+- date: "2026-02-12"
+  type: Funding
+  content: |
+    Our team has been supported by 중소벤처기업진흥공단 - 경남테크노파크 as part of <b>AI솔루션 개발·실증 지원(가치사슬형-제조설비) 사업</b> under <b>지역 주도형 AI 대전환 사업</b> 👏
+    우주항공 제조설비의 멀티모달 이상탐지와 실시간 생성형 AI 보고체계 기반의 AX전환 실증
+
 - date: "2026-01-14"
   type: Publication
   content: |
@@ -46,7 +52,7 @@
 - date: "2025-11-11"
   type: Funding
   content: |
-    Our team has been supported by <b>국방과학연구소 - LIG넥스원</b> 👏
+    Our team has been supported by <b>국방과학연구소 - LIG넥스원</b> as part of <b>사이버 전장관리체계 핵심기술을 활용한 미래 지능형 함정 통합 사이버방호체계 기술 시범</b> 👏
     그래프기반 위협추적 분석
 
 - date: "2025-11-07"
@@ -87,7 +93,7 @@
 - date: "2025-09-01"
   type: Funding
   content: |
-    Our team has been supported by <b>국방과학연구소 - 한화시스템</b> 👏
+    Our team has been supported by <b>국방과학연구소 - 한화시스템</b> as part of <b>위치기반 다자간 실시간 전장정보 공유 및 임무조정 기술</b> 👏
     추천시스템 모델 설계 자문 및 사례연구
 
 - date: "2025-08-27"
@@ -101,7 +107,7 @@
 - date: "2025-08-05"
   type: Funding
   content: |
-    Our team has been supported by 건국대학교 through <b>그룹연구인력양성 사업</b> 👏
+    Our team has been supported by 건국대학교 as part of <b>그룹연구인력양성 사업</b> 👏
     실전 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구
 
 - date: "2025-08-04"
@@ -122,7 +128,7 @@
 - date: "2025-05-23"
   type: Funding
   content: |
-    Our team has been supported by 실감미디어 혁신융합대학사업 through <b>교원연구과제</b> 👏
+    Our team has been supported by 첨단분야 혁신융합대학사업(실감미디어) as part of <b>지원사업(교원연구)</b> 👏
     LLM 기반 추천을 위한 그래프 기반 컨텍스트 추출 에이전트
 
 - date: "2025-05-16"
@@ -195,7 +201,7 @@
 - date: "2024-08-01"
   type: Funding
   content: |
-    Our team has been supported by 한국연구재단 through <b>중견연구(유형1) 사업</b> 👏
+    Our team has been supported by 한국연구재단 as part of <b>중견연구(유형1) 사업</b> 👏
     멀티모달 생성모델의 신뢰성 및 제어가능성 향상을 위한 그래프 구조 기반의 상호작용
 
 - date: "2024-07-01"
@@ -209,7 +215,7 @@
 - date: "2024-04-01"
   type: Funding
   content: |
-    Our team has been supported by 건국대학교 through <b>KU학술연구비 사업</b> 👏
+    Our team has been supported by 건국대학교 as part of <b>KU학술연구비 사업</b> 👏
     논리적 패턴을 반영할 수 있는 지식그래프 표현학습
 
 - date: "2024-03-15"

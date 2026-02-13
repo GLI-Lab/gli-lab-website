@@ -127,28 +127,6 @@
     joined: {start: "2024.07", end: "Current"}
     affiliation: null
 
-- id: "[2025.03] 조은영"
-  role: {type: intern, title: Undergraduate Student (4학년 2학기)}
-  name: {en: Eun-Yeong Jo, ko: 조은영}
-  education: {bs: ["Biomedical Science & Engineering, Konkuk University", "Computer Science & Engineering, Konkuk University"], ms: null, phd: null}
-  interests: [Graph ML/DL, LLM Optimization, News Recommendation, Fake News Detection]
-  contacts: {emails: ["tina6022@naver.com"], homepage: null, github: null, linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2025.03", end: "Current"}
-    affiliation: null
-
-- id: "[2025.03] 김상준"
-  role: {type: intern, title: Undergraduate Student (4학년 2학기)}
-  name: {en: Sang-June Kim, ko: 김상준}
-  education: {bs: "Smart ICT Convergence, Konkuk University", ms: null, phd: null}
-  interests: [Graph ML/DL, Graph-based RAG, KG-Based Question Answering, Bioinfomatics]
-  contacts: {emails: ["drbug2000@naver.com"], homepage: null, github: ["drbug2000"], linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2025.03", end: "Current"}
-    affiliation: null
-
 - id: "[2025.07] 박상현"
   role: {type: intern, title: Undergraduate Student (1학년 2학기)}
   name: {en: Sang-Hyun Park, ko: 박상현}

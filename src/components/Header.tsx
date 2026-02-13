@@ -105,6 +105,7 @@ export default function Header() {
             path: "/board/gallery",
             subMenus: [
                 {title: "News", path: "/board/news"},
+                {title: "Seminar", path: "/board/seminar"},
                 {title: "Gallery", path: "/board/gallery"},
                 {title: "Study", path: "/board/study"},
                 {title: "Lectures", path: "/board/lectures"},

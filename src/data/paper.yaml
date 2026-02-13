@@ -8,7 +8,7 @@
 - title: "Multi-Agent Graph-Enhanced Retrieval-Augmented Generation for Question Answering"
   filter: {"type": "", "scope": ""}
   status: "In Progress"
-  year: 2025
+  year: 2026
   venue: { name: "", acronym: "" }
   links: 
     Link: null
@@ -16,13 +16,14 @@
   notes: {"normal": "", "important": ""}
   authors:
     - { ID: "[2024.12] 최진호", name: "Jinho Choi", position: first }
+    - { ID: "[2025.07] 박상현", name: "Sang-Hyun Park", position: co }
     - { ID: "[2025.03] 김상준", name: "Sang-June Kim", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
 - title: "Learnable Rule-Modulated LLM Adapter for Document-Level Relation Extraction"
   filter: {"type": "", "scope": ""}
   status: "In Progress"
-  year: 2025
+  year: 2026
   venue: { name: "", acronym: "" }
   links: 
     Link: null
@@ -33,10 +34,24 @@
     - { ID: "[2024.07] 지상준", name: "Sang-Jun Ji", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-- title: "Text-Attributed Graph-Driven Agent for Fake News Detection"
+- title: "Temporal Knowledge Graph Question Answering with GraphRAG"
   filter: {"type": "", "scope": ""}
   status: "In Progress"
-  year: 2025
+  year: 2026
+  venue: { name: "", acronym: "" }
+  links: 
+    Link: null
+    Code: null
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: first }
+    - { ID: "[2025.07] 김세영", name: "Seyeong Kim", position: co }
+    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
+
+- title: "Collaborative Graph Agent-based Fake News Detection"
+  filter: {"type": "", "scope": ""}
+  status: "In Progress"
+  year: 2026
   venue: { name: "", acronym: "" }
   links: 
     Link: null
@@ -44,13 +59,29 @@
   notes: {"normal": "", "important": ""}
   authors:
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: first }
-    - { ID: "[2025.03] 조은영", name: "Eun-Yeong Jo", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-- title: "Text-Aligned Graph Anomaly Detection"
+- title: "VISTA: Variable-Length Semantic IDs from Collaborative Embeddings for LLM-based Generative Recommendation"
   filter: {"type": "", "scope": ""}
   status: "In Progress"
-  year: 2025
+  year: 2026
+  venue: { name: "", acronym: "" }
+  links: 
+    Link: null
+    Code: null
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2025.01] 구해윤", name: "Hae-Yoon Koo", position: first }
+    - { ID: "[2025.07] 이동현", name: "Donghyun Lee", position: co }
+    - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: co }
+    - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: co }
+    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: co }
+    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
+
+- title: "Graph Anomaly Detection with Clustering-based Spectral Scoring"
+  filter: {"type": "", "scope": ""}
+  status: "In Progress"
+  year: 2026
   venue: { name: "", acronym: "" }
   links: 
     Link: null
@@ -61,27 +92,47 @@
     - { ID: "[2025.07] 이재진", name: "JaeJin Lee", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-- title: "Anchoring Sequential Intent Alignment for LLM-based Recommendation"
+########################################################################################
+# Ongoing Work (Under Review)
+########################################################################################
+- title: "Reliable Distillation of Recommendation Rationales from Large Language Models for Conversational Recommendation"
   filter: {"type": "", "scope": ""}
-  status: "In Progress"
-  year: 2025
+  status: "Under Review"
+  year: 2026
   venue: { name: "", acronym: "" }
   links: 
     Link: null
     Code: null
   notes: {"normal": "", "important": ""}
   authors:
-    - { ID: "[2025.01] 구해윤", name: "Hae-Yoon Koo", position: first }
-    - { ID: "[2025.07] 이동현", name: "Donghyun Lee", position: co }
+    - { name: "Hyeongjun Yang", position: first }
+    - { name: "Donghyun Kim", position: co }
+    - { name: "Kyuhwan Yeom", position: co }
+    - { name: "Kyong-Ho Lee", position: co, isCorresponding: true }
+    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co }
+    - { name: "Xiongnan Jin", position: co }
+
+- title: "An Empirical Analysis of Stability and Sensitivity in Node-level Graph Anomaly Detection"
+  filter: {"type": "", "scope": ""}
+  status: "Under Review"
+  year: 2026
+  venue: { name: "", acronym: "" }
+  links: 
+    Link: null
+    Code: null
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: first }
+    - { ID: "[2025.07] 이재진", name: "JaeJin Lee", position: co }
+    - { ID: "[2025.01] 구해윤", name: "Hae-Yoon Koo", position: co }
+    - { ID: "[2024.11] 이동천", name: "Dongcheon Lee", position: co }
+    - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-########################################################################################
-# Ongoing Work (Under Review)
-########################################################################################
 - title: "Disentangled Global-Local Representations via Relation-Entity Pair Encoding for Hyper-Relational KGs"
   filter: {"type": "", "scope": ""}
   status: "Under Review"
-  year: 2025
+  year: 2026
   venue: { name: "", acronym: "" }
   links: 
     Link: null
@@ -95,6 +146,23 @@
     - { name: "Xiongnan Jin", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
+- title: "Top-HiCL: Hierarchical Contrastive Learning for Job-Skill Matching with Topological Awareness"
+  filter: {"type": "", "scope": ""}
+  status: "Under Review"
+  year: 2026
+  venue: { name: "", acronym: "" }
+  links: 
+    Link: null
+    Code: null
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { name: "Wonseok Son, ", position: first }
+    - { ID: "[2025.01] 구해윤", name: "Haeyoon Koo", position: co }
+    - { name: "Jeonghyeon Park", position: co }
+    - { name: "Jungkyu Han", position: co }
+    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co }
+    - { name: "Sejin Chun", position: co, isCorresponding: true }
+
 ########################################################################################
 # Accepted
 ########################################################################################
@@ -104,8 +172,8 @@
   year: 2026
   venue: { name: "To Appear in The ACM Web Conference", acronym: "WWW" }
   links: 
-    Link: null
-    Code: null
+    Link: https://doi.org/10.1145/3774904.3792529
+    Code: https://github.com/leedongcheon/TARD
   notes: {"normal": "Full Research Paper (Acceptance Rate: 20.1% = 676/3,370)", "important": ""}  # refer: mail
   authors:
     - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: first }
@@ -121,8 +189,8 @@
   year: 2026
   venue: { name: "To Appear in ACM International Conference on Web Search and Data Mining", acronym: "WSDM" }
   links: 
-    Link: null
-    Code: null
+    Link: https://doi.org/10.1145/3773966.3777983
+    Code: https://github.com/seojmm/IGKnow
   notes: {"normal": "Full Paper (Acceptance Rate: 16.3% = 100/613)", "important": ""}
   authors:
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: first }
@@ -157,7 +225,7 @@
   links:
     Link: https://doi.org/10.1145/3746252.3761243
     Code: https://github.com/hyeyoon100/RePooL
-    Slide: /slides/RePooL.pdf
+    Slide: /pdf/research/RePooL.pdf
   notes: {"normal": "Full Research Paper (Acceptance Rate: 27.2% = 443/1,627)", "important": ""}  # refer: mail
   authors:
     - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: first }

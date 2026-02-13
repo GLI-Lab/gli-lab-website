@@ -4,14 +4,22 @@ import Link from 'next/link';
 import { MainCover } from "@/components/Covers";
 import { FaCheck } from "react-icons/fa";
 import { NewsList } from "@/components/News";
+import { SeminarList } from "@/components/Seminar";
+import { GalleryGrid, getGalleryItems } from "@/components/Gallery";
 import { getNews } from "@/data/loaders/newsLoader";
-import { getMemberIds, getAlumniIds } from "@/data/loaders/profileLoader";
+import { getMemberIds, getAlumniIds, getProfiles, getAlumniProfiles } from "@/data/loaders/profileLoader";
+import { getSeminars } from "@/data/loaders/seminarLoader";
 
 export default async function Page() {
-    // 뉴스와 프로필 ID 리스트 데이터 로딩
-    const newsItems = await getNews();
-    const memberIds = await getMemberIds();
-    const alumniIds = await getAlumniIds();
+    const [newsItems, memberIds, alumniIds, seminars, profiles, alumniProfiles, galleryItems] = await Promise.all([
+        getNews(),
+        getMemberIds(),
+        getAlumniIds(),
+        getSeminars(),
+        getProfiles(),
+        getAlumniProfiles().catch(() => []),
+        getGalleryItems(),
+    ]);
 
     return (
         <div className="">
@@ -174,6 +182,48 @@ export default async function Page() {
                           className="px-6 py-2 mt-12 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
                         Read More
                     </Link>
+                </div>
+            </div>
+
+            {/* =============================== */}
+            {/*           Latest Seminar       */}
+            {/* =============================== */}
+            <div className="max-w-screen-2xl mx-auto bg-white">
+                <div className="max-w-screen-xl mx-auto flex flex-col items-center text-center space-y-8
+                                py-8 md:py-16 px-3 md:px-5">
+                    <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
+                        Latest Seminar
+                    </p>
+                    <SeminarList
+                        className="w-full"
+                        count={6}
+                        seminarItems={seminars}
+                        profiles={profiles}
+                        alumniProfiles={alumniProfiles}
+                        variant="card"
+                    />
+                    <Link href="/board/seminar"
+                        className="px-6 py-2 mt-4 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
+                        Read More
+                    </Link>
+                </div>
+            </div>
+
+            {/* =============================== */}
+            {/*           Latest Gallery       */}
+            {/* =============================== */}
+            <div className="max-w-screen-2xl mx-auto bg-gray-100">
+                <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-16 space-y-8">
+                    <p className="font-bold tracking-tighter text-[28px] md:text-[36px] text-center">
+                        Latest Gallery
+                    </p>
+                    <GalleryGrid items={galleryItems.slice(0, 3)} className="w-full gap-x-6 gap-y-6 md:gap-y-12" />
+                    <div className="text-center">
+                        <Link href="/board/gallery"
+                            className="inline-block px-6 py-2 mt-4 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
+                            Read More
+                        </Link>
+                    </div>
                 </div>
             </div>
 

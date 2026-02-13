@@ -138,6 +138,17 @@ export interface StudyData {
 }
 
 // =====================================================
+// Seminar Types
+// =====================================================
+
+export interface SeminarData {
+  title: string;
+  date: string;
+  Presenter?: { ID: string; name: string } | null;
+  slide?: string | null;
+}
+
+// =====================================================
 // News Types
 // =====================================================
 

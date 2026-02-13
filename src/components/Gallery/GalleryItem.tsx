@@ -83,7 +83,7 @@ const GalleryItemComponent = ({
       {!isInViewport && (
         <>
           {/* 썸네일 스켈레톤 */}
-          <div className="aspect-[7/6] bg-gray-200 animate-pulse">
+          <div className="aspect-[7/5] bg-gray-200 animate-pulse">
             <div className="w-full h-full flex items-center justify-center">
               <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
             </div>
@@ -108,7 +108,7 @@ const GalleryItemComponent = ({
             <ImageCarousel
               images={item.images}
               title={item.title}
-              className="relative aspect-[7/6] "
+              className="relative aspect-[7/5]"
               imageClassName="object-cover overflow-hidden select-none transform transition-all duration-500 md:hover:scale-105 md:brightness-85 md:saturate-60 md:contrast-90 md:grayscale-[50%] transition-all duration-300 md:hover:brightness-100 md:hover:saturate-100 md:hover:contrast-100 md:hover:grayscale-0"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
               showNavigation={!isCardHovered}
