@@ -1,3 +1,16 @@
+- semester: "2026 Spring"
+  courses:
+    - title: "[0053] C Programming (C프로그래밍)"
+      university: "Konkuk University"
+    - title: "[0054] C Programming (C프로그래밍)"
+      university: "Konkuk University"
+    - title: "[3232] Machine Learning (기계학습)"
+      university: "Konkuk University"
+    - title: "[3204] Graduation Project 1 (졸업프로젝트1)"
+      university: "Konkuk University"
+    - title: "[0326] Career Success Program (CSP진로탐색)"
+      university: "Konkuk University"
+
 - semester: "2025 Fall"
   courses:
     - title: "[3203] Data Science (데이터사이언스)"
