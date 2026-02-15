@@ -142,13 +142,7 @@ export default function ProjectList({ projects, className = "" }: ProjectListPro
 
       {/* Ongoing Projects */}
       <div className="mb-12">
-        <SectionHeader
-            title="Ongoing"
-            className=""
-            underline={true}
-            size="small"
-          >
-          </SectionHeader>
+        <SectionHeader title="Ongoing" className="" underline={true} size="small"></SectionHeader>
 
         <ul className="space-y-4 md:space-y-5">
           {ongoingProjects.map((project, index) => (
@@ -161,13 +155,7 @@ export default function ProjectList({ projects, className = "" }: ProjectListPro
 
       {/* Completed Projects */}
       <div>
-        <SectionHeader
-          title="Completed"
-          className=""
-          underline={true}
-          size="small"
-        >
-        </SectionHeader>
+        <SectionHeader title="Completed" className="" underline={true} size="small"></SectionHeader>
 
         {completedProjects.length > 0 ? (
           <ul className="space-y-4 md:space-y-5">

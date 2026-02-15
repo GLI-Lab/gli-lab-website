@@ -87,7 +87,7 @@ export default function Header() {
             title: "Research",
             path: "/research/topics",
             subMenus: [
-                {title: "Research Topics", path: "/research/topics"},
+                {title: "Vision and Topics", path: "/research/topics"},
                 {title: "Projects", path: "/research/projects"}
             ]
         },
