@@ -108,7 +108,7 @@ const GalleryItemComponent = ({
             <ImageCarousel
               images={item.images}
               title={item.title}
-              className="relative aspect-[7/5]"
+              className="relative aspect-[8/5] md:aspect-[6/5]"
               imageClassName="object-cover overflow-hidden select-none transform transition-all duration-500 md:hover:scale-105 md:brightness-85 md:saturate-60 md:contrast-90 md:grayscale-[50%] transition-all duration-300 md:hover:brightness-100 md:hover:saturate-100 md:hover:contrast-100 md:hover:grayscale-0"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
               showNavigation={!isCardHovered}
@@ -122,7 +122,7 @@ const GalleryItemComponent = ({
             onMouseEnter={() => setIsCardHovered(true)}
             onMouseLeave={() => setIsCardHovered(false)}
           >
-            <div className="font-semibold text-gray-900 mb-1 text-lg truncate">
+            <div className="font-semibold text-gray-900 mb-1 text-base md:text-lg truncate">
               {item.title}
               {isNewItem(item.date) && (
                 <span className="ml-1 text-xs font-bold text-red-500 inline-flex ">

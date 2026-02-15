@@ -1,0 +1,98 @@
+# YAML에서 tab은 금지. 반드시 space 2개 사용
+# Our team has been supported by [parent.funder] › [main.funder], as part of [main.program] under [parent.program] 👏
+
+########################################################################################
+# 2025
+########################################################################################
+- title: 우주항공 제조설비의 멀티모달 이상탐지와 실시간 생성형 AI 보고체계 기반의 AX전환 실증
+  type: 집단연구
+  role: 공동연구자
+  parent: { funder: 중소벤처기업진흥공단, program: 지역 주도형 AI 대전환 }
+  main: { funder: 경남테크노파크, program: AI솔루션 개발·실증 지원(가치사슬형-제조설비) }
+  start_date: 2026-01
+  end_date: 2026-11
+  image: { url: /images/projects/gntp.png, width: 225px }
+
+- title: 그래프기반 위협추적 분석
+  type: 산업체·위탁
+  role: 연구책임자
+  parent: { funder: 국방과학연구소, program: 사이버 전장관리체계 핵심기술을 활용한 미래 지능형 함정 통합 사이버방호체계 기술 시범 }
+  main: { funder: LIG넥스원, program: null }  # 산업체·위탁
+  start_date: 2025-10
+  end_date: 2027-05
+  image: { url: /images/projects/nex1.png, width: 150px }
+
+- title: 추천시스템 모델 설계 자문 및 사례 연구
+  type: 산업체·위탁
+  role: 연구책임자
+  parent: { funder: 국방과학연구소, program: 위치기반 다자간 실시간 전장정보 공유 및 임무조정 기술 }
+  main: { funder: 한화시스템, program: null }  # 산업체·위탁
+  start_date: 2025-09
+  end_date: 2027-08
+  image: { url: /images/projects/hanwha.png, width: 200px }
+
+- title: 실전 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구
+  type: 개인연구
+  role: 공동연구자
+  parent: { funder: null, program: null }
+  main: { funder: 건국대학교, program: 그룹연구인력양성 }
+  start_date: 2025-08
+  end_date: 2026-07
+  image: { url: /images/projects/konkuk.jpg, width: 200px }
+
+- title: LLM 기반 추천을 위한 그래프 기반 컨텍스트 추출 에이전트
+  type: 개인연구
+  role: 연구책임자
+  parent: { funder: 한국연구재단, program: 첨단분야 혁신융합대학사업(실감미디어) }
+  main: { funder: 실감미디어혁신융합대학사업단, program: 실감미디어 혁신융합대학 지원사업(교원연구) }
+  start_date: 2025-05
+  end_date: 2025-11
+  image: { url: /images/projects/coss.png, width: 175px }
+
+########################################################################################
+# 2024
+########################################################################################
+- title: 멀티모달 생성모델의 신뢰성 및 제어가능성 향상을 위한 그래프 구조 기반의 상호작용
+  type: 개인연구
+  role: 연구책임자
+  parent: { funder: null, program: null }
+  main: { funder: 한국연구재단, program: 중견연구(유형1) }
+  start_date: 2024-09
+  end_date: 2028-08
+  image: { url: /images/projects/nrf.png, width: 200px }
+
+- title: 논리적 패턴을 반영할 수 있는 지식그래프 표현학습
+  type: 개인연구
+  role: 연구책임자
+  parent: { funder: null, program: null }
+  main: { funder: 건국대학교, program: KU학술연구비(신임교원) }
+  start_date: 2024-04
+  end_date: 2025-03
+  image: { url: /images/projects/konkuk.jpg, width: 200px }
+
+- title: 메타버스융합대학원(건국대학교)
+  type: 인력양성
+  role: 참여연구자
+  parent: { funder: null, program: null }
+  main: { funder: 정보통신기획평가원, program: 메타버스융합대학원 }
+  start_date: 2024-03
+  end_date: 2028-12
+  image: { url: /images/projects/iitp.png, width: 150px }
+
+- title: 공학교육혁신사업단
+  type: 인력양성
+  role: 참여연구자
+  parent: { funder: null, program: null }
+  main: { funder: 한국산업기술진흥원, program: 창의융합형공학인재양성지원(미래형 이동수단) }
+  start_date: 2022-03
+  end_date: 2028-02
+  image: { url: /images/projects/kiat.png, width: 200px }
+
+- title: 실감미디어 혁신융합대학 사업단
+  type: 인력양성
+  role: 참여연구자
+  parent: { funder: null, program: null }
+  main: { funder: 한국연구재단, program: 첨단분야 혁신융합대학사업(실감미디어) }
+  start_date: 2021-05
+  end_date: 2027-02
+  image: { url: /images/projects/nrf.png, width: 200px }

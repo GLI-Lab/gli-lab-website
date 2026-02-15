@@ -17,7 +17,7 @@ export function GalleryGrid({ items, className = "" }: GalleryGridProps) {
 
   return (
     <>
-      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 md:gap-y-12 ${className}`}>
+      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 md:gap-y-12 text-left ${className}`}>
         {items.map((item) => {
           return (
             <GalleryItem
