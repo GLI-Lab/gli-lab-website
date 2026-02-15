@@ -104,7 +104,7 @@ export function SubCover({
 
 export function MainCover() {
   return (
-    <div className="relative overflow-hidden py-24 md:py-36 lg:py-48 xl:py-56">
+    <div className="relative overflow-hidden h-[320px] md:h-[400px] lg:h-[520px] xl:h-[600px] flex flex-col items-center justify-center">
       <div 
         className="absolute inset-0 bg-cover bg-center animate-cinematic-1" 
         style={{ backgroundImage: 'url("/images/cover/main1-min-crop.webp")' }} 
@@ -123,10 +123,11 @@ export function MainCover() {
       />
       
       {/* 콘텐츠 */}
-      <div className="relative z-10 flex items-center justify-center text-center h-full">
-        <div className="w-full bg-white bg-opacity-55 font-bold leading-none md:whitespace-nowrap
+      <div className="relative z-10 w-full h-full">
+        {/* 흰 박스: 컨테이너 정중앙 */}
+        <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 w-full bg-white bg-opacity-55 font-bold leading-none md:whitespace-nowrap
                         space-y-1 lg:space-y-2
-                        p-2 md:p-3 lg:p-4">
+                        p-2 md:p-3 lg:p-4 text-center">
           <p className="tracking-tight text-[36px] md:text-[44px] lg:text-[54px] xl:text-[60px]">
             Graph & Language Intelligence Lab.
           </p>
@@ -134,6 +135,7 @@ export function MainCover() {
             @ Konkuk Univ.
           </p>
         </div>
+
       </div>
     </div>
   )

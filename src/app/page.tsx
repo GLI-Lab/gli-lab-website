@@ -37,15 +37,14 @@ export default async function Page() {
                         About GLI Lab.
                     </h2>
                     <div className="md:py-4 text-center">
-                        <div className="inline-block relative hover:scale-105 transition-all duration-300">
-                            <div className="absolute -inset-1 bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg blur opacity-25 hover:opacity-40 transition-opacity duration-300"></div>
+                        <div className="inline-block relative">
+                            <div className="absolute -inset-1 bg-gradient-to-r from-green-600 to-emerald-600 rounded-lg blur opacity-25 transition-opacity duration-300"></div>
                             <div className="relative bg-white px-4 py-3 md:px-8 md:py-6 rounded-lg border border-gray-200 shadow-sm hover:shadow-lg hover:border-green-300 transition-all duration-300">
                                 <p className="text-[17px] sm:text-[18px] md:text-[18.5px] lg:text-[19px] xl:text-[20px] font-medium italic">
-                                    " I pursue <Link href="https://www.youtube.com/watch?v=y7sXDpffzQQ&ab_channel=IBMTechnology" 
+                                    " Unifying Graph & Language Intelligence toward <Link href="https://www.youtube.com/watch?v=y7sXDpffzQQ&ab_channel=IBMTechnology" 
                                     className="group text-brand-primary underline-offset-4 hover:underline transition-colors">knowledge<svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                                </svg></Link>-driven AI
-                                    capable of human-like thinking because it is vital to the future of AGI "
+                                </svg></Link>-driven AI, enabling human-like reasoning for the future of AGI "
                                 </p>
                             </div>
                         </div>
@@ -125,56 +124,55 @@ export default async function Page() {
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
                                     <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
-                                    <span><span className="font-semibold underline underline-offset-4">자연어처리</span>: 질의응답, 정보 검색/추출, 지식/LLM 증류 및 응용</span>
+                                    <span><span className="font-semibold underline underline-offset-4">Graph-Language Fusion (그래프·언어모델 통합)</span>: 텍스트-그래프 변환, GraphRAG, LLM 에이전트, 지식 기반 응답 생성</span>
                                 </div>
                             </div>
                             <div className="ml-6 text-gray-600 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
-                                → 그래프 지식을 통합하여 LLM의 환각 문제를 줄이고, 더 일관된 응답 생성 가능
+                                → 그래프와 LLM을 결합해 외부 지식을 활용한 응답 생성, GraphRAG·에이전트 등 신뢰 가능하고 도메인 적응형 AI 추구
                             </div>
                         </li>
                         <li className="space-y-2 leading-snug">
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
                                     <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
-                                    <span><span className="font-semibold underline underline-offset-4">추천시스템</span>: 지식기반/설명가능한 추천, 멀티모달/대화형 추천, 그래프 기반 추천</span>
+                                    <span><span className="font-semibold underline underline-offset-4">Graph-Centric AI (그래프 분석·예측)</span>: 노드·그래프 분류, 링크 예측, 지식그래프 완성</span>
                                 </div>
                             </div>
                             <div className="ml-6 text-gray-600 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
-                                → 그래프 기반의 사용자–아이템 관계 확장을 통해 의도와 맥락 중심의 추천 가능
+                                → 노드·링크·그래프 수준의 분석·분류·예측을 통해 그래프 구축·확장 및 다른 딥러닝 모델과의 통합 기반을 마련
                             </div>
                         </li>
                         <li className="space-y-2 leading-snug">
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
                                     <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
-                                    <span><span className="font-semibold underline underline-offset-4">그래프 표현학습</span>: 그래프 뉴럴네트워크(GNNs), 지식그래프 표현/완성/검증/구축
-                                    </span>
+                                    <span><span className="font-semibold underline underline-offset-4">Language-Centric AI (자연어처리)</span>: 질의응답, 정보 검색/추출, 문서 분석, 지식·LLM 증류 및 응용</span>
                                 </div>
                             </div>
                             <div className="ml-6 text-gray-600 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
-                                → 그래프 구축/확장 및 다양한 딥러닝 모델과의 통합을 위한 기반 기술로 활용 가능
+                                → 질의응답·검색·추출·문서 분석 등에 그래프 지식을 결합해 LLM 환각을 줄이고, 일관되고 근거 있는 응답 생성
                             </div>
                         </li>
                         <li className="space-y-2 leading-snug">
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
                                     <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
-                                    <span><span className="font-semibold underline underline-offset-4">LLM–그래프 융합</span>: 지식기반/멀티모달 LLM, 텍스트-그래프 변환, LLM 에이전트, GraphRAG</span>
+                                    <span><span className="font-semibold underline underline-offset-4">Recommender Systems (추천시스템)</span>: 지식기반/설명가능한 추천, 멀티모달/대화형 추천, 그래프 기반 추천</span>
                                 </div>
                             </div>
                             <div className="ml-6 text-gray-600 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
-                                → 그래프를 통해 LLM에 외부 지식을 입력하여 신뢰성 높고 도메인 특화 응답 생성 가능
+                                → 사용자–아이템·지식 그래프를 확장해 의도·맥락·설명 가능성을 반영한 추천과 대화형 추천을 연구
                             </div>
                         </li>
                         <li className="space-y-2 leading-snug">
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
                                     <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0"/>
-                                    <span><span className="font-semibold underline underline-offset-4">이상탐지</span>: 네트워크/그래프 이상탐지, 사용자 행동 기반 이상탐지, 멀티모달 이상탐지</span>
+                                    <span><span className="font-semibold underline underline-offset-4">Anomaly Detection (이상탐지)</span>: 네트워크/그래프 이상탐지, 사용자 행동 기반 이상탐지, 멀티모달 이상탐지</span>
                                 </div>
                             </div>
                             <div className="ml-6 text-gray-600 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
-                                → 그래프를 통해 행위 간의 상관관계를 모델링하여 상황 맥락에 맞는 이상 탐지 가능
+                                → 네트워크·행동·멀티모달 데이터를 그래프로 모델링하여, 행위 간 상관관계와 맥락을 반영한 이상 탐지를 수행
                             </div>
                         </li>
                     </ul>

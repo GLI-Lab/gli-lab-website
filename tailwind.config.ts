@@ -1,5 +1,9 @@
-// 타이틀      : text-base md:text-lg text-gray-800 font-semibold leading-snug
-// 타이틀(서브): text-sm md:text-base text-gray-600 font-normal leading-normal
+// 타이틀(카드) : text-lg md:text-xl font-semibold text-gray-800 leading-snug
+// 타이틀(제목) : text-base md:text-lg font-semibold text-gray-800 leading-snug
+// 메타데이터   : text-sm md:text-base text-gray-600 leading-snug
+// 보조설명     : text-[13px] md:text-[15px] text-gray-600 leading-snug
+// 뱃지         : inline-block bg-brand-primary/10 text-brand-primary text-[13px] md:text-[15px] px-2 py-0.5 md:py-0 rounded-md shrink-0
+// 뱃지         : inline-block bg-gray-100 text-gray-600 text-[13px] md:text-[15px] px-2 py-0.5 md:py-0 rounded-md shrink-0
 
 // text-xs   (12px, 0.75rem)     
 // text-[15px]                :                          (데스크탑) 뱃지, 메타데이터(서브)
@@ -35,7 +39,7 @@
 
 // gray-800: 타이틀
 // gray-700: 본문, 필터
-// gray-600: 부가설명, 메타데이터
+// gray-600: 메타데이터
 // gray-500: 데코레이션
 // gray-200: 박스 border
 // text-red-600: 빨강 강조
