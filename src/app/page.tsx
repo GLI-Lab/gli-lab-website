@@ -213,17 +213,15 @@ export default async function Page() {
             {/*           Latest Gallery       */}
             {/* =============================== */}
             <div className="max-w-screen-2xl mx-auto bg-gray-100">
-                <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-16 space-y-8">
-                    <p className="font-bold tracking-tighter text-[28px] md:text-[36px] text-center">
+                <div className="max-w-screen-xl mx-auto flex flex-col items-center text-center px-3 md:px-5 py-8 md:py-16 space-y-8">
+                    <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
                         Latest Gallery
                     </p>
                     <GalleryGrid items={galleryItems.slice(0, 3)} className="w-full gap-x-6 gap-y-6 md:gap-y-12" />
-                    <div className="text-center">
-                        <Link href="/board/gallery"
-                            className="inline-block px-6 py-2 mt-4 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
-                            Read More
-                        </Link>
-                    </div>
+                    <Link href="/board/gallery"
+                        className="px-6 py-2 mt-4 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
+                        Read More
+                    </Link>
                 </div>
             </div>
 

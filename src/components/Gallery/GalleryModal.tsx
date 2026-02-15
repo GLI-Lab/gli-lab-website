@@ -135,7 +135,7 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
         {/* 콘텐츠 (주소창 고려해서 -60px) */}
         <div 
           ref={contentRef}
-          className="overflow-y-auto max-h-[calc(90vh-20px)] relative overscroll-none" 
+          className="overflow-y-auto max-h-[calc(90vh-20px)] relative overscroll-none text-left" 
           onScroll={handleScroll}
         >
           {/* 이미지 섹션 */}

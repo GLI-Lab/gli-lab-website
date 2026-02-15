@@ -199,4 +199,47 @@ export interface PatentData {
   link?: string | null;
 }
 
+// =====================================================
+// Project Types
+// =====================================================
+
+/** YAML에서 image는 url과 선택적 width(px) */
+export interface ProjectImage {
+  url: string;
+  width?: number;
+}
+
+export interface ProjectParent {
+  funder: string;
+  program: string | null;
+}
+
+export interface ProjectMain {
+  funder: string | null;
+  program: string | null;
+}
+
+export interface ProjectYAML {
+  title: string;
+  type: string;
+  role: string;
+  parent: ProjectParent;
+  main: ProjectMain;
+  start_date: string;
+  end_date: string;
+  /** 기관 로고: url 필수, width(px) 선택 */
+  image?: { url: string; width?: number } | string | null;
+}
+
+export interface ProjectData {
+  title: string;
+  type: string;
+  role: string;
+  parent: ProjectParent;
+  main: ProjectMain;
+  start_date: string;
+  end_date: string;
+  image: ProjectImage | null;
+}
+
  

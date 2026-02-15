@@ -1,8 +1,12 @@
+// 타이틀      : text-base md:text-lg text-gray-800 font-semibold leading-snug
+// 타이틀(서브): text-sm md:text-base text-gray-600 font-normal leading-normal
+
 // text-xs   (12px, 0.75rem)     
-// text-sm   (14px, 0.875rem) : (모바일) 일반 보조
-// text-base (16px, 1rem)     : (모바일) 홈/일반 기본값, (데스크탑) 일반 보조
-// text-lg   (18px, 1.125rem) : (데스크탑) 일반 기본값
-// text-xl   (20px, 1.25rem)  : (데스크탑) 홈 기본값     
+// text-[15px]                :                          (데스크탑) 뱃지, 메타데이터(서브)
+// text-sm   (14px, 0.875rem) : (모바일) 일반 보조       (데스크탑) 버튼(Link/Code)
+// text-base (16px, 1rem)     : (모바일) HOME/일반 본문, (데스크탑) 메타데이터
+// text-lg   (18px, 1.125rem) :                          (데스크탑) 본문
+// text-xl   (20px, 1.25rem)  :                          (데스크탑) Home
 // text-2xl  (24px, 1.5rem)     
 // text-3xl  (30px, 1.875rem)     
 // text-4xl  (36px, 2.25rem)     
@@ -31,7 +35,7 @@
 
 // gray-800: 타이틀
 // gray-700: 본문, 필터
-// gray-600: 설명
+// gray-600: 부가설명, 메타데이터
 // gray-500: 데코레이션
 // gray-200: 박스 border
 // text-red-600: 빨강 강조

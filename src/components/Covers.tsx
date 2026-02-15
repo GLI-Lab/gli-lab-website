@@ -3,8 +3,8 @@ import { Breadcrumb } from "@/components/Breadcrumb";
 interface CoverProps {
   title: string;
   backgroundImage?: string;
-  pattern?: 'geometric' | 'diagonal' | 'diagonal-reverse' | 'diagonal-check' | 'diagonal-diamond' | 'diagonal-wide' | 'diagonal-lines-sm' | 'solid' | 'complex-weave' | 'dots' | 'dots-ring' | 'none';
-  colorVariant?: 'neutral' | 'warm-gray' | 'cool-gray' | 'charcoal' | 'pearl' | 'sage' | 'mint' | 'eucalyptus' | 'forest' | 'olive' | 'seafoam' | 'moss' | 'pine';
+  pattern?: 'diagonal-lines' | 'none';
+  colorVariant?: 'neutral' | 'slate' | 'sage';
   showBreadcrumb?: boolean;
 }
 
@@ -18,233 +18,50 @@ const getPatternStyle = (pattern?: string, colorVariant?: string) => {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   };
 
-  // 색상 조합 정의 (그레이 + 초록색 계열)
-  const colorSchemes = {
-    // 그레이 계열
+  const colorSchemes: Record<string, { primary: string; secondary: string; tertiary: string; quaternary: string; background: string }> = {
     neutral: {
       primary: '#d4d4d4',
-      secondary: '#e5e5e5', 
+      secondary: '#e5e5e5',
       tertiary: '#c8c8c8',
       quaternary: '#b8b8b8',
       background: '#f0f0f0'
     },
-    'warm-gray': {
-      primary: '#d0ccc8',
-      secondary: '#ddd9d5',
-      tertiary: '#c3bfbb',
-      quaternary: '#b6b2ae',
-      background: '#ebe9e7'
+    slate: {
+      primary: '#cbd5e1',
+      secondary: '#e2e8f0',
+      tertiary: '#94a3b8',
+      quaternary: '#64748b',
+      background: '#f1f5f9'
     },
-    'cool-gray': {
-      primary: '#d1d5d8',
-      secondary: '#dee2e5',
-      tertiary: '#c4c8cb',
-      quaternary: '#b7bbbe',
-      background: '#f2f4f5'
-    },
-    charcoal: {
-      primary: '#a8a8a8',
-      secondary: '#b8b8b8',
-      tertiary: '#989898',
-      quaternary: '#888888',
-      background: '#e0e0e0'
-    },
-    pearl: {
-      primary: '#e8e8e8',
-      secondary: '#f0f0f0',
-      tertiary: '#e0e0e0',
-      quaternary: '#d8d8d8',
-      background: '#f8f8f8'
-    },
-    // 초록색 계열
     sage: {
-      primary: '#c7d2cc',
-      secondary: '#d4ddd7',
-      tertiary: '#b8c5bc',
-      quaternary: '#a9b8ad',
-      background: '#f0f3f1'
-    },
-    mint: {
-      primary: '#c8d5d0',
-      secondary: '#d5e0db',
-      tertiary: '#b9c6c1',
-      quaternary: '#aab9b4',
-      background: '#f1f4f2'
-    },
-    eucalyptus: {
-      primary: '#c5d3ce',
-      secondary: '#d2dfd9',
-      tertiary: '#b6c4bf',
-      quaternary: '#a7b7b0',
-      background: '#f0f3f1'
-    },
-    forest: {
-      primary: '#bcc9c4',
-      secondary: '#c9d4cf',
-      tertiary: '#adbab5',
-      quaternary: '#9eada6',
-      background: '#eff2f0'
-    },
-    olive: {
-      primary: '#c9d0c7',
-      secondary: '#d6ddd4',
-      tertiary: '#bac3b8',
-      quaternary: '#abb6a9',
-      background: '#f2f3f1'
-    },
-    seafoam: {
-      primary: '#c6d4d1',
-      secondary: '#d3e0dd',
-      tertiary: '#b7c7c2',
-      quaternary: '#a8bab3',
-      background: '#f0f4f2'
-    },
-    moss: {
-      primary: '#c4cfc6',
-      secondary: '#d1dcd3',
-      tertiary: '#b5c2b7',
-      quaternary: '#a6b5a8',
-      background: '#f1f3f1'
-    },
-    pine: {
-      primary: '#c1cdc5',
-      secondary: '#ced9d2',
-      tertiary: '#b2c0b6',
-      quaternary: '#a3b3a7',
-      background: '#eff2f0'
+      primary: '#bbd4c4',
+      secondary: '#d4e5d9',
+      tertiary: '#9cb8a8',
+      quaternary: '#7a9b88',
+      background: '#f0f5f1'
     }
   };
 
-  const variant = colorVariant as keyof typeof colorSchemes || 'neutral';
+  const variant = (colorVariant && colorSchemes[colorVariant]) ? colorVariant : 'neutral';
   const colors = colorSchemes[variant];
 
   switch (pattern) {
-    case 'geometric':
-      return {
-        background: `
-          linear-gradient(135deg, ${colors.primary} 25%, transparent 25%),
-          linear-gradient(-135deg, ${colors.primary} 25%, transparent 25%),
-          linear-gradient(45deg, ${colors.secondary} 25%, transparent 25%),
-          linear-gradient(-45deg, ${colors.secondary} 25%, transparent 25%)
-        `,
-        backgroundSize: '60px 60px',
-        backgroundPosition: '0 0, 0 30px, 30px -30px, -30px 0px',
-        backgroundColor: colors.background
-      };
-    case 'diagonal':
+    case 'diagonal-lines': {
+      const lineColor = hexToRgba(colors.tertiary, 0.55);
       return {
         background: `
           repeating-linear-gradient(
             45deg,
-            ${colors.primary},
-            ${colors.primary} 20px,
-            ${colors.secondary} 20px,
-            ${colors.secondary} 40px,
-            ${colors.tertiary} 40px,
-            ${colors.tertiary} 60px
-          )
-        `,
-        backgroundColor: colors.background
-      };
-    case 'diagonal-reverse':
-      return {
-        background: `
-          repeating-linear-gradient(
-            -45deg,
-            ${colors.primary},
-            ${colors.primary} 20px,
-            ${colors.secondary} 20px,
-            ${colors.secondary} 40px,
-            ${colors.tertiary} 40px,
-            ${colors.tertiary} 60px
-          )
-        `,
-        backgroundColor: colors.background
-      };
-    case 'diagonal-check':
-      return {
-        background: `
-          linear-gradient(-45deg, ${hexToRgba(colors.tertiary)} 25%, transparent 25%, transparent 50%, ${hexToRgba(colors.tertiary)} 50%, ${hexToRgba(colors.tertiary)} 75%, transparent 75%, transparent 100%),
-          linear-gradient(45deg, ${hexToRgba(colors.quaternary)} 25%, transparent 25%, transparent 50%, ${hexToRgba(colors.quaternary)} 50%, ${hexToRgba(colors.quaternary)} 75%, transparent 75%, transparent 100%)
-        `,
-        backgroundSize: '52px 52px',
-        backgroundColor: colors.background
-      };
-    case 'diagonal-diamond':
-      return {
-        backgroundColor: colors.background,
-        backgroundImage: `
-          linear-gradient(45deg, ${colors.tertiary} 25%, transparent 25%, transparent 75%, ${colors.tertiary} 75%, ${colors.tertiary}), 
-          linear-gradient(-45deg, ${colors.tertiary} 25%, transparent 25%, transparent 75%, ${colors.tertiary} 75%, ${colors.tertiary})
-        `,
-        backgroundSize: '25px 25px'
-      };
-    case 'diagonal-wide':
-      return {
-        background: `
-          repeating-linear-gradient(
-            45deg,
-            ${colors.secondary},
-            ${colors.secondary} 40px,
-            ${colors.tertiary} 40px,
-            ${colors.tertiary} 80px
-          )
-        `,
-        backgroundColor: colors.background
-      };
-    case 'diagonal-lines-sm':
-      return {
-        background: `
-          repeating-linear-gradient(
-            45deg,
-            ${colors.tertiary} 0,
-            ${colors.tertiary} 1px,
+            ${lineColor} 0,
+            ${lineColor} 1px,
             transparent 0,
             transparent 50%
           )
         `,
-        backgroundSize: '20px 20px',
+        backgroundSize: '22px 22px',
         backgroundColor: colors.background
       };
-    case 'solid':
-      return {
-        backgroundColor: colors.tertiary,
-        backgroundImage: 'none'
-      };
-    case 'complex-weave':
-      return {
-        backgroundColor: colors.background,
-        backgroundImage: `
-          linear-gradient(27deg, ${colors.primary} 5px, transparent 5px),
-          linear-gradient(207deg, ${colors.primary} 5px, transparent 5px),
-          linear-gradient(27deg, ${colors.secondary} 5px, transparent 5px),
-          linear-gradient(207deg, ${colors.secondary} 5px, transparent 5px),
-          linear-gradient(90deg, ${colors.tertiary} 10px, transparent 10px),
-          linear-gradient(${colors.quaternary} 25%, ${colors.primary} 25%, ${colors.primary} 50%, transparent 50%, transparent 75%, ${colors.secondary} 75%, ${colors.secondary})
-        `,
-        backgroundPosition: '0 5px, 10px 0px, 0px 10px, 10px 5px, 0 0, 0 0',
-        backgroundSize: '20px 20px'
-      };
-    case 'dots':
-      return {
-        background: colors.background,
-        backgroundImage: `
-          radial-gradient(${colors.tertiary} 20%, transparent 0), 
-          radial-gradient(${colors.tertiary} 20%, transparent 0)
-        `,
-        backgroundPosition: '0 0, 10px 10px',
-        backgroundSize: '20px 20px'
-      };
-    case 'dots-ring':
-      return {
-        backgroundColor: colors.background,
-        backgroundImage: `
-          radial-gradient(closest-side, transparent 98%, ${colors.tertiary} 100%), 
-          radial-gradient(closest-side, transparent 98%, ${colors.tertiary} 100%)
-        `,
-        backgroundPosition: '0 0, 15px 15px',
-        backgroundSize: '30px 30px'
-      };
+    }
     default:
       return {};
   }
@@ -265,7 +82,7 @@ export function SubCover({
   return (
     <div 
       className={`bg-center items-center justify-center text-center
-                 py-14 lg:py-20 xl:py-24
+                 py-12 lg:py-16 xl:py-20
                  ${isPattern ? '' : '[background-size:175%] md:[background-size:cover]'}`}
       style={{ ...patternStyle, ...imageStyle }}
     >
