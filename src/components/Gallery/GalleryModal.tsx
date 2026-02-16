@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { GalleryItem } from './types';
 import { Separator } from '../ui/separator';
@@ -105,8 +106,8 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
     }
   };
 
-  return (
-    <div 
+  const modal = (
+    <div
       className="fixed inset-0 z-50 bg-black bg-opacity-75 flex items-center justify-center px-2 py-2 md:p-4"
       onClick={handleBackdropClick}
     >
@@ -275,4 +276,11 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
       </div>
     </div>
   );
+
+  // createPortal: 모달을 document.body에 직접 렌더링해서, 
+  // 페이지 내부의 부모(transform/overflow/스태킹 컨텍스트) 영향 없이 항상 뷰포트 전체를 덮도록 함. 
+  // HOME처럼 MainCover 등이 있는 페이지에서도 동일하게 동작.
+  return typeof document !== 'undefined'
+    ? createPortal(modal, document.body)
+    : null;
 } 

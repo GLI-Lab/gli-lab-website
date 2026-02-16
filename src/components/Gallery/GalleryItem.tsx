@@ -126,7 +126,7 @@ const GalleryItemComponent = ({
             <div className="text-base md:text-lg font-semibold text-gray-800 truncate mb-1">
               {item.title}
               {isNewItem(item.date) && (
-                <span className="ml-1 text-xs font-bold text-red-500 inline-flex ">
+                <span className="ml-1.5 text-xs font-bold text-red-500 inline-flex ">
                   <span className="animate-bounce" style={{animationDelay: '0ms'}}>N</span>
                   <span className="animate-bounce" style={{animationDelay: '100ms'}}>e</span>
                   <span className="animate-bounce" style={{animationDelay: '200ms'}}>w</span>
