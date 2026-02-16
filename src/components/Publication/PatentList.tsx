@@ -11,7 +11,7 @@ function formatTitle(title: { ko: string; en: string }): React.ReactNode {
     <>
       {title.ko}
       {'\n'}
-      <span className="text-[14.5px] md:text-[16.5px] font-medium text-gray-800 leading-snug">{title.en}</span>
+      <span className="text-[14.5px] md:text-[16.5px] font-medium text-gray-800 leading-tight">{title.en}</span>
     </>
   );
 }
@@ -361,7 +361,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
                       ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
                       : ''
                   }`}>
-                    <div className="text-base md:text-lg font-medium text-gray-800 leading-snug mb-1 whitespace-pre-line">
+                    <div className="text-[16px] md:text-[18px] font-medium text-gray-800 leading-snug mb-1 whitespace-pre-line">
                       {formatTitle(patent.title)}
                     </div>
                     <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">

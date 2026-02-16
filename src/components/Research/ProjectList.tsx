@@ -53,11 +53,11 @@ function ProjectCard({
   const imageWidth = project.image?.width;
 
   return (
-    <article className="flex flex-col sm:flex-row sm:items-center rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden hover:shadow-md transition-shadow">
+    <article className="flex flex-col sm:flex-row sm:items-center rounded-xl border border-gray-200 bg-white shadow-sm hover:border-interactive-primary hover:shadow-md transition-all duration-200 overflow-hidden">
       <div className="flex-1 px-4 py-3 md:px-6 md:py-4 flex flex-col justify-center min-w-0">
         <div className="flex flex-col space-y-2 min-w-0">
             <div className="flex flex-wrap items-center gap-2">
-              <h3 className="text-base md:text-lg font-semibold text-gray-800 leading-snug">
+              <h3 className="text-[16px] md:text-[18px] font-semibold text-gray-800 leading-snug">
                 {project.title}
                 {isOngoing && isNewProject(project) && (
                   <span className="ml-2 text-xs font-bold text-red-500 inline-flex">
@@ -104,7 +104,7 @@ function ProjectCard({
             </div>
         </div>
       </div>
-      <div className="hidden lg:flex h-[120px] flex-shrink-0 min-w-[300px] bg-white px-4 md:px-6">
+      <div className="hidden lg:flex h-[120px] flex-shrink-0 min-w-[300px] bg-white px-4 md:px-6 rounded-r-xl">
         <div className="w-full flex justify-center items-center h-full">
           {showImage ? (
             <img
@@ -150,7 +150,7 @@ export default function ProjectList({ projects, className = "" }: ProjectListPro
 
       {/* Ongoing Projects */}
       <div className="mb-12">
-        <SectionHeader title="Ongoing" className="" underline={true} size="small"></SectionHeader>
+        {/* <SectionHeader title="Ongoing" className="" underline={true} size="small"></SectionHeader> */}
 
         <ul className="space-y-4 md:space-y-5">
           {ongoingProjects.map((project, index) => (

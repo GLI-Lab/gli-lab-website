@@ -1,7 +1,7 @@
 import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
-import { LectureList, getLectureItems } from "@/components/Lecture";
+import { LectureList, getLectureItems } from "@/components/Board/LectureList";
 
 const TITLE = 'Lectures'
 
@@ -20,7 +20,7 @@ export default async function Page() {
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
-                <SubCover title={TITLE} showBreadcrumb={false}/>
+                <SubCover title={TITLE} pattern="diagonal-lines" colorVariant="sage" showBreadcrumb={false} />
             </div>
             
             <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
@@ -31,13 +31,11 @@ export default async function Page() {
                     </p>
                 </div>
 
-                <div className="rounded-lg border border-gray-200 shadow-sm">
-                    <LectureList 
-                        className="w-full text-left"
-                        count={50}
-                        lectureItems={lectureItems}
-                    />
-                </div>
+                <LectureList
+                    className="w-full"
+                    count={50}
+                    lectureItems={lectureItems}
+                />
             </div>
 
             <div className="h-40"></div>

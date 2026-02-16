@@ -113,10 +113,7 @@ const ResearchSection = ({
     emphasized?: boolean;
     bgColor?: string; 
 }) => (
-    <div className={`${emphasized ? "bg-brand-primary/[0.04]" : bgColor} rounded-xl border transition-all duration-200 p-4 md:p-5 overflow-hidden h-full flex flex-col
-        ${emphasized 
-            ? "border border-gray-200 shadow-md hover:shadow-lg hover:border-brand-primary/30" 
-            : "border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300"}`}>
+    <div className={`${emphasized ? "bg-brand-primary/[0.04]" : bgColor} p-4 md:p-5 overflow-hidden h-full flex flex-col rounded-xl border border-gray-200 shadow-sm hover:border-brand-primary hover:shadow-md transition-all duration-200}`}>
         <div className={`flex flex-col items-center text-center mx-auto w-full ${wide ? "max-w-2xl" : "max-w-xl"}`}>
             <p className={`text-lg md:text-xl font-semibold leading-snug break-words mb-4 md:mb-5 w-full text-brand-primary `}>
                 {titleWithNowrapParens(title)}
@@ -189,7 +186,7 @@ export default function Page() {
                                         href="/pdf/Graph-based AI_part1_v251028.pdf"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-1 px-3 py-2 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 text-sm md:text-base font-medium rounded-lg shadow-sm hover:shadow transition duration-200"
+                                        className="inline-flex items-center gap-1 px-3 py-2 bg-white text-sm md:text-base font-medium hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 rounded-lg shadow hover:shadow-md transition duration-200"
                                     >
                                         <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -200,7 +197,7 @@ export default function Page() {
                                         href="/pdf/Graph-based AI_part2_v251104.pdf"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-1 px-3 py-2 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 text-sm md:text-base font-medium rounded-lg shadow-sm hover:shadow transition duration-200"
+                                        className="inline-flex items-center gap-1 px-3 py-2 bg-white text-sm md:text-base font-medium hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 rounded-lg shadow hover:shadow-md transition duration-200"
                                     >
                                         <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
