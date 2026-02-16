@@ -156,7 +156,7 @@
     Code: null
   notes: {"normal": "", "important": ""}
   authors:
-    - { name: "Wonseok Son, ", position: first }
+    - { name: "Wonseok Son", position: first }
     - { ID: "[2025.01] 구해윤", name: "Haeyoon Koo", position: co }
     - { name: "Jeonghyeon Park", position: co }
     - { name: "Jungkyu Han", position: co }

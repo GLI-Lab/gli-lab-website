@@ -1,15 +1,22 @@
-// [Vision and Topics]
+// [Vision and Topics (카드)]
 // 비전      : text-lg md:text-xl font-normal text-gray-900 leading-relaxed tracking-tight  # 18px / 20px
 // 타이틀    : text-lg md:text-xl font-semibold text-brand-primary leading-snug             # 18px / 20px
 // 설명      : text-[14.5px] md:text-[16.5px] text-gray-600 leading-normal                  # 14.5px / 16.5px
 // 뱃지/버튼 : text-sm md:text-base text-gray-600 text-sm md:text-base font-medium          # 14px / 16px
 
-// [Projects]
-// 타이틀     : text-base md:text-lg font-semibold text-gray-800 leading-snug   # 16px / 18px
+// [Projects (리스트)]
+// 타이틀     : text-base md:text-lg font-medium text-gray-800 leading-snug   # 16px / 18px
 // 메타데이터 : text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug       # 14.5px / 16.5px
 // 보조설명   : text-[14px] md:text-[16px] text-gray-600 leading-snug           # 14px / 16px
-// 뱃지       : inline-block bg-brand-primary/10 text-brand-primary text-[13.5px] md:text-[15.5px] px-2 py-0.5 md:py-0.25 rounded-md shrink-0  # 13.5px / 15.5px
-// 뱃지       : inline-block bg-gray-100 text-gray-600 text-[13.5px] md:text-[15.5px] px-2 py-0.5 md:py-0.25 rounded-md shrink-0               # 13.5px / 15.5px
+// 뱃지       : bg-brand-primary/10 text-brand-primary text-[13.5px] md:text-[15.5px] px-2 py-0.5 md:py-0.25 rounded-md shrink-0  # 13.5px / 15.5px
+// 뱃지       : bg-gray-100 text-gray-600 text-[13.5px] md:text-[15.5px] px-2 py-0.5 md:py-0.25 rounded-md shrink-0               # 13.5px / 15.5px
+
+// [Papers/Patents (리스트)]
+// 타이틀(메인) : text-base md:text-lg font-medium text-gray-800 leading-snug            # 16px / 18px
+// 타이틀(서브) : text-[14.5px] md:text-[16.5px] font-medium text-gray-800 leading-snug  # 16px / 18px
+// 저자         : text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug              # 14.5px / 16.5px
+// 버튼         : text-xs md:text-sm text-gray-600                                       # 12px / 14px
+// 중요         : text-sm md:text-base font-medium italic text-red-600                   # 14px / 16px
 
 // text-xs   (12px, 0.75rem)     
 // text-[15px]                :                          (데스크탑) 뱃지, 메타데이터(서브)

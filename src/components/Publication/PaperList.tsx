@@ -7,7 +7,7 @@ import { PaperData } from '@/data/loaders/types';
 import { titleToId } from '@/lib/utils';
 
 
-interface PublicationListProps {
+interface PaperListProps {
   className?: string
   papers: PaperData[];
   memberIds?: string[];
@@ -15,7 +15,7 @@ interface PublicationListProps {
   initialShowInProgress?: boolean;
 }
 
-export default function PublicationList({ className = '', papers, memberIds = [], alumniIds = [], initialShowInProgress = false }: PublicationListProps) {
+export default function PaperList({ className = '', papers, memberIds = [], alumniIds = [], initialShowInProgress = false }: PaperListProps) {
   // 서버에서 전달된 초기값 사용
   const [showInProgress, setShowInProgress] = useState(initialShowInProgress);
   const [showUnderReview, setShowUnderReview] = useState(true);
@@ -419,10 +419,10 @@ export default function PublicationList({ className = '', papers, memberIds = []
                           ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
                           : ''
                       }`}>
-                        <div className="text-gray-700 mb-1">
-                          <span className="font-normal">(🛠)</span> <span className="font-semibold">{publication.title}</span>
+                        <div className="text-base md:text-lg font-medium text-gray-800 leading-snug mb-1">
+                          <span className="font-normal">(🛠)</span> <span>{publication.title}</span>
                         </div>
-                        <div className="text-gray-600 mb-1">
+                        <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">
                           {renderAuthors(publication)}
                         </div>
                       </div>
@@ -468,10 +468,10 @@ export default function PublicationList({ className = '', papers, memberIds = []
                           ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
                           : ''
                       }`}>
-                        <div className="text-gray-700 font-semibold mb-1">
+                        <div className="text-base md:text-lg font-medium text-gray-800 leading-snug mb-1">
                           {publication.title}
                         </div>
-                        <div className="text-gray-600 mb-1">
+                        <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">
                           {renderAuthors(publication)}
                         </div>
                       </div>
@@ -502,13 +502,13 @@ export default function PublicationList({ className = '', papers, memberIds = []
                       ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
                       : ''
                   }`}>
-                    <div className="text-gray-700 font-semibold mb-1">
+                    <div className="text-base md:text-lg font-medium text-gray-800 leading-snug mb-1">
                       {publication.title}
                     </div>
-                    <div className="text-gray-600 mb-1">
+                    <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">
                       {renderAuthors(publication)}
                     </div>
-                    <div className="italic leading-snug text-gray-600 mb-1">
+                    <div className="italic text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">
                       <>{renderVenue(publication.venue)}, {publication.year}{publication.notes?.normal ? ` — ${publication.notes.normal}` : ''}</>
                     </div>
                     {publication.links && Object.entries(publication.links).some(([_, url]) => url) && (
@@ -524,14 +524,14 @@ export default function PublicationList({ className = '', papers, memberIds = []
                               href={url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="px-3 py-0.25 text-xs md:text-sm bg-white border border-gray-700 hover:bg-gray-50 transition-colors"
+                              className="px-3 py-0.25 text-xs md:text-sm text-gray-600 bg-white border border-gray-600 hover:bg-gray-50 transition-colors"
                             >
                               {key}
                             </a>
                           ))
                         }
                         {publication.notes?.important && (
-                          <span className="text-sm md:text-base font-semibold italic text-red-600">{publication.notes.important}</span>
+                          <span className="text-sm md:text-base font-medium italic text-red-600">{publication.notes.important}</span>
                         )}
                       </div>
                     )}
