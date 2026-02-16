@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { MainCover } from "@/components/Covers";
 import { FaCheck } from "react-icons/fa";
 import { NewsList } from "@/components/Board/NewsList";
-import { SeminarList } from "@/components/Seminar";
+import { SeminarList } from "@/components/Board/SeminarList";
 import { GalleryGrid, getGalleryItems } from "@/components/Gallery";
 import { getNews } from "@/data/loaders/newsLoader";
 import { getMemberIds, getAlumniIds, getProfiles, getAlumniProfiles } from "@/data/loaders/profileLoader";
@@ -49,14 +49,14 @@ export default async function Page() {
                             </div>
                         </div>
                     </div>
-                    <p className="text-home">
+                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
                         We strive for technological innovation across various real-world applications 
                         such as explainable and conversational recommendations, information retrieval and extraction, and trustworthy response generation.
                         To achieve this, we actively research and develop advanced methods including Graph Neural Networks (GNNs),
                         multimodal and knowledge-enhanced Large Language Models (LLMs), Synergizing LLMs and Graphs techniques,
                         GraphRAG, and LLM-based agents, aiming toward knowledge-enhanced intelligent systems.
                     </p>
-                    <p className="text-home">
+                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
                         <span className="underline underline-offset-4"><span className="highlight">그래프</span>는
                         다출처 데이터와 지식 간의 관계, 규칙, 제약사항 등을 명확하게 구조화하고 잠재적 지식을 탐색</span>할 수 있습니다.
                         <span className="underline underline-offset-4"><span className="highlight">텍스트</span>는
@@ -64,13 +64,13 @@ export default async function Page() {
                         이미 글로벌 빅테크 기업들은 자사의 핵심 사업 분야인 검색/추천/개인화/추론/탐지 서비스 고도화를 위해
                         그래프와 텍스트 데이터를 유기적으로 융합하여 활용하고 있습니다.
                     </p>
-                    <p className="text-home">
+                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
                         이에 본 연구실에서는 자연어처리, 컴퓨터비전, 이상탐지 등 전통적인 딥러닝 모델이 가지는 한계점을 극복하고자 합니다. 
                         기존 딥러닝 방법론과 그래프 기반 접근을 유기적으로 융합하여, <span className="underline underline-offset-4">지식 중심(Knowledge-driven)의 추론 가능한 AI를 
                         구현하기 위한 <span className="highlight">그래프 기반 딥러닝의 원천기술</span>을 다방면으로 연구개발</span>하는 것을 목표로 합니다.
                         
                     </p>
-                    <p className="text-home">
+                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
                         구체적으로, 텍스트와 이미지 같은 비정형 멀티모달 데이터뿐만 아니라, 행렬, 시계열, 그래프 등 다양한 데이터로부터 
                         아이템 속성, 사용자 프로필, 도메인 지식, 상식, 제약 정보 등의 관계지식을 그래프 형태로 구조화하고, 이를 지속적으로 확장합니다. 
                         또한, 언어모델(LLMs), 추천시스템, 이상탐지 등 다양한 딥러닝 기술에 그래프 기반 딥러닝을 융합하여, 
@@ -89,9 +89,8 @@ export default async function Page() {
                         Explore Our Research Topics
                     </p>
 
-                    <p className="text-home">
-                        본 연구실은 궁극적으로 자연어처리, 추천시스템, 그래프 표현학습, LLM-그래프 융합, 이상탐지에서 
-                        다음과 같은 최신 기술들을 연구개발하고 있습니다.
+                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
+                        본 연구실은 궁극적으로 Graph Intelligence와 Language Intelligence를 융합하여 얻은 Graph-Language Ingelligence를 Graph-Centric AI, Language-Centric AI, Recommender Systems, Anomaly Detection 등에 적용하는 것을 목적으로 하고 있으며, 다음과 같은 최신 기술들을 연구개발하고 있습니다.
                     </p>
 
                     <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center justify-center !mt-6">
@@ -99,7 +98,7 @@ export default async function Page() {
                             href="/pdf/Graph-based AI_part1_v251028.pdf" 
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-4 py-2 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-300 flex items-center gap-2"
+                            className="px-4 py-2 bg-white rounded-lg hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 shadow hover:shadow-md transition duration-200 font-medium flex items-center gap-2"
                         >
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -110,7 +109,7 @@ export default async function Page() {
                             href="/pdf/Graph-based AI_part2_v251104.pdf" 
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="px-4 py-2 bg-white hover:bg-gray-50 border-2 border-gray-300 hover:border-gray-400 text-gray-700 hover:text-gray-900 font-semibold rounded-lg shadow-md hover:shadow-lg transition duration-300 flex items-center gap-2"
+                            className="px-4 py-2 bg-white rounded-lg hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 shadow hover:shadow-md transition duration-200 font-medium flex items-center gap-2"
                         >
                             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -119,7 +118,7 @@ export default async function Page() {
                         </a>
                     </div>
 
-                    <ul className="list-none list-inside space-y-6 md:space-y-10 text-left text-home">
+                    <ul className="list-none list-inside space-y-6 md:space-y-10 text-left text-[16px] md:text-[18px] font-normal text-gray-800 leading-[1.8] tracking-normal">
                         <li className="space-y-2 leading-snug">
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
@@ -193,12 +192,20 @@ export default async function Page() {
                         Latest Seminar
                     </p>
                     <SeminarList
-                        className="w-full"
+                        className="w-full block md:hidden"
+                        layout="card"
+                        count={3}
+                        seminarItems={seminars}
+                        profiles={profiles}
+                        alumniProfiles={alumniProfiles}
+                    />
+                    <SeminarList
+                        className="w-full hidden md:block"
+                        layout="card"
                         count={6}
                         seminarItems={seminars}
                         profiles={profiles}
                         alumniProfiles={alumniProfiles}
-                        variant="card"
                     />
                     <Link href="/board/seminar"
                         className="px-6 py-2 mt-4 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
@@ -232,9 +239,16 @@ export default async function Page() {
                     <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
                         Latest News
                     </p>
-                    <NewsList 
+                    {/* <NewsList 
                         className="w-full text-home text-left"
                         count={30}
+                        newsItems={newsItems}
+                        memberIds={memberIds}
+                        alumniIds={alumniIds}
+                    /> */}
+                    <NewsList 
+                        className="w-full text-left"
+                        count={20}
                         newsItems={newsItems}
                         memberIds={memberIds}
                         alumniIds={alumniIds}
@@ -256,13 +270,13 @@ export default async function Page() {
                         Now Hiring ✨
                     </p>
 
-                    <p className="text-home">
+                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-[1.8] tracking-normal">
                         We are currently seeking <span className="highlight">talented and passionate students (MS/PhD) as well as undergraduate research interns.</span> 
                         {' '}<br className="hidden md:inline" />
                         Please feel free to contact us at <span className="font-semibold">bkoh@konkuk.ac.kr (오병국 교수)</span> if you are interested in joining our team.
                     </p>
 
-                    <p className="text-home">
+                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-[1.8] tracking-normal">
                         본 연구실은 <span className="highlight">그래프를 활용한 지식기반 지능형 시스템</span>을 핵심적으로 연구하고 있습니다. 
                         {' '}<br className="hidden md:inline" />
                         그래프는 복잡한 데이터와 지식 간의 관계/규칙/제약사항 등을 명확하게 표현하고 탐색하는 핵심 기술로, 
@@ -274,7 +288,7 @@ export default async function Page() {
                         데이터와 지식을 효과적으로 통합하여 보다 정교하고 제어 가능한 추론과 의사결정 능력을 제공합니다.
                     </p>
 
-                    <p className="text-home">
+                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-[1.8] tracking-normal">
                         해당 주제에 관심 있는 대학원 지망생과 학부 연구생은 언제든지 <span className="font-semibold">bkoh@konkuk.ac.kr (오병국 교수)</span>로 문의해 주세요.
                         {' '}<br className="hidden md:inline" />
                         체계적인 연구역량 향상을 위해 선별된 핵심 논문 <Link href="/board/study" className="group text-brand-primary underline-offset-4 hover:underline hover:decoration-1">
@@ -285,7 +299,7 @@ export default async function Page() {
                         </Link>를 통해 충분히 성장할 수 있는 기회를 제공합니다.
                     </p>
 
-                    <div className="text-home flex flex-col text-left mb-6">
+                    <div className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-[1.8] tracking-normal flex flex-col text-left mb-6">
                         <p className="font-semibold mb-2">
                             [연구지원]
                         </p>

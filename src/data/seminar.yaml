@@ -1,62 +1,84 @@
 # YAML에서 tab은 금지. 반드시 space 2개 사용
 
 ###############################################
-# 2025-2026 Winter
+# 2025 Winter
 ###############################################
-- title: "Semantic IDs for Recommender Systems via Vector Quantization and Generative Models"
-  date: "2026-02-12"
-  Presenter: { ID: "[2025.01] 구해윤", name: "Hae-Yoon Koo (구해윤)" }
+- title: Semantic IDs for Recommender Systems via Vector Quantization and Generative Models
+  season: 2025 Winter
+  date: 2026-02-12
+  Presenter: { ID: "[2025.01] 구해윤", name: Hae-Yoon Koo (구해윤) }
+  tag: { area: { Language Int., Recommender Systems }, topic: { Semantic/Textual IDs } }
   slide: /pdf/seminar/[260212][구해윤] Semantic IDs for Recommender Systems via Vector Quantization and Generative Models.pdf
 
-- title: "Efficient Knowledge Graph Evidence Utilization for Retrieval-Augmented Question Answering"
-  date: "2026-01-20"
-  Presenter: { ID: "[2024.12] 최진호", name: "Jinho Choi (최진호)" }
+- title: Efficient Knowledge Graph Evidence Utilization for Retrieval-Augmented Question Answering
+  season: 2025 Winter
+  date: 2026-01-20
+  Presenter: { ID: "[2024.12] 최진호", name: Jinho Choi (최진호) }
+  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Question Answering } }
   slide: /pdf/seminar/[260120][최진호] Efficient Knowledge Graph Evidence Utilization for Retrieval-Augmented Question Answering.pdf
 
-- title: "Question Answering over Temporal Knowledge Graphs"
-  date: "2026-01-13"
-  Presenter: { ID: "[2024.11] 이동천", name: "Dongcheon Lee (이동천)" }
+- title: Question Answering over Temporal Knowledge Graphs
+  season: 2025 Winter
+  date: 2026-01-13
+  Presenter: { ID: "[2024.11] 이동천", name: Dongcheon Lee (이동천) }
+  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Temporal Question Answering } }
   slide: /pdf/seminar/[260113][이동천] Question Answering over Temporal Knowledge Graphs.pdf
 
-- title: "Integrating Logical Rules into LLM Reasoning for Document-level Relation Extraction"
-  date: "2026-01-08"
-  Presenter: { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek (백혜윤)" }
+- title: Integrating Logical Rules into LLM Reasoning for Document-level Relation Extraction
+  season: 2025 Winter
+  date: 2026-01-08
+  Presenter: { ID: "[2024.07] 백혜윤", name: Hye-Yoon Baek (백혜윤) }
+  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Relation Extraction } }
   slide: /pdf/seminar/[260108][백혜윤] Integrating Logical Rules into LLM Reasoning for Document-level Relation Extraction.pdf
 
-- title: "Explainability in Graph Neural Networks"
-  date: "2026-01-06"
-  Presenter: { ID: "[2024.06] 서지명", name: "Jimyeung Seo (서지명)" }
+- title: Explainability in Graph Neural Networks
+  season: 2025 Winter
+  date: 2026-01-06
+  Presenter: { ID: "[2024.06] 서지명", name: Jimyeung Seo (서지명) }
+  tag: { area: { Graph Int., Graph-Centric AI }, topic: { Explainability, Agent-based GNNs } }
   slide: /pdf/seminar/[260106][서지명] Explainability in Graph Neural Networks.pdf
 
-- title: "From Pointer Network to GFlowNet for Combinatorial Optimization"
-  date: "2025-12-23"
-  Presenter: { ID: "[2024.03] 오병국", name: "Byungkook Oh (오병국)" }  
+- title: From Pointer Network to GFlowNet for Combinatorial Optimization
+  season: 2025 Winter
+  date: 2025-12-23
+  Presenter: { ID: "[2024.03] 오병국", name: Byungkook Oh (오병국) }
+  tag: { area: { Graph Int., Graph-Centric AI }, topic: { Combinatorial Optimization } }
   slide: /pdf/seminar/[251223][오병국] From Pointer Network to GFlowNet for Combinatorial Optimization.pdf
 
 ###############################################
 # 2025 Summer
 ###############################################
-- title: "Recent Advances in Graph Anomaly Detection"
-  date: "2025-07-31"
-  Presenter: { ID: "[2025.04] 구본유", name: "Bonyou Koo (구본유)" }
+- title: Recent Advances in Graph Anomaly Detection
+  season: 2025 Summer
+  date: 2025-07-31
+  Presenter: { ID: "[2025.04] 구본유", name: Bonyou Koo (구본유) }
+  tag: { area: { Graph Int., Anomaly Detection }, topic: { Autoencoder } }
   slide: /pdf/seminar/[250731][구본유] Recent Advances in Graph Anomaly Detection.pdf
 
-- title: "LLM-based Recommendation - From Basics to Beyond"
-  date: "2025-07-24"
-  Presenter: { ID: "[2025.01] 구해윤", name: "Hae-Yoon Koo (구해윤)" }
+- title: LLM-based Recommendation - From Basics to Beyond
+  season: 2025 Summer
+  date: 2025-07-24
+  Presenter: { ID: "[2025.01] 구해윤", name: Hae-Yoon Koo (구해윤) }
+  tag: { area: { Language Int., Recommender Systems }, topic: { LLM-based Recommendation } }
   slide: /pdf/seminar/[250724][구해윤] LLM-based Recommendation - From Basics to Beyond.pdf
 
-- title: "GraphRAG for KGQA - Trends in Advanced Retrieval Methods"
-  date: "2025-07-17"
-  Presenter: { ID: "[2024.11] 이동천", name: "Dongcheon Lee (이동천)" }
+- title: GraphRAG for KGQA - Trends in Advanced Retrieval Methods
+  season: 2025 Summer
+  date: 2025-07-17
+  Presenter: { ID: "[2024.11] 이동천", name: Dongcheon Lee (이동천) }
+  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Question Answering } }
   slide: /pdf/seminar/[250717][이동천] GraphRAG for KGQA - Trends in Advanced Retrieval Methods.pdf
 
-- title: "Trends in Joint Information Extraction"
-  date: "2025-07-10"
-  Presenter: { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek (백혜윤)" }
+- title: Trends in Joint Information Extraction
+  season: 2025 Summer
+  date: 2025-07-10
+  Presenter: { ID: "[2024.07] 백혜윤", name: Hye-Yoon Baek (백혜윤) }
+  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Joint Information Extraction } }
   slide: /pdf/seminar/[250710][백혜윤] Trends in Joint Information Extraction.pdf
 
-- title: "Instruction Tuning for LLMs with Graphs"
-  date: "2025-07-03"
-  Presenter: { ID: "[2024.06] 서지명", name: "Jimyeung Seo (서지명)" }  
+- title: Instruction Tuning for LLMs with Graphs
+  season: 2025 Summer
+  date: 2025-07-03
+  Presenter: { ID: "[2024.06] 서지명", name: Jimyeung Seo (서지명) }
+  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Instruction Tuning } }
   slide: /pdf/seminar/[250703][서지명] Instruction Tuning for LLMs with Graphs.pdf

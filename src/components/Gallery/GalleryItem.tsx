@@ -73,7 +73,8 @@ const GalleryItemComponent = ({
   return (
     <div 
       ref={itemRef}
-      className="group/details relative bg-white rounded-xl border border-gray-300 overflow-hidden hover:border-interactive-primary hover:shadow-lg transition-all duration-300 touch-manipulation"
+      className="group/details relative bg-white overflow-hidden
+      rounded-xl border border-gray-200 shadow-sm hover:border-brand-primary hover:shadow-md transition-all duration-200 touch-manipulation"
       onClick={() => onCardClick(item)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
