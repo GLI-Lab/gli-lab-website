@@ -1,7 +1,7 @@
 import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
-import { NewsList } from "@/components/News";
+import { NewsList } from "@/components/Board/NewsList";
 import { getNews } from "@/data/loaders/newsLoader";
 import { getMemberIds, getAlumniIds } from "@/data/loaders/profileLoader";
 

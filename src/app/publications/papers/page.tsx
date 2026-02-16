@@ -1,7 +1,7 @@
 import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
-import PublicationList from "@/components/Publication/PublicationList";
+import PaperList from "@/components/Publication/PaperList";
 import { getPapers } from "@/data/loaders/paperLoader";
 import { getMemberIds, getAlumniIds } from "@/data/loaders/profileLoader";
 
@@ -32,7 +32,7 @@ export default async function Page({ searchParams }: PageProps) {
                 <SubCover title={TITLE} showBreadcrumb={false}/>
             </div>
             <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
-                <PublicationList 
+                <PaperList 
                     className="w-full text-left"
                     papers={papers} 
                     memberIds={memberIds}

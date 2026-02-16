@@ -6,8 +6,14 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import { PatentData } from '@/data/loaders/types';
 import { titleToId } from '@/lib/utils';
 
-function formatTitle(title: { ko: string; en: string }): string {
-  return `${title.ko}\n${title.en}`;
+function formatTitle(title: { ko: string; en: string }): React.ReactNode {
+  return (
+    <>
+      {title.ko}
+      {'\n'}
+      <span className="text-[14.5px] md:text-[16.5px] font-medium text-gray-800 leading-snug">{title.en}</span>
+    </>
+  );
 }
 
 interface PatentListProps {
@@ -355,13 +361,13 @@ export default function PatentList({ className = '', patents, memberIds = [], al
                       ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
                       : ''
                   }`}>
-                    <div className="text-gray-700 font-semibold mb-1 whitespace-pre-line">
+                    <div className="text-base md:text-lg font-medium text-gray-800 leading-snug mb-1 whitespace-pre-line">
                       {formatTitle(patent.title)}
                     </div>
-                    <div className="text-gray-600 mb-1">
+                    <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">
                       {renderAuthors(patent)}
                     </div>
-                    <div className="text-gray-600 mb-1">
+                    <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">
                       {renderPatentInfo(patent)}
                     </div>
                     {patent.link && (
@@ -370,7 +376,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
                           href={patent.link}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="px-3 py-0.25 text-xs md:text-sm bg-white border border-gray-700 hover:bg-gray-50 transition-colors"
+                          className="px-3 py-0.25 text-xs md:text-sm text-gray-600 bg-white border border-gray-700 hover:bg-gray-50 transition-colors"
                         >
                           Link
                         </a>

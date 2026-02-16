@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { MainCover } from "@/components/Covers";
 import { FaCheck } from "react-icons/fa";
-import { NewsList } from "@/components/News";
+import { NewsList } from "@/components/Board/NewsList";
 import { SeminarList } from "@/components/Seminar";
 import { GalleryGrid, getGalleryItems } from "@/components/Gallery";
 import { getNews } from "@/data/loaders/newsLoader";
