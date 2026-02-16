@@ -22,7 +22,7 @@ export default async function Page() {
     ]);
 
     return (
-        <div className="">
+        <>
             <div className="max-w-screen-2xl mx-auto">
                 <MainCover/>
             </div>
@@ -322,6 +322,6 @@ export default async function Page() {
 
             <div className="h-20"></div>
 
-        </div>
+        </>
     )
 }

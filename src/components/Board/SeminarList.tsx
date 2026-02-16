@@ -111,11 +111,11 @@ export function SeminarList({
           {groupIdx > 0 && group.season && (
             <SectionHeader title={group.season} size="small" className="first:mt-0" />
           )}
-          <div className={`grid gap-4 md:gap-5 ${listMd ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
+          <div className={`grid gap-4 md:gap-5 grid-cols-1 ${listMd ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
             {group.items.map((item, idx) => (
               <div
                 key={`${item.date}-${item.title}-${idx}`}
-                className={`flex flex-col bg-white px-4 py-2 rounded-xl border border-gray-200 shadow-sm hover:border-brand-primary hover:shadow-md transition-all duration-200 min-h-0 ${listMd ? 'md:py-4 md:flex-row md:items-center md:gap-5' : 'h-full gap-3 md:py-4 md:gap-3'}`}
+                className={`flex flex-col bg-white px-4 py-2 rounded-xl border border-gray-200 shadow-sm hover:border-brand-primary hover:shadow-md transition-all duration-200 min-h-0 ${listMd ? 'md:py-4 md:flex-row md:items-center md:gap-5' : 'h-full gap-2 md:py-4 md:gap-3'}`}
               >
                 <span
                   className={`text-[14px] md:text-[16px] font-medium text-gray-600 leading-snug tabular-nums shrink-0 text-center block ${listMd ? 'mb-0 md:w-20 md:text-right' : 'mb-0'}`}
@@ -123,20 +123,38 @@ export function SeminarList({
                   {formatDate(item.date)}
                 </span>
                 <div
-                  className={`flex-1 min-w-0 flex flex-col min-h-0 ${listMd ? 'md:flex-row md:justify-start md:items-center gap-2 md:gap-4' : 'gap-3 md:gap-2'}`}
+                  className={`flex-1 min-w-0 flex flex-col min-h-0 ${listMd ? 'md:flex-row md:justify-start md:items-center gap-2 md:gap-4' : 'gap-2 md:gap-2'}`}
                 >
                   <div
                     className={`min-w-0 flex flex-col items-center text-center ${listMd ? 'flex-1 md:items-start md:text-left' : 'flex-1 min-h-0 justify-center'}`}
                   >
                     <p className={`text-[16px] md:text-[18px] font-semibold text-gray-800 leading-snug ${listMd ? 'mb-0' : ''}`}>
-                      {item.title}
-                      {isNewSeminar(item) && (
-                        <span className="ml-1.5 text-xs font-bold text-red-500 inline-flex">
-                          <span className="animate-bounce" style={{ animationDelay: '0ms' }}>N</span>
-                          <span className="animate-bounce" style={{ animationDelay: '100ms' }}>e</span>
-                          <span className="animate-bounce" style={{ animationDelay: '200ms' }}>w</span>
-                        </span>
-                      )}
+                      {(() => {
+                        const title = item.title ?? '';
+                        const words = title.trim().split(/\s+/).filter(Boolean);
+                        const isNew = isNewSeminar(item);
+                        const newBadge = (
+                          <span className="ml-1.5 text-xs font-bold text-red-500 inline-flex">
+                            <span className="animate-bounce" style={{ animationDelay: '0ms' }}>N</span>
+                            <span className="animate-bounce" style={{ animationDelay: '100ms' }}>e</span>
+                            <span className="animate-bounce" style={{ animationDelay: '200ms' }}>w</span>
+                          </span>
+                        );
+                        if (!isNew || words.length === 0) {
+                          return <>{title}{isNew ? newBadge : null}</>;
+                        }
+                        const lastTwo = words.slice(-2).join(' ');
+                        const rest = words.slice(0, -2).join(' ');
+                        return (
+                          <>
+                            {rest && <>{rest}{' '}</>}
+                            <span className="whitespace-nowrap">
+                              {lastTwo}
+                              {newBadge}
+                            </span>
+                          </>
+                        );
+                      })()}
                     </p>
                     {listMd && (getTopicTags(item).length > 0 || getAreaTags(item).length > 0) && (
                       <div className="flex flex-wrap justify-center gap-x-2 gap-y-1 mt-1 md:mt-2 md:justify-start">
@@ -172,7 +190,7 @@ export function SeminarList({
                     </div>
                   )}
                   <div
-                    className={`flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-gray-600 shrink-0 pt-3 border-t border-gray-200 w-full ${listMd ? 'md:pt-0 md:border-t-0 md:w-auto md:justify-end' : 'md:pt-4'}`}
+                    className={`flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-gray-600 shrink-0 pt-2 border-t border-gray-200 w-full ${listMd ? 'md:pt-0 md:border-t-0 md:w-auto md:justify-end' : 'md:pt-4'}`}
                   >
                     {item.Presenter && (
                       <span className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-normal">{renderPresenter(item.Presenter, profiles, alumniProfiles)}</span>
