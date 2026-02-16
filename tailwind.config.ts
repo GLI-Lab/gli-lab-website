@@ -18,6 +18,13 @@
 // 버튼         : text-xs md:text-sm text-gray-600                                       # 12px / 14px
 // 중요         : text-sm md:text-base font-medium italic text-red-600                   # 14px / 16px
 
+// [Gallery (카드)]
+// 타이틀           : text-base md:text-lg font-semibold text-gray-800
+// 메타데이터       : text-sm text-gray-600
+// 타이틀(팝업)     : text-lg md:text-xl font-semibold text-gray-800
+// 메타데이터(팝업) : text-[14px] md:text-[16px] text-gray-600
+// 설명(팝업)       : text-[14.5px] md:text-[16.5px] text-gray-600 leading-normal
+
 // text-xs   (12px, 0.75rem)     
 // text-[15px]                :                          (데스크탑) 뱃지, 메타데이터(서브)
 // text-sm   (14px, 0.875rem) : (모바일) 일반 보조       (데스크탑) 버튼(Link/Code)

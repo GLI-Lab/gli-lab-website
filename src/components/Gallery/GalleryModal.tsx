@@ -107,14 +107,14 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
 
   return (
     <div 
-      className="fixed inset-0 z-50 bg-black bg-opacity-75 flex items-center justify-center p-4"
+      className="fixed inset-0 z-50 bg-black bg-opacity-75 flex items-center justify-center px-2 py-2 md:p-4"
       onClick={handleBackdropClick}
     >
-      <div className="max-h-[90vh] max-w-4xl w-full bg-white rounded-lg overflow-hidden relative">
+      <div className="max-w-5xl w-full bg-white rounded-lg overflow-hidden relative">
         {/* 닫기버튼 */}
           <button
             onClick={onClose}
-            className="absolute top-1 right-1 z-[200]"
+            className="absolute top-2 right-2 md:top-3 md:right-3 z-[200]"
           >
             <svg
               className="w-8 h-8"
@@ -135,7 +135,7 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
         {/* 콘텐츠 (주소창 고려해서 -60px) */}
         <div 
           ref={contentRef}
-          className="overflow-y-auto max-h-[calc(90vh-20px)] relative overscroll-none text-left" 
+          className="overflow-y-auto max-h-[calc(95vh-20px)] relative overscroll-none text-left scrollbar-hide" 
           onScroll={handleScroll}
         >
           {/* 이미지 섹션 */}
@@ -188,8 +188,8 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
           {/* 정보 섹션 */}
           <div className="p-4 sm:p-6">
             {/* 타이틀 */}
-            <div className="mb-2">
-              <div className="text-xl font-bold text-gray-900">
+            <div className="mb-1">
+              <div className="text-lg md:text-xl font-semibold text-gray-800">
                 {item.title}
                 {isNewItem(item.date) && (
                   <span className="ml-1 text-xs font-bold text-red-500 inline-flex">
@@ -202,7 +202,7 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
             </div>
             
             {item.date && (
-                <p className="text-gray-900">
+                <p className="text-[14px] md:text-[16px] text-gray-600">
                   {formatDateForDisplay(item.date)}
                 </p>
             )}
@@ -214,7 +214,7 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
                 <h3 className="text-sm font-semibold text-brand-primary uppercase tracking-wide mb-2">
                   Description
                 </h3>
-                <div className="text-gray-700 whitespace-pre-wrap leading-relaxed">
+                <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-normal whitespace-pre-wrap">
                   {item.description}
                 </div>
               </div>
@@ -227,15 +227,15 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
               </h3>
             </div>
             
-            <div className="flex flex-wrap gap-2 mt-4">
+            <div className="flex flex-wrap gap-2 md:gap-3 mt-4">
               {item.images.map((image, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentImageIndex(index)}
                   className={`relative w-16 h-16 sm:w-20 sm:h-20 rounded overflow-hidden border-2 transition-all ${
                     index === currentImageIndex 
-                      ? 'border-brand-primary' 
-                      : 'border-gray-200 hover:border-gray-300'
+                      ? 'ring-2 md:ring-4 ring-brand-primary/80 ring-offset-1 shadow-md' 
+                      : ''
                   }`}
                 >
                   <Image
@@ -256,13 +256,13 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
         <div className={`absolute bottom-0 left-0 right-0 transition-opacity duration-300 ease-in-out ${
           !isAtBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
-          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white/95 via-white/60 to-white/0 pointer-events-none"></div>
-          <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white/100 via-white/80 to-transparent pointer-events-none"></div>
-          <div className={`absolute bottom-1.5 left-0 right-0 flex justify-center items-center pointer-events-none transform transition-all duration-300 ease-in-out ${
+          <div className="absolute bottom-0 left-0 right-0 h-20 md:h-24 bg-gradient-to-t from-white/95 via-white/60 to-white/0 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 right-0 h-8 md:h-10 bg-gradient-to-t from-white/100 via-white/80 to-transparent pointer-events-none"></div>
+          <div className={`absolute bottom-1.5 md:bottom-2 left-0 right-0 flex justify-center items-center pointer-events-none transform transition-all duration-300 ease-in-out ${
             !isAtBottom ? 'translate-y-0 opacity-100' : 'translate-y-1.5 opacity-0'
           }`}>
             <svg
-              className="h-5 text-interactive-primary animate-bounce"
+              className="h-6 md:h-7 text-interactive-primary animate-bounce"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
