@@ -13,73 +13,72 @@ export async function generateMetadata() {
     });
 };
 
-// 연구 데이터 정의
 const researchData = {
     approaches: [
         {
             title: "Graph Intelligence (그래프 표현학습)",
             items: [
-                "Graph Neural Networks (GNNs) for Node/Edge/Graph Embedding",
-                "Knowledge Graph Representation/Completion/Validation/Construction",
-                "Context-Aware Knowledge Graph Representation and Relational Learning"
+                "Graph Neural Networks for Node, Edge, and Graph-level Representation",
+                "Knowledge Graph Completion, Validation, and Construction",
+                "Context-Aware Relational Learning on Heterogeneous/Dynamic Graphs"
             ],
-            description: "그래프 구조와 엔티티·관계를 임베딩하고, 지식그래프의 표현·완성·검증을 위한 핵심 방법론을 연구합니다."
+            description: "Graph Intelligence는 노드, 엣지, 서브그래프 등 다양한 레벨에서 복잡한 관계와 구조를 표현하고 분석합니다. 이를 위해, 그래프 신경망(GNN), 지식그래프 임베딩 등 딥러닝 기반 그래프 표현학습 방법론을 심층 탐구합니다."
         },
         {
             title: "Language Intelligence (대형 언어모델)",
             items: [
-                "Multi-Modal & Knowledge-Enhanced Foundation Models",
-                "Knowledge & LLM Distillation for Efficient Model Development",
+                "Knowledge Integration and Reasoning Capabilities of LLM Agents",
+                "Knowledge & LLM Distillation for Lightweight, Efficient Intelligence",
                 "Advanced Prompt Engineering: Chain-of-Thought (CoT), and Retrieval-Augmented Generation (RAG)"
             ],
-            description: "멀티모달·지식 증강 기반 대형 언어모델과 CoT, RAG 등을 통해 일관된 이해·추론·생성 능력을 높입니다."
+            description: "Language Intelligence는 대규모 텍스트로부터 언어의 의미와 맥락을 깊이 이해하고, 일관된 추론과 생성을 가능하게 합니다. 이를 위해, 멀티모달·지식 증강 파운데이션 모델과 CoT, RAG 등 고급 프롬프트 전략을 연구합니다."
         },
         {
             title: "Graph-Language Fusion (그래프·언어모델 통합)",
             items: [
-                "Text-to-Graph & Graph-to-Text Generation",
-                "Graph-Structured Interaction for LLMs (GraphRAG, Graph-driven LLM Agents)",
-                "Knowledge-grounded & Context-aware Response Generation with LLMs"
+                "Text-to-Graph and Graph-to-Text Generation",
+                "Graph-Structured Interaction for LLMs: GraphRAG and Graph-Driven Agents",
+                "Knowledge-Grounded and Context-Aware Response Generation"
             ],
-            description: "그래프와 LLM을 결합해 외부 지식을 활용한 응답 생성, GraphRAG·에이전트 등 신뢰 가능하고 도메인 적응형 AI를 추구합니다."
+            description: "Graph-Language Fusion은 그래프의 구조적 지식과 언어모델의 생성·추론 능력을 결합하여, 더 신뢰할 수 있는 AI를 구현합니다. 이를 위해, GraphRAG, Graph-driven Agent 등 그래프 구조를 활용한 LLM 상호작용과 지식 기반 응답 생성 방법론을 연구합니다."
         }
     ],
     applications: [
         {
             title: "Graph-Centric AI (그래프 분석·예측)",
             items: [
-                "Graph Neural Networks (GNNs) for Node/Edge/Graph Representation",
-                "Knowledge Graph Representation, Completion, Validation & Construction",
-                "Node & Graph Classification, Link Prediction"
+                "Node and Graph Classification, Link Prediction, and Graph Generation",
+                "Knowledge Graph Construction and Quality Assurance",
+                "Predictive Analytics and Intelligent Monitoring on Graph-Structured Data"
             ],
-            description: "노드·링크·그래프 수준의 분석·분류·예측을 통해 그래프 구축·확장 및 다른 딥러닝 모델과의 통합 기반을 마련합니다."
+            description: "노드·링크·그래프 수준의 분류와 예측을 통해 복잡한 네트워크 데이터를 실제 문제에 적용합니다. 지식그래프 구축·검증·확장 및 다양한 딥러닝 모델과의 통합을 통해 관계 기반 의사결정을 지원합니다."
         },
         {
             title: "Language-Centric AI (자연어처리)",
             items: [
-                "Question Answering, Information Retrieval & Extraction",
-                "Document Analysis (Sentiment, Opinion, Topic, NER, Summarization)",
-                "Knowledge & LLM Distillation and Applications"
+                "Question Answering, Information Retrieval, and Extraction",
+                "Document Analysis: Sentiment, Opinion, Topic, NER, and Summarization",
+                "LLM-Driven Insight Discovery and Automated Decision Making"
             ],
-            description: "질의응답·검색·추출·문서 분석 등에 그래프 지식을 결합해 LLM 환각을 줄이고, 일관되고 근거 있는 응답 생성을 목표로 합니다."
+            description: "질의응답, 정보 검색·추출, 문서 분석 등 핵심 자연어처리 태스크를 다양한 도메인에 적용합니다. LLM의 환각을 줄이고 근거 있는 응답을 생성하기 위한 지식 증강 및 모델 경량화 기법을 함께 탐구합니다."
         },
         {
             title: "Recommender Systems (추천시스템)",
             items: [
-                "Knowledge-enhanced & Explainable Recommendations",
-                "Multimodal & Conversational Recommendations",
-                "Graph-based User–Item Relation Modeling"
+                "Learned Representations and Encoders for Retrieval and Personalization",
+                "Knowledge-enhanced and Explainable Recommendations",
+                "Multimodal and Conversational Recommendations",
             ],
-            description: "사용자–아이템·지식 그래프를 확장해 의도·맥락·설명 가능성을 반영한 추천과 대화형 추천을 연구합니다."
+            description: "사용자–아이템-지식 그래프를 확장해 사용자의 의도와 맥락을 반영하여 설명 가능하고 정확한 추천을 구현합니다. 멀티모달 정보와 대화형 인터페이스를 활용해 사용자 선호를 보다 깊이 이해하는 추천 시스템을 연구합니다."
         },
         {
             title: "Anomaly Detection (이상탐지)",
             items: [
-                "Network & Graph-based Anomaly Detection",
-                "User Behavior-based Anomaly Detection",
+                "Network and Graph-based Anomaly Detection",
+                "User Behavior Modeling and Profiling for Anomaly Identification",
                 "Multimodal Anomaly Detection"
             ],
-            description: "네트워크·행동·멀티모달 데이터를 그래프로 모델링하여, 행위 간 상관관계와 맥락을 반영한 이상 탐지를 수행합니다."
+            description: "네트워크 구조, 사용자 행동, 멀티모달 데이터 등 다양한 소스를 활용하여 이상 패턴을 탐지합니다. 행위 간 상관관계와 맥락 정보를 반영함으로써 기존 방법으로는 포착하기 어려운 복합적 이상을 식별합니다."
         }
     ]
 };
@@ -102,34 +101,41 @@ const ResearchSection = ({
     items, 
     description,
     children,
+    wide = false,
+    emphasized = false,
     bgColor = "bg-white" 
 }: { 
     title: string; 
     items: string[]; 
     description?: string;
     children?: React.ReactNode;
+    wide?: boolean;
+    emphasized?: boolean;
     bgColor?: string; 
 }) => (
-    <div className={`${bgColor} rounded-xl border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300 transition-all duration-200 p-4 md:p-5 overflow-hidden h-full flex flex-col`}>
-        <div className="flex flex-col items-center text-center max-w-xl mx-auto w-full">
-            <p className="text-lg md:text-xl font-semibold text-gray-800 leading-snug break-words mb-4 md:mb-5 w-full">
+    <div className={`${emphasized ? "bg-brand-primary/[0.04]" : bgColor} rounded-xl border transition-all duration-200 p-4 md:p-5 overflow-hidden h-full flex flex-col
+        ${emphasized 
+            ? "border border-gray-200 shadow-md hover:shadow-lg hover:border-brand-primary/30" 
+            : "border border-gray-200 shadow-sm hover:shadow-md hover:border-gray-300"}`}>
+        <div className={`flex flex-col items-center text-center mx-auto w-full ${wide ? "max-w-2xl" : "max-w-xl"}`}>
+            <p className={`text-lg md:text-xl font-semibold leading-snug break-words mb-4 md:mb-5 w-full text-brand-primary `}>
                 {titleWithNowrapParens(title)}
             </p>
-            <ul className="grid gap-2 text-sm md:text-base text-gray-600 leading-snug flex-1 w-full text-left list-none pl-0">
+            <ul className="grid gap-2 text-[14.5px] md:text-[16.5px] text-gray-600 leading-normal flex-1 w-full text-left list-none pl-0">
                 {items.map((item, index) => (
                     <li key={index} className="break-words flex gap-2">
                         <span className="text-border-accent flex-shrink-0">•</span>
-                        <span>{item}</span>
+                        <span>{item}</span> 
                     </li>
                 ))}
             </ul>
             {description && (
-                <p className="mt-3 pt-3 border-t border-gray-100 text-sm md:text-base text-gray-600 leading-snug w-full text-left">
+                <p className="mt-3 pt-3 md:mt-4 md:pt-4 border-t border-gray-200 text-[14.5px] md:text-[16.5px] text-gray-600 leading-normal w-full text-left">
                     {description}
                 </p>
             )}
             {children && (
-                <div className="mt-3 pt-3 border-t border-gray-100 w-full">
+                <div className="mt-3 pt-3 md:mt-4 md:pt-4 border-t border-gray-200 w-full">
                     {children}
                 </div>
             )}
@@ -148,8 +154,8 @@ export default function Page() {
                 <div className="mb-12">
                     <SectionHeader title="Vision" underline={true} size="small" />
 
-                    <div className="max-w-3xl mx-auto text-center">
-                        <blockquote className="text-lg md:text-xl text-gray-900 italic leading-relaxed tracking-tight mb-6">
+                    <div className="mx-auto text-center">
+                        <blockquote className="text-lg md:text-xl font-normal text-gray-900 italic leading-relaxed tracking-tight mb-6">
                             Unifying Graph & Language Intelligence toward <span className="highlight">knowledge-driven AI</span>, enabling human-like reasoning for the future of AGI.
                         </blockquote>
                     </div>
@@ -170,21 +176,23 @@ export default function Page() {
                                 />
                             ))}
                         </div>
-                        <div className="max-w-2xl mx-auto">
+                        <div className="max-w-[50rem] mx-auto">
                             <ResearchSection
                                 title={researchData.approaches[2].title}
                                 items={researchData.approaches[2].items}
                                 description={researchData.approaches[2].description}
+                                wide
+                                emphasized
                             >
-                                <div className="flex flex-col sm:flex-row gap-2 flex-wrap">
+                                <div className="flex flex-col sm:flex-row gap-2 flex-wrap justify-center items-center">
                                     <a
                                         href="/pdf/Graph-based AI_part1_v251028.pdf"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 px-3 py-2 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-700 hover:text-gray-900 text-[13px] md:text-[15px] font-medium rounded-lg shadow-sm hover:shadow transition duration-200"
+                                        className="inline-flex items-center gap-1 px-3 py-2 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 text-sm md:text-base font-medium rounded-lg shadow-sm hover:shadow transition duration-200"
                                     >
-                                        <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                         </svg>
                                         Graph-based AI (Part 1)
                                     </a>
@@ -192,10 +200,10 @@ export default function Page() {
                                         href="/pdf/Graph-based AI_part2_v251104.pdf"
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 px-3 py-2 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-700 hover:text-gray-900 text-[13px] md:text-[15px] font-medium rounded-lg shadow-sm hover:shadow transition duration-200"
+                                        className="inline-flex items-center gap-1 px-3 py-2 bg-white hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 text-sm md:text-base font-medium rounded-lg shadow-sm hover:shadow transition duration-200"
                                     >
-                                        <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                        <svg className="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.75} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                                         </svg>
                                         Graph-based AI (Part 2)
                                     </a>
