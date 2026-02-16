@@ -1,9 +1,15 @@
-// 타이틀(카드) : text-lg md:text-xl font-semibold text-gray-800 leading-snug
-// 타이틀(제목) : text-base md:text-lg font-semibold text-gray-800 leading-snug
-// 메타데이터   : text-sm md:text-base text-gray-600 leading-snug
-// 보조설명     : text-[13px] md:text-[15px] text-gray-600 leading-snug
-// 뱃지         : inline-block bg-brand-primary/10 text-brand-primary text-[13px] md:text-[15px] px-2 py-0.5 md:py-0 rounded-md shrink-0
-// 뱃지         : inline-block bg-gray-100 text-gray-600 text-[13px] md:text-[15px] px-2 py-0.5 md:py-0 rounded-md shrink-0
+// [Vision and Topics]
+// 비전      : text-lg md:text-xl font-normal text-gray-900 leading-relaxed tracking-tight  # 18px / 20px
+// 타이틀    : text-lg md:text-xl font-semibold text-brand-primary leading-snug             # 18px / 20px
+// 설명      : text-[14.5px] md:text-[16.5px] text-gray-600 leading-normal                  # 14.5px / 16.5px
+// 뱃지/버튼 : text-sm md:text-base text-gray-600 text-sm md:text-base font-medium          # 14px / 16px
+
+// [Projects]
+// 타이틀     : text-base md:text-lg font-semibold text-gray-800 leading-snug   # 16px / 18px
+// 메타데이터 : text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug       # 14.5px / 16.5px
+// 보조설명   : text-[14px] md:text-[16px] text-gray-600 leading-snug           # 14px / 16px
+// 뱃지       : inline-block bg-brand-primary/10 text-brand-primary text-[13.5px] md:text-[15.5px] px-2 py-0.5 md:py-0.25 rounded-md shrink-0  # 13.5px / 15.5px
+// 뱃지       : inline-block bg-gray-100 text-gray-600 text-[13.5px] md:text-[15.5px] px-2 py-0.5 md:py-0.25 rounded-md shrink-0               # 13.5px / 15.5px
 
 // text-xs   (12px, 0.75rem)     
 // text-[15px]                :                          (데스크탑) 뱃지, 메타데이터(서브)
@@ -41,6 +47,7 @@
 // gray-700: 본문, 필터
 // gray-600: 메타데이터
 // gray-500: 데코레이션
+// gray-300: 박스 border 호버
 // gray-200: 박스 border
 // text-red-600: 빨강 강조
 

@@ -18,6 +18,15 @@ function isOngoing(project: ProjectData): boolean {
   return end >= today;
 }
 
+/** 하위 항목(가지) 표시용 아이콘 */
+function SubItemIcon({ className }: { className?: string }) {
+  return (
+    <svg className={className} width="15" height="15" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M4 2v6M4 8h5" />
+    </svg>
+  );
+}
+
 /** 최근 6개월 이내 시작한 프로젝트인지 (start_date 기준) */
 function isNewProject(project: ProjectData): boolean {
   if (!project.start_date) return false;
@@ -45,7 +54,7 @@ function ProjectCard({
 
   return (
     <article className="flex flex-col sm:flex-row sm:items-center rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden hover:shadow-md transition-shadow">
-      <div className="flex-1 px-4 py-3 md:px-6 md:py-5 flex flex-col justify-center min-w-0">
+      <div className="flex-1 px-4 py-3 md:px-6 md:py-4 flex flex-col justify-center min-w-0">
         <div className="flex flex-col space-y-2 min-w-0">
             <div className="flex flex-wrap items-center gap-2">
               <h3 className="text-base md:text-lg font-semibold text-gray-800 leading-snug">
@@ -61,28 +70,27 @@ function ProjectCard({
             </div>
             <div className="space-y-0.5">
               {(project.main.funder || project.main.program) && (
-                <p className="text-sm md:text-base text-gray-600 leading-snug">
-                  {[project.main.funder, project.main.program].filter(Boolean).join(" / ")}
+                <p className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug">
+                  {[project.main.funder, project.main.program].filter(Boolean).join("\u00A0\u00A0›\u00A0\u00A0")}
                 </p>
               )}
               {(project.parent.funder || project.parent.program) && (
-                <p className="text-[13px] md:text-[15px] text-gray-600 leading-snug flex">
-                  <span className="text-gray-500 select-none shrink-0 pl-0.5" aria-hidden>└ </span>
-                  <span className="min-w-0 pl-1">
-                    {project.parent.funder}
-                    {project.parent.program && ` / ${project.parent.program}`}
+                <p className="text-[14px] md:text-[16px] text-gray-600 leading-snug flex items-start gap-1">
+                  <SubItemIcon className="text-gray-600 ml-0.5 shrink-0" />
+                  <span className="min-w-0">
+                    {project.parent.funder}{project.parent.program && `\u00A0\u00A0›\u00A0\u00A0${project.parent.program}`}
                   </span>
                 </p>
               )}
             </div>
-            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm md:text-base font-normal text-gray-600 leading-snug">
+            <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-[14.5px] md:text-[16.5px] font-normal text-gray-600 leading-snug">
               {(project.role === "연구책임자" || project.role === "공동연구자" || project.role === "참여연구자") && (
                 <>
                   <span
                     className={
                       project.role === "연구책임자"
-                        ? "inline-block bg-brand-primary/10 text-brand-primary text-[13px] md:text-[15px] px-2 py-0.5 md:py-0 rounded-md shrink-0"
-                        : "inline-block bg-gray-100 text-gray-600 text-[13px] md:text-[15px] px-2 py-0.5 md:py-0 rounded-md shrink-0"
+                        ? "inline-block bg-brand-primary/10 text-brand-primary text-[13.5px] md:text-[15.5px] px-2 py-0.5 md:py-0.25 rounded-md shrink-0"
+                        : "inline-block bg-gray-100 text-gray-600 text-[13.5px] md:text-[15.5px] px-2 py-0.5 md:py-0.25 rounded-md shrink-0"
                     }
                   >
                     {project.role}
@@ -96,7 +104,7 @@ function ProjectCard({
             </div>
         </div>
       </div>
-      <div className="hidden lg:flex h-[140px] flex-shrink-0 min-w-[300px] bg-white p-4 md:p-6">
+      <div className="hidden lg:flex h-[120px] flex-shrink-0 min-w-[300px] bg-white px-4 md:px-6">
         <div className="w-full flex justify-center items-center h-full">
           {showImage ? (
             <img
