@@ -73,7 +73,7 @@ const GalleryItemComponent = ({
   return (
     <div 
       ref={itemRef}
-      className="group/details relative bg-white rounded-lg border border-gray-300 overflow-hidden hover:border-interactive-primary hover:shadow-lg transition-all duration-300 touch-manipulation"
+      className="group/details relative bg-white rounded-xl border border-gray-300 overflow-hidden hover:border-interactive-primary hover:shadow-lg transition-all duration-300 touch-manipulation"
       onClick={() => onCardClick(item)}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
@@ -109,7 +109,7 @@ const GalleryItemComponent = ({
               images={item.images}
               title={item.title}
               className="relative aspect-[8/5] md:aspect-[6/5]"
-              imageClassName="object-cover overflow-hidden select-none transform transition-all duration-500 md:hover:scale-105 md:brightness-85 md:saturate-60 md:contrast-90 md:grayscale-[50%] transition-all duration-300 md:hover:brightness-100 md:hover:saturate-100 md:hover:contrast-100 md:hover:grayscale-0"
+              imageClassName="object-cover overflow-hidden select-none transform transition-all duration-500 hover:scale-105 brightness-85 saturate-60 contrast-90 grayscale-[50%] transition-all duration-300 md:hover:brightness-100 md:hover:saturate-100 md:hover:contrast-100 md:hover:grayscale-0"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
               showNavigation={!isCardHovered}
               showIndicators={!isCardHovered}
@@ -118,11 +118,11 @@ const GalleryItemComponent = ({
 
           {/* 카드 정보 - 호버 시 손모양 커서 */}
           <div 
-            className="p-3 cursor-pointer"
+            className="p-3 md:px-4 md:py-3 cursor-pointer"
             onMouseEnter={() => setIsCardHovered(true)}
             onMouseLeave={() => setIsCardHovered(false)}
           >
-            <div className="font-semibold text-gray-900 mb-1 text-base md:text-lg truncate">
+            <div className="text-base md:text-lg font-semibold text-gray-800 truncate mb-1">
               {item.title}
               {isNewItem(item.date) && (
                 <span className="ml-1 text-xs font-bold text-red-500 inline-flex ">
@@ -135,7 +135,7 @@ const GalleryItemComponent = ({
             
             {item.date && (
               <div className="flex justify-between items-center">
-                <p className="text-sm text-gray-500">
+                <p className="text-sm text-gray-600">
                   {formatDateForDisplay(item.date)}
                 </p>
                 
