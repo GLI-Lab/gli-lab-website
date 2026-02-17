@@ -155,6 +155,11 @@ export default function Page() {
                         <blockquote className="text-lg md:text-xl font-normal text-gray-900 italic leading-relaxed tracking-tight mb-6">
                             Unifying Graph & Language Intelligence toward <span className="highlight">knowledge-driven AI</span>, enabling human-like reasoning for the future of AGI.
                         </blockquote>
+                        <div className="w-12 h-0.5 bg-brand-primary mx-auto my-6" />
+                        <p className="text-[16px] md:text-[18px] text-gray-800 tracking-tight leading-relaxed max-w-5xl mx-auto">
+                            We aim to overcome the limitations of conventional deep learning by unifying Graph Intelligence and Language Intelligence 
+                            <br className="hidden md:block" /> — structuring real-world data through graphs and capturing human language insight through language models.
+                        </p>
                     </div>
                 </div>
 

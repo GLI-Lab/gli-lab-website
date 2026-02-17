@@ -49,32 +49,31 @@ export default async function Page() {
                             </div>
                         </div>
                     </div>
-                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
+                    {/* <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
                         We strive for technological innovation across various real-world applications 
                         such as explainable and conversational recommendations, information retrieval and extraction, and trustworthy response generation.
                         To achieve this, we actively research and develop advanced methods including Graph Neural Networks (GNNs),
                         multimodal and knowledge-enhanced Large Language Models (LLMs), Synergizing LLMs and Graphs techniques,
                         GraphRAG, and LLM-based agents, aiming toward knowledge-enhanced intelligent systems.
-                    </p>
+                    </p> */}
                     <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
-                        <span className="underline underline-offset-4"><span className="highlight">그래프</span>는
-                        다출처 데이터와 지식 간의 관계, 규칙, 제약사항 등을 명확하게 구조화하고 잠재적 지식을 탐색</span>할 수 있습니다.
-                        <span className="underline underline-offset-4"><span className="highlight">텍스트</span>는
-                        인간의 방대한 지식과 정보</span>를 담고있지만, 이로부터 의미 있는 정보를 추출/분석할 수 있어야합니다.
-                        이미 글로벌 빅테크 기업들은 자사의 핵심 사업 분야인 검색/추천/개인화/추론/탐지 서비스 고도화를 위해
-                        그래프와 텍스트 데이터를 유기적으로 융합하여 활용하고 있습니다.
+                        <span className="underline underline-offset-4"><span className="highlight">그래프</span>는 다출처 실세계 데이터(real-world data) 속 엔티티 간의 관계, 규칙, 제약사항 등을 명확하게 구조화하고 잠재적 지식을 탐색</span>할 수 있습니다. 
+                        <br />
+                        <span className="underline underline-offset-4"><span className="highlight">텍스트</span>는 인간의 방대한 지식과 정보를 담고 있으며, 이로부터 맥락, 의도, 뉘앙스 등 인간 언어 고유의 통찰(human language insight)을 추출·분석</span>할 수 있어야 합니다.
+                        <br />
+                        이미 글로벌 빅테크 기업들은 자사의 핵심 사업 분야인 검색/추천/개인화/추론/탐지 서비스 고도화를 위해 그래프와 텍스트 데이터를 유기적으로 융합하여 활용하고 있습니다.
                     </p>
                     <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
                         이에 본 연구실에서는 자연어처리, 컴퓨터비전, 이상탐지 등 전통적인 딥러닝 모델이 가지는 한계점을 극복하고자 합니다. 
-                        기존 딥러닝 방법론과 그래프 기반 접근을 유기적으로 융합하여, <span className="underline underline-offset-4">지식 중심(Knowledge-driven)의 추론 가능한 AI를 
-                        구현하기 위한 <span className="highlight">그래프 기반 딥러닝의 원천기술</span>을 다방면으로 연구개발</span>하는 것을 목표로 합니다.
-                        
+                        그래프 지능(Graph Intelligence)를 통해 실세계 데이터의 구조와 관계를 체계적으로 포착하고, 
+                        언어 지능(Language Intelligence)을 통해 인간의 의미 해석과 맥락 이해를 결합함으로써, <span className="underline underline-offset-4">기존 딥러닝 방법론에 Graph-Language Intelligence를 융합하여, 
+                        지식 중심의 추론 가능한 Knowledge-driven AI를 구현</span>하기 위한 그래프 기반 딥러닝의 원천기술을 다방면으로 연구개발하는 것을 목표로 합니다.
                     </p>
                     <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
                         구체적으로, 텍스트와 이미지 같은 비정형 멀티모달 데이터뿐만 아니라, 행렬, 시계열, 그래프 등 다양한 데이터로부터 
                         아이템 속성, 사용자 프로필, 도메인 지식, 상식, 제약 정보 등의 관계지식을 그래프 형태로 구조화하고, 이를 지속적으로 확장합니다. 
                         또한, 언어모델(LLMs), 추천시스템, 이상탐지 등 다양한 딥러닝 기술에 그래프 기반 딥러닝을 융합하여, 
-                        사용자 의도와 선호, 사실 정보 등을 정밀하게 반영하고, <span className="underline underline-offset-4">높은 신뢰성, 유연한 확장성, 설명 가능성</span>을 갖춘 기술을 연구개발하고자 합니다.
+                        실세계 데이터에 근거한(grounded) 사실 정보와 인간 언어의 의미적 통찰을 정밀하게 반영하고, 높은 신뢰성, 유연한 확장성, 설명 가능성을 갖춘 기술을 연구개발하고자 합니다.
                     </p>
                 </div>
             </div>
