@@ -31,9 +31,9 @@ interface GenerateMetadataProps {
  */
 export const META: MetaConfig = {
   title: "GLI Lab",
-  siteName: '건국대학교 Graph & Language Intelligence 연구실',
+  siteName: '건국대학교 컴퓨터공학부 Graph & Language Intelligence Lab',
   description:
-    '그래프와 텍스트 기반의 인공지능 기술을 연구개발하고 새로운 응용방법(추천, 맞춤형 검색, 챗봇 등)을 찾아내는 것을 목적으로 합니다.',
+    '그래프와 텍스트 기반의 인공지능 기술을 연구개발하고 새로운 응용방법(언어모델·그래프 융합, 그래프 예측·분석, 자연어처리, 추천시스템, 이상탐지 등)을 찾아내는 것을 목적으로 합니다.',
   keyword: [
     '추천시스템',
     '맞춤형 검색',
@@ -41,7 +41,6 @@ export const META: MetaConfig = {
     'chatbot',
     'recommendation system',
     'personalized search',
-    'chatbot',
     '그래프',
     'graph',
     '텍스트',
@@ -50,6 +49,12 @@ export const META: MetaConfig = {
     'konkuk university',
     '건국대학교',
     '컴퓨터공학부',
+    '컴퓨터공학과',
+    'computer science',
+    'computer engineering',
+    'computer science and engineering',
+    "인공지능학과",
+    "artificial intelligence",
     'AI',
     '인공지능',
     'machine learning',
