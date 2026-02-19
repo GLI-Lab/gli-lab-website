@@ -1,9 +1,19 @@
 # YAML에서 tab은 금지. 반드시 space 2개 사용
-# Our team has been supported by [parent.funder] › [main.funder], as part of [main.program] under [parent.program] 👏
+# Our team has been supported by [parent.funder] · [main.funder], as part of [main.program] under [parent.program] 👏
+
 
 ########################################################################################
 # 2025
 ########################################################################################
+- title: AI 관련 학과 지원 / AI 분야 조기취업형 계약학과 지원
+  type: 인력양성
+  role: 참여연구자
+  parent: { funder: 한국연구재단, program: 지역혁신중심 대학지원체계(RISE) }
+  main: { funder: null, program: null }
+  start_date: 2026-03
+  end_date: 2030-02
+  image: { url: /images/projects/nrf.png, width: 200px }
+
 - title: 우주항공 제조설비의 멀티모달 이상탐지와 실시간 생성형 AI 보고체계 기반의 AX전환 실증
   type: 집단연구
   role: 공동연구자
@@ -13,6 +23,9 @@
   end_date: 2026-11
   image: { url: /images/projects/gntp.png, width: 225px }
 
+########################################################################################
+# 2025
+########################################################################################
 - title: 그래프기반 위협추적 분석
   type: 산업체·위탁
   role: 연구책임자
