@@ -37,7 +37,7 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
       const files = fs.readdirSync(folderPath);
       const imageFiles = files.filter(file => 
         /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(file)
-      ).sort(); // 파일명 순으로 정렬
+      ).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })); // 자연순 정렬 (1, 2, ..., 10, 11)
 
       if (imageFiles.length === 0) continue;
 
