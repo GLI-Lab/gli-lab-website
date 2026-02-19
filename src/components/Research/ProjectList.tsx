@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { ProjectData } from "@/data/loaders/types";
 
@@ -134,18 +134,48 @@ interface ProjectListProps {
 }
 
 export default function ProjectList({ projects, className = "" }: ProjectListProps) {
-  const ongoingProjects = projects.filter(isOngoing);
-  const completedProjects = projects.filter((p) => !isOngoing(p));
-  const totalProjects = projects.length;
+  const [showTalentDevelopment, setShowTalentDevelopment] = useState(true);
+
+  const filteredProjects = useMemo(
+    () =>
+      showTalentDevelopment
+        ? projects
+        : projects.filter((p) => p.type !== "인력양성"),
+    [projects, showTalentDevelopment]
+  );
+
+  const ongoingProjects = filteredProjects.filter(isOngoing);
+  const completedProjects = filteredProjects.filter((p) => !isOngoing(p));
+  const visibleCount = filteredProjects.length;
+  const allCount = projects.length;
 
   return (
     <div className={className}>
-      <div className="mb-6">
+      <div className="mb-6 flex flex-row flex-nowrap items-center justify-between gap-4">
         <p className="text-gray-600">
           Total{" "}
-          <span className="font-semibold text-gray-900">{totalProjects}</span>{" "}
+          <span className="font-semibold text-gray-900">{visibleCount}</span>
+          {" of "}
+          <span className="font-semibold text-gray-900">{allCount}</span>{" "}
           projects
         </p>
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <span className="text-gray-700 text-sm md:text-base font-medium">인력양성</span>
+          <button
+            onClick={() => setShowTalentDevelopment(!showTalentDevelopment)}
+            className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-200 ease-in-out ${
+              showTalentDevelopment ? "bg-brand-primary" : "bg-gray-200"
+            }`}
+            role="switch"
+            aria-checked={showTalentDevelopment}
+          >
+            <span
+              className={`inline-block h-4 w-4 transform rounded-full bg-white shadow-lg transition-transform duration-200 ease-in-out ${
+                showTalentDevelopment ? "translate-x-6" : "translate-x-1"
+              }`}
+            />
+          </button>
+        </div>
       </div>
 
       {/* Ongoing Projects */}
