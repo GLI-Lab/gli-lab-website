@@ -3,6 +3,13 @@
 ###############################################
 # 2025 Winter
 ###############################################
+- title: Recent Advances in Spectral Perspectives for Anomaly Detection
+  season: 2025 Winter
+  date: 2026-02-19 
+  Presenter: { ID: "[2025.04] 구본유", name: Bonyou Koo (구본유) }
+  tag: { area: { Graph Int., Anomaly Detection }, topic: { Dirichlet Energy, Rayleigh Quotient } }
+  slide: /pdf/seminar/[260219][구본유] Recent Advances in Spectral Perspectives for Anomaly Detection.pdf
+
 - title: Semantic IDs for Recommender Systems via Vector Quantization and Generative Models
   season: 2025 Winter
   date: 2026-02-12
