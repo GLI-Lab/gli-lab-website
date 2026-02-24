@@ -57,25 +57,29 @@ const nextConfig = {
     // 사용자는 원래 URL을 계속 보게 됨
     // 서버 측에서 대상 URL의 콘텐츠를 가져와 마치 원래 URL에서 온 것처럼 제공
     // 서버에서 프록시 역할을 하므로 CORS 문제가 발생하지 않음
+    // Next.js 기본값: {basePath: false, locale: false}
     async rewrites() {
         return [
             {
                 source: '/people/professor/:path*',
                 destination: 'https://bkoh509.github.io/:path*',
-                basePath: false,
-                locale: false,
             },
             {
                 source: '/publication/:path*',
                 destination: 'https://bkoh509.github.io/:path*',
-                basePath: false,
-                locale: false,
+
+            },
+            {
+                source: '/board/lectures/machine-learning',
+                destination: 'https://gli-lab.github.io/machine-learning-course/',
+            },
+            {
+                source: '/board/lectures/machine-learning/:path*',
+                destination: 'https://gli-lab.github.io/machine-learning-course/:path*',
             },
             {
                 source: '/jupyterlite/:path*',
                 destination: 'https://gli-lab.github.io/jupyterlite/:path*',
-                basePath: false,
-                locale: false,
             },
         ];
     },
