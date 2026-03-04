@@ -174,6 +174,7 @@
   links: 
     Link: https://doi.org/10.1145/3774904.3792529
     Code: https://github.com/leedongcheon/TARD
+    News: https://www.konkuk.ac.kr/bbs/konkuk/259/1167092/artclView.do
   notes: {"normal": "Full Research Paper (Acceptance Rate: 20.1% = 676/3,370)", "important": ""}  # refer: mail
   authors:
     - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: first }
@@ -191,6 +192,7 @@
   links: 
     Link: https://doi.org/10.1145/3773966.3777983
     Code: https://github.com/seojmm/IGKnow
+    News: https://www.konkuk.ac.kr/bbs/konkuk/259/1167092/artclView.do
   notes: {"normal": "Full Paper (Acceptance Rate: 16.3% = 100/613)", "important": ""}
   authors:
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: first }
