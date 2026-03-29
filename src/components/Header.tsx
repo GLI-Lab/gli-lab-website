@@ -115,6 +115,10 @@ export default function Header() {
         {
             title: "Contact",
             path: "/contact",
+            subMenus: [
+                {title: "✨ Hiring (Q&A) ✨", path: "/contact/hiring"},
+                {title: "Email & Location", path: "/contact/information"},
+            ]
         },
     ];
 
