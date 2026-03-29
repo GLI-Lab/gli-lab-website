@@ -265,8 +265,44 @@ export default async function Page() {
             <div className="max-w-screen-2xl mx-auto bg-gray-100">
                 <div className="max-w-screen-xl mx-auto flex flex-col items-center justify-center text-center space-y-8
                                 py-8 md:py-16 px-3 md:px-5">
+                    <h2 className="font-bold tracking-tighter text-[28px] md:text-[36px]">
+                        ✨ Now Hiring (Q&A) ✨
+                    </h2>
+                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
+                        We are currently seeking talented and passionate students (MS/PhD) as well as undergraduate research interns.
+                        <br />
+                        Please feel free to contact us at <span className="font-semibold">bkoh@konkuk.ac.kr (오병국 교수)</span> if you are interested in joining our team.
+                    </p>
+                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
+                        본 연구실은 <span className="highlight">그래프를 활용한 지식기반 지능형 시스템</span>을 핵심적으로 연구하고 있습니다.
+                        <br />
+                        하나의 도메인만 깊이 파기보다는, 자연어처리, 추천시스템, 이상탐지 등 다양한 분야에 knowledge-driven 방법론을 폭넓게 적용하는 것을 지향합니다.
+                        <br />
+                        각 구성원과 주 1~2회 개별 랩미팅을 통해 밀착 지도를 제공하며, 규모 대비 우수한 연구실적을 꾸준히 달성하고 있습니다.
+                        <br />
+                        개발과 연구의 균형 잡힌 성장을 통해 WWW, CIKM, WSDM, KDD, AAAI, ACL, EMNLP 등 탑티어 학회 논문 게재를 목표로 합니다.
+                    </p>
+                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
+                        해당 주제에 관심 있는 대학원 지망생과 학부 연구생은 언제든지 <span className="font-semibold">bkoh@konkuk.ac.kr (오병국 교수)</span>로 문의해 주세요.
+                        <br />
+                        체계적인 연구역량 향상을 위해 선별된 핵심 논문 <Link href="/board/study" className="group text-brand-primary underline-offset-4 hover:underline hover:decoration-1">
+                            스터디
+                            <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                            </svg>
+                        </Link>를 통해 충분히 성장할 수 있는 기회를 제공합니다.
+                    </p>
+                    <Link href='/contact/hiring'
+                        className="px-6 py-2 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
+                        Read More
+                    </Link>
+                </div>
+            </div>
+            {/* <div className="max-w-screen-2xl mx-auto bg-gray-100">
+                <div className="max-w-screen-xl mx-auto flex flex-col items-center justify-center text-center space-y-8
+                                py-8 md:py-16 px-3 md:px-5">
                     <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
-                        Now Hiring ✨
+                        ✨ Now Hiring (Q&A) ✨
                     </p>
 
                     <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-[1.8] tracking-normal">
@@ -312,12 +348,12 @@ export default async function Page() {
                         </ul>
                     </div>
 
-                    <Link href='/contact?tab=hiring'
+                    <Link href='/contact/hiring'
                         className="px-6 py-2 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
                         Read More
                     </Link>
                 </div>
-            </div>
+            </div> */}
 
             <div className="h-20"></div>
 
