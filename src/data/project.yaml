@@ -9,7 +9,7 @@
   type: 인력양성
   role: 참여연구자
   parent: { funder: null, program: null }
-  main: { funder: 한국산업기술진흥원, program: n산업혁신인재성장지원사업 }
+  main: { funder: 한국산업기술진흥원, program: 산업혁신인재성장지원사업 }
   start_date: 2026-03
   end_date: 2031-02
   image: { url: /images/projects/kiat.png, width: 175px }
@@ -54,7 +54,7 @@
   image: { url: /images/projects/hanwha.png, width: 190px }
 
 - title: 실전 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구
-  type: 개인연구
+  type: 인력양성
   role: 공동연구자
   parent: { funder: null, program: null }
   main: { funder: 건국대학교, program: 그룹연구인력양성 }
