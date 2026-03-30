@@ -6,16 +6,6 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import { PatentData } from '@/data/loaders/types';
 import { titleToId } from '@/lib/utils';
 
-function formatTitle(title: { ko: string; en: string }): React.ReactNode {
-  return (
-    <>
-      {title.ko}
-      {'\n'}
-      <span className="text-[14.5px] md:text-[16.5px] font-medium text-gray-800 leading-tight">{title.en}</span>
-    </>
-  );
-}
-
 interface PatentListProps {
   className?: string
   patents: PatentData[];
@@ -28,6 +18,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
   const [filterScope, setFilterScope] = useState<'all' | 'international' | 'domestic'>('all');
   const [triggerAnimation, setTriggerAnimation] = useState(0);
   const [highlightedPatentId, setHighlightedPatentId] = useState<string | null>(null);
+  const [copiedPatentId, setCopiedPatentId] = useState<string | null>(null);
 
   // Animation trigger functions
   const triggerFilterAnimation = () => {
@@ -232,6 +223,79 @@ export default function PatentList({ className = '', patents, memberIds = [], al
     return parts.join(', ');
   };
 
+  const renderCopyButton = (patentId: string) => {
+    const copied = copiedPatentId === patentId;
+
+    return (
+      <>
+      {/* URL 복사 링크 아이콘 */}
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          const currentUrl = `${window.location.origin}${window.location.pathname}${window.location.search}#${encodeURIComponent(patentId)}`;
+
+          // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
+          const selectionlessCopy = () => {
+            try {
+              const listener = (event: ClipboardEvent) => {
+                event.preventDefault();
+                event.clipboardData?.setData('text/plain', currentUrl);
+              };
+              document.addEventListener('copy', listener);
+              document.execCommand('copy');
+              document.removeEventListener('copy', listener);
+            } catch {
+              // 마지막 수단: 아무 동작 안 함 (iOS에서 입력 포커스 회피)
+            }
+          };
+
+          if (navigator.clipboard?.writeText) {
+            navigator.clipboard.writeText(currentUrl).catch(selectionlessCopy);
+          } else {
+            selectionlessCopy();
+          }
+
+          // 버튼 옆 토스트 (고정 위치, 버튼 오른쪽에 표시)
+          const buttonRect = e.currentTarget.getBoundingClientRect();
+          const toast = document.createElement('div');
+          toast.textContent = 'Link copied!';
+          toast.className = 'fixed bg-gray-600 text-white px-3 py-1.5 rounded-md shadow-md text-[15px] font-medium z-[1000] pointer-events-none';
+          toast.style.left = `${buttonRect.right + 10}px`;
+          toast.style.top = `${buttonRect.top + buttonRect.height / 2}px`;
+          toast.style.transform = 'translateY(-50%)';
+          document.body.appendChild(toast);
+
+          // 1초 후 토스트 제거
+          setTimeout(() => {
+            if (toast.parentNode) {
+              toast.parentNode.removeChild(toast);
+            }
+          }, 1000);
+
+          // 아이콘을 1초 동안 체크표시로 변경
+          setCopiedPatentId(patentId);
+          setTimeout(() => {
+            setCopiedPatentId(prev => (prev === patentId ? null : prev));
+          }, 1000);
+        }}
+        className={`mt-0.5 w-5 h-5 transition-colors duration-200 flex-shrink-0 ${copied ? 'text-brand-primary' : 'text-gray-400 hover:text-interactive-primary'}`}
+        title="Copy patent link"
+        aria-label="Copy patent link"
+      >
+        {copied ? (
+          <svg className="w-[90%] h-[90%] mx-auto my-auto origin-center scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+          </svg>
+        ) : (
+          <svg className="w-[90%] h-[90%] mx-auto my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+          </svg>
+        )}
+      </button>
+      </>
+    );
+  };
+
   return (
     <div className={`${className}`}>
       {/* Controls + Patent Count + Legend */}
@@ -361,8 +425,14 @@ export default function PatentList({ className = '', patents, memberIds = [], al
                       ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
                       : ''
                   }`}>
-                    <div className="text-[16px] md:text-[18px] font-medium text-gray-800 leading-snug mb-1 whitespace-pre-line">
-                      {formatTitle(patent.title)}
+                    <div className="text-[16px] md:text-[18px] font-medium text-gray-800 mb-1">
+                      <div className="flex items-start gap-1.5 leading-snug">
+                        {patent.title.ko}
+                        {renderCopyButton(patentId)}
+                      </div>
+                      <div className="text-[14.5px] md:text-[16.5px] leading-tight">
+                        {patent.title.en}
+                      </div>
                     </div>
                     <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">
                       {renderAuthors(patent)}
