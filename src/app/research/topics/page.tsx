@@ -38,7 +38,8 @@ const researchData = {
             items: [
                 "Text-to-Graph and Graph-to-Text Generation",
                 "Graph-Structured Interaction for LLMs: GraphRAG and Graph-Driven Agents",
-                "Knowledge-Grounded and Context-Aware Response Generation"
+                "Knowledge-Grounded and Context-Aware Response Generation",
+                "LLM-Powered Graph Agents and NL-to-Graph Query"
             ],
             description: "Graph-Language Fusion은 그래프의 구조적 지식과 언어모델의 생성·추론 능력을 결합하여, 더 신뢰할 수 있는 AI를 구현합니다. 이를 위해, GraphRAG, Graph-driven Agent 등 그래프 구조를 활용한 LLM 상호작용과 지식 기반 응답 생성 방법론을 연구합니다."
         }
