@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { NewsData } from '@/data/loaders/types';
-import { titleToId } from '@/lib/utils';
+import { getProfileBasePath, titleToId } from '@/lib/utils';
 
 export interface NewsListProps {
   className?: string
@@ -62,9 +62,6 @@ export function getAvailableYears(newsItems: NewsData[]): number[] {
 function renderContentWithMarkup(content: string, memberIds: string[], alumniIds: string[], newsIndex: number, lineIndex: number): React.ReactNode {
   if (!content) return content;
   
-  const isValidProfileId = (id: string) => memberIds.includes(id) || alumniIds.includes(id);
-  const isAlumniProfile = (id: string) => alumniIds.includes(id);
-
   // <profile=ID>이름</>, <paper>제목</>, <patent>제목</>, <b>텍스트</b> 패턴을 찾는 정규식
   const profilePattern = /<profile=([^>]+)>([^<]+)<\/>/g;
   const paperPattern = /<paper>([^<]+)<\/>/g;
@@ -138,8 +135,9 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
     if (type === 'profile') {
       const [fullMatch, profileId, displayName] = match;
       
-      if (isValidProfileId(profileId)) {
-        const basePath = isAlumniProfile(profileId) ? '/people/alumni' : '/people/members';
+      const basePath = getProfileBasePath(profileId, memberIds, alumniIds);
+
+      if (basePath) {
         
         elements.push(
           <Link 
@@ -474,7 +472,7 @@ export function NewsList({ className = '', count = null, newsItems = [], memberI
         </div>
       )}
 
-      <div className="grid grid-cols-[auto,1fr] gap-x-[0.5em] md:gap-x-[0.6em] gap-y-[0.4em] md:gap-y-[0.6em]">
+      <div className="grid grid-cols-[auto,1fr] gap-x-[0.5em] md:gap-x-[0.6em] gap-y-[0.4em] md:gap-y-[0.25em]">
         {latestNews.map((news, idx) => {
           const date = new Date(news.date);
           const year = date.getFullYear();
@@ -501,7 +499,7 @@ export function NewsList({ className = '', count = null, newsItems = [], memberI
                   )}
                 </div>
               </div>
-              <div className={`${idx < latestNews.length - 1 ? 'border-b border-gray-200 pt-0.5 pb-2.5' : ''}`}>
+              <div className={`${idx < latestNews.length - 1 ? 'border-b border-gray-200 pt-0.5 pb-2' : ''}`}>
                 <div className="text-[0.95em] sm:text-[1em]">
                   {renderContentWithMarkup(title, memberIds, alumniIds, idx, 0)}
                 </div>

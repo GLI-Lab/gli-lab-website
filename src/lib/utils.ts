@@ -7,3 +7,19 @@ export function titleToId(title: string): string {
     .replace(/^-|-$/g, ''); // 앞뒤 하이픈 제거
 }
 
+type ProfileIdSource = string | { id: string };
+
+function hasProfileId(profiles: ProfileIdSource[], id: string): boolean {
+  return profiles.some((profile) => typeof profile === 'string' ? profile === id : profile.id === id);
+}
+
+export function getProfileBasePath(
+  id: string,
+  memberProfiles: ProfileIdSource[],
+  alumniProfiles: ProfileIdSource[]
+): '/people/members' | '/people/alumni' | null {
+  if (hasProfileId(memberProfiles, id)) return '/people/members';
+  if (hasProfileId(alumniProfiles, id)) return '/people/alumni';
+  return null;
+}
+

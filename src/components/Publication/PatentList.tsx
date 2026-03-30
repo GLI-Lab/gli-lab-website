@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PatentData } from '@/data/loaders/types';
-import { titleToId } from '@/lib/utils';
+import { getProfileBasePath, titleToId } from '@/lib/utils';
 
 interface PatentListProps {
   className?: string
@@ -35,10 +35,6 @@ export default function PatentList({ className = '', patents, memberIds = [], al
     triggerFilterAnimation();
   };
 
-  // ID 리스트를 사용한 빠른 검증 함수들
-  const isValidProfileId = (id: string) => memberIds.includes(id) || alumniIds.includes(id);
-  const isAlumniProfile = (id: string) => alumniIds.includes(id);
-
   // 날짜를 "YYYY년 MM월 DD일" 형식으로 변환
   const formatDate = (dateStr: string | null): string => {
     if (!dateStr) return '';
@@ -53,7 +49,8 @@ export default function PatentList({ className = '', patents, memberIds = [], al
   const renderAuthors = (patent: PatentData) => {
     return patent.authors.map((author, i) => {
       const hasId = !!author.ID;
-      const hasValidId = hasId && author.ID && isValidProfileId(author.ID);
+      const basePath = author.ID ? getProfileBasePath(author.ID, memberIds, alumniIds) : null;
+      const hasValidId = !!basePath;
       
       const authorName = (
         <span className={hasValidId ? 'decoration-gray-500 hover:decoration-brand-primary underline underline-offset-[3px]' : ''}>
@@ -65,7 +62,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
         <span key={i}>
           {hasValidId ? (
             <Link 
-              href={`/people/${author.ID && isAlumniProfile(author.ID) ? 'alumni' : 'members'}/?id=${encodeURIComponent(author.ID!)}`}
+              href={`${basePath}/?id=${encodeURIComponent(author.ID!)}`}
               className="hover:text-brand-primary transition-colors"
             >
               {authorName}

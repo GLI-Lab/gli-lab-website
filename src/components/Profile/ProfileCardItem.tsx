@@ -29,7 +29,7 @@ export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
                 </div>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-2 sm:gap-x-3 tracking-tight sm:tracking-normal text-sm sm:text-base
                                  ${isSelected ? 'text-gray-600 1.5md:text-white' : 'text-gray-600'}`}>
-                    {isAlumniPage && (admission || graduation) ? (
+                    {isAlumniPage && (affiliation || joined_start || joined_end) ? (
                         <>
                             {affiliation && (
                                 <>
@@ -37,11 +37,11 @@ export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
                                     <span className="font-semibold underline">{affiliation}</span>
                                 </>
                             )}
-                            <span className={`${isSelected ? 'text-interactive-primary 1.5md:text-white' : 'group-hover:text-interactive-primary'}`}>Period</span>
+                            <span className={`${isSelected ? 'text-interactive-primary 1.5md:text-white' : 'group-hover:text-interactive-primary'}`}>Joined</span>
                             <span>
-                                {admission && graduation ? `${admission} - ${graduation}` : 
-                                 admission ? `${admission} - ` : 
-                                 graduation ? ` - ${graduation}` : 'N/A'}
+                                {joined_start && joined_end ? `${joined_start} - ${joined_end}` :
+                                 joined_start ? `${joined_start} - ` :
+                                 joined_end ? ` - ${joined_end}` : 'N/A'}
                             </span>
                         </>
                     ) : (type === "intern") || (type === "pms") || (type === "pphd") ? (

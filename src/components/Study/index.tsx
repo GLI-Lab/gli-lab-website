@@ -3,6 +3,7 @@ import { getProfiles } from '../../data/loaders/profileLoader';
 import { getAlumniProfiles } from '../../data/loaders/profileLoader';
 import { StudyData } from '../../data/loaders/types';
 import { StudyHighlightWrapper } from './StudyHighlight';
+import { getProfileBasePath } from '@/lib/utils';
 export { getStudies } from '@/data/loaders/studyLoader';
 
 
@@ -62,11 +63,9 @@ function renderProfileWithLink(participant: string, profiles: any[], alumniProfi
     const profile = profiles.find(p => p.id === profileId) || alumniProfiles.find(p => p.id === profileId);
     
     if (profile) {
-      const isAlumniProfile = alumniProfiles.some(p => p.id === profileId);
-      const basePath = isAlumniProfile ? '/people/alumni' : '/people/members';
-      
+      const basePath = getProfileBasePath(profileId, profiles, alumniProfiles);
+      if (!basePath) return <span>{participant}</span>;
 
-      
       return (
         <Link 
           href={`${basePath}?id=${profileId.replace(/\s/g, '%20')}`}

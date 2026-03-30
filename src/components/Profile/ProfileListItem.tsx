@@ -201,7 +201,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
 
                     {/* Status */}
                     <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-0 tracking-normal sm:tracking-normal text-base md:text-lg ${type === "faculty" ? "mt-3" : ""} text-left`}>
-                        {isAlumniPage && (admission || graduation) ? (
+                        {isAlumniPage && (affiliation || joined_start || joined_end) ? (
                             <>
                                 {affiliation && (
                                     <>
@@ -209,11 +209,11 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                                         <span className="font-semibold underline">{affiliation}</span>
                                     </>
                                 )}
-                                <span className={`font-medium`}>Period</span>
+                                <span className={`font-medium`}>Joined</span>
                                 <span>
-                                    {admission && graduation ? `${admission} - ${graduation}` : 
-                                     admission ? `${admission} - ` : 
-                                     graduation ? ` - ${graduation}` : 'N/A'}
+                                    {joined_start && joined_end ? `${joined_start} - ${joined_end}` :
+                                     joined_start ? `${joined_start} - ` :
+                                     joined_end ? ` - ${joined_end}` : 'N/A'}
                                 </span>
                             </>
                         ) : (type === "intern") || (type === "pms") || (type === "pphd") ? (
