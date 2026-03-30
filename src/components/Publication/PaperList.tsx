@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PaperData } from '@/data/loaders/types';
-import { titleToId } from '@/lib/utils';
+import { getProfileBasePath, titleToId } from '@/lib/utils';
 
 
 interface PaperListProps {
@@ -176,10 +176,6 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
     );
   };
 
-  // ID 리스트를 사용한 빠른 검증 함수들
-  const isValidProfileId = (id: string) => memberIds.includes(id) || alumniIds.includes(id);
-  const isAlumniProfile = (id: string) => alumniIds.includes(id);
-
   // Render author with appropriate symbols (optimized with useMemo per publication)
   const renderAuthors = (publication: PaperData) => {
     const firstAuthors = publication.authors.filter(a => a.position === 'first');
@@ -188,7 +184,8 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
     return publication.authors.map((author, i) => {
       const isFirstAuthor = author.position === 'first';
       const hasId = !!author.ID;
-      const hasValidId = hasId && author.ID && isValidProfileId(author.ID);
+      const basePath = author.ID ? getProfileBasePath(author.ID, memberIds, alumniIds) : null;
+      const hasValidId = !!basePath;
       
       const authorName = (
         <span className={hasValidId ? 'decoration-gray-500 hover:decoration-brand-primary underline underline-offset-[3px]' : ''}>
@@ -200,7 +197,7 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
         <span key={i}>
           {hasValidId ? (
             <Link 
-              href={`/people/${author.ID && isAlumniProfile(author.ID) ? 'alumni' : 'members'}/?id=${encodeURIComponent(author.ID!)}`}
+              href={`${basePath}/?id=${encodeURIComponent(author.ID!)}`}
               className="hover:text-brand-primary transition-colors"
             >
               {authorName}

@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import Link from 'next/link';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { SeminarData } from '@/data/loaders/types';
+import { getProfileBasePath } from '@/lib/utils';
 
 export type SeminarListLayout = 'card' | 'list';
 
@@ -56,8 +57,8 @@ function renderPresenter(
 ): ReactNode {
   const profile = profiles.find((p) => p.id === presenter.ID) ?? alumniProfiles.find((p) => p.id === presenter.ID);
   if (profile) {
-    const isAlumni = alumniProfiles.some((p) => p.id === presenter.ID);
-    const basePath = isAlumni ? '/people/alumni' : '/people/members';
+    const basePath = getProfileBasePath(presenter.ID, profiles, alumniProfiles);
+    if (!basePath) return <span className="text-gray-700">{presenter.name}</span>;
     const profileId = presenter.ID.replace(/\s/g, '%20');
     return (
       <Link
