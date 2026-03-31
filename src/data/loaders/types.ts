@@ -83,24 +83,9 @@ export interface ProfileDetailProps extends ProfileData {
 // Paper Types
 // =====================================================
 
-// Raw paper data interface (as it comes from YAML)
-export interface PaperYAML {
-  title: string;
-  filter: { type: string; scope: string };
-  status: string;
-  year: number;
-  venue: { name: string; acronym: string };
-  links?: {
-    [key: string]: string | null | undefined;
-  };
-  notes: {normal: string; important: string;};
-  authors: {
-    ID?: string;
-    name: string;
-    position: 'first' | 'co';
-    isCorresponding?: boolean;
-  }[];
-}
+export type PaperType = 'journal' | 'conference';
+export type PaperScope = 'international' | 'domestic';
+export type PaperStatus = 'Accepted' | 'In Progress' | 'Under Review';
 
 export interface AuthorData {
   ID?: string;
@@ -109,10 +94,8 @@ export interface AuthorData {
   isCorresponding?: boolean;
 }
 
-export interface PaperData {
+interface BasePaperData {
   title: string;
-  filter: { type: string; scope: string };
-  status: string;
   year: number;
   venue: { name: string; acronym: string };
   links?: {
@@ -121,6 +104,18 @@ export interface PaperData {
   notes: { normal: string; important: string };
   authors: AuthorData[];
 }
+
+export interface AcceptedPaperData extends BasePaperData {
+  status: 'Accepted';
+  filter: { type: PaperType; scope: PaperScope };
+}
+
+export interface OngoingPaperData extends BasePaperData {
+  status: 'In Progress' | 'Under Review';
+  filter: { type: ''; scope: '' };
+}
+
+export type PaperData = AcceptedPaperData | OngoingPaperData;
 
 // =====================================================
 // Study Types
@@ -170,23 +165,7 @@ export interface NewsData {
 // Patent Types
 // =====================================================
 
-// Raw patent data interface (as it comes from YAML)
-export interface PatentYAML {
-  title: {
-    ko: string;
-    en: string;
-  };
-  scope: string;
-  status: {
-    filed: { date: string | null; number: string | null };
-    registered: { date: string | null; number: string | null };
-  };
-  authors: {
-    ID?: string;
-    name: string;
-  }[];
-  link?: string | null;
-}
+export type PatentScope = 'international' | 'domestic';
 
 export interface PatentAuthorData {
   ID?: string;
@@ -198,7 +177,7 @@ export interface PatentData {
     ko: string;
     en: string;
   };
-  scope: string;
+  scope: PatentScope;
   status: {
     filed: { date: string | null; number: string | null };
     registered: { date: string | null; number: string | null };

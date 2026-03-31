@@ -44,7 +44,7 @@
   end_date: 2027-05
   image: { url: /images/projects/nex1.png, width: 140px }
 
-- title: 추천시스템 모델 설계 자문 및 사례 연구
+- title: 추천시스템 모델 설계 자문 및 사례연구
   type: 산업체·위탁
   role: 연구책임자
   parent: { funder: 국방과학연구소, program: 위치기반 다자간 실시간 전장정보 공유 및 임무조정 기술 }

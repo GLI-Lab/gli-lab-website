@@ -68,10 +68,10 @@ export function StudyHighlightWrapper({ children, studyId }: StudyHighlightWrapp
   return (
     <div 
       id={studyId}
-      className={`rounded-lg border transition-all duration-300 overflow-hidden group flex flex-col h-full ${
+      className={`rounded-xl border transition-all duration-300 overflow-hidden group flex flex-col h-full ${
         isHighlighted 
           ? 'bg-brand-primary/10 border-brand-primary shadow-lg animate-pulse' 
-          : 'border-gray-300 hover:border-interactive-primary hover:shadow-lg'
+          : 'border-gray-200 shadow-sm hover:border-interactive-primary hover:shadow-md'
       }`}
     >
       {children}

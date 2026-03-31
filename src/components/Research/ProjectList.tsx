@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { ProjectData } from "@/data/loaders/types";
+import { titleToId } from "@/lib/utils";
 
 function formatDateRange(start: string, end: string): string {
   const s = start?.replace(/-/g, ".") ?? "";
@@ -41,10 +42,12 @@ function ProjectCard({
   project,
   index,
   isOngoing,
+  isHighlighted = false,
 }: {
   project: ProjectData;
   index: number;
   isOngoing: boolean;
+  isHighlighted?: boolean;
 }) {
   const dateRange = formatDateRange(project.start_date, project.end_date);
   const hasImage = Boolean(project.image?.url?.trim());
@@ -53,7 +56,16 @@ function ProjectCard({
   const imageWidth = project.image?.width;
 
   return (
-    <article className="flex flex-col sm:flex-row sm:items-center rounded-xl border border-gray-200 bg-white shadow-sm hover:border-interactive-primary hover:shadow-md transition-all duration-200 overflow-hidden">
+    <article
+      className={`relative flex flex-col sm:flex-row sm:items-center rounded-xl border bg-white transition-all duration-300 overflow-hidden ${
+        isHighlighted
+          ? "border-brand-primary shadow-lg animate-pulse"
+          : "border-gray-200 shadow-sm hover:border-interactive-primary hover:shadow-md"
+      }`}
+    >
+      {isHighlighted && (
+        <div className="pointer-events-none absolute inset-0 z-10 rounded-xl bg-brand-primary/10" />
+      )}
       <div className="flex-1 px-4 py-3 md:px-6 md:py-4 flex flex-col justify-center min-w-0">
         <div className="flex flex-col space-y-2 min-w-0">
             <div className="flex flex-wrap items-center gap-2">
@@ -135,6 +147,7 @@ interface ProjectListProps {
 
 export default function ProjectList({ projects, className = "" }: ProjectListProps) {
   const [showTalentDevelopment, setShowTalentDevelopment] = useState(true);
+  const [highlightedProjectId, setHighlightedProjectId] = useState<string | null>(null);
 
   const filteredProjects = useMemo(
     () =>
@@ -148,6 +161,75 @@ export default function ProjectList({ projects, className = "" }: ProjectListPro
   const completedProjects = filteredProjects.filter((p) => !isOngoing(p));
   const visibleCount = filteredProjects.length;
   const allCount = projects.length;
+
+  useEffect(() => {
+    let highlightTimer: NodeJS.Timeout | null = null;
+
+    const checkHash = () => {
+      const hash = window.location.hash;
+      if (!hash) return;
+
+      const targetId = titleToId(decodeURIComponent(hash.substring(1)));
+      const targetProject = projects.find((project) => titleToId(project.title) === targetId);
+      if (!targetProject) return;
+
+      if (targetProject.type === "인력양성") {
+        setShowTalentDevelopment(true);
+      }
+
+      setHighlightedProjectId(targetId);
+
+      if (highlightTimer) clearTimeout(highlightTimer);
+
+      let attempts = 0;
+      const maxAttempts = 20;
+      const scrollToElement = () => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({
+            behavior: "auto",
+            block: "center"
+          });
+        } else if (attempts < maxAttempts) {
+          attempts++;
+          requestAnimationFrame(scrollToElement);
+        }
+      };
+      requestAnimationFrame(scrollToElement);
+
+      highlightTimer = setTimeout(() => {
+        setHighlightedProjectId(null);
+      }, 1500);
+    };
+
+    checkHash();
+
+    const handleHashChange = () => {
+      checkHash();
+    };
+    window.addEventListener("hashchange", handleHashChange);
+
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+      if (highlightTimer) clearTimeout(highlightTimer);
+    };
+  }, [projects]);
+
+  const renderProjectItem = (project: ProjectData, index: number, isOngoingProject: boolean) => {
+    const projectId = titleToId(project.title);
+    const isHighlighted = highlightedProjectId === projectId;
+
+    return (
+      <li key={index} id={projectId}>
+        <ProjectCard
+          project={project}
+          index={index}
+          isOngoing={isOngoingProject}
+          isHighlighted={isHighlighted}
+        />
+      </li>
+    );
+  };
 
   return (
     <div className={className}>
@@ -183,11 +265,7 @@ export default function ProjectList({ projects, className = "" }: ProjectListPro
         {/* <SectionHeader title="Ongoing" className="" underline={true} size="small"></SectionHeader> */}
 
         <ul className="space-y-4 md:space-y-5">
-          {ongoingProjects.map((project, index) => (
-            <li key={index}>
-              <ProjectCard project={project} index={index} isOngoing />
-            </li>
-          ))}
+          {ongoingProjects.map((project, index) => renderProjectItem(project, index, true))}
         </ul>
       </div>
 
@@ -197,11 +275,7 @@ export default function ProjectList({ projects, className = "" }: ProjectListPro
 
         {completedProjects.length > 0 ? (
           <ul className="space-y-4 md:space-y-5">
-            {completedProjects.map((project, index) => (
-              <li key={index}>
-                <ProjectCard project={project} index={index} isOngoing={false} />
-              </li>
-            ))}
+            {completedProjects.map((project, index) => renderProjectItem(project, index, false))}
           </ul>
         ) : (
           <div className="rounded-xl border border-gray-200 shadow-sm p-8 md:p-12 bg-white">
