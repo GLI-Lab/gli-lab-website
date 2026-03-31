@@ -144,7 +144,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
       const hash = window.location.hash;
       if (hash) {
         // # 제거하고 디코딩 (한글이 포함될 수 있음)
-        const targetId = decodeURIComponent(hash.substring(1));
+        const targetId = titleToId(decodeURIComponent(hash.substring(1)));
         
         // 해당 특허가 필터링된 목록에 있는지 확인
         const targetPatent = filteredPatents.find(p => titleToId(p.title.ko) === targetId);

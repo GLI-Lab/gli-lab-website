@@ -12,14 +12,12 @@ interface PaperListProps {
   papers: PaperData[];
   memberIds?: string[];
   alumniIds?: string[];
-  initialShowInProgress?: boolean;
 }
 
-export default function PaperList({ className = '', papers, memberIds = [], alumniIds = [], initialShowInProgress = false }: PaperListProps) {
-  // 서버에서 전달된 초기값 사용
-  const [showInProgress, setShowInProgress] = useState(initialShowInProgress);
+export default function PaperList({ className = '', papers, memberIds = [], alumniIds = [] }: PaperListProps) {
+  const [showInProgress, setShowInProgress] = useState(false);
   const [showUnderReview, setShowUnderReview] = useState(true);
-  const [isInProgressExpanded, setIsInProgressExpanded] = useState(initialShowInProgress);
+  const [isInProgressExpanded, setIsInProgressExpanded] = useState(false);
   const [isUnderReviewExpanded, setIsUnderReviewExpanded] = useState(true);
   const [filterType, setFilterType] = useState<'all' | 'journal' | 'conference'>('all');
   const [filterScope, setFilterScope] = useState<'all' | 'international' | 'domestic'>('international');
@@ -93,11 +91,26 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
       const hash = window.location.hash;
       if (hash) {
         // # 제거하고 디코딩 (한글이 포함될 수 있음)
-        const targetId = decodeURIComponent(hash.substring(1));
+        const targetId = titleToId(decodeURIComponent(hash.substring(1)));
         
-        // 해당 논문이 필터링된 목록에 있는지 확인
-        const targetPaper = filteredPublications.find(p => titleToId(p.title) === targetId);
+        // 해시 대상 논문을 전체 목록에서 찾고, 필요하면 해당 섹션을 먼저 노출한다.
+        const targetPaper = papers.find(p => titleToId(p.title) === targetId);
         if (targetPaper) {
+          if (targetPaper.status === 'In Progress') {
+            setShowInProgress(true);
+            setIsInProgressExpanded(true);
+          }
+
+          if (targetPaper.status === 'Under Review') {
+            setShowUnderReview(true);
+            setIsUnderReviewExpanded(true);
+          }
+
+          if (targetPaper.status === 'Accepted') {
+            setFilterType(targetPaper.filter.type);
+            setFilterScope(targetPaper.filter.scope);
+          }
+
           setHighlightedPaperId(targetId);
           
           // 이전 타이머 정리
@@ -106,7 +119,7 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
           // 즉시 중앙으로 스크롤 (애니메이션 없음)
           // requestAnimationFrame을 사용하여 DOM 렌더링 후 실행
           let attempts = 0;
-          const maxAttempts = 10; // 최대 10번 시도 (약 160ms, 60fps 기준)
+          const maxAttempts = 20; // 상태 변경 후 재렌더링까지 고려해 조금 더 여유를 둠
           const scrollToElement = () => {
             const element = document.getElementById(targetId);
             if (element) {
@@ -142,7 +155,7 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
       window.removeEventListener('hashchange', handleHashChange);
       if (highlightTimer) clearTimeout(highlightTimer);
     };
-  }, [filteredPublications]);
+  }, [papers]);
 
   // Group publications by year (only Accepted papers)
   const publicationsByYear = filteredPublications
@@ -229,7 +242,7 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
       <button
         onClick={(e) => {
           e.stopPropagation();
-          const currentUrl = `${window.location.origin}${window.location.pathname}${window.location.search}#${encodeURIComponent(paperId)}`;
+          const currentUrl = `${window.location.origin}${window.location.pathname}#${encodeURIComponent(paperId)}`;
 
           // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
           const selectionlessCopy = () => {

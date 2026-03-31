@@ -15,29 +15,22 @@ export const generateMetadata = async (): Promise<Metadata> => {
     });
 };
 
-interface PageProps {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
-}
-
-export default async function Page({ searchParams }: PageProps) {
+export default async function Page() {
     const papers = await getPapers();
     const memberIds = await getMemberIds();
     const alumniIds = await getAlumniIds();
-    const resolvedSearchParams = await searchParams;
-    const showInProgress = resolvedSearchParams?.showInProgress === 'true';
-    
+
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
             <SubCover title={TITLE} pattern="diagonal-lines" colorVariant="sage" showBreadcrumb={false} />
             </div>
             <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
-                <PaperList 
+                <PaperList
                     className="w-full text-left"
-                    papers={papers} 
+                    papers={papers}
                     memberIds={memberIds}
                     alumniIds={alumniIds}
-                    initialShowInProgress={showInProgress}
                 />
             </div>
             <div className="h-40"></div>

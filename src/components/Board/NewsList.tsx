@@ -58,20 +58,21 @@ export function getAvailableYears(newsItems: NewsData[]): number[] {
 }
 
 
-// 텍스트에서 프로필 마크업, 페이퍼 마크업, bold 태그를 찾아서 변환하는 함수
+// 텍스트에서 프로필/논문/특허/프로젝트 마크업과 bold 태그를 찾아서 변환하는 함수
 function renderContentWithMarkup(content: string, memberIds: string[], alumniIds: string[], newsIndex: number, lineIndex: number): React.ReactNode {
   if (!content) return content;
   
-  // <profile=ID>이름</>, <paper>제목</>, <patent>제목</>, <b>텍스트</b> 패턴을 찾는 정규식
+  // <profile=ID>이름</>, <paper>제목</>, <patent>제목</>, <project>제목</>, <b>텍스트</b> 패턴을 찾는 정규식
   const profilePattern = /<profile=([^>]+)>([^<]+)<\/>/g;
   const paperPattern = /<paper>([^<]+)<\/>/g;
   const patentPattern = /<patent>([^<]+)<\/>/g;
+  const projectPattern = /<project>([^<]+)<\/>/g;
   const boldPattern = /<b>([^<]+)<\/b>/g;
   
   const elements: React.ReactNode[] = [];
   let lastIndex = 0;
   
-  const allMatches: Array<{type: 'profile' | 'paper' | 'patent' | 'bold', match: RegExpExecArray, index: number}> = [];
+  const allMatches: Array<{type: 'profile' | 'paper' | 'patent' | 'project' | 'bold', match: RegExpExecArray, index: number}> = [];
   
   // 프로필 매치 찾기
   let profileMatch;
@@ -100,6 +101,16 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
       type: 'patent',
       match: patentMatch,
       index: patentMatch.index
+    });
+  }
+
+  // 프로젝트 매치 찾기
+  let projectMatch;
+  while ((projectMatch = projectPattern.exec(content)) !== null) {
+    allMatches.push({
+      type: 'project',
+      match: projectMatch,
+      index: projectMatch.index
     });
   }
   
@@ -203,6 +214,25 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
         >
           {patentTitle}
           <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </Link>
+      );
+      
+      lastIndex = index + fullMatch.length;
+    } else if (type === 'project') {
+      const [fullMatch, projectTitle] = match;
+      const projectId = titleToId(projectTitle);
+      
+      elements.push(
+        <Link 
+          key={`${newsIndex}-${lineIndex}-project-${index}`}
+          href={`/research/projects#${encodeURIComponent(projectId)}`}
+          className="group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-1.5"
+          title="View project details"
+        >
+          {projectTitle}
+          <svg className="w-[0.66em] h-[0.66em] ml-1 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
         </Link>
