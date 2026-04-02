@@ -110,17 +110,6 @@
 ###############################################
 # Interns
 ###############################################
-- id: "[2024.06] 이영호"
-  role: {type: intern, title: Undergraduate Student (3학년 1학기)}
-  name: {en: Young-Ho Lee, ko: 이영호}
-  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
-  interests: [Graph ML/DL]
-  contacts: {emails: ["james20042016@gmail.com"], homepage: null, github: ["yhLee205"], linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2024.06", end: "Current"}
-    affiliation: null
-
 - id: "[2024.07] 지상준"
   role: {type: intern, title: Undergraduate Student (4학년 1학기)}
   name: {en: Sang-Jun Ji, ko: 지상준}

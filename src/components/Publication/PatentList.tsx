@@ -275,16 +275,16 @@ export default function PatentList({ className = '', patents, memberIds = [], al
             setCopiedPatentId(prev => (prev === patentId ? null : prev));
           }, 1000);
         }}
-        className={`mt-0.5 w-5 h-5 transition-colors duration-200 flex-shrink-0 ${copied ? 'text-brand-primary' : 'text-gray-400 hover:text-interactive-primary'}`}
+        className={`relative -top-[1px] md:-top-[2px] ml-0.5 md:ml-1 inline-flex h-5 w-5 items-center justify-center align-middle transition-colors duration-200 ${copied ? 'text-brand-primary' : 'text-gray-400 hover:text-interactive-primary'}`}
         title="Copy patent link"
         aria-label="Copy patent link"
       >
         {copied ? (
-          <svg className="w-[90%] h-[90%] mx-auto my-auto origin-center scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="md:w-[90%] md:h-[90%] w-[80%] h-[80%] mx-auto my-auto origin-center scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
           </svg>
         ) : (
-          <svg className="w-[90%] h-[90%] mx-auto my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="md:w-[90%] md:h-[90%] w-[80%] h-[80%] mx-auto my-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
           </svg>
         )}
@@ -423,7 +423,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
                       : ''
                   }`}>
                     <div className="text-[16px] md:text-[18px] font-medium text-gray-800 mb-1">
-                      <div className="flex items-start gap-1.5 leading-snug">
+                      <div className="leading-snug">
                         {patent.title.ko}
                         {renderCopyButton(patentId)}
                       </div>

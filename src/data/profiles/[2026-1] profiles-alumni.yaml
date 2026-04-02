@@ -36,27 +36,16 @@
 
 ###############################################
 # Interns
-###############################################
-- id: "[2024.06] 서지명"
+###############################################    
+- id: "[2024.06] 이영호"
   role: {type: intern, title: Undergraduate Student}
-  name: {en: Jimyeung Seo, ko: 서지명}
+  name: {en: Young-Ho Lee, ko: 이영호}
   education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
-  academic: {year: 1, semester: 1}
-  contacts: {emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"], homepage: null, github: ["seojmm"], linkedin: ["jimyeungseo"]}
+  contacts: {emails: ["james20042016@gmail.com"], homepage: null, github: ["yhLee205"], linkedin: null}
   status: 
-    period: {admission: null, graduation: "2025.02"}
-    joined: {start: "2024.06", end: "2025.02"}
-    affiliation: "건국대학교 석사과정 (GLI Lab)"
-
-- id: "[2024.07] 백혜윤"
-  role: {type: intern, title: Undergraduate Student}
-  name: {en: Hye-Yoon Baek, ko: 백혜윤}
-  education: {bs: ["English Language & Literature, Konkuk University", "Smart ICT Convergence, Konkuk University"], ms: "Computer Science & Engineering, Konkuk University", phd: null}
-  contacts: {emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"], homepage: null, github: ["hyeyoon100"], linkedin: ["hye-yoon-baek1205"]}
-  status: 
-    period: {admission: null, graduation: "2025.02"}
-    joined: {start: "2024.07", end: "2025.02"}
-    affiliation: "건국대학교 석사과정 (GLI Lab)"
+    period: {admission: null, graduation: null}
+    joined: {start: "2024.06", end: "2026.04"}
+    affiliation: null
 
 - id: "[2024.12] 최진호"
   role: {type: intern, title: Undergraduate Student}
@@ -68,7 +57,6 @@
     joined: {start: "2024.12", end: "2026.02"}
     affiliation: "건국대학교 석사과정 (GLI Lab)"
     
-# --------------------------------------------------------------
 - id: "[2025.03] 조은영"
   role: {type: intern, title: Undergraduate Student}
   name: {en: Eun-Yeong Jo, ko: 조은영}
@@ -138,3 +126,24 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.01", end: "2025.04"}
     affiliation: null
+
+- id: "[2024.06] 서지명"
+  role: {type: intern, title: Undergraduate Student}
+  name: {en: Jimyeung Seo, ko: 서지명}
+  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
+  academic: {year: 1, semester: 1}
+  contacts: {emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"], homepage: null, github: ["seojmm"], linkedin: ["jimyeungseo"]}
+  status: 
+    period: {admission: null, graduation: "2025.02"}
+    joined: {start: "2024.06", end: "2025.02"}
+    affiliation: "건국대학교 석사과정 (GLI Lab)"
+
+- id: "[2024.07] 백혜윤"
+  role: {type: intern, title: Undergraduate Student}
+  name: {en: Hye-Yoon Baek, ko: 백혜윤}
+  education: {bs: ["English Language & Literature, Konkuk University", "Smart ICT Convergence, Konkuk University"], ms: "Computer Science & Engineering, Konkuk University", phd: null}
+  contacts: {emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"], homepage: null, github: ["hyeyoon100"], linkedin: ["hye-yoon-baek1205"]}
+  status: 
+    period: {admission: null, graduation: "2025.02"}
+    joined: {start: "2024.07", end: "2025.02"}
+    affiliation: "건국대학교 석사과정 (GLI Lab)"
