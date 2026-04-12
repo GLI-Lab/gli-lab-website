@@ -1,7 +1,7 @@
 # YAML에서 tab은 금지. 반드시 space 2개 사용
 # role.type  : faculty, phd, ms, iphd, ims, researcher, intern
-# role.title : Pre-Ph.D. Students (X학기), Ph.D. Students (X학기), Joint M.S./Ph.D. Students (X학기), 
-#              Pre-M.S. Students (X학기), M.S. Students (X학기), Undergraduate Student (X학년 X학기)
+# role.title : Pre-Ph.D. Students, Ph.D. Students (X학기), Joint M.S./Ph.D. Students (X학기), 
+#              Pre-M.S. Students, M.S. Students (X학기), Undergraduate Student (X학년 X학기)
 # CV         : public/pdf/cv
 # homepage   : https://[THIS]
 # github     : https://github.com/[THIS]
@@ -102,7 +102,28 @@
 ###############################################
 # Incoming MS Students
 ###############################################
+- id: "[2026.03] 윤종우"
+  role: {type: ims, title: Pre-M.S. Students}
+  name: {en: Jongwoo Yun, ko: 윤종우}
+  education: {bs: ["Business Administration, Kangwon National University", "AI and Data Science, Kangwon National University"], ms: null, phd: null}
+  interests: [Graph ML/DL]
+  contacts: {emails: ["jooo316@naver.com"], homepage: null, github: ["jongwoogit"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2026.03", end: "Current"}
+    affiliation: null
 
+- id: "[2026.04] 박원규"
+  role: {type: ims, title: Pre-M.S. Students}
+  name: {en: Won-Gyu Park, ko: 박원규}
+  education: {bs: ["Department of Information Communications Engineering, Soonchunhyang University", "Intelligent Information and Communications, Soonchunhyang University"], ms: null, phd: null}
+  interests: [Graph ML/DL]
+  contacts: {emails: ["parkwongyu0408@gmail.com"], homepage: null, github: ["Won-Gyu01"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2026.04", end: "Current"}
+    affiliation: null
+    
 ###############################################
 # Researchers
 ###############################################
@@ -240,16 +261,4 @@
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2025.12", end: "Current"}
-    affiliation: null
-
-
-- id: "[2026.03] 윤종우"
-  role: {type: intern, title: Undergraduate Student (5학년 1학기)}
-  name: {en: Jongwoo Yun, ko: 윤종우}
-  education: {bs: ["Business Administration, Kangwon National University", "AI and Data Science, Kangwon National University"], ms: null, phd: null}
-  interests: [Graph ML/DL]
-  contacts: {emails: ["jooo316@naver.com"], homepage: null, github: ["jongwoogit"], linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2026.03", end: "Current"}
     affiliation: null
