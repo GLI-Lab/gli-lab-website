@@ -133,23 +133,6 @@
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-- title: "Disentangled Global-Local Representations via Relation-Entity Pair Encoding for Hyper-Relational KGs"
-  filter: {"type": "", "scope": ""}
-  status: "Under Review"
-  year: 2026
-  venue: { name: "", acronym: "" }
-  links: 
-    Link: null
-    Code: null
-  notes: {"normal": "", "important": ""}
-  authors:
-    - { ID: "[2024.07] 지상준", name: "Sang-Jun Ji", position: first }
-    - { ID: "[2025.03] 김상준", name: "Sang-June Kim", position: co }
-    - { ID: "[2024.06] 이영호", name: "Young-Ho Lee", position: co }
-    - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: co }
-    - { name: "Xiongnan Jin", position: co }
-    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
-
 - title: "Top-HiCL: Hierarchical Contrastive Learning for Job-Skill Matching with Topological Awareness"
   filter: {"type": "", "scope": ""}
   status: "Under Review"
@@ -170,6 +153,23 @@
 ########################################################################################
 # Accepted
 ########################################################################################
+- title: "Disentangled Global-Local Representations via Relation-Entity Pair Encoding for Hyper-Relational KGs"
+  filter: {"type": "conference", "scope": "international"}
+  status: "Accepted"
+  year: 2026
+  venue: { name: "To Appear in ACM SIGKDD Conference on Knowledge Discovery and Data Mining", acronym: "KDD" }
+  links: 
+    Link: null
+    Code: null
+  notes: {"normal": "Research Track (Acceptance Rate: 18.5%)", "important": ""}
+  authors:
+    - { ID: "[2024.07] 지상준", name: "Sang-Jun Ji", position: first }
+    - { ID: "[2025.03] 김상준", name: "Sang-June Kim", position: co }
+    - { ID: "[2024.06] 이영호", name: "Young-Ho Lee", position: co }
+    - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: co }
+    - { name: "Xiongnan Jin", position: co }
+    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
+
 - title: "Diversifying Differentiable Graph Retrieval with Topic-Adaptive Multi-Intent Learning"
   filter: {"type": "conference", "scope": "international"}
   status: "Accepted"
@@ -179,7 +179,7 @@
     Link: https://doi.org/10.1145/3774904.3792529
     Code: https://github.com/leedongcheon/TARD
     News: https://www.konkuk.ac.kr/bbs/konkuk/259/1167092/artclView.do
-  notes: {"normal": "Full Research Paper (Acceptance Rate: 20.1% = 676/3,370)", "important": ""}  # refer: mail
+  notes: {"normal": "Research Track (Acceptance Rate: 20.1% = 676/3,370)", "important": ""}  # refer: mail
   authors:
     - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: first }
     - { ID: "[2024.07] 박지연", name: "Ji-Yeon Park", position: co }
@@ -249,7 +249,7 @@
   links: 
     Link: https://doi.org/10.1609/aaai.v39i11.33294
     Code: https://github.com/xnjin-ai/HLMEA
-  notes: {"normal": "Main Track (Acceptance Rate: 23.4% = 3,032/12,957)", "important": ""}
+  notes: {"normal": "Main Technical Track (Acceptance Rate: 23.4% = 3,032/12,957)", "important": ""}
   authors:
     - { name: "Xiongnan Jin", position: first }
     - { name: "Zhilin Wang", position: co }

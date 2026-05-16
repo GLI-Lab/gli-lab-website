@@ -159,6 +159,7 @@ export interface NewsData {
   date: string;
   type: 'Member' | 'Publication' | 'Funding' | 'General';
   content: string;
+  selected?: boolean;
 }
 
 // =====================================================

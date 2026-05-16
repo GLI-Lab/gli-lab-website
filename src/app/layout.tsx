@@ -12,7 +12,7 @@ import {pretendard} from "./fonts"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { getMetadata } from "@/lib/GetMetadata";
-import Header from "@/components/Header";
+import Header from "@/components/Header/Header";
 import ScrollToTop from "@/components/ScrollToTop";
 import Footer from "@/components/Footer";
 
