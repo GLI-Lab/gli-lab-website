@@ -9,6 +9,8 @@ import { GalleryGrid, getGalleryItems } from "@/components/Gallery";
 import { getNews } from "@/data/loaders/newsLoader";
 import { getMemberIds, getAlumniIds, getProfiles, getAlumniProfiles } from "@/data/loaders/profileLoader";
 import { getSeminars } from "@/data/loaders/seminarLoader";
+import NewsPopup from "@/components/NewsPopup";
+import { getNewsMarkupAlerts } from "@/lib/newsPaper";
 
 export default async function Page() {
     const [newsItems, memberIds, alumniIds, seminars, profiles, alumniProfiles, galleryItems] = await Promise.all([
@@ -21,8 +23,14 @@ export default async function Page() {
         getGalleryItems(),
     ]);
 
+    const paperNewsAlerts = getNewsMarkupAlerts(newsItems, {
+        kinds: ["paper"],
+        max: 4,
+    });
+
     return (
         <>
+            <NewsPopup alerts={paperNewsAlerts} />
             <div className="max-w-screen-2xl mx-auto">
                 <MainCover/>
             </div>

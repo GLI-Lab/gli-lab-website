@@ -5,8 +5,16 @@
 # }
 
 ########################################################################################
-# 2025
+# 2026
 ########################################################################################
+- date: "2026-05-17"
+  type: Publication
+  selected: true
+  content: |
+    One paper has been accepted at the Research Track of <b>KDD 2026</b> ✏️
+    - <paper>Disentangled Global-Local Representations via Relation-Entity Pair Encoding for Hyper-Relational KGs</>
+    Sang-Jun Ji, Sang-June Kim, Young-Ho Lee, Bonyou Koo, Xiongnan Jin, Byungkook Oh
+
 - date: "2026-04-12"
   type: Member
   content: "Welcome to GLI lab, <profile=[2026.04] 박원규>Won-Gyu Park (박원규)</>!"
@@ -17,17 +25,22 @@
 
 - date: "2026-02-12"
   type: Funding
+  selected: true
   content: |
     Our team has been supported by 중소벤처기업진흥공단 · 경남테크노파크, as part of <b>AI솔루션 개발·실증 지원(가치사슬형-제조설비) 사업</b> under <b>지역 주도형 AI 대전환 사업</b> 👏
     <project>우주항공 제조설비의 멀티모달 이상탐지와 실시간 생성형 AI 보고체계 기반의 AX전환 실증</>
 
 - date: "2026-01-14"
   type: Publication
+  selected: true
   content: |
-    One full research paper has been accepted at <b>WWW 2026</b> ✏️
+    A full paper has been accepted at the Research Track of <b>WWW 2026</b> ✏️
     - <paper>Diversifying Differentiable Graph Retrieval with Topic-Adaptive Multi-Intent Learning</>
     Dongcheon Lee, Ji-Yeon Park, Hye-Yoon Baek, Jimyeung Seo, Seyeong Kim and Byungkook Oh
-    
+
+########################################################################################
+# 2025
+########################################################################################
 - date: "2025-12-19"
   type: General
   content: <profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>, <profile=[2024.12] 최진호>Jinho Choi (최진호)</>, <profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</>이 <b>카카오X한국정보과학회 AI 에이전트 경진대회</b>에서 우수상을 수상했습니다 👏
@@ -59,6 +72,7 @@
 
 - date: "2025-11-11"
   type: Funding
+  selected: true
   content: |
     Our team has been supported by 국방과학연구소 · LIG넥스원, under <b>사이버 전장관리체계 핵심기술을 활용한 미래 지능형 함정 통합 사이버방호체계 기술 시범</b> 👏
     <project>그래프기반 위협추적 분석</>
@@ -85,6 +99,7 @@
 
 - date: "2025-10-24"
   type: Publication
+  selected: true
   content: |
     One full paper has been accepted at <b>WSDM 2026</b> ✏️
     - <paper>Image-Guided Debiasing Distillation with Preference Alignment Across Multi-News Histories</>
@@ -100,6 +115,7 @@
 
 - date: "2025-09-01"
   type: Funding
+  selected: true
   content: |
     Our team has been supported by 국방과학연구소 · 한화시스템, under <b>위치기반 다자간 실시간 전장정보 공유 및 임무조정 기술</b> 👏
     <project>추천시스템 모델 설계 자문 및 사례연구</>
@@ -120,6 +136,7 @@
 
 - date: "2025-08-04"
   type: Publication
+  selected: true
   content: |
     One full research paper has been accepted at <b>CIKM 2025</b> ✏️
     - <paper>Relation-Faceted Graph Pooling with LLM Guidance for Dynamic Span-Aware Information Extraction</>
@@ -135,6 +152,7 @@
 
 - date: "2025-05-23"
   type: Funding
+  selected: true
   content: |
     Our team has been supported by 한국연구재단 · 실감미디어혁신융합대학사업단, as part of <b>실감미디어 혁신융합대학 지원사업(교원연구)</b> under <b>첨단분야 혁신융합대학사업(실감미디어)</b> 👏
     <project>LLM 기반 추천을 위한 그래프 기반 컨텍스트 추출 에이전트</>
@@ -146,7 +164,7 @@
 - date: "2025-04-11"
   type: Publication
   content: |
-    One full research paper has been accepted at <b>AAAI 2025</b> ✏️
+    One paper has been accepted at the Main Technical Track of <b>AAAI 2025</b> ✏️
     - <paper>HLMEA: Unsupervised Entity Alignment Based on Hybrid Language Models</>
     Xiongnan Jin, Zhilin Wang, Jinpeng Chen, Liu Yang, Byungkook Oh, Seung-won Hwang, Jianqiang Li
 
@@ -202,12 +220,13 @@
 - date: "2024-08-25"
   type: Publication
   content: |
-    One full research paper has been accepted at <b>KDD 2024</b> ✏️
+    One paper has been accepted at the Research Track of <b>KDD 2024</b> ✏️
     - <paper>Embedding Two-View Knowledge Graphs with Class Inheritance and Structural Similarity</>
     Kyuhwan Yeom, Hyeongjun Yang, Gayeon Park, Myeongheon Jeon, Yunjeong Ko, Byungkook Oh, Kyong-Ho Lee
 
 - date: "2024-08-01"
   type: Funding
+  selected: true
   content: |
     Our team has been supported by 한국연구재단, as part of <b>중견연구(유형1) 사업</b> 👏
     <project>멀티모달 생성모델의 신뢰성 및 제어가능성 향상을 위한 그래프 구조 기반의 상호작용</>

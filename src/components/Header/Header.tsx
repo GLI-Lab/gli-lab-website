@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useState, useEffect } from "react"
 
 import { IoChevronDown } from "react-icons/io5";
+import { SITE_HEADER_BAR_ID, useHeaderHeight, useHeaderScrolled } from "./headerScroll";
 
 interface SubMenu {
     title: string;
@@ -20,7 +21,8 @@ interface Menu {
 export default function Header() {
     const [menu, setMenu] = useState (false)
     const [activeMenu, setActiveMenu] = useState<number | null>(null);
-    const [isScrolled, setIsScrolled] = useState(false);
+    const isScrolled = useHeaderScrolled();
+    const headerHeight = useHeaderHeight();
     const [isTouchDevice, setIsTouchDevice] = useState(false);
 
     // Detect touch device
@@ -29,21 +31,6 @@ export default function Header() {
             setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
         };
         checkTouchDevice();
-    }, []);
-
-    // To resize header
-    useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 10) {
-                setIsScrolled(true);
-            } else {
-                setIsScrolled(false);
-            }
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
     }, []);
 
     // Close submenu when clicking outside
@@ -122,10 +109,24 @@ export default function Header() {
         },
     ];
 
+    const headerBackdropClass = isScrolled
+        ? "bg-[#f4f4f4] shadow-xl"
+        : menu
+          ? "bg-white shadow-xl md:shadow-none"
+          : "bg-white";
+
     return (
-        // fixed top-0: 항상 상단에 고정
-        <nav className="z-50">
-            <div className={`fixed top-0 ${isScrolled ? "bg-[#f4f4f4] shadow-xl" : (menu ? "bg-white shadow-xl md:shadow-none" : "bg-white")} w-full border-b md:border-b-1`}>
+        // z-50 backdrop < z-58 news banner < z-65 bar + z-70 submenu (sibling banner in NewsPopup)
+        <nav>
+            <div
+                aria-hidden
+                className={`pointer-events-none fixed top-0 inset-x-0 z-[50] w-full border-b md:border-b-1 ${headerBackdropClass}`}
+                style={{ height: "var(--header-height, 76px)" }}
+            />
+            <div
+                id={SITE_HEADER_BAR_ID}
+                className="fixed top-0 z-[65] w-full"
+            >
                 <div className="max-w-screen-xl items-center mx-auto md:flex px-4">
 
                     {/* ##################################################### */}
@@ -133,7 +134,7 @@ export default function Header() {
                     {/* ##################################################### */}
                     <div className={`flex items-center justify-between ${isScrolled ? "py-1" : "py-2"}`}>
                         <Link href="/" className="items-center flex min-w-[250px]">
-                            <div className={`transition-all duration-200 ${isScrolled ? "h-[50px] w-[50px]" : "h-[60px] w-[60px] lg:h-[70px] lg:w-[70px]"}`}>
+                            <div className={` ${isScrolled ? "h-[50px] w-[50px]" : "h-[60px] w-[60px] lg:h-[70px] lg:w-[70px]"}`}>
                                 <Image src={`${isScrolled ? "/images/logo/GLI_logo_black.png" : "/images/logo/GLI_logo_green.png"}`} alt="logo" width="96" height="96"/>
                             </div>
                             <div className={`-space-y-2 ml-3 tracking-tighter ${isScrolled ? "text-[20px]" : "text-[21px] lg:text-[23.5px]"}`}>
@@ -210,7 +211,7 @@ export default function Header() {
                                     {activeMenu === idx && item.subMenus && (
                                         <ul className={`absolute animate-fade-up w-auto min-w-[140px] lg:min-w-[160px] -mt-1 
                                                         ${idx == menus.length - 1 ? "-left-24" : "-left-6"}
-                                                        border-t-4 border-green-900 divide-y divide-gray-200 shadow-xl z-10
+                                                        border-t-4 border-green-900 divide-y divide-gray-200 shadow-xl z-[70]
                                                         tracking-tight ${isScrolled ? "bg-[#f4f4f4] text-[15.5px]" : "bg-white text-[16px] lg:text-[17px]"}`}>
                                             {item.subMenus.map((subItem, subIdx) => (
                                                 <li key={subIdx}
@@ -335,7 +336,7 @@ export default function Header() {
                     </div>
                 </div>
             </div>
-            <div className={`transition-all duration-300 ${isScrolled ? "h-[74px]" : "h-[76px] lg:h-[86px]"}`}></div>
+            <div className="transition-all duration-300" style={{ height: headerHeight }} />
         </nav>
 )
 }
