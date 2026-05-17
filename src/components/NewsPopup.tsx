@@ -148,11 +148,11 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
                     key={`${item.kind}-${item.title}`}
                     className="inline-flex min-w-0 max-w-full"
                   >
-                    {itemIdx > 0 && (
+                    {/* {itemIdx > 0 && (
                       <span className="text-gray-300 mr-2" aria-hidden>
                         |
                       </span>
-                    )}
+                    )} */}
                     <Link
                       href={item.href}
                       className="text-sm md:text-base text-gray-600 hover:text-brand-primary underline-offset-2 hover:underline leading-snug line-clamp-1"
@@ -167,7 +167,7 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
             <div className="flex items-center gap-0.5 shrink-0 self-center">
               <Link
                 href="/board/news"
-                className="text-sm text-gray-600 hover:text-brand-primary whitespace-nowrap transition-colors md:px-1 px-0.5"
+                className="hidden md:inline text-sm md:text-base text-gray-600 hover:text-brand-primary whitespace-nowrap transition-colors md:px-1"
               >
                 All news →
               </Link>

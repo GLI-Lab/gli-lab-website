@@ -11,9 +11,13 @@
   type: Publication
   selected: true
   content: |
-    One paper has been accepted at the Research Track of <b>KDD 2026</b> ✏️
+    One paper has been accepted to the Research Track at <b>KDD 2026</b> (GLI Lab-led) ✏️
     - <paper>Disentangled Global-Local Representations via Relation-Entity Pair Encoding for Hyper-Relational KGs</>
     Sang-Jun Ji, Sang-June Kim, Young-Ho Lee, Bonyou Koo, Xiongnan Jin, Byungkook Oh
+
+- date: "2026-04-30"
+  type: General
+  content: "We have added two NVIDIA RTX Pro 6000 GPUs (192GB VRAM)"
 
 - date: "2026-04-12"
   type: Member
@@ -34,7 +38,7 @@
   type: Publication
   selected: true
   content: |
-    One full paper has been accepted at the Research Track of <b>WWW 2026</b> ✏️
+    One full paper has been accepted to the Research Track at <b>WWW 2026</b> (GLI Lab-led) ✏️
     - <paper>Diversifying Differentiable Graph Retrieval with Topic-Adaptive Multi-Intent Learning</>
     Dongcheon Lee, Ji-Yeon Park, Hye-Yoon Baek, Jimyeung Seo, Seyeong Kim and Byungkook Oh
 
@@ -56,7 +60,7 @@
 - date: "2025-12-12"
   type: Publication
   content: |
-    Two patents has been filed 💡
+    Two patents have been filed 💡
     - <patent>지식 그래프 기반 질의 응답 시스템의 최적화 방법 및 장치</>
     이동천, 오병국
     - <patent>하이퍼관계형 지식 그래프 상의 하이퍼관계형 사실에 대한 링크 예측 방법 및 장치</>
@@ -80,7 +84,7 @@
 - date: "2025-11-07"
   type: Publication
   content: |
-    One paper has been accepted at <b>IEEE Access</b> ✏️
+    One paper has been accepted at <b>IEEE Access</b> (GLI Lab-led) ✏️
     - <paper>Interaction-Grounded Semantic Graph Refinement for LLM-based Recommendation</>
     Wooseok Jeong*, Young-Jin Kim*, Hae-Yoon Koo, Jimyeung Seo, Jinho Choi, Byungkook Oh (*: Equal Contribution)
 
@@ -91,7 +95,7 @@
 - date: "2025-10-31"
   type: Publication
   content: |
-    Two patents has been filed 💡
+    Two patents have been filed 💡
     - <patent>동적 스팬 인식 정보 추출 방법 및 장치</>
     백혜윤, 오병국
     - <patent>멀티모달 데이터 증류 방법, 트리플 기반 뉴스 정제 및 추천 방법</>
@@ -101,7 +105,7 @@
   type: Publication
   selected: true
   content: |
-    One full paper has been accepted at <b>WSDM 2026</b> ✏️
+    One full paper has been accepted at <b>WSDM 2026</b> (GLI Lab-led) ✏️
     - <paper>Image-Guided Debiasing Distillation with Preference Alignment Across Multi-News Histories</>
     Jimyeung Seo, Eun-Yeong Jo, Hye-Yoon Baek, Dongcheon Lee, Xiongnan Jin, Byungkook Oh
 
@@ -138,7 +142,7 @@
   type: Publication
   selected: true
   content: |
-    One full research paper has been accepted at <b>CIKM 2025</b> ✏️
+    One full research paper has been accepted at <b>CIKM 2025</b> (GLI Lab-led) ✏️
     - <paper>Relation-Faceted Graph Pooling with LLM Guidance for Dynamic Span-Aware Information Extraction</>
     Hye-Yoon Baek, Jinho Choi, Jimyeung Seo, Dongcheon Lee, Xiongnan Jin, Byungkook Oh
 
@@ -164,7 +168,7 @@
 - date: "2025-04-11"
   type: Publication
   content: |
-    One paper has been accepted at the Main Technical Track of <b>AAAI 2025</b> ✏️
+    One paper has been accepted to the Main Technical Track at <b>AAAI 2025</b> (Collaborative) ✏️
     - <paper>HLMEA: Unsupervised Entity Alignment Based on Hybrid Language Models</>
     Xiongnan Jin, Zhilin Wang, Jinpeng Chen, Liu Yang, Byungkook Oh, Seung-won Hwang, Jianqiang Li
 
@@ -179,15 +183,15 @@
 - date: "2025-02-01"
   type: Publication
   content: |
-    One paper has been accepted at <b>Information Sciences</b> ✏️
+    One paper has been accepted at <b>Information Sciences</b> (Collaborative) ✏️
     - <paper>Knowledge-constrained Interest-aware Multi-behavior Recommendation with Behavior Pattern Identification</>
     Gayeon Park, Hyeongjun Yang, Kyuhwan Yeom, Myeongheon Jeon, Yunjeong Ko, Byungkook Oh, Kyong-Ho Lee
 
 - date: "2025-01-01"
   type: Publication
   content: |
-    One paper has been accepted at <b>International Journal of Web and Grid Services</b> ✏️
-    - <paper>A survey on knowledge graph evolution  proliferation, dynamic embedding, and versioning</>
+    One paper has been accepted at <b>International Journal of Web and Grid Services</b> (Collaborative) ✏️
+    - <paper>A Survey on Knowledge Graph Evolution: Proliferation, Dynamic Embedding, and Versioning</>
     Xiongnan Jin, Zhilin Wang, Manni Duan, Yan Shao, Xingyun Hong, Yongheng Wang, Byungkook Oh
 
 - date: "2025-01-01"
@@ -197,7 +201,7 @@
 - date: "2024-12-20"
   type: Publication
   content: |
-    One paper has been accepted at <b>Knowledge-Based Systems</b> ✏️
+    One paper has been accepted at <b>Knowledge-Based Systems</b> (Collaborative) ✏️
     - <paper>Granular Intents Learning via Mutual Information Maximization for Knowledge-aware Recommendation</>
     Hyeongjun Yang, Yerim Lee, Gayeon Park, TaeYoung Kim, Heesun Kim, Kyong-Ho Lee, Byungkook Oh
 
@@ -220,7 +224,7 @@
 - date: "2024-08-25"
   type: Publication
   content: |
-    One paper has been accepted at the Research Track of <b>KDD 2024</b> ✏️
+    One paper has been accepted to the Research Track at <b>KDD 2024</b> (Collaborative) ✏️
     - <paper>Embedding Two-View Knowledge Graphs with Class Inheritance and Structural Similarity</>
     Kyuhwan Yeom, Hyeongjun Yang, Gayeon Park, Myeongheon Jeon, Yunjeong Ko, Byungkook Oh, Kyong-Ho Lee
 

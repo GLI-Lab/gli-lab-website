@@ -9,35 +9,6 @@
 ########################################################################################
 # Ongoing Work (In Progress)
 ########################################################################################
-- title: "Multi-Agent Graph-Enhanced Retrieval-Augmented Generation for Question Answering"
-  filter: {"type": "", "scope": ""}
-  status: "In Progress"
-  year: 2026
-  venue: { name: "", acronym: "" }
-  links: 
-    Link: null
-    Code: null
-  notes: {"normal": "", "important": ""}
-  authors:
-    - { ID: "[2024.12] 최진호", name: "Jinho Choi", position: first }
-    - { ID: "[2025.07] 박상현", name: "Sang-Hyun Park", position: co }
-    - { ID: "[2025.03] 김상준", name: "Sang-June Kim", position: co }
-    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
-
-- title: "Learnable Rule-Modulated LLM Adapter for Document-Level Relation Extraction"
-  filter: {"type": "", "scope": ""}
-  status: "In Progress"
-  year: 2026
-  venue: { name: "", acronym: "" }
-  links: 
-    Link: null
-    Code: null
-  notes: {"normal": "", "important": ""}
-  authors:
-    - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: first }
-    - { ID: "[2024.07] 지상준", name: "Sang-Jun Ji", position: co }
-    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
-
 - title: "Temporal Knowledge Graph Question Answering with GraphRAG"
   filter: {"type": "", "scope": ""}
   status: "In Progress"
@@ -52,6 +23,40 @@
     - { ID: "[2025.07] 김세영", name: "Seyeong Kim", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
+- title: "Causality-Guided Spurious Chunk Pruning with GFlowNet for Graph Retrieval"
+  filter: {"type": "", "scope": ""}
+  status: "In Progress"
+  year: 2026
+  venue: { name: "", acronym: "" }
+  links: 
+    Link: null
+    Code: null
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2024.12] 최진호", name: "Jinho Choi", position: first }
+    - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: co }
+    - { ID: "[2025.07] 박상현", name: "Sang-Hyun Park", position: co }
+    - { ID: "[2025.03] 김상준", name: "Sang-June Kim", position: co }
+    - { name: "Hyeongjun Yang", position: co }
+    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
+
+- title: "Learnable Rule-Modulated LLM Adapter for Document-Level Relation Extraction"
+  filter: {"type": "", "scope": ""}
+  status: "In Progress"
+  year: 2026
+  venue: { name: "", acronym: "" }
+  links: 
+    Link: null
+    Code: null
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: first }
+    - { ID: "[2024.07] 지상준", name: "Sang-Jun Ji", position: co }
+    - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: co }
+    - { ID: "[2025.01] 구해윤", name: "Hae-Yoon Koo", position: co }
+    - { name: "Seungmin Seo", position: co }
+    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
+
 - title: "Collaborative Graph Agent-based Fake News Detection"
   filter: {"type": "", "scope": ""}
   status: "In Progress"
@@ -63,6 +68,10 @@
   notes: {"normal": "", "important": ""}
   authors:
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: first }
+    - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: co }
+    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: co }
+    - { ID: "[2025.12] 홍다연", name: "Dayeon Hong", position: co }
+    - { name: "Donghyun Kim", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
 - title: "VISTA: Variable-Length Semantic IDs from Collaborative Embeddings for LLM-based Generative Recommendation"
@@ -93,6 +102,9 @@
   notes: {"normal": "", "important": ""}
   authors:
     - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: first }
+    - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: co }
+    - { ID: "[2025.01] 구해윤", name: "Hae-Yoon Koo", position: co }
+    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: co }
     - { ID: "[2025.07] 이재진", name: "JaeJin Lee", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
@@ -127,10 +139,6 @@
   notes: {"normal": "", "important": ""}
   authors:
     - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: first }
-    - { ID: "[2025.07] 이재진", name: "JaeJin Lee", position: co }
-    - { ID: "[2025.01] 구해윤", name: "Hae-Yoon Koo", position: co }
-    - { ID: "[2024.11] 이동천", name: "Dongcheon Lee", position: co }
-    - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
 - title: "Top-HiCL: Hierarchical Contrastive Learning for Job-Skill Matching with Topological Awareness"
