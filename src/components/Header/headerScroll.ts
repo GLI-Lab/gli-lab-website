@@ -24,7 +24,12 @@ export function useHeaderScrolled(): boolean {
   return isScrolled;
 }
 
-/** Measured height of the fixed header bar (logo + nav row) */
+/**
+ * `#site-header-bar` 높이를 측정해 state와 `:root`의 `--header-height`에 반영합니다.
+ * 포함: 로고 행(항상), 데스크톱 메인 내비(md+). 모바일은 로고 행만.
+ * 제외: 모바일 펼침 메뉴·데스크톱 드롭다운(오버레이, 레이아웃 높이에 미포함).
+ * 용도: Header spacer·배경, NewsPopup 배너 top, 모바일 메뉴 top. 초기값 76px.
+ */
 export function useHeaderHeight(): number {
   const [height, setHeight] = useState(DEFAULT_HEADER_HEIGHT);
 

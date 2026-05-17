@@ -46,19 +46,14 @@ function normalizeKinds(kinds: NewsMarkupKind | NewsMarkupKind[]): NewsMarkupKin
   return Array.isArray(kinds) ? kinds : [kinds];
 }
 
-function stripMarkup(text: string): string {
-  return text
-    .replace(/<b>([^<]*)<\/b>/g, '$1')
+function extractHeadline(content: string): string {
+  const firstLine = content.split('\n').find((line) => line.trim() !== '') ?? '';
+  return firstLine
     .replace(/<paper>[^<]+<\/>/g, '')
     .replace(/<patent>[^<]+<\/>/g, '')
     .replace(/<project>[^<]+<\/>/g, '')
     .replace(/<profile=[^>]+>[^<]+<\/>/g, '')
     .trim();
-}
-
-function extractHeadline(content: string): string {
-  const firstLine = content.split('\n').find((line) => line.trim() !== '') ?? '';
-  return stripMarkup(firstLine);
 }
 
 export function hasMarkupTag(content: string, kind: NewsMarkupKind): boolean {

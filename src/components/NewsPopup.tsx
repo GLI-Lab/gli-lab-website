@@ -1,13 +1,57 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
 import { createPortal } from "react-dom";
 import { IoAlertCircleOutline, IoClose } from "react-icons/io5";
 import type { NewsPopupAlert } from "@/lib/newsPaper";
 
 const NEWS_POPUP_ROOT_ID = "news-popup-root";
 const BANNER_HEIGHT_CSS_VAR = "--news-banner-height";
+const BOLD_PATTERN = /<b>([^<]+)<\/b>/g;
+
+function renderHeadlineWithBold(text: string, keyPrefix: string): ReactNode {
+  const nodes: ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let partIndex = 0;
+
+  BOLD_PATTERN.lastIndex = 0;
+  while ((match = BOLD_PATTERN.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      nodes.push(
+        <span key={`${keyPrefix}-text-${partIndex++}`}>
+          {text.slice(lastIndex, match.index)}
+        </span>,
+      );
+    }
+    nodes.push(
+      <strong
+        key={`${keyPrefix}-bold-${partIndex++}`}
+        className="font-semibold underline underline-offset-2"
+      >
+        {match[1]}
+      </strong>,
+    );
+    lastIndex = match.index + match[0].length;
+  }
+
+  if (lastIndex < text.length) {
+    nodes.push(
+      <span key={`${keyPrefix}-text-${partIndex++}`}>
+        {text.slice(lastIndex)}
+      </span>,
+    );
+  }
+
+  return nodes.length > 0 ? nodes : text;
+}
 
 interface NewsPopupProps {
   alerts: NewsPopupAlert[];
@@ -95,10 +139,10 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
               <div className="min-w-0 flex-1 space-y-0.5">
               {alert.headline && (
                 <p className="text-sm md:text-base font-medium text-gray-900 leading-snug">
-                  {alert.headline}
+                  {renderHeadlineWithBold(alert.headline, alert.id)}
                 </p>
               )}
-              <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+              <div className="hidden md:flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
                 {alert.items.map((item, itemIdx) => (
                   <span
                     key={`${item.kind}-${item.title}`}
