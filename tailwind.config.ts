@@ -143,6 +143,16 @@ const config = {
                     dark_gray: "#656F76",    // ⚫ 보조 텍스트 컬러 (제한적 사용)
                 },
             },
+            // stacking: header-backdrop(50) < news-banner(58) < header-bar(65) < header-menu(70) < modal(80)
+            zIndex: {
+                'header-backdrop': '50',
+                'news-banner': '58',
+                'header-bar': '65',
+                'header-menu': '70',
+                'modal': '80',
+                'modal-controls': '90',
+                'toast': '1000',
+            },
             ///////////////////////////////////////////
             //
             ////////////////////////////////////////////
