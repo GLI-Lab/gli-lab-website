@@ -110,7 +110,8 @@ export default function Header() {
     ];
 
     const headerBackdropClass = isScrolled
-        ? "bg-[#f4f4f4] shadow-xl"
+        // ? "bg-[#f4f4f4] shadow-xl"
+        ? "bg-white shadow-xl"
         : menu
           ? "bg-white shadow-xl md:shadow-none"
           : "bg-white";
@@ -123,16 +124,17 @@ export default function Header() {
                 className={`pointer-events-none fixed top-0 inset-x-0 z-[50] w-full border-b md:border-b-1 ${headerBackdropClass}`}
                 style={{ height: "var(--header-height, 76px)" }}
             />
-            <div
-                id={SITE_HEADER_BAR_ID}
-                className="fixed top-0 z-[65] w-full"
-            >
-                <div className="max-w-screen-xl items-center mx-auto md:flex px-4">
+            <div className="fixed top-0 z-[65] w-full">
+                <div className="max-w-screen-xl mx-auto px-4 relative">
+                    <div
+                        id={SITE_HEADER_BAR_ID}
+                        className="md:flex md:items-center w-full"
+                    >
 
                     {/* ##################################################### */}
                     {/* # 네비게이션 로고/텍스트 + 네비게이션 햄버거 아이콘 # */}
                     {/* ##################################################### */}
-                    <div className={`flex items-center justify-between ${isScrolled ? "py-1" : "py-2"}`}>
+                    <div className={`flex items-center justify-between w-full ${isScrolled ? "py-1" : "py-2"}`}>
                         <Link href="/" className="items-center flex min-w-[250px]">
                             <div className={` ${isScrolled ? "h-[50px] w-[50px]" : "h-[60px] w-[60px] lg:h-[70px] lg:w-[70px]"}`}>
                                 <Image src={`${isScrolled ? "/images/logo/GLI_logo_black.png" : "/images/logo/GLI_logo_green.png"}`} alt="logo" width="96" height="96"/>
@@ -254,10 +256,17 @@ export default function Header() {
                         </ul>
                     </div>
 
+                    </div>
+
                     {/* ######################################### */}
-                    {/* # MOBILE: 네비게이션 메뉴 (menu 클릭시)    # */}
+                    {/* # MOBILE: 오버레이 메뉴 (본문·배너 높이 밀지 않음) # */}
                     {/* ######################################### */}
-                    <div className={`block md:hidden text-[15.5px] ${menu ? "animate-drop-in mb-2" : ""}`}>
+                    <div
+                        className={`md:hidden fixed inset-x-0 z-[70] text-[15.5px] bg-white ${
+                            menu ? "shadow-xl border-b border-gray-200 animate-drop-in-25" : ""
+                        }`}
+                        style={{ top: "var(--header-height, 76px)" }}
+                    >
                         {menu && (
                             // 모바일 네비게이션
                             // items-center space-y-6

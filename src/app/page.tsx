@@ -24,6 +24,7 @@ export default async function Page() {
     ]);
 
     const paperNewsAlerts = getNewsMarkupAlerts(newsItems, {
+        // kinds: ["paper", "project"],
         kinds: ["paper"],
         max: 4,
     });
