@@ -278,7 +278,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
             {/* Detailed Profile (popup) - URL로 접근한 경우 모바일에서는 바로 열지 않음 -> {selectedCard && !init && (  */}
             {/* Detailed Profile (popup) - 모바일에서 팝업으로 표시                    -> {selectedCard && (           */}
             {selectedCard && isCardView && !init && (
-                <div onClick={handleBackdropClick} className="fixed inset-0 z-50 bg-black bg-opacity-75 flex items-center justify-center 1.5md:hidden">
+                <div onClick={handleBackdropClick} className="fixed inset-0 z-modal bg-black bg-opacity-75 flex items-center justify-center 1.5md:hidden">
                     <div className="max-h-[90vh] w-[90vw] max-w-[350px] flex flex-col items-center justify-center rounded-lg bg-white relative overflow-hidden">
                         {/* 닫기버튼 */}
                         <button
@@ -286,7 +286,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                 setSelectedCard(null);
                                 document.body.style.overflow = 'auto';
                             }}
-                            className="absolute top-1 right-1 z-[200]"
+                            className="absolute top-1 right-1 z-modal-controls"
                         >
                             <svg
                                 className="w-8 h-8"

@@ -108,14 +108,14 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
 
   const modal = (
     <div
-      className="fixed inset-0 z-50 bg-black bg-opacity-75 flex items-center justify-center px-2 py-2 md:p-4"
+      className="fixed inset-0 z-modal bg-black bg-opacity-75 flex items-center justify-center px-2 py-2 md:p-4"
       onClick={handleBackdropClick}
     >
       <div className="max-w-5xl w-full bg-white rounded-lg overflow-hidden relative">
         {/* 닫기버튼 */}
           <button
             onClick={onClose}
-            className="absolute top-2 right-2 md:top-3 md:right-3 z-[200]"
+            className="absolute top-2 right-2 md:top-3 md:right-3 z-modal-controls"
           >
             <svg
               className="w-8 h-8"
