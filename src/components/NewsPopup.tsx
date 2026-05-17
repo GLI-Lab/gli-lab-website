@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { IoClose } from "react-icons/io5";
+import { IoAlertCircleOutline, IoClose } from "react-icons/io5";
 import type { NewsPopupAlert } from "@/lib/newsPaper";
 
 const NEWS_POPUP_ROOT_ID = "news-popup-root";
@@ -81,13 +81,18 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
       role="region"
       aria-label="Latest news highlights"
     >
-      <div className="max-w-screen-xl mx-auto px-4 divide-y divide-brand-primary/20">
+      <div className="max-w-screen-xl mx-auto px-4 divide-y divide-brand-primary/25">
         {visibleAlerts.map((alert) => (
-          <div
-            key={alert.id}
-            className="flex items-center gap-3 py-3"
-          >
-            <div className="min-w-0 flex-1 space-y-0.5">
+            <div
+              key={alert.id}
+              className="flex items-start gap-3 py-3"
+            >
+              <IoAlertCircleOutline
+                className="hidden md:block mt-0.5 shrink-0 text-brand-primary"
+                size={22}
+                aria-hidden
+              />
+              <div className="min-w-0 flex-1 space-y-0.5">
               {alert.headline && (
                 <p className="text-sm md:text-base font-medium text-gray-900 leading-snug">
                   {alert.headline}
@@ -115,20 +120,20 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
               </div>
             </div>
 
-            <div className="flex items-center gap-1 shrink-0">
+            <div className="flex items-center gap-0.5 shrink-0 self-center">
               <Link
                 href="/board/news"
-                className="text-sm text-gray-500 hover:text-brand-primary whitespace-nowrap transition-colors px-1"
+                className="text-sm text-gray-600 hover:text-brand-primary whitespace-nowrap transition-colors md:px-1 px-0.5"
               >
                 All news →
               </Link>
               <button
                 type="button"
                 onClick={() => dismiss(alert.id)}
-                className="p-1 rounded-md text-gray-400 hover:text-gray-700 hover:bg-white/60 transition-colors"
+                className="p-1 rounded-md mt-0.5 text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-colors"
                 aria-label="Dismiss"
               >
-                <IoClose size={20} />
+                <IoClose size={22} />
               </button>
             </div>
           </div>
