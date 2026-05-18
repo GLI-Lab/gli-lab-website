@@ -111,9 +111,9 @@ export default function Header() {
 
     const headerBackdropClass = isScrolled
         // ? "bg-[#f4f4f4] shadow-xl"
-        ? "bg-white shadow-xl"
+        ? "bg-white shadow-md"
         : menu
-          ? "bg-white shadow-xl md:shadow-none"
+          ? "bg-white shadow-md md:shadow-none"
           : "bg-white";
 
     return (
@@ -214,7 +214,7 @@ export default function Header() {
                                         <ul className={`absolute animate-fade-up w-auto min-w-[140px] lg:min-w-[160px] -mt-1 
                                                         ${idx == menus.length - 1 ? "-left-24" : "-left-6"}
                                                         border-t-4 border-green-900 divide-y divide-gray-200 shadow-xl z-[70]
-                                                        tracking-tight ${isScrolled ? "bg-[#f4f4f4] text-[15.5px]" : "bg-white text-[16px] lg:text-[17px]"}`}>
+                                                        tracking-tight ${isScrolled ? "bg-white text-[15.5px]" : "bg-white text-[16px] lg:text-[17px]"}`}>
                                             {item.subMenus.map((subItem, subIdx) => (
                                                 <li key={subIdx}
                                                     className="whitespace-nowrap hover:bg-gray-100 hover:text-green-900">

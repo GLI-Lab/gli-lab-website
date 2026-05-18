@@ -1,3 +1,12 @@
+- semester: "2026 Fall"
+  courses:
+    - title: "[TBD] Data Mining (데이터마이닝)"
+      university: "Konkuk University"
+    - title: "[TBD] Data Mining (데이터마이닝)"
+      university: "Konkuk University"
+    - title: "[TBD] Graduation Project 2 (졸업프로젝트2)"
+      university: "Konkuk University"
+
 - semester: "2026 Spring"
   courses:
     - title: "[0053] C Programming (C프로그래밍)"
