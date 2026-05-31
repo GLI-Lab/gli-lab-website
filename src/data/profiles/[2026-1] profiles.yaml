@@ -262,3 +262,25 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.12", end: "Current"}
     affiliation: null
+
+- id: "[2026.05] 김진겸"
+  role: {type: intern, title: Undergraduate Student (4학년 1학기)}
+  name: {en: Jin-Gyeom Kim, ko: 김진겸}
+  education: {bs: ["Computer Security Engineering, Myongji College"], ms: null, phd: null}
+  interests: [Graph ML/DL, Provenance Graph, LLM-based Anomaly Detection]
+  contacts: {emails: ["ronan@rutile.tech"], homepage: null, github: ["HUMBLE25"], linkedin: ["rutilegyeom"]}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2026.05", end: "Current"}
+    affiliation: null
+
+- id: "[2026.06] 권준희"
+  role: {type: intern, title: Undergraduate Student (3학년 1학기)}
+  name: {en: Junhui Kwon, ko: 권준희}
+  education: {bs: ["Computer Science & Engineering, Konkuk University"], ms: null, phd: null}
+  interests: [Graph ML/DL]
+  contacts: {emails: ["juni9565@konkuk.ac.kr"], homepage: null, github: ["galgalrobot"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2026.06", end: "Current"}
+    affiliation: null
