@@ -5,9 +5,10 @@ import { Separator } from "@/components/ui/separator"
 import { ProfileDetailProps, type StudyData, type PaperData, type PatentData } from '@/data/loaders/types';
 import Link from 'next/link';
 import { titleToId } from '@/lib/utils';
+import { ProfileProjectActivities } from './ProfileProjectActivities';
 
 export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
-    const {id, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], isAlumniPage = false } = props;
+    const {id, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false } = props;
     const [displayedStudiesCount, setDisplayedStudiesCount] = useState(5);
     const [displayedPapersCount, setDisplayedPapersCount] = useState(5);
     const [displayedPatentsCount, setDisplayedPatentsCount] = useState(5);
@@ -241,9 +242,9 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                                         {paper.status && (
                                                             <span>
                                                                 , <span className={`inline-block text-[13px] px-2 py-1/2 rounded-full ${
-                                                                    paper.status === 'Accepted' ? 'bg-green-100 text-green-800' :
-                                                                    paper.status === 'In Progress' ? 'bg-blue-100 text-blue-800' :
-                                                                    paper.status === 'Under Review' ? 'bg-yellow-100 text-yellow-800' :
+                                                                    paper.status === 'Accepted' ? 'bg-brand-primary/10 text-brand-primary' :
+                                                                    paper.status === 'In Progress' ? 'bg-blue-500/10 text-blue-600' :
+                                                                    paper.status === 'Under Review' ? 'bg-yellow-500/10 text-yellow-700' :
                                                                     'bg-brand-primary/10 text-brand-primary'
                                                                 }`}>
                                                                     {paper.status}
@@ -468,7 +469,10 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                     </div>
                 )}
                 <div className="my-2"></div>
-                
+
+                {/* Activities (Projects) */}
+                <ProfileProjectActivities projects={projects} profileId={id} />
+
                 {/* Activities (Study) */}
                 {filteredStudies.length > 0 && (
                     <div className={`grid gap-x-4 gap-y-1`}>
@@ -499,7 +503,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                         </div>
                                         <div></div>
                                         <div className="flex items-center gap-1 flex-shrink-0 mt-0.5">
-                                            <span className="text-[12.5px] text-text-accent">
+                                            <span className="text-[13px] md:text-[14px] text-text-secondary">
                                                 {formatDate(study.start_date)}
                                                 {study.end_date ? ` ~ ${formatDate(study.end_date)}` : ' ~ '}
                                             </span>

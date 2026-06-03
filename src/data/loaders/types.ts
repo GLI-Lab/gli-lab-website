@@ -76,6 +76,7 @@ export interface ProfileDetailProps extends ProfileData {
   studies?: StudyData[];
   papers?: PaperData[];
   patents?: PatentData[];
+  projects?: ProjectData[];
   isAlumniPage?: boolean;
 }
 
@@ -207,6 +208,20 @@ export interface ProjectMain {
   program: string | null;
 }
 
+/** 프로젝트 참여 인원 (profiles.yaml / profiles-alumni.yaml의 id와 연결) */
+export interface ProjectMember {
+  ID?: string;
+  name: string;
+}
+
+/** 실무책임자: since(시작)와 until(끝). until이 있으면 '이전' 실무책임자 */
+export interface ProjectManager extends ProjectMember {
+  /** 실무책임자를 맡기 시작한 시점 (YYYY-MM) */
+  since?: string;
+  /** 실무책임자를 끝낸 시점 (YYYY-MM). 값이 있으면 '실무책임자 (이전)'로 표시 */
+  until?: string;
+}
+
 export interface ProjectYAML {
   title: string;
   type: string;
@@ -217,6 +232,11 @@ export interface ProjectYAML {
   end_date: string;
   /** 기관 로고: url 필수, width(px) 선택 */
   image?: { url: string; width?: number } | string | null;
+  /** 실무책임자 목록. until이 있으면 '이전', 없으면 '현재'. 단수 manager도 허용 */
+  managers?: ProjectManager[] | null;
+  manager?: ProjectManager | null;
+  /** 참여자 (참여기간 구분 없이 누적) */
+  participants?: ProjectMember[] | null;
 }
 
 export interface ProjectData {
@@ -228,6 +248,9 @@ export interface ProjectData {
   start_date: string;
   end_date: string;
   image: ProjectImage | null;
+  /** 실무책임자 목록 (YAML 순서 유지). until 유무로 현재/이전 구분 */
+  managers: ProjectManager[];
+  participants: ProjectMember[];
 }
 
  

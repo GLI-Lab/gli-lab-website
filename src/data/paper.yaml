@@ -166,6 +166,55 @@
 ########################################################################################
 # Accepted
 ########################################################################################
+# - title: "Graph Pattern Machine-based Node Anomaly Detection via Substructure Reconstruction (그래프 패턴 머신 기반 서브구조 복원을 이용한 그래프 노드 이상 탐지)"
+#   filter: {"type": "conference", "scope": "domestic"}
+#   status: "Accepted"
+#   year: 2026
+#   venue: { name: "Korea Computer Congress", acronym: "KCC" }
+#   links: 
+#     Link: null
+#     Code: null
+#   notes: {"normal": "", "important": ""}
+#   authors:
+#     - { name: "Minjung Kim", position : first }
+#     - { name: "Xiongnan Jin", position : co }
+#     - { name: "Jooik Jung", position : co }
+#     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position : co }
+#     - { name: "Kyong-Ho Lee", position : co, isCorresponding : true }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 - title: "Disentangled Global-Local Representations via Relation-Entity Pair Encoding for Hyper-Relational KGs"
   filter: {"type": "conference", "scope": "international"}
   status: "Accepted"
@@ -615,7 +664,7 @@
     - { name : "Jooik Jung", position : co }
     - { name : "Kyong-Ho Lee", position : co, isCorresponding : true }
 
-- title: "Web Service Selection based on a Probabilistic QoS Model"
+- title: "Web Service Selection based on a Probabilistic QoS Model (확률적 QoS 모델 기반 웹서비스 선택 방법)"
   filter: {"type": "conference", "scope": "domestic"}
   status: "Accepted"
   year: 2015

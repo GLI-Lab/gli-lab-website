@@ -4,7 +4,7 @@ import Image from 'next/image';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ProfileItemProps } from '@/data/loaders/types';
 import { ProfileListDetail } from './ProfileListDetail';
-import { type StudyData, type PaperData, type PatentData } from '@/data/loaders/types';
+import { type StudyData, type PaperData, type PatentData, type ProjectData } from '@/data/loaders/types';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
 
@@ -12,10 +12,11 @@ interface ProfileListItemProps extends ProfileItemProps {
     studies?: StudyData[];
     papers?: PaperData[];
     patents?: PatentData[];
+    projects?: ProjectData[];
 }
 
 export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
-    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage, studies = [], papers = [], patents = [], bs, ms, phd, interest, homepage, github, linkedin, scholar, cv, title } = props;
+    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage, studies = [], papers = [], patents = [], projects = [], bs, ms, phd, interest, homepage, github, linkedin, scholar, cv, title } = props;
     const [isExpanded, setIsExpanded] = useState(false);
     const [copied, setCopied] = useState(false);
     
@@ -233,7 +234,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                             </>
                         )}
                         <span className={`font-medium`}>E-mail</span>
-                        <span className="font-normal text-gray-600">{email.length > 0 && email[0].trim() !== '' ? email[0] : 'N/A'}</span>
+                        <span className="font-normal text-gray-600 min-w-0 break-all">{email.length > 0 && email[0].trim() !== '' ? email[0] : 'N/A'}</span>
                     </div>
                     
                     {/* Research Interests */}
@@ -390,6 +391,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                         studies={studies} 
                         papers={papers} 
                         patents={patents}
+                        projects={projects}
                         isAlumniPage={isAlumniPage}
                     />
                 </div>
