@@ -61,7 +61,7 @@ export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
                         </>
                     )}
                     <span className={`${isSelected ? 'text-interactive-primary 1.5md:text-white' : 'group-hover:text-interactive-primary'}`}>E-mail</span>
-                    <span>{email.length > 0 && email[0].trim() !== '' ? email[0] : 'N/A'}</span>
+                    <span className="min-w-0 truncate" title={email.length > 0 && email[0].trim() !== '' ? email[0] : undefined}>{email.length > 0 && email[0].trim() !== '' ? email[0] : 'N/A'}</span>
                 </div>
             </div>
         </div>

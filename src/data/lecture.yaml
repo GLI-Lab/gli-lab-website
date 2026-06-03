@@ -1,10 +1,14 @@
 - semester: "2026 Fall"
   courses:
-    - title: "[TBD] Data Mining (데이터마이닝)"
+    - title: "[3148] Data Mining (데이터마이닝)"
       university: "Konkuk University"
-    - title: "[TBD] Data Mining (데이터마이닝)"
+    - title: "[3149] Data Mining (데이터마이닝)"
       university: "Konkuk University"
-    - title: "[TBD] Graduation Project 2 (졸업프로젝트2)"
+    - title: "[3186] Graduation Project 2 (졸업프로젝트2)"
+      university: "Konkuk University"
+    - title: "[TBD] 석사논문연구법"
+      university: "Konkuk University"
+    - title: "[TBD] 산학연계 프로젝트1"
       university: "Konkuk University"
 
 - semester: "2026 Spring"

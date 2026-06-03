@@ -1,6 +1,22 @@
 # YAML에서 tab은 금지. 반드시 space 2개 사용
 # Our team has been supported by [parent.funder] · [main.funder], as part of [main.program] under [parent.program] 👏
 
+# 연구책임자: Principal Investigator (PI)
+# 공동연구자/공동연구원: Co-Investigator (Co-I)
+# (공동연구기관의) 연구책임자: Co-Principal Investigator (Co-PI)
+# 참여연구자/참여연구원: Participating Researcher
+
+# managers: 각 실무책임자에 since(시작)/until(끝)을 적음 (YYYY-MM)
+#   - until 없음  -> 현재 실무책임자 (since ~ Current, 과제 종료 시 종료월로 자동 표시)
+#   - until 있음  -> 실무책임자 (이전)  (since ~ until)
+#   - 현재/이전 모두 여러 명이면 세로로 나열됨
+#   - { ID: "[2025.04] 구본유", name: Bonyou Koo, since: 2026-04 }                 # 현재
+#   - { ID: "[2024.06] 서지명", name: Jimyeung Seo, since: 2026-04 }               # 현재 (여러 명 가능)
+#   - { ID: "[2024.11] 이동천", name: Dong-Cheon Lee, since: 2025-09, until: 2026-04 }  # 이전
+# participants: 매니저가 아닌 추가 참여자만 적으면 됨
+#   (실무책임자는 '참여자' 명단에 자동 포함되어 함께 표시됨. 중복 입력 불필요)
+#   - { ID: "[2024.11] 이동천", name: Dong-Cheon Lee }
+
 
 ########################################################################################
 # 2026
@@ -13,6 +29,8 @@
   start_date: 2026-03
   end_date: 2031-02
   image: { url: /images/projects/kiat.png, width: 175px }
+  managers: []
+  participants: []
 
 - title: AI 관련 학과 지원 / AI 분야 조기취업형 계약학과 지원
   type: 인력양성
@@ -21,7 +39,9 @@
   main: { funder: null, program: null }
   start_date: 2026-03
   end_date: 2030-02
-  image: { url: /images/projects/nrf.png, width: 200px }
+  image: { url: /images/projects/nrf.png, width: 220px }
+  managers: []
+  participants: []
 
 - title: 우주항공 제조설비의 멀티모달 이상탐지와 실시간 생성형 AI 보고체계 기반의 AX전환 실증
   type: 집단연구
@@ -31,6 +51,12 @@
   start_date: 2026-01
   end_date: 2026-11
   image: { url: /images/projects/gntp.png, width: 225px }
+  managers:
+    - { ID: "[2024.11] 이동천", name: Dongcheon Lee (이동천), since: 2026-01 }
+  participants:
+    - { ID: "[2025.07] 이동현", name: Donghyun Lee (이동현)}
+    - { ID: "[2025.07] 김세영", name: Seyeong Kim (김세영)}
+    - { ID: "[2025.11] 손원희", name: Wonhee Son (손원희)}
 
 ########################################################################################
 # 2025
@@ -42,7 +68,10 @@
   main: { funder: LIG넥스원, program: null }  # 산업체·위탁
   start_date: 2025-10
   end_date: 2027-05
-  image: { url: /images/projects/nex1.png, width: 140px }
+  image: { url: /images/projects/nex1.png, width: 160px }
+  managers:
+    - { ID: "[2025.04] 구본유", name: Bonyou Koo (구본유), since: 2025-10 }
+  participants: []
 
 - title: 추천시스템 모델 설계 자문 및 사례연구
   type: 산업체·위탁
@@ -51,7 +80,10 @@
   main: { funder: 한화시스템, program: null }  # 산업체·위탁
   start_date: 2025-09
   end_date: 2027-08
-  image: { url: /images/projects/hanwha.png, width: 190px }
+  image: { url: /images/projects/hanwha.png, width: 210px }
+  managers:
+    - { ID: "[2024.06] 서지명", name: Jimyeung Seo (서지명), since: 2025-09 }
+  participants: []
 
 - title: 실전 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구
   type: 인력양성
@@ -61,6 +93,8 @@
   start_date: 2025-08
   end_date: 2026-07
   image: { url: /images/projects/konkuk.jpg, width: 190px }
+  managers: []
+  participants: []
 
 - title: LLM 기반 추천을 위한 그래프 기반 컨텍스트 추출 에이전트
   type: 개인연구
@@ -70,6 +104,10 @@
   start_date: 2025-05
   end_date: 2025-11
   image: { url: /images/projects/coss.png, width: 175px }
+  managers:
+    - { ID: "[2024.07] 정우석", name: Wooseok Jeong (정우석), since: 2025-05 }
+    - { ID: "[2024.10] 김영진", name: Young-Jin Kim (김영진), since: 2025-05 }
+  participants: []
 
 ########################################################################################
 # 2024
@@ -81,7 +119,9 @@
   main: { funder: 한국연구재단, program: 중견연구(유형1) }
   start_date: 2024-09
   end_date: 2028-08
-  image: { url: /images/projects/nrf.png, width: 200px }
+  image: { url: /images/projects/nrf.png, width: 220px }
+  managers: []
+  participants: []
 
 - title: 논리적 패턴을 반영할 수 있는 지식그래프 표현학습
   type: 개인연구
@@ -91,6 +131,8 @@
   start_date: 2024-04
   end_date: 2025-03
   image: { url: /images/projects/konkuk.jpg, width: 190px }
+  managers: []
+  participants: []
 
 - title: 메타버스융합대학원(건국대학교)
   type: 인력양성
@@ -100,6 +142,8 @@
   start_date: 2024-03
   end_date: 2028-12
   image: { url: /images/projects/iitp.png, width: 140px }
+  managers: []
+  participants: []
 
 - title: 공학교육혁신사업단
   type: 인력양성
@@ -109,6 +153,8 @@
   start_date: 2022-03
   end_date: 2028-02
   image: { url: /images/projects/kiat.png, width: 175px }
+  managers: []
+  participants: []
 
 - title: 실감미디어 혁신융합대학 사업단
   type: 인력양성
@@ -117,4 +163,6 @@
   main: { funder: 한국연구재단, program: 첨단분야 혁신융합대학사업(실감미디어) }
   start_date: 2021-05
   end_date: 2027-02
-  image: { url: /images/projects/nrf.png, width: 200px }
+  image: { url: /images/projects/nrf.png, width: 220px }
+  managers: []
+  participants: []

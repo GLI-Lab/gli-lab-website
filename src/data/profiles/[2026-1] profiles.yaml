@@ -133,7 +133,7 @@
 ###############################################
 - id: "[2024.07] 지상준"
   role: {type: intern, title: Undergraduate Student (4학년 1학기)}
-  name: {en: Sang-Jun Ji, ko: 지상준}
+  name: {en: Sangjun Ji, ko: 지상준}
   education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
   interests: [Graph ML/DL, Hyper-Relational KG, Rule-aware LLM]
   contacts: {emails: ["wltkdwns0220@naver.com", "wltkdwns0220@konkuk.ac.kr"], homepage: ["approxy02.github.io/homepage/"], github: ["Approxy02"], linkedin: null}
