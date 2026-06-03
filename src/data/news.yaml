@@ -7,6 +7,14 @@
 ########################################################################################
 # 2026
 ########################################################################################
+- date: "2026-06-01"
+  type: Member
+  content: "Welcome to GLI lab, <profile=[2026.06] 권준희>Junhui Kwon (권준희)</>!"
+
+- date: "2026-05-01"
+  type: Member
+  content: "Welcome to GLI lab, <profile=[2026.05] 김진겸>Jin-Gyeom Kim (김진겸)</>!"
+
 - date: "2026-05-17"
   type: Publication
   selected: true

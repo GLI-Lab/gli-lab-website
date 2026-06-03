@@ -10,8 +10,31 @@ import Link from 'next/link';
 import { titleToId } from '@/lib/utils';
 import { ProfileProjectActivities } from './ProfileProjectActivities';
 
-export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
-    const {id, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false } = props;
+function WrappedContactEntries({
+    items,
+    renderItem,
+}: {
+    items: string[];
+    renderItem: (item: string, index: number) => React.ReactNode;
+}) {
+    const filtered = items.filter((item) => typeof item === 'string' && item.trim() !== '');
+    if (filtered.length === 0) {
+        return <span className="text-[15.5px] md:text-[16.5px]">-</span>;
+    }
+    return (
+        <div className="min-w-0 flex flex-wrap items-baseline gap-x-1 gap-y-1">
+            {filtered.map((item, index) => (
+                <span key={index} className="max-w-full break-words">
+                    {renderItem(item, index)}
+                    {index < filtered.length - 1 ? ',' : ''}
+                </span>
+            ))}
+        </div>
+    );
+}
+
+export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolean }> = (props) => {
+    const {id, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false, isModal = false } = props;
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30}, [Fade()]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [displayedStudiesCount, setDisplayedStudiesCount] = useState(5);
@@ -68,10 +91,12 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
             return (
                 <React.Fragment key={idx}>
                     <span className={`text-text-accent font-medium${groupTopMargin}`}>{idx === 0 ? label : ''}</span>
-                    <span className={`text-[15.5px] md:text-[16.5px] leading-snug pt-0.5${groupTopMargin}`}>
-                        {before}
+                    <span className={`min-w-0 flex flex-wrap items-baseline gap-x-1 text-[15.5px] md:text-[16.5px] leading-snug pt-0.5${groupTopMargin}`}>
+                        <span className="min-w-0">{after ? `${before},` : before}</span>
                         {after && (
-                            <span className="block text-text-secondary italic text-[14.5px] md:text-[15.5px] mt-0.5">{after}</span>
+                            <span className="max-w-full text-text-secondary italic text-[14.5px] md:text-[15.5px] break-words">
+                                {after}
+                            </span>
                         )}
                     </span>
                 </React.Fragment>
@@ -80,8 +105,8 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
     };
 
     return (
-        <div className=" bg-white flex flex-col items-center justify-center">
-            <div className="embla">
+        <div className={`bg-white flex flex-col w-full ${isModal ? 'items-center' : 'items-start'}`}>
+            <div className="embla w-[280px] 1.5md:w-[320px] shrink-0">
                 <div className="overflow-hidden" ref={emblaRef}>
                     <div className="flex w-[280px] h-[330px] 1.5md:w-[320px] 1.5md:h-[400px]">
                         {photo.map((src, index) => (
@@ -106,7 +131,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                     ))}
                 </div>
             </div>
-            <div className="w-full pt-4 text-[16px] md:text-[17px]">
+            <div className="w-full min-w-0 pt-4 text-[16px] md:text-[17px]">
                 <div className="mb-6">
                     <div className="flex items-center gap-1.5">
                         <h1 className="text-[24px] md:text-[26px] font-medium leading-none tracking-tight">{name_en}</h1>
@@ -219,7 +244,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                 <Separator className="my-3"/>
 
                 {/* Education */}
-                <div className={`grid grid-cols-[auto,1fr] gap-x-4 items-start`}>
+                <div className={`grid grid-cols-[auto,minmax(0,1fr)] gap-x-4 items-start`}>
                     {renderEducation('B.S.', bs)}
                     {renderEducation('M.S.', ms, true)}
                     {renderEducation('Ph.D.', phd, true)}
@@ -227,7 +252,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                 <Separator className="my-3"/>
 
                 {/* Contact */}
-                <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 items-start`}>
+                <div className={`grid grid-cols-[auto,minmax(0,1fr)] gap-x-4 gap-y-1 items-start`}>
                     <span className={`text-text-accent font-medium`}>CV</span>
                     <div className="flex flex-col">
                         {cv ? (
@@ -240,21 +265,22 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                         )}
                     </div>
                     <span className={`text-text-accent font-medium`}>Email</span>
-                    <div className="flex flex-col">
-                        {email.length > 0 && email.some(e => e.trim() !== '') ? (
-                            email.filter(e => e.trim() !== '').map((src, index) => (
-                                <a href={`mailto:${src}`} key={index}
-                                   className="hover:text-interactive-hover hover:underline underline-offset-4 text-[15.5px] md:text-[16.5px]">{src}</a>
-                            ))
-                        ) : (
-                            <span className="text-[15.5px] md:text-[16.5px]">-</span>
+                    <WrappedContactEntries
+                        items={email}
+                        renderItem={(src) => (
+                            <a
+                                href={`mailto:${src}`}
+                                className="hover:text-interactive-hover hover:underline underline-offset-4 text-[15.5px] md:text-[16.5px]"
+                            >
+                                {src}
+                            </a>
                         )}
-                    </div>
+                    />
                 </div>
                 <Separator className="my-3"/>
 
                 {/* Links */}
-                <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 items-start`}>
+                <div className={`grid grid-cols-[auto,minmax(0,1fr)] gap-x-4 gap-y-1 items-start`}>
                     <span className={`text-text-accent font-medium`}>Home</span>
                     <div className="flex flex-col">
                         {homepage.length > 0 && homepage.some(h => h.trim() !== '') ? (
@@ -269,18 +295,20 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps> = (props) => {
                         )}
                     </div>
                     <span className={`text-text-accent font-medium`}>Github</span>
-                    <div className="flex flex-col">
-                        {github.length > 0 && github.some(g => g.trim() !== '') ? (
-                            github.filter(g => g.trim() !== '').map((src, index) => (
-                                <a href={src} rel="" title={src} key={index} target="_blank"
-                                   className="hover:text-interactive-hover hover:underline underline-offset-4 break-all text-[15.5px] md:text-[16.5px]">
-                                    {src.replace("https://github.com/", "")}
-                                </a>
-                            ))
-                        ) : (
-                            <span className="text-[15.5px] md:text-[16.5px]">-</span>
+                    <WrappedContactEntries
+                        items={github}
+                        renderItem={(src) => (
+                            <a
+                                href={src}
+                                rel=""
+                                title={src}
+                                target="_blank"
+                                className="hover:text-interactive-hover hover:underline underline-offset-4 text-[15.5px] md:text-[16.5px]"
+                            >
+                                {src.replace("https://github.com/", "")}
+                            </a>
                         )}
-                    </div>
+                    />
                     <span className={`text-text-accent font-medium`}>LinkedIn</span>
                     <div className="flex flex-col">
                         {linkedin.length > 0 && linkedin.some(l => l.trim() !== '') ? (
