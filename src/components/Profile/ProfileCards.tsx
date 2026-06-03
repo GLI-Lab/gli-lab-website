@@ -43,6 +43,25 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     // URL 파라미터 'view'의 값으로 첫 렌더링 시 뷰 모드를 설정하여
     // 클라이언트 사이드 렌더링 시 발생하는 화면 깜빡임(flicker) 방지
     const [isCardView, setIsCardView] = useState(initialIsCardView);
+
+    // 1.5xl(1440px) 이상에서 카드 뷰 컬럼 수 (1단/2단). hydration mismatch 방지를 위해 상수로 초기화 후 effect에서 복원
+    const [cardColumns, setCardColumns] = useState<1 | 2>(2);
+
+    useEffect(() => {
+        const stored = typeof window !== 'undefined' ? window.localStorage.getItem('profileCardColumns') : null;
+        if (stored === '1' || stored === '2') {
+            setCardColumns(Number(stored) as 1 | 2);
+        }
+    }, []);
+
+    const handleColumnsChange = useCallback((cols: 1 | 2) => {
+        setCardColumns(cols);
+        try {
+            window.localStorage.setItem('profileCardColumns', String(cols));
+        } catch {
+            // localStorage 사용 불가 환경 무시
+        }
+    }, []);
     
     // members 페이지에서는 default 프로필을 useMemo로 캐싱 (profiles가 변경될 때만 재계산)
     // alumni 페이지에서는 null로, 특정 프로필이 선택되지 않은 상태
@@ -219,9 +238,44 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     };
 
     return (
-        <div className="max-w-screen-1.5xl mx-auto px-3 sm:px-4 py-8 md:py-12 flex flex-row relative">
+        <div className="max-w-screen-1.5xl mx-auto px-3 sm:px-4 py-8 md:py-12 flex flex-row relative min-w-0 1.5md:gap-12 lg:gap-20">
             {/* View Toggle Button */}
-            <div className="absolute top-8 md:top-12 right-4 z-10">
+            <div className="absolute top-8 md:top-12 right-4 z-10 flex items-center gap-2">
+                {/* Column Toggle (1.5xl 이상, Card View일 때만) */}
+                {isCardView && (
+                    <div className="hidden 1.5xl:flex bg-white border border-gray-300 rounded-lg p-1">
+                        {/* 1 Column Button */}
+                        <button
+                            onClick={() => handleColumnsChange(1)}
+                            className={`flex items-center px-2.5 py-2 rounded-l-md transition-all duration-200 ${
+                                cardColumns === 1
+                                    ? 'bg-interactive-primary text-white shadow-md'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            }`}
+                            title="1 Column"
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <rect x="5" y="4" width="14" height="16" rx="1.5" strokeWidth={2} />
+                            </svg>
+                        </button>
+
+                        {/* 2 Column Button */}
+                        <button
+                            onClick={() => handleColumnsChange(2)}
+                            className={`flex items-center px-2.5 py-2 rounded-r-md transition-all duration-200 ${
+                                cardColumns === 2
+                                    ? 'bg-interactive-primary text-white shadow-md'
+                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                            }`}
+                            title="2 Columns"
+                        >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <rect x="3" y="4" width="7.5" height="16" rx="1.5" strokeWidth={2} />
+                                <rect x="13.5" y="4" width="7.5" height="16" rx="1.5" strokeWidth={2} />
+                            </svg>
+                        </button>
+                    </div>
+                )}
                 <div className="bg-white border border-gray-300 rounded-lg p-1 flex">
                     {/* Card View Button */}
                     <button
@@ -269,7 +323,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
 
             {/* Detailed Profile (left side) - Card View에서만 표시 */}
             {selectedCard && isCardView && (
-                <div className="hidden 1.5md:block 1.5md:w-[350px] 1.5md:mr-12 lg:mr-20 sticky self-start top-16 pt-4">
+                <div className={`hidden 1.5md:block sticky self-start top-16 pt-4 min-w-0 1.5md:flex-1 1.5md:basis-0 ${cardColumns === 2 ? '1.5xl:flex-none 1.5xl:w-[350px]' : '1.5xl:flex-1 1.5xl:basis-0'}`}>
                     <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pr-8 -mr-8 pb-20">
                         <ProfileCardDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} patents={selectedProfilePatents} projects={projects} isAlumniPage={isAlumniPage}/>
                     </div>
@@ -339,7 +393,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
             )}
 
             {/* Profile List */}
-            <div className="flex-1">
+            <div className={`flex-1 min-w-0 ${isCardView ? '1.5md:min-w-[430px]' : ''} ${isCardView && selectedCard ? '1.5md:flex-1 1.5md:basis-0' : ''} ${isCardView && selectedCard && cardColumns === 1 ? '1.5xl:flex-none 1.5xl:w-[600px]' : isCardView && selectedCard ? '1.5xl:flex-1 1.5xl:basis-0' : ''}`}>
                 {categories.map((category) => {
                     const categoryProfiles = profiles.filter(profile => profile.type === category.type);
                     
@@ -357,7 +411,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                             
                             {isCardView ? (
                                 // Card View
-                                <div className="grid grid-cols-1 1.5xl:grid-cols-2 gap-x-4 gap-y-3 sm:gap-y-4 mb-10">
+                                <div className={`grid grid-cols-1 ${cardColumns === 2 ? '1.5xl:grid-cols-[repeat(2,minmax(430px,1fr))]' : ''} gap-x-4 gap-y-3 sm:gap-y-4 mb-10`}>
                                     {categoryProfiles.map((profile, index) => (
                                         <div
                                             key={index}

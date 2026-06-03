@@ -11,7 +11,7 @@ export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
     return (
         <div
             onClick={onClick}
-            className={`border border-gray-300 px-1 py-1 sm:px-2 sm:py-2 flex gap-3 sm:gap-5 rounded-lg cursor-pointer group
+            className={`border border-gray-300 px-1 py-1 sm:px-2 sm:py-2 flex gap-3 sm:gap-5 rounded-lg cursor-pointer group w-full 1.5md:min-w-[430px]
                        ${isSelected ? 'bg-white border-interactive-primary shadow-lg 1.5md:bg-brand-primary/90 1.5md:text-white' : 'bg-white hover:border-interactive-primary hover:shadow-lg'}`}
         >
             <div className="w-[115px] h-[135px] sm:w-[140px] sm:h-[160px] lg:w-[150px] lg:h-[170px] relative flex-shrink-0">
