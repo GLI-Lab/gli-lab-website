@@ -365,7 +365,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                             className="overflow-y-auto w-[320px] max-h-[calc(90vh-20px)] relative overscroll-none scrollbar-hide pt-2 pb-10" 
                             onScroll={handleScroll}
                         >
-                            <ProfileCardDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} patents={selectedProfilePatents} projects={projects} isAlumniPage={isAlumniPage}/>
+                            <ProfileCardDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} patents={selectedProfilePatents} projects={projects} isAlumniPage={isAlumniPage} isModal />
                         </div>
 
                         {/* 스크롤 인디케이터 - 모달 전체 하단에 고정 */}
@@ -393,7 +393,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
             )}
 
             {/* Profile List */}
-            <div className={`flex-1 min-w-0 ${isCardView ? '1.5md:min-w-[430px]' : ''} ${isCardView && selectedCard ? '1.5md:flex-1 1.5md:basis-0' : ''} ${isCardView && selectedCard && cardColumns === 1 ? '1.5xl:flex-none 1.5xl:w-[600px]' : isCardView && selectedCard ? '1.5xl:flex-1 1.5xl:basis-0' : ''}`}>
+            <div className={`flex-1 min-w-0 ${isCardView ? '1.5md:min-w-[430px]' : ''} ${isCardView && selectedCard ? '1.5md:flex-1 1.5md:basis-0' : ''} ${isCardView && selectedCard && cardColumns === 1 ? '1.5xl:flex-none 1.5xl:w-[550px]' : isCardView && selectedCard ? '1.5xl:flex-1 1.5xl:basis-0' : ''}`}>
                 {categories.map((category) => {
                     const categoryProfiles = profiles.filter(profile => profile.type === category.type);
                     

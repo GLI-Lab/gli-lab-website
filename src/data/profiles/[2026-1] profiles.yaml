@@ -124,6 +124,28 @@
     joined: {start: "2026.04", end: "Current"}
     affiliation: null
     
+- id: "[2025.07] 김세영"
+  role: {type: ims, title: Undergraduate Student (4학년 1학기)}
+  name: {en: Seyeong Kim, ko: 김세영}
+  education: {bs: ["Computer Science & Engineering, Konkuk University", "Applied Statistics, Konkuk University"], ms: null, phd: null}
+  interests: [Graph ML/DL, Graph-based RAG, KG-Based Question Answering]
+  contacts: {emails: ["people7261@naver.com"], homepage: null, github: ["k-seyeong"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2025.07", end: "Current"}
+    affiliation: null
+
+- id: "[2025.07] 이동현"
+  role: {type: ims, title: Undergraduate Student (4학년 1학기)}
+  name: {en: Donghyun Lee, ko: 이동현}
+  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
+  interests: [Graph ML/DL, LLM-based Recommender Systems]
+  contacts: {emails: ["donghyunlee01@gmail.com"], homepage: null, github: ["DunkelH"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2025.07", end: "Current"}
+    affiliation: null
+
 ###############################################
 # Researchers
 ###############################################
@@ -164,34 +186,12 @@
     joined: {start: "2025.07", end: "Current"}
     affiliation: null
 
-- id: "[2025.07] 김세영"
-  role: {type: intern, title: Undergraduate Student (4학년 1학기)}
-  name: {en: Seyeong Kim, ko: 김세영}
-  education: {bs: ["Computer Science & Engineering, Konkuk University", "Applied Statistics, Konkuk University"], ms: null, phd: null}
-  interests: [Graph ML/DL, Graph-based RAG, KG-Based Question Answering]
-  contacts: {emails: ["people7261@naver.com"], homepage: null, github: ["k-seyeong"], linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
-    affiliation: null
-
 - id: "[2025.07] 이재진"
   role: {type: intern, title: Undergraduate Student (4학년 1학기)}
   name: {en: Jaejin Lee, ko: 이재진}
   education: {bs: ["Computer Science & Engineering, Konkuk University", "Applied Statistics, Konkuk University"], ms: null, phd: null}
   interests: [Graph ML/DL, Graph Anomaly Detection]
   contacts: {emails: ["y62945@naver.com"], homepage: null, github: ["jin1ee-02"], linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
-    affiliation: null
-
-- id: "[2025.07] 이동현"
-  role: {type: intern, title: Undergraduate Student (4학년 1학기)}
-  name: {en: Donghyun Lee, ko: 이동현}
-  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
-  interests: [Graph ML/DL, LLM-based Recommender Systems]
-  contacts: {emails: ["donghyunlee01@gmail.com"], homepage: null, github: ["DunkelH"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2025.07", end: "Current"}
@@ -278,7 +278,7 @@
   role: {type: intern, title: Undergraduate Student (3학년 1학기)}
   name: {en: Junhui Kwon, ko: 권준희}
   education: {bs: ["Computer Science & Engineering, Konkuk University"], ms: null, phd: null}
-  interests: [Graph ML/DL]
+  interests: [Graph ML/DL, ATT&CK Graph, LLM-based APT Detection]
   contacts: {emails: ["juni9565@konkuk.ac.kr"], homepage: null, github: ["galgalrobot"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
