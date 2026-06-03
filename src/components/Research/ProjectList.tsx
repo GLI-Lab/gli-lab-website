@@ -67,6 +67,29 @@ function renderMemberList(
   ));
 }
 
+const PARTICIPANTS_PER_ROW = 4;
+
+/** 참여자 명단: 한 줄에 최대 4명, 초과 시 다음 줄 */
+function renderParticipantList(
+  members: ProjectMember[],
+  memberIds: string[],
+  alumniIds: string[]
+) {
+  const rows: ProjectMember[][] = [];
+  for (let i = 0; i < members.length; i += PARTICIPANTS_PER_ROW) {
+    rows.push(members.slice(i, i + PARTICIPANTS_PER_ROW));
+  }
+  return (
+    <span className="flex flex-col gap-0.5">
+      {rows.map((row, rowIndex) => (
+        <span key={rowIndex}>
+          {renderMemberList(row, memberIds, alumniIds, `participant-${rowIndex}`)}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 /** 참여자 전체 누적 명단 = participants + managers (ID, 없으면 이름 기준 중복 제거) */
 function mergeParticipants(
   managers: ProjectMember[],
@@ -311,7 +334,7 @@ function ProjectCard({
               <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2">
                 <span className="font-semibold text-gray-700 shrink-0 min-w-[120px]">참여자</span>
                 <span className="text-gray-600">
-                  {renderMemberList(participantRoster, memberIds, alumniIds, "participant")}
+                  {renderParticipantList(participantRoster, memberIds, alumniIds)}
                 </span>
               </div>
             )}

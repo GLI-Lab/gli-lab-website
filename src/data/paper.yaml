@@ -74,7 +74,7 @@
     - { ID: "[2024.12] 최진호", name: "Jinho Choi", position: first }
     - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: co }
     - { ID: "[2025.07] 박상현", name: "Sang-Hyun Park", position: co }
-    - { ID: "[2025.03] 김상준", name: "Sang-June Kim", position: co }
+    - { ID: "[2025.03] 김상준", name: "Sangjune Kim", position: co }
     - { name: "Hyeongjun Yang", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
@@ -89,7 +89,7 @@
   notes: {"normal": "", "important": ""}
   authors:
     - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: first }
-    - { ID: "[2024.07] 지상준", name: "Sang-Jun Ji", position: co }
+    - { ID: "[2024.07] 지상준", name: "Sangjun Ji", position: co }
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: co }
     - { ID: "[2025.01] 구해윤", name: "Hae-Yoon Koo", position: co }
     - { name: "Xiongnan Jin", position: co }
@@ -157,7 +157,7 @@
   notes: {"normal": "", "important": ""}
   authors:
     - { name: "Wonseok Son", position: first }
-    - { ID: "[2025.01] 구해윤", name: "Haeyoon Koo", position: co }
+    - { ID: "[2025.01] 구해윤", name: "Haeyoon Koo", position: first }
     - { name: "Jeonghyeon Park", position: co }
     - { name: "Jungkyu Han", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co }
@@ -225,9 +225,9 @@
     Code: null
   notes: {"normal": "Research Track (Acceptance Rate: 18.5%)", "important": ""}
   authors:
-    - { ID: "[2024.07] 지상준", name: "Sang-Jun Ji", position: first }
-    - { ID: "[2025.03] 김상준", name: "Sang-June Kim", position: co }
-    - { ID: "[2024.06] 이영호", name: "Young-Ho Lee", position: co }
+    - { ID: "[2024.07] 지상준", name: "Sangjun Ji", position: first }
+    - { ID: "[2025.03] 김상준", name: "Sangjune Kim", position: co }
+    - { ID: "[2024.06] 이영호", name: "Youngho Lee", position: co }
     - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: co }
     - { name: "Xiongnan Jin", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }

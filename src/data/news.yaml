@@ -11,10 +11,6 @@
   type: Member
   content: "Welcome to GLI lab, <profile=[2026.06] 권준희>Junhui Kwon (권준희)</>!"
 
-- date: "2026-05-01"
-  type: Member
-  content: "Welcome to GLI lab, <profile=[2026.05] 김진겸>Jin-Gyeom Kim (김진겸)</>!"
-
 - date: "2026-05-17"
   type: Publication
   selected: true
@@ -22,6 +18,17 @@
     One paper has been accepted to the Research Track at <b>KDD 2026</b> (GLI Lab-led) ✏️
     - <paper>Disentangled Global-Local Representations via Relation-Entity Pair Encoding for Hyper-Relational KGs</>
     Sang-Jun Ji, Sang-June Kim, Young-Ho Lee, Bonyou Koo, Xiongnan Jin, Byungkook Oh
+
+- date: "2026-05-01"
+  type: Funding
+  selected: true
+  content: |
+    Our team has been supported by LG생산기술원 👏
+    <project>제조 도메인 지식그래프 구축 및 멀티턴 질의응답 기술 개발</>
+    
+- date: "2026-05-01"
+  type: Member
+  content: "Welcome to GLI lab, <profile=[2026.05] 김진겸>Jin-Gyeom Kim (김진겸)</>!"
 
 - date: "2026-04-30"
   type: General
@@ -55,7 +62,7 @@
 ########################################################################################
 - date: "2025-12-19"
   type: General
-  content: <profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>, <profile=[2024.12] 최진호>Jinho Choi (최진호)</>, <profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</>이 <b>카카오X한국정보과학회 AI 에이전트 경진대회</b>에서 우수상을 수상했습니다 👏
+  content: <profile=[2024.06] 서지명>Jimyeung Seo (서지명)</>, <profile=[2024.12] 최진호>Jinho Choi (최진호)</>, <profile=[2024.07] 지상준>Sangjun Ji (지상준)</>이 <b>카카오X한국정보과학회 AI 에이전트 경진대회</b>에서 우수상을 수상했습니다 👏
 
 - date: "2025-12-19"
   type: Member
@@ -186,7 +193,7 @@
 
 - date: "2025-03-01"
   type: Member
-  content: "Welcome to GLI lab, <profile=[2025.03] 조은영>Eun-Yeong Jo (조은영)</> and <profile=[2025.03] 김상준>Sang-June Kim (김상준)</>!"
+  content: "Welcome to GLI lab, <profile=[2025.03] 조은영>Eun-Yeong Jo (조은영)</> and <profile=[2025.03] 김상준>Sangjune Kim (김상준)</>!"
 
 - date: "2025-02-01"
   type: Publication
@@ -245,11 +252,11 @@
 
 - date: "2024-07-01"
   type: Member
-  content: "Welcome to GLI lab, <profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</>, <profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>, <profile=[2024.07] 지상준>Sang-Jun Ji (지상준)</> and <profile=[2024.07] 박지연>Ji-Yeon Park (박지연)</>!"
+  content: "Welcome to GLI lab, <profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</>, <profile=[2024.07] 정우석>Wooseok Jeong (정우석)</>, <profile=[2024.07] 지상준>Sangjun Ji (지상준)</> and <profile=[2024.07] 박지연>Ji-Yeon Park (박지연)</>!"
 
 - date: "2024-06-01"
   type: Member
-  content: "Welcome to GLI lab, <profile=[2024.06] 서지명>Jimyeung Seo (서지명)</> and <profile=[2024.06] 이영호>Young-Ho Lee (이영호)</>!"
+  content: "Welcome to GLI lab, <profile=[2024.06] 서지명>Jimyeung Seo (서지명)</> and <profile=[2024.06] 이영호>Youngho Lee (이영호)</>!"
 
 - date: "2024-04-01"
   type: Funding
