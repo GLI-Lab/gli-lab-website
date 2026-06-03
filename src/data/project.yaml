@@ -21,6 +21,24 @@
 ########################################################################################
 # 2026
 ########################################################################################
+- title: 제조 도메인 지식그래프 구축 및 멀티턴 질의응답 기술 개발
+  type: 산업체·위탁
+  role: 연구책임자
+  parent: { funder: null, program: null }
+  main: { funder: LG생산기술원, program: null }
+  start_date: 2026-05
+  end_date: 2026-12
+  image: { url: /images/projects/lg.png, width: 200px }
+  managers:
+    - { ID: "[2024.12] 최진호", name: Jinho Choi (최진호), since: 2026-05 }
+  participants:
+    - { ID: "[2024.06] 서지명", name: Jimyeung Seo (서지명) }
+    - { ID: "[2024.07] 백혜윤", name: Hye-Yoon Baek (백혜윤) }
+    - { ID: "[2025.01] 구해윤", name: Hae-Yoon Koo (구해윤) }
+    - { ID: "[2025.08] 김예은", name: Yeeun Kim (김예은) }
+    - { ID: "[2025.10] 박규민", name: Gyumin Park (박규민) }
+    - { ID: "[2025.11] 손원희", name: Wonhee Son (손원희) }
+
 - title: SDV기반AI융합기술전문인력양성
   type: 인력양성
   role: 참여연구자
@@ -54,9 +72,9 @@
   managers:
     - { ID: "[2024.11] 이동천", name: Dongcheon Lee (이동천), since: 2026-01 }
   participants:
-    - { ID: "[2025.07] 이동현", name: Donghyun Lee (이동현)}
-    - { ID: "[2025.07] 김세영", name: Seyeong Kim (김세영)}
-    - { ID: "[2025.11] 손원희", name: Wonhee Son (손원희)}
+    - { ID: "[2025.07] 이동현", name: Donghyun Lee (이동현) }
+    - { ID: "[2025.07] 김세영", name: Seyeong Kim (김세영) }
+    - { ID: "[2025.11] 손원희", name: Wonhee Son (손원희) }
 
 ########################################################################################
 # 2025
@@ -65,19 +83,19 @@
   type: 산업체·위탁
   role: 연구책임자
   parent: { funder: 국방과학연구소, program: 사이버 전장관리체계 핵심기술을 활용한 미래 지능형 함정 통합 사이버방호체계 기술 시범 }
-  main: { funder: LIG넥스원, program: null }  # 산업체·위탁
+  main: { funder: LIG넥스원, program: null }
   start_date: 2025-10
   end_date: 2027-05
   image: { url: /images/projects/nex1.png, width: 160px }
   managers:
     - { ID: "[2025.04] 구본유", name: Bonyou Koo (구본유), since: 2025-10 }
-  participants: []
+  participants: 
 
 - title: 추천시스템 모델 설계 자문 및 사례연구
   type: 산업체·위탁
   role: 연구책임자
   parent: { funder: 국방과학연구소, program: 위치기반 다자간 실시간 전장정보 공유 및 임무조정 기술 }
-  main: { funder: 한화시스템, program: null }  # 산업체·위탁
+  main: { funder: 한화시스템, program: null }
   start_date: 2025-09
   end_date: 2027-08
   image: { url: /images/projects/hanwha.png, width: 210px }
@@ -120,8 +138,14 @@
   start_date: 2024-09
   end_date: 2028-08
   image: { url: /images/projects/nrf.png, width: 220px }
-  managers: []
-  participants: []
+  managers:
+    - { ID: "[2024.07] 백혜윤", name: Hye-Yoon Baek (백혜윤), since: 2025-03 }
+  participants:
+    - { ID: "[2024.11] 이동천", name: Dongcheon Lee (이동천) }
+    - { ID: "[2024.06] 서지명", name: Jimyeung Seo (서지명) }
+    - { ID: "[2025.01] 구해윤", name: Hae-Yoon Koo (구해윤) }
+    - { ID: "[2025.04] 구본유", name: Bonyou Koo (구본유) }
+    - { ID: "[2024.12] 최진호", name: Jinho Choi (최진호) }
 
 - title: 논리적 패턴을 반영할 수 있는 지식그래프 표현학습
   type: 개인연구
