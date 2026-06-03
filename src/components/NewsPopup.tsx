@@ -125,11 +125,15 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
       role="region"
       aria-label="Latest news highlights"
     >
-      <div className="max-w-screen-xl mx-auto px-4 divide-y divide-brand-primary/25">
-        {visibleAlerts.map((alert) => (
+      {visibleAlerts.map((alert, index) => (
             <div
               key={alert.id}
-              className="flex items-start gap-3 py-3"
+              className="w-full transition-colors hover:bg-brand-primary/10"
+            >
+            <div
+              className={`max-w-screen-xl mx-auto px-4 flex items-start gap-3 py-3${
+                index > 0 ? " border-t border-brand-primary/25" : ""
+              }`}
             >
               <IoAlertCircleOutline
                 className="hidden md:block mt-0.5 shrink-0 text-brand-primary"
@@ -180,9 +184,9 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
                 <IoClose size={22} />
               </button>
             </div>
+            </div>
           </div>
         ))}
-      </div>
     </div>
   );
 
