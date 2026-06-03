@@ -333,15 +333,18 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
             {/* Detailed Profile (popup) - URL로 접근한 경우 모바일에서는 바로 열지 않음 -> {selectedCard && !init && (  */}
             {/* Detailed Profile (popup) - 모바일에서 팝업으로 표시                    -> {selectedCard && (           */}
             {selectedCard && isCardView && !init && (
-                <div onClick={handleBackdropClick} className="fixed inset-0 z-modal bg-black bg-opacity-75 flex items-center justify-center 1.5md:hidden">
-                    <div className="max-h-[90vh] w-[90vw] max-w-[350px] flex flex-col items-center justify-center rounded-lg bg-white relative overflow-hidden">
+                <div
+                    onClick={handleBackdropClick}
+                    className="fixed inset-0 z-modal bg-black bg-opacity-75 flex items-center justify-center px-2 py-2 md:p-4 1.5md:hidden"
+                >
+                    <div className="w-full max-w-5xl max-h-[95vh] bg-white rounded-lg overflow-hidden relative">
                         {/* 닫기버튼 */}
                         <button
                             onClick={() => {
                                 setSelectedCard(null);
                                 document.body.style.overflow = 'auto';
                             }}
-                            className="absolute top-1 right-1 z-modal-controls"
+                            className="absolute top-2 right-2 md:top-3 md:right-3 z-modal-controls"
                         >
                             <svg
                                 className="w-8 h-8"
@@ -362,7 +365,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                         {/* 콘텐츠 (주소창 고려해서 -20px) */}
                         <div 
                             ref={mobilePopupRef}
-                            className="overflow-y-auto w-[320px] max-h-[calc(90vh-20px)] relative overscroll-none scrollbar-hide pt-2 pb-10" 
+                            className="overflow-y-auto w-full max-h-[calc(95vh-20px)] relative overscroll-none scrollbar-hide pt-2 pb-10" 
                             onScroll={handleScroll}
                         >
                             <ProfileCardDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} patents={selectedProfilePatents} projects={projects} isAlumniPage={isAlumniPage} isModal />
@@ -372,13 +375,13 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                         <div className={`absolute bottom-0 left-0 right-0 transition-opacity duration-300 ease-in-out ${
                             !isAtBottom ? 'opacity-100' : 'opacity-0 pointer-events-none'
                         }`}>
-                            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white/95 via-white/60 to-white/0 pointer-events-none"></div>
-                            <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white/100 via-white/80 to-transparent pointer-events-none"></div>
-                            <div className={`absolute bottom-1.5 left-0 right-0 flex justify-center items-center pointer-events-none transform transition-all duration-300 ease-in-out ${
+                            <div className="absolute bottom-0 left-0 right-0 h-20 md:h-24 bg-gradient-to-t from-white/95 via-white/60 to-white/0 pointer-events-none"></div>
+                            <div className="absolute bottom-0 left-0 right-0 h-8 md:h-10 bg-gradient-to-t from-white/100 via-white/80 to-transparent pointer-events-none"></div>
+                            <div className={`absolute bottom-1.5 md:bottom-2 left-0 right-0 flex justify-center items-center pointer-events-none transform transition-all duration-300 ease-in-out ${
                                 !isAtBottom ? 'translate-y-0 opacity-100' : 'translate-y-1.5 opacity-0'
                             }`}>
                                 <svg
-                                    className="h-5 text-interactive-primary animate-bounce"
+                                    className="h-5 md:h-6 text-interactive-primary animate-bounce"
                                     fill="none"
                                     stroke="currentColor"
                                     viewBox="0 0 24 24"

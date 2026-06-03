@@ -131,7 +131,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                     ))}
                 </div>
             </div>
-            <div className="w-full min-w-0 pt-4 text-[16px] md:text-[17px]">
+            <div className={`w-full min-w-0 pt-4 text-[16px] md:text-[17px] ${isModal ? 'px-4 sm:px-6' : ''}`}>
                 <div className="mb-6">
                     <div className="flex items-center gap-1.5">
                         <h1 className="text-[24px] md:text-[26px] font-medium leading-none tracking-tight">{name_en}</h1>
