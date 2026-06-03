@@ -184,7 +184,7 @@ export default function Header() {
                                     {/* 메인 메뉴 */}
                                     {item.subMenus ? (
                                         <div 
-                                            className={`flex tracking-tight items-center transition-all duration-200 pb-5 mt-5 cursor-pointer ${
+                                            className={`flex tracking-tight items-center transition-colors duration-200 pb-5 mt-5 cursor-pointer ${
                                                 activeMenu === idx ? "text-green-900" : ""}
                                                 ${isScrolled ? "text-[16.5px]" : "text-[16.5px] 1.5md:text-[17px] lg:text-[18px]"} `}
                                             onClick={(e) => {
@@ -202,7 +202,7 @@ export default function Header() {
                                     ) : (
                                         <Link href={item.path}
                                               {...(isExternalUrl(item.path) && {target: "_blank", rel: "noopener noreferrer"})}
-                                              className={`flex tracking-tight items-center transition-all duration-200 pb-5 mt-5 ${
+                                              className={`flex tracking-tight items-center transition-colors duration-200 pb-5 mt-5 ${
                                                   activeMenu === idx ? "text-green-900" : ""}
                                                   ${isScrolled ? "text-[16.5px]" : "text-[16.5px] 1.5md:text-[17px] lg:text-[18px]"} `}>
                                             {item.title}
@@ -345,7 +345,7 @@ export default function Header() {
                     </div>
                 </div>
             </div>
-            <div className="transition-all duration-300" style={{ height: headerHeight }} />
+            <div aria-hidden style={{ height: headerHeight }} />
         </nav>
 )
 }
