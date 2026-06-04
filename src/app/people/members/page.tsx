@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { SubCover } from "@/components/Covers";
 import { ProfileCards } from "@/components/Profile";
 import { getProfiles } from "@/data/loaders/profileLoader";
+import { DEFAULT_MEMBER_PROFILE_YAML_ID, findProfileById, getProfileOgImagePath } from "@/data/loaders/profileSlug";
 import { getPapers } from "@/data/loaders/paperLoader";
 import { getStudies } from "@/data/loaders/studyLoader";
 import { getPatents } from "@/data/loaders/patentLoader";
@@ -18,9 +19,9 @@ export async function generateMetadata({ searchParams }: { searchParams: Promise
     const resolved = await searchParams;
     const id = resolved?.id as string | undefined;
     const view = (resolved?.view as string | undefined) ?? 'card';
-    const selected = id ? profiles.find((p: any) => p.id === id) : undefined;
-    // 정적 OG 이미지 URL 사용 (fallback: 기본 로고)
-    const ogImage = selected ? `/images/profiles-og/${selected.id}.webp` : '/images/logo/GLI_opengraph_2000x1050.jpg';
+    const selected = id ? findProfileById(profiles, id) : undefined;
+    // 정적 OG 이미지 URL 사용 (fallback: 기본 로고) — OG 파일명은 YAML id 기준
+    const ogImage = selected ? getProfileOgImagePath(selected.yamlId) : '/images/logo/GLI_opengraph_2000x1050.jpg';
 
     const asPath = id ? `/people/members?view=${view}&id=${id}` : '/people/members';
 
@@ -49,13 +50,13 @@ export default async function Page({ searchParams }: PageProps) {
     // 프로필 찾기
     let selectedProfile;
     if (selectedId) {
-        selectedProfile = profiles.find(profile => profile.id === selectedId);
+        selectedProfile = findProfileById(profiles, selectedId);
     }
     
     // 기본 프로필 설정 (selectedId가 없거나 프로필을 찾지 못한 경우)
     if (!selectedProfile) {
         console.log('selectedProfile not found', selectedId);
-        selectedProfile = profiles.find(profile => profile.id === "[2024.03] 오병국") || profiles[0];
+        selectedProfile = profiles.find(profile => profile.yamlId === DEFAULT_MEMBER_PROFILE_YAML_ID) || profiles[0];
     }
     
     return (

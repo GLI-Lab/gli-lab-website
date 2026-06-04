@@ -6,7 +6,8 @@ import { ProfileCardItem } from './ProfileCardItem';
 import { ProfileListItem } from './ProfileListItem';
 import { ProfileCardDetail } from './ProfileCardDetail';
 import { type ProfileData, type PaperData, type StudyData, type PatentData, type ProjectData } from '@/data/loaders/types';
-import { getPapersForProfile } from '@/data/loaders/utils';
+import { getPapersForProfile, getPatentsForProfile } from '@/data/loaders/utils';
+import { DEFAULT_MEMBER_PROFILE_YAML_ID } from '@/data/loaders/profileSlug';
 
 interface ProfileCardsProps {
     profiles: ProfileData[];
@@ -27,7 +28,7 @@ const filterStudiesForProfile = (allStudies: StudyData[], profile: ProfileData) 
             const profileMatch = participant.match(/^<profile=(.+?)>(.+?)<\/>$/);
             if (profileMatch) {
                 const [, id, ] = profileMatch;
-                return id === profile.id;
+                return id === profile.yamlId;
             }
         })
     );
@@ -66,7 +67,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     // members 페이지에서는 default 프로필을 useMemo로 캐싱 (profiles가 변경될 때만 재계산)
     // alumni 페이지에서는 null로, 특정 프로필이 선택되지 않은 상태
     const defaultProfile = useMemo(() => 
-        profiles.find(p => p.id === "[2024.03] 오병국"), 
+        profiles.find(p => p.yamlId === DEFAULT_MEMBER_PROFILE_YAML_ID), 
         [profiles]
     );
     
@@ -135,7 +136,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     // 자동 스크롤
     useEffect(() => {
         // console.log('----scroll useEffect:', selectedProfile, selectedCard, init);
-        if (selectedCard && (!init || selectedCard.id !== "[2024.03] 오병국")) {
+        if (selectedCard && (!init || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID)) {
             // console.log('scroll!!!');
             const timer = setTimeout(() => {
                 const profileElement = profileRefs.current[selectedCard.id];
@@ -170,19 +171,12 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
 
     // 현재 선택된 프로필과 관련된 논문 필터링  
     const selectedProfilePapers = useMemo(() => 
-        selectedCard ? getPapersForProfile(papers, selectedCard.id) : [],
+        selectedCard ? getPapersForProfile(papers, selectedCard.yamlId) : [],
         [papers, selectedCard]
     );
 
-    // 현재 선택된 프로필과 관련된 특허 필터링
-    const getPatentsForProfile = (allPatents: PatentData[], profileId: string) => {
-        return allPatents.filter(patent => 
-            patent.authors.some((author) => author.ID === profileId)
-        );
-    };
-
     const selectedProfilePatents = useMemo(() => 
-        selectedCard ? getPatentsForProfile(patents, selectedCard.id) : [],
+        selectedCard ? getPatentsForProfile(patents, selectedCard.yamlId) : [],
         [patents, selectedCard]
     );
 
@@ -422,7 +416,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                         >
                                             <ProfileCardItem
                                                 onClick={() => handleProfileClick(profile)}
-                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || (selectedCard && selectedCard.id !== "[2024.03] 오병국")))}
+                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID))}
                                                 isAlumniPage={isAlumniPage}
                                                 {...profile}
                                             />
@@ -440,7 +434,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                         >
                                             <ProfileListItem
                                                 onClick={() => handleProfileClick(profile)}
-                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || (selectedCard && selectedCard.id !== "[2024.03] 오병국")))}
+                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID))}
                                                 isAlumniPage={isAlumniPage}
                                                 studies={studies}
                                                 papers={papers}

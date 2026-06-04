@@ -11,8 +11,8 @@ export interface SeminarListProps {
   layout?: SeminarListLayout;
   count?: number | null;
   seminarItems?: SeminarData[];
-  profiles?: { id: string; name_ko?: string; name_en?: string }[];
-  alumniProfiles?: { id: string; name_ko?: string; name_en?: string }[];
+  profiles?: { id: string; yamlId?: string; name_ko?: string; name_en?: string }[];
+  alumniProfiles?: { id: string; yamlId?: string; name_ko?: string; name_en?: string }[];
 }
 
 function formatDate(dateString: string): string {
@@ -52,17 +52,16 @@ function isNewSeminar(item: SeminarData): boolean {
 
 function renderPresenter(
   presenter: { ID: string; name: string },
-  profiles: { id: string; name_ko?: string; name_en?: string }[] = [],
-  alumniProfiles: { id: string; name_ko?: string; name_en?: string }[] = []
+  profiles: { id: string; yamlId?: string; name_ko?: string; name_en?: string }[] = [],
+  alumniProfiles: { id: string; yamlId?: string; name_ko?: string; name_en?: string }[] = []
 ): ReactNode {
-  const profile = profiles.find((p) => p.id === presenter.ID) ?? alumniProfiles.find((p) => p.id === presenter.ID);
+  const profile = profiles.find((p) => p.yamlId === presenter.ID || p.id === presenter.ID) ?? alumniProfiles.find((p) => p.yamlId === presenter.ID || p.id === presenter.ID);
   if (profile) {
     const basePath = getProfileBasePath(presenter.ID, profiles, alumniProfiles);
     if (!basePath) return <span className="text-gray-700">{presenter.name}</span>;
-    const profileId = presenter.ID.replace(/\s/g, '%20');
     return (
       <Link
-        href={`${basePath}?id=${profileId}`}
+        href={`${basePath}?id=${profile.id}`}
         className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary transition-colors"
         title={profile.name_ko ?? profile.name_en}
       >

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getMetadata } from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
 import { getProjects } from "@/data/loaders/projectLoader";
-import { getMemberIds, getAlumniIds } from "@/data/loaders/profileLoader";
+import { getMemberIds, getAlumniIds, getProfileSlugByYamlId } from "@/data/loaders/profileLoader";
 import ProjectList from "@/components/Research/ProjectList";
 
 const TITLE = "Projects";
@@ -18,8 +18,11 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 export default async function Page() {
   const projects = await getProjects();
-  const memberIds = await getMemberIds();
-  const alumniIds = await getAlumniIds();
+  const [memberIds, alumniIds, profileSlugByYamlId] = await Promise.all([
+    getMemberIds(),
+    getAlumniIds(),
+    getProfileSlugByYamlId(),
+  ]);
 
   return (
     <>
@@ -32,6 +35,7 @@ export default async function Page() {
           projects={projects}
           memberIds={memberIds}
           alumniIds={alumniIds}
+          profileSlugByYamlId={profileSlugByYamlId}
           className="w-full"
         />
       </div>

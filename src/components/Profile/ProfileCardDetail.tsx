@@ -34,7 +34,7 @@ function WrappedContactEntries({
 }
 
 export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolean }> = (props) => {
-    const {id, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false, isModal = false } = props;
+    const {id, yamlId, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false, isModal = false } = props;
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30}, [Fade()]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [displayedStudiesCount, setDisplayedStudiesCount] = useState(5);
@@ -389,7 +389,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                                                             
                                                             return (
                                                                 <span key={idx}>
-                                                                    <span className={author.ID === id ? 'font-semibold text-black italic' : 'italic'}>
+                                                                    <span className={author.ID === yamlId ? 'font-semibold text-black italic' : 'italic'}>
                                                                         {author.name.replace(/\([^)]*\)/g, '').trim()}
                                                                         {isCorresponding && '*'}
                                                                         {isFirstAuthor && hasMultipleFirstAuthors && <sup> ‡</sup>}
@@ -526,7 +526,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                                                     <div className="text-[13px] md:text-[14px] text-text-secondary">
                                                         {patent.authors?.map((author, idx) => (
                                                             <span key={idx}>
-                                                                <span className={author.ID === id ? 'font-semibold text-black italic' : 'italic'}>
+                                                                <span className={author.ID === yamlId ? 'font-semibold text-black italic' : 'italic'}>
                                                                     {author.name}
                                                                 </span>
                                                                 {idx < patent.authors.length - 1 ? ', ' : ''}
@@ -600,7 +600,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                 <div className="my-2"></div>
 
                 {/* Activities (Projects) */}
-                <ProfileProjectActivities projects={projects} profileId={id || ''} />
+                <ProfileProjectActivities projects={projects} profileId={yamlId || ''} />
 
                 {/* Activities (Study) */}
                 {studies.length > 0 && (

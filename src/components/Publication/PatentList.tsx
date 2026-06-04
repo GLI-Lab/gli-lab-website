@@ -11,9 +11,10 @@ interface PatentListProps {
   patents: PatentData[];
   memberIds?: string[];
   alumniIds?: string[];
+  profileSlugByYamlId?: Record<string, string>;
 }
 
-export default function PatentList({ className = '', patents, memberIds = [], alumniIds = [] }: PatentListProps) {
+export default function PatentList({ className = '', patents, memberIds = [], alumniIds = [], profileSlugByYamlId = {} }: PatentListProps) {
   const [filterType, setFilterType] = useState<'all' | 'filed' | 'registered'>('all');
   const [filterScope, setFilterScope] = useState<'all' | 'international' | 'domestic'>('all');
   const [triggerAnimation, setTriggerAnimation] = useState(0);
@@ -62,7 +63,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
         <span key={i}>
           {hasValidId ? (
             <Link 
-              href={`${basePath}/?id=${encodeURIComponent(author.ID!)}`}
+              href={`${basePath}/?id=${profileSlugByYamlId[author.ID!] ?? author.ID}`}
               className="hover:text-brand-primary transition-colors"
             >
               {authorName}

@@ -2,6 +2,7 @@ import yaml from 'js-yaml';
 import path from 'path';
 import fs from 'fs/promises';
 import { ProfileYAML, ProfileData } from './types';
+import { generateProfileSlug } from './profileSlug';
 
 // YAML 파일을 읽어서 프로필 데이터 반환
 async function loadProfilesYAML(isAlumni: boolean = false): Promise<ProfileYAML[]> {
@@ -142,8 +143,12 @@ function transformProfile(yamlProfile: ProfileYAML, photosDict: Map<string, stri
   // Dictionary에서 CV 정보 조회
   const cvInfo = cvDict.get(yamlProfile.id || "");
 
+  const yamlId = yamlProfile.id || "";
+  const slug = generateProfileSlug(yamlId, yamlProfile.name.en || "");
+
   return {
-    id: yamlProfile.id || "",
+    id: slug,
+    yamlId,
     type: yamlProfile.role.type || "",
     title: yamlProfile.role.title || "",
     name_en: yamlProfile.name.en || "",
@@ -257,4 +262,14 @@ export async function getAlumniIds(): Promise<string[]> {
     console.error('Error loading alumni IDs:', error);
     return [];
   }
-} 
+}
+
+/** YAML id -> URL slug 맵 (논문·뉴스 등 외부 링크 생성용) */
+export async function getProfileSlugByYamlId(): Promise<Record<string, string>> {
+  const [members, alumni] = await Promise.all([getProfiles(), getAlumniProfiles()]);
+  const map: Record<string, string> = {};
+  for (const profile of [...members, ...alumni]) {
+    map[profile.yamlId] = profile.id;
+  }
+  return map;
+}

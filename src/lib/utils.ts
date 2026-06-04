@@ -7,10 +7,13 @@ export function titleToId(title: string): string {
     .replace(/^-|-$/g, '');                // 앞뒤 하이픈 제거
 }
 
-type ProfileIdSource = string | { id: string };
+type ProfileIdSource = string | { id: string; yamlId?: string };
 
 function hasProfileId(profiles: ProfileIdSource[], id: string): boolean {
-  return profiles.some((profile) => typeof profile === 'string' ? profile === id : profile.id === id);
+  return profiles.some((profile) => {
+    if (typeof profile === 'string') return profile === id;
+    return profile.id === id || profile.yamlId === id;
+  });
 }
 
 export function getProfileBasePath(

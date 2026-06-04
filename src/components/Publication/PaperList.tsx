@@ -12,9 +12,10 @@ interface PaperListProps {
   papers: PaperData[];
   memberIds?: string[];
   alumniIds?: string[];
+  profileSlugByYamlId?: Record<string, string>;
 }
 
-export default function PaperList({ className = '', papers, memberIds = [], alumniIds = [] }: PaperListProps) {
+export default function PaperList({ className = '', papers, memberIds = [], alumniIds = [], profileSlugByYamlId = {} }: PaperListProps) {
   const [showInProgress, setShowInProgress] = useState(false);
   const [showUnderReview, setShowUnderReview] = useState(true);
   const [isInProgressExpanded, setIsInProgressExpanded] = useState(false);
@@ -210,7 +211,7 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
         <span key={i}>
           {hasValidId ? (
             <Link 
-              href={`${basePath}/?id=${encodeURIComponent(author.ID!)}`}
+              href={`${basePath}/?id=${profileSlugByYamlId[author.ID!] ?? author.ID}`}
               className="hover:text-brand-primary transition-colors"
             >
               {authorName}

@@ -11,6 +11,7 @@ export interface NewsListProps {
   newsItems?: NewsData[]
   memberIds?: string[]
   alumniIds?: string[]
+  profileSlugByYamlId?: Record<string, string>
   filterType?: 'Member' | 'Publication' | 'Funding' | 'General' | 'All'
   showFilters?: boolean
 }
@@ -59,7 +60,7 @@ export function getAvailableYears(newsItems: NewsData[]): number[] {
 
 
 // 텍스트에서 프로필/논문/특허/프로젝트 마크업과 bold 태그를 찾아서 변환하는 함수
-function renderContentWithMarkup(content: string, memberIds: string[], alumniIds: string[], newsIndex: number, lineIndex: number): React.ReactNode {
+function renderContentWithMarkup(content: string, memberIds: string[], alumniIds: string[], profileSlugByYamlId: Record<string, string>, newsIndex: number, lineIndex: number): React.ReactNode {
   if (!content) return content;
   
   // <profile=ID>이름</>, <paper>제목</>, <patent>제목</>, <project>제목</>, <b>텍스트</b> 패턴을 찾는 정규식
@@ -153,7 +154,7 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
         elements.push(
           <Link 
             key={`${newsIndex}-${lineIndex}-profile-${profileId}`}
-            href={`${basePath}?id=${profileId.replace(/\s/g, '%20')}`}
+            href={`${basePath}?id=${profileSlugByYamlId[profileId] ?? profileId}`}
             className="group hover:text-brand-primary underline-offset-4 hover:underline hover:decoration-1.5"
             title={`View ${displayName}`}
           >
@@ -276,7 +277,7 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
   return <>{elements}</>;
 }
 
-export function NewsList({ className = '', count = null, newsItems = [], memberIds = [], alumniIds = [], filterType = 'All', showFilters = false }: NewsListProps) {
+export function NewsList({ className = '', count = null, newsItems = [], memberIds = [], alumniIds = [], profileSlugByYamlId = {}, filterType = 'All', showFilters = false }: NewsListProps) {
   const [selectedTypes, setSelectedTypes] = useState<Set<NewsType>>(new Set(['All']));
   const [selectedYears, setSelectedYears] = useState<Set<number>>(new Set());
   const [selectedYearPeriod, setSelectedYearPeriod] = useState<string>('');
@@ -531,7 +532,7 @@ export function NewsList({ className = '', count = null, newsItems = [], memberI
               </div>
               <div className={`${idx < latestNews.length - 1 ? 'border-b border-gray-200 pt-0.5 pb-2' : ''}`}>
                 <div className="text-[0.95em] sm:text-[1em]">
-                  {renderContentWithMarkup(title, memberIds, alumniIds, idx, 0)}
+                  {renderContentWithMarkup(title, memberIds, alumniIds, profileSlugByYamlId, idx, 0)}
                 </div>
                 {descriptionLines.length > 0 && (
                   <div className="text-[0.9em] italic text-gray-600 mt-1 space-y-1.5">
@@ -563,7 +564,7 @@ export function NewsList({ className = '', count = null, newsItems = [], memberI
                             <div key={lineIdx} className="flex items-start gap-2 not-italic font-medium">
                               -
                               <div className="flex-1">
-                                {renderContentWithMarkup(content, memberIds, alumniIds, idx, lineIdx + 1)}
+                                {renderContentWithMarkup(content, memberIds, alumniIds, profileSlugByYamlId, idx, lineIdx + 1)}
                               </div>
                             </div>
                           );
@@ -572,14 +573,14 @@ export function NewsList({ className = '', count = null, newsItems = [], memberI
                             // bullet group 내의 일반 텍스트 (같은 indentation)
                             currentBulletGroup.push(
                               <div key={lineIdx} className="ml-4 text-[0.95em]">
-                                {renderContentWithMarkup(content, memberIds, alumniIds, idx, lineIdx + 1)}
+                                {renderContentWithMarkup(content, memberIds, alumniIds, profileSlugByYamlId, idx, lineIdx + 1)}
                               </div>
                             );
                           } else {
                             // bullet group 밖의 일반 텍스트
                             elements.push(
                               <div key={lineIdx}>
-                                {renderContentWithMarkup(content, memberIds, alumniIds, idx, lineIdx + 1)}
+                                {renderContentWithMarkup(content, memberIds, alumniIds, profileSlugByYamlId, idx, lineIdx + 1)}
                               </div>
                             );
                           }
