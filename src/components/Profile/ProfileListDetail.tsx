@@ -8,7 +8,7 @@ import { titleToId } from '@/lib/utils';
 import { ProfileProjectActivities } from './ProfileProjectActivities';
 
 export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
-    const {id, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false } = props;
+    const {id, yamlId, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false } = props;
     const [displayedStudiesCount, setDisplayedStudiesCount] = useState(5);
     const [displayedPapersCount, setDisplayedPapersCount] = useState(5);
     const [displayedPatentsCount, setDisplayedPatentsCount] = useState(5);
@@ -46,7 +46,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                 const profileMatch = participant.match(/^<profile=(.+?)>(.+?)<\/>$/);
                 if (profileMatch) {
                     const [, profileId, ] = profileMatch;
-                    return profileId === profile.id;
+                    return profileId === profile.yamlId;
                 }
                 return false;
             })
@@ -69,8 +69,8 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
 
     // 현재 프로필과 관련된 스터디와 논문 필터링
     const filteredStudies = filterStudiesForProfile(studies, { id });
-    const filteredPapers = getPapersForProfile(papers, id);
-    const filteredPatents = getPatentsForProfile(patents, id);
+    const filteredPapers = getPapersForProfile(papers, yamlId);
+    const filteredPatents = getPatentsForProfile(patents, yamlId);
 
     // 날짜 포맷팅 함수
     const formatDate = (dateString: string): string => {
@@ -260,7 +260,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                                             
                                                             return (
                                                                 <span key={idx}>
-                                                                    <span className={author.ID === id ? 'font-semibold text-black italic' : 'italic'}>
+                                                                    <span className={author.ID === yamlId ? 'font-semibold text-black italic' : 'italic'}>
                                                                         {author.name.replace(/\([^)]*\)/g, '').trim()}
                                                                         {isCorresponding && '*'}
                                                                         {isFirstAuthor && hasMultipleFirstAuthors && <sup> ‡</sup>}
@@ -397,7 +397,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                                                     <div className="text-[13px] md:text-[14px] text-text-secondary">
                                                         {patent.authors?.map((author, idx) => (
                                                             <span key={idx}>
-                                                                <span className={author.ID === id ? 'font-semibold text-black italic' : 'italic'}>
+                                                                <span className={author.ID === yamlId ? 'font-semibold text-black italic' : 'italic'}>
                                                                     {author.name}
                                                                 </span>
                                                                 {idx < patent.authors.length - 1 ? ', ' : ''}
@@ -471,7 +471,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                 <div className="my-2"></div>
 
                 {/* Activities (Projects) */}
-                <ProfileProjectActivities projects={projects} profileId={id} />
+                <ProfileProjectActivities projects={projects} profileId={yamlId} />
 
                 {/* Activities (Study) */}
                 {filteredStudies.length > 0 && (

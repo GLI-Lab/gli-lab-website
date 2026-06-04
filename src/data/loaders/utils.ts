@@ -1,6 +1,6 @@
 // Utility functions for data processing (client-safe)
 
-import { AuthorData, PaperData } from './types';
+import { AuthorData, PaperData, PatentData } from './types';
 
 // Find user's position in a paper
 export function findUserPositionInPaper(authors: AuthorData[], profileId: string): string | null {
@@ -18,6 +18,12 @@ export function isUserCorrespondingAuthor(authors: AuthorData[], profileId: stri
 export function getPapersForProfile(papers: PaperData[], profileId: string): PaperData[] {
   return papers.filter(paper => 
     paper.authors.some(author => author.ID === profileId)
+  );
+}
+
+export function getPatentsForProfile(patents: PatentData[], profileId: string): PatentData[] {
+  return patents.filter(patent =>
+    patent.authors.some(author => author.ID === profileId)
   );
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useMemo, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { ProjectData, ProjectMember } from "@/data/loaders/types";
@@ -12,6 +13,7 @@ function renderMember(
   member: ProjectMember,
   memberIds: string[],
   alumniIds: string[],
+  profileSlugByYamlId: Record<string, string>,
   key: React.Key
 ) {
   const basePath = member.ID ? getProfileBasePath(member.ID, memberIds, alumniIds) : null;
@@ -22,7 +24,7 @@ function renderMember(
     return (
       <Link
         key={key}
-        href={`${basePath}?id=${member.ID!.replace(/\s/g, "%20")}`}
+        href={`${basePath}?id=${profileSlugByYamlId[member.ID!] ?? member.ID}`}
         className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
         title={`View ${member.name}`}
       >
@@ -57,11 +59,12 @@ function renderMemberList(
   members: ProjectMember[],
   memberIds: string[],
   alumniIds: string[],
+  profileSlugByYamlId: Record<string, string>,
   keyPrefix: string | number = ""
 ) {
   return members.map((member, i) => (
     <React.Fragment key={`${keyPrefix}-${i}`}>
-      {renderMember(member, memberIds, alumniIds, `${keyPrefix}-${i}`)}
+      {renderMember(member, memberIds, alumniIds, profileSlugByYamlId, `${keyPrefix}-${i}`)}
       {i < members.length - 1 && ", "}
     </React.Fragment>
   ));
@@ -73,7 +76,8 @@ const PARTICIPANTS_PER_ROW = 4;
 function renderParticipantList(
   members: ProjectMember[],
   memberIds: string[],
-  alumniIds: string[]
+  alumniIds: string[],
+  profileSlugByYamlId: Record<string, string>
 ) {
   const rows: ProjectMember[][] = [];
   for (let i = 0; i < members.length; i += PARTICIPANTS_PER_ROW) {
@@ -83,7 +87,7 @@ function renderParticipantList(
     <span className="flex flex-col gap-0.5">
       {rows.map((row, rowIndex) => (
         <span key={rowIndex}>
-          {renderMemberList(row, memberIds, alumniIds, `participant-${rowIndex}`)}
+          {renderMemberList(row, memberIds, alumniIds, profileSlugByYamlId, `participant-${rowIndex}`)}
         </span>
       ))}
     </span>
@@ -153,6 +157,7 @@ function ProjectCard({
   isHighlighted = false,
   memberIds = [],
   alumniIds = [],
+  profileSlugByYamlId = {},
 }: {
   project: ProjectData;
   index: number;
@@ -160,6 +165,7 @@ function ProjectCard({
   isHighlighted?: boolean;
   memberIds?: string[];
   alumniIds?: string[];
+  profileSlugByYamlId?: Record<string, string>;
 }) {
   const dateRange = formatDateRange(project.start_date, project.end_date);
   const hasImage = Boolean(project.image?.url?.trim());
@@ -208,11 +214,19 @@ function ProjectCard({
       <div className="hidden lg:flex min-h-[120px] flex-shrink-0 min-w-[300px] bg-white px-4 md:px-6 rounded-l-xl">
         <div className="w-full flex justify-center items-center h-full">
           {showImage ? (
-            <img
+            <Image
               src={project.image!.url}
-              alt={project.main.funder || project.parent.funder}
-              className="max-h-[120px] w-auto max-w-none object-contain"
-              style={imageWidth != null ? { maxWidth: `${imageWidth}px` } : undefined}
+              alt={project.main.funder || project.parent.funder || "Project logo"}
+              width={imageWidth ?? 200}
+              height={120}
+              sizes={imageWidth != null ? `${imageWidth}px` : "200px"}
+              className="max-h-[120px] w-auto object-contain select-none"
+              draggable={false}
+              style={
+                imageWidth != null
+                  ? { width: "auto", height: "auto", maxWidth: imageWidth, maxHeight: 120 }
+                  : { width: "auto", height: "auto", maxHeight: 120 }
+              }
               onError={() => setImageError(true)}
             />
           ) : (
@@ -304,7 +318,7 @@ function ProjectCard({
                 <span className="flex flex-col gap-0.5 text-gray-600">
                   {currentManagers.map((manager, i) => (
                     <span key={i}>
-                      {renderMember(manager, memberIds, alumniIds, `current-${i}`)}
+                      {renderMember(manager, memberIds, alumniIds, profileSlugByYamlId, `current-${i}`)}
                       {manager.since && (
                         <span className="ml-1.5 text-gray-400 text-[0.9em]">
                           · {formatMonth(manager.since)} ~ {isOngoing ? "Current" : formatMonth(project.end_date)}
@@ -321,7 +335,7 @@ function ProjectCard({
                 <span className="flex flex-col gap-0.5 text-gray-500">
                   {pastManagers.map((manager, i) => (
                     <span key={i}>
-                      {renderMember(manager, memberIds, alumniIds, `past-${i}`)}
+                      {renderMember(manager, memberIds, alumniIds, profileSlugByYamlId, `past-${i}`)}
                       <span className="ml-1.5 text-gray-400 text-[0.9em]">
                         · {manager.since ? `${formatMonth(manager.since)} ~ ` : "~ "}{formatMonth(manager.until)}
                       </span>
@@ -334,7 +348,7 @@ function ProjectCard({
               <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2">
                 <span className="font-semibold text-gray-700 shrink-0 min-w-[120px]">참여자</span>
                 <span className="text-gray-600">
-                  {renderParticipantList(participantRoster, memberIds, alumniIds)}
+                  {renderParticipantList(participantRoster, memberIds, alumniIds, profileSlugByYamlId)}
                 </span>
               </div>
             )}
@@ -349,10 +363,11 @@ interface ProjectListProps {
   projects: ProjectData[];
   memberIds?: string[];
   alumniIds?: string[];
+  profileSlugByYamlId?: Record<string, string>;
   className?: string;
 }
 
-export default function ProjectList({ projects, memberIds = [], alumniIds = [], className = "" }: ProjectListProps) {
+export default function ProjectList({ projects, memberIds = [], alumniIds = [], profileSlugByYamlId = {}, className = "" }: ProjectListProps) {
   const [showTalentDevelopment, setShowTalentDevelopment] = useState(true);
   const [highlightedProjectId, setHighlightedProjectId] = useState<string | null>(null);
 
@@ -435,6 +450,7 @@ export default function ProjectList({ projects, memberIds = [], alumniIds = [], 
           isHighlighted={isHighlighted}
           memberIds={memberIds}
           alumniIds={alumniIds}
+          profileSlugByYamlId={profileSlugByYamlId}
         />
       </li>
     );

@@ -42,7 +42,10 @@ export interface ProfileYAML {
 }
 
 export interface ProfileData {
+  /** URL용 slug (예: 2024-03-byungkook-oh) */
   id: string;
+  /** YAML 원본 id (예: [2024.03] 오병국) — 논문·프로젝트·에셋 경로 매칭용 */
+  yamlId: string;
   type: string;
   title: string;
   name_en: string;

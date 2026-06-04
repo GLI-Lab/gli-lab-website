@@ -60,7 +60,7 @@ function renderProfileWithLink(participant: string, profiles: any[], alumniProfi
   if (profileMatch) {
     const [, profileId, displayName] = profileMatch;
     // 현재 멤버와 alumni 모두에서 프로필 찾기
-    const profile = profiles.find(p => p.id === profileId) || alumniProfiles.find(p => p.id === profileId);
+    const profile = profiles.find(p => p.yamlId === profileId || p.id === profileId) || alumniProfiles.find(p => p.yamlId === profileId || p.id === profileId);
     
     if (profile) {
       const basePath = getProfileBasePath(profileId, profiles, alumniProfiles);
@@ -68,7 +68,7 @@ function renderProfileWithLink(participant: string, profiles: any[], alumniProfi
 
       return (
         <Link 
-          href={`${basePath}?id=${profileId.replace(/\s/g, '%20')}`}
+          href={`${basePath}?id=${profile.id}`}
           className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
           title={`View ${profile.name_ko} (${profile.name_en})`}
         >

@@ -23,6 +23,10 @@ export default async function Page() {
         getGalleryItems(),
     ]);
 
+    const profileSlugByYamlId = Object.fromEntries(
+        [...profiles, ...alumniProfiles].map((p) => [p.yamlId, p.id])
+    );
+
     const paperNewsAlerts = getNewsMarkupAlerts(newsItems, {
         // kinds: ["paper", "project"],
         kinds: ["paper"],
@@ -260,6 +264,7 @@ export default async function Page() {
                         newsItems={newsItems}
                         memberIds={memberIds}
                         alumniIds={alumniIds}
+                        profileSlugByYamlId={profileSlugByYamlId}
                     />
                     <Link href='/board/news'
                         className="px-6 py-2 mt-12 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
