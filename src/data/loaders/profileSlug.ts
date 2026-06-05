@@ -47,3 +47,42 @@ export function resolveProfileUrlId(
   const profile = profiles.find((p) => p.yamlId === idOrYamlId || p.id === idOrYamlId);
   return profile?.id ?? idOrYamlId;
 }
+
+export type ProfileSection = 'members' | 'alumni';
+
+export function getProfileSectionBasePath(section: ProfileSection): `/people/${ProfileSection}` {
+  return `/people/${section}`;
+}
+
+/** 프로필 상세 경로 (trailing slash 포함) */
+export function buildProfilePath(
+  section: ProfileSection,
+  profileId: string,
+  options?: { view?: 'list' }
+): string {
+  const path = `/people/${section}/${profileId}/`;
+  if (options?.view === 'list') return `${path}?view=list`;
+  return path;
+}
+
+/** 목록 페이지 경로 (trailing slash 포함) */
+export function buildProfileListPath(
+  section: ProfileSection,
+  options?: { view?: 'list' }
+): string {
+  const path = `/people/${section}/`;
+  if (options?.view === 'list') return `${path}?view=list`;
+  return path;
+}
+
+/** 메타데이터/OG용 canonical path */
+export function buildProfileAsPath(
+  section: ProfileSection,
+  profileId?: string,
+  view?: string
+): string {
+  if (!profileId) return buildProfileListPath(section, view === 'list' ? { view: 'list' } : undefined);
+  const path = `/people/${section}/${profileId}/`;
+  if (view === 'list') return `${path}?view=list`;
+  return path;
+}

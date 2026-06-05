@@ -7,6 +7,7 @@ import { ProfileListDetail } from './ProfileListDetail';
 import { type StudyData, type PaperData, type PatentData, type ProjectData } from '@/data/loaders/types';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
+import { buildProfilePath } from '@/data/loaders/profileSlug';
 
 interface ProfileListItemProps extends ProfileItemProps {
     studies?: StudyData[];
@@ -16,7 +17,8 @@ interface ProfileListItemProps extends ProfileItemProps {
 }
 
 export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
-    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage, studies = [], papers = [], patents = [], projects = [], bs, ms, phd, interest, homepage, github, linkedin, scholar, cv, title } = props;
+    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage = false, studies = [], papers = [], patents = [], projects = [], bs, ms, phd, interest, homepage, github, linkedin, scholar, cv, title, id } = props;
+    const section = isAlumniPage ? 'alumni' : 'members';
     const [isExpanded, setIsExpanded] = useState(false);
     const [copied, setCopied] = useState(false);
     
@@ -121,7 +123,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                const currentUrl = window.location.origin + window.location.pathname + '?view=list&id=' + encodeURIComponent(props.id || '');
+                                const currentUrl = `${window.location.origin}${buildProfilePath(section, id, { view: 'list' })}`;
 
                                 // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
                                 const selectionlessCopy = () => {

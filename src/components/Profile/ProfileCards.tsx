@@ -1,17 +1,19 @@
 "use client"
 
 import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ProfileCardItem } from './ProfileCardItem';
 import { ProfileListItem } from './ProfileListItem';
 import { ProfileCardDetail } from './ProfileCardDetail';
 import { type ProfileData, type PaperData, type StudyData, type PatentData, type ProjectData } from '@/data/loaders/types';
 import { getPapersForProfile, getPatentsForProfile } from '@/data/loaders/utils';
-import { DEFAULT_MEMBER_PROFILE_YAML_ID } from '@/data/loaders/profileSlug';
+import { buildProfilePath, DEFAULT_MEMBER_PROFILE_YAML_ID, getProfileSectionBasePath } from '@/data/loaders/profileSlug';
 
 interface ProfileCardsProps {
     profiles: ProfileData[];
-    selectedProfile?: ProfileData | null; // page에서 찾아서 넘겨준 프로필 (alumni 페이지에서는 null일 수 있음)
+    selectedProfile?: ProfileData | null;
+    /** URL path에 포함된 slug (목록 페이지면 null) */
+    activeSlug?: string | null;
     studies?: StudyData[];
     papers?: PaperData[];
     patents?: PatentData[];
@@ -34,12 +36,12 @@ const filterStudiesForProfile = (allStudies: StudyData[], profile: ProfileData) 
     );
 };
 
-export function ProfileCards({ profiles, selectedProfile, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false, initialIsCardView = true }: ProfileCardsProps) {
+export function ProfileCards({ profiles, selectedProfile, activeSlug = null, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false, initialIsCardView = true }: ProfileCardsProps) {
+    const profileBasePath = getProfileSectionBasePath(isAlumniPage ? 'alumni' : 'members');
     const [init, setInit] = useState(true);
     const [isAtBottom, setIsAtBottom] = useState(false);
     const [selectedCard, setSelectedCard] = useState<ProfileData | null>(selectedProfile || null);
     
-    const pathname = usePathname();
     const searchParams = useSearchParams();
     // URL 파라미터 'view'의 값으로 첫 렌더링 시 뷰 모드를 설정하여
     // 클라이언트 사이드 렌더링 시 발생하는 화면 깜빡임(flicker) 방지
@@ -100,33 +102,21 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     ];
 
     const handleViewChange = useCallback((newView: boolean) => {
-        // console.log('----handleViewChange:', selectedProfile, selectedCard, init);
         setIsCardView(newView);
-        setInit(true); // 뷰 변경 시 init을 true로 설정
-        
-        // 뷰 변경 시 default 프로필로 설정 (화면 깜빡임 방지)
-        // console.log(init);
-        setSelectedCard(defaultProfile || null);
+        setInit(true);
+        setSelectedCard(isAlumniPage ? null : (defaultProfile || null));
 
-        // 특정 프로필 anchoring을 막기 위해 id 파라미터 제거
-        // 즉, id 파라미터를 제거하니깐 selectedCard를 초기화하여 detailed에 표시되는 정보도 초기화를 해야함
-        // -> 이걸 수행하는 함수가 아래아래 useEffect에 있음
-        const params = new URLSearchParams(searchParams.toString());
-        params.delete('id');  
-        params.set('view', newView ? 'card' : 'list');
-        const query = params.toString();
-        const url = query ? `${pathname}?${query}` : pathname;
-        router.replace(url, { scroll: false });  // 현재 프로필 클릭 시 스크롤 유지
-    }, [pathname, router, searchParams, profiles]);
+        const url = newView ? `${profileBasePath}/` : `${profileBasePath}/?view=list`;
+        router.replace(url, { scroll: false });
+    }, [router, profileBasePath, defaultProfile, isAlumniPage]);
 
     const handleProfileClick = useCallback((profile: ProfileData) => {
         setInit(false);
         setSelectedCard(profile);
-        const params = new URLSearchParams(searchParams.toString());
-        params.set('id', profile.id);
-        router.replace(`${pathname}?${params.toString()}`, { scroll: false });  // 현재 프로필 클릭 시 스크롤 유지
-
-    }, [selectedCard, router, pathname, searchParams]);
+        const section = isAlumniPage ? 'alumni' : 'members';
+        const url = buildProfilePath(section, profile.id, isCardView ? undefined : { view: 'list' });
+        router.replace(url, { scroll: false });
+    }, [router, isAlumniPage, isCardView]);
 
     // view가 바뀔때 이전에 클릭했던 프로필을 초기화
     useEffect(() => {
@@ -136,7 +126,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
     // 자동 스크롤
     useEffect(() => {
         // console.log('----scroll useEffect:', selectedProfile, selectedCard, init);
-        if (selectedCard && (!init || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID)) {
+        if (selectedCard && (!init || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID)) {
             // console.log('scroll!!!');
             const timer = setTimeout(() => {
                 const profileElement = profileRefs.current[selectedCard.id];
@@ -416,7 +406,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                         >
                                             <ProfileCardItem
                                                 onClick={() => handleProfileClick(profile)}
-                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID))}
+                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID))}
                                                 isAlumniPage={isAlumniPage}
                                                 {...profile}
                                             />
@@ -434,7 +424,7 @@ export function ProfileCards({ profiles, selectedProfile, studies = [], papers =
                                         >
                                             <ProfileListItem
                                                 onClick={() => handleProfileClick(profile)}
-                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID))}
+                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID))}
                                                 isAlumniPage={isAlumniPage}
                                                 studies={studies}
                                                 papers={papers}

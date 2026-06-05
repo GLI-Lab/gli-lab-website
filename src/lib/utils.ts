@@ -26,3 +26,33 @@ export function getProfileBasePath(
   return null;
 }
 
+function resolveProfileSlug(
+  id: string,
+  memberProfiles: ProfileIdSource[],
+  alumniProfiles: ProfileIdSource[]
+): string {
+  for (const profiles of [memberProfiles, alumniProfiles]) {
+    for (const profile of profiles) {
+      if (typeof profile === 'string') {
+        if (profile === id) return id;
+      } else if (profile.id === id || profile.yamlId === id) {
+        return profile.id;
+      }
+    }
+  }
+  return id;
+}
+
+/** 프로필 상세 페이지 href (trailing slash 포함) */
+export function getProfileHref(
+  id: string,
+  memberProfiles: ProfileIdSource[],
+  alumniProfiles: ProfileIdSource[],
+  profileSlugByYamlId?: Record<string, string>
+): string | null {
+  const basePath = getProfileBasePath(id, memberProfiles, alumniProfiles);
+  if (!basePath) return null;
+  const slug = profileSlugByYamlId?.[id] ?? resolveProfileSlug(id, memberProfiles, alumniProfiles);
+  return `${basePath}/${slug}/`;
+}
+
