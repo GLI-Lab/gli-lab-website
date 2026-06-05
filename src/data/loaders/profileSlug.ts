@@ -50,6 +50,9 @@ export function resolveProfileUrlId(
 
 export type ProfileSection = 'members' | 'alumni';
 
+/** 모바일 모달·공유 링크 기준 너비 (1.5md) */
+export const PROFILE_MOBILE_BREAKPOINT = 880;
+
 export function getProfileSectionBasePath(section: ProfileSection): `/people/${ProfileSection}` {
   return `/people/${section}`;
 }
@@ -58,11 +61,25 @@ export function getProfileSectionBasePath(section: ProfileSection): `/people/${P
 export function buildProfilePath(
   section: ProfileSection,
   profileId: string,
-  options?: { view?: 'list' }
+  options?: { view?: 'card' | 'list'; detail?: boolean }
 ): string {
   const path = `/people/${section}/${profileId}/`;
-  if (options?.view === 'list') return `${path}?view=list`;
-  return path;
+  const params = new URLSearchParams();
+  if (options?.view) params.set('view', options.view);
+  if (options?.detail) params.set('detail', '1');
+  const query = params.toString();
+  return query ? `${path}?${query}` : path;
+}
+
+/** 링크 복사용 프로필 URL (모바일이면 detail=1 포함) */
+export function buildProfileSharePath(
+  section: ProfileSection,
+  profileId: string,
+  view: 'card' | 'list'
+): string {
+  const isMobile =
+    typeof window !== 'undefined' && window.innerWidth < PROFILE_MOBILE_BREAKPOINT;
+  return buildProfilePath(section, profileId, { view, detail: isMobile });
 }
 
 /** 목록 페이지 경로 (trailing slash 포함) */

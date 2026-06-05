@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef, useState, useEffect, useCallback, useMemo } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { ProfileCardItem } from './ProfileCardItem';
 import { ProfileListItem } from './ProfileListItem';
 import { ProfileCardDetail } from './ProfileCardDetail';
@@ -38,11 +38,26 @@ const filterStudiesForProfile = (allStudies: StudyData[], profile: ProfileData) 
 
 export function ProfileCards({ profiles, selectedProfile, activeSlug = null, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false, initialIsCardView = true }: ProfileCardsProps) {
     const profileBasePath = getProfileSectionBasePath(isAlumniPage ? 'alumni' : 'members');
-    const [init, setInit] = useState(true);
     const [isAtBottom, setIsAtBottom] = useState(false);
     const [selectedCard, setSelectedCard] = useState<ProfileData | null>(selectedProfile || null);
     
     const searchParams = useSearchParams();
+    const pathname = usePathname();
+    // 모바일 모달: URL detail 파라미터 + detailSuppressed state 조합
+    // - urlDetailOpen (?detail=1): 열기의 source of truth. 공유·뒤로가기·리마운트 후에도 유지.
+    //   직접 URL 접근(detail 없음) → 모달 안 열림 / 클릭 시 detail=1 → 모달 열림
+    // - detailSuppressed: 닫기 즉시 반영용 optimistic state. X·배경·ESC 시 router URL 갱신을
+    //   UI가 기다리지 않도록 함 (searchParams만 쓰면 router.replace 완료까지 모달이 남음)
+    // - isDetailOpen = urlDetailOpen && !detailSuppressed
+    // init과 달리 state는 닫기만 담당하고 URL과 같은 방향(닫힘)이라 리마운트 시 충돌 없음
+    const urlDetailOpen = searchParams.get('detail') === '1';
+    const [detailSuppressed, setDetailSuppressed] = useState(false);
+    const isDetailOpen = urlDetailOpen && !detailSuppressed;
+
+    // detail=1이 URL에 다시 생기면(다른 프로필 클릭 등) suppressed 해제
+    useEffect(() => {
+        if (urlDetailOpen) setDetailSuppressed(false);
+    }, [urlDetailOpen]);
     // URL 파라미터 'view'의 값으로 첫 렌더링 시 뷰 모드를 설정하여
     // 클라이언트 사이드 렌더링 시 발생하는 화면 깜빡임(flicker) 방지
     const [isCardView, setIsCardView] = useState(initialIsCardView);
@@ -83,6 +98,22 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
     const profileRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
     const router = useRouter();
 
+    const closeDetailModal = useCallback(() => {
+        setDetailSuppressed(true);
+        document.body.style.overflow = 'auto';
+        const params = new URLSearchParams(searchParams.toString());
+        params.delete('detail');
+        const query = params.toString();
+        const nextUrl = query ? `${pathname}?${query}` : pathname;
+        window.history.replaceState(null, '', nextUrl);
+        router.replace(nextUrl, { scroll: false });
+    }, [router, pathname, searchParams]);
+
+    const isProfileSelected = useCallback((profile: ProfileData) => {
+        if (!selectedCard || profile.id !== selectedCard.id) return false;
+        return isDetailOpen || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID;
+    }, [selectedCard, isDetailOpen, activeSlug]);
+
     // console.log('ProfileCards rendered');
     
     // 카테고리 설정
@@ -103,7 +134,6 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
 
     const handleViewChange = useCallback((newView: boolean) => {
         setIsCardView(newView);
-        setInit(true);
         setSelectedCard(isAlumniPage ? null : (defaultProfile || null));
 
         const url = newView ? `${profileBasePath}/` : `${profileBasePath}/?view=list`;
@@ -111,10 +141,14 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
     }, [router, profileBasePath, defaultProfile, isAlumniPage]);
 
     const handleProfileClick = useCallback((profile: ProfileData) => {
-        setInit(false);
+        setDetailSuppressed(false);
         setSelectedCard(profile);
         const section = isAlumniPage ? 'alumni' : 'members';
-        const url = buildProfilePath(section, profile.id, isCardView ? undefined : { view: 'list' });
+        const isMobile = typeof window !== 'undefined' && window.innerWidth < 880;
+        const url = buildProfilePath(section, profile.id, {
+            view: isCardView ? undefined : 'list',
+            detail: isCardView && isMobile,
+        });
         router.replace(url, { scroll: false });
     }, [router, isAlumniPage, isCardView]);
 
@@ -125,9 +159,7 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
 
     // 자동 스크롤
     useEffect(() => {
-        // console.log('----scroll useEffect:', selectedProfile, selectedCard, init);
-        if (selectedCard && (!init || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID)) {
-            // console.log('scroll!!!');
+        if (selectedCard && (isDetailOpen || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID)) {
             const timer = setTimeout(() => {
                 const profileElement = profileRefs.current[selectedCard.id];
                 if (profileElement) {
@@ -139,7 +171,7 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
             }, 200);
             return () => clearTimeout(timer);
         }
-    }, [selectedCard, isCardView, init]);
+    }, [selectedCard, isCardView, isDetailOpen, activeSlug]);
 
     const checkBottom = useCallback(() => {
         if (mobilePopupRef.current) {
@@ -172,29 +204,24 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
 
     // 배경 스크롤 방지 및 ESC 키 처리
     useEffect(() => {
-        if (!init && selectedCard && window.innerWidth < 880 && isCardView) {
-            // 모달이 열릴 때 배경 스크롤 방지
+        if (isDetailOpen && selectedCard && window.innerWidth < 880 && isCardView) {
             document.body.style.overflow = 'hidden';
-            
-            // ESC 키로 모달 닫기
+
             const handleEsc = (event: KeyboardEvent) => {
                 if (event.key === 'Escape') {
-                    setSelectedCard(null);
-                    document.body.style.overflow = 'auto';
+                    closeDetailModal();
                 }
             };
             document.addEventListener('keydown', handleEsc);
-            
+
             return () => {
-                // 모달이 닫힐 때 스크롤 복원
                 document.body.style.overflow = 'auto';
                 document.removeEventListener('keydown', handleEsc);
             };
         } else {
-            // 모달이 열리지 않은 경우 스크롤 복원
             document.body.style.overflow = 'auto';
         }
-    }, [init, selectedCard, isCardView]);
+    }, [isDetailOpen, selectedCard, isCardView, closeDetailModal]);
 
     // 컴포넌트 마운트 시 스크롤 상태 확인 및 윈도우 리사이즈 감지
     useEffect(() => {
@@ -216,8 +243,7 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
     // 배경 클릭으로 모달 닫기
     const handleBackdropClick = (e: React.MouseEvent) => {
         if (e.target === e.currentTarget) {
-            setSelectedCard(null);
-            document.body.style.overflow = 'auto';
+            closeDetailModal();
         }
     };
 
@@ -314,9 +340,8 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
                 </div>
             )}
 
-            {/* Detailed Profile (popup) - URL로 접근한 경우 모바일에서는 바로 열지 않음 -> {selectedCard && !init && (  */}
-            {/* Detailed Profile (popup) - 모바일에서 팝업으로 표시                    -> {selectedCard && (           */}
-            {selectedCard && isCardView && !init && (
+            {/* Detailed Profile (popup) - ?detail=1 일 때만 모바일에서 팝업 표시 */}
+            {selectedCard && isCardView && isDetailOpen && (
                 <div
                     onClick={handleBackdropClick}
                     className="fixed inset-0 z-modal bg-black bg-opacity-75 flex items-center justify-center px-2 py-2 md:p-4 1.5md:hidden"
@@ -324,10 +349,7 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
                     <div className="w-full max-w-5xl max-h-[95vh] bg-white rounded-lg overflow-hidden relative">
                         {/* 닫기버튼 */}
                         <button
-                            onClick={() => {
-                                setSelectedCard(null);
-                                document.body.style.overflow = 'auto';
-                            }}
+                            onClick={closeDetailModal}
                             className="absolute top-2 right-2 md:top-3 md:right-3 z-modal-controls"
                         >
                             <svg
@@ -406,7 +428,7 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
                                         >
                                             <ProfileCardItem
                                                 onClick={() => handleProfileClick(profile)}
-                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID))}
+                                                isSelected={isProfileSelected(profile)}
                                                 isAlumniPage={isAlumniPage}
                                                 {...profile}
                                             />
@@ -424,7 +446,7 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
                                         >
                                             <ProfileListItem
                                                 onClick={() => handleProfileClick(profile)}
-                                                isSelected={!!(selectedCard && profile.id === selectedCard.id && (!init || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID))}
+                                                isSelected={isProfileSelected(profile)}
                                                 isAlumniPage={isAlumniPage}
                                                 studies={studies}
                                                 papers={papers}

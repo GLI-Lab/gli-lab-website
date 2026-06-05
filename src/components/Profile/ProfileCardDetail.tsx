@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator"
 import { ProfileDetailProps, type StudyData, type PaperData, type PatentData } from '@/data/loaders/types';
 import Link from 'next/link';
 import { titleToId } from '@/lib/utils';
-import { buildProfilePath } from '@/data/loaders/profileSlug';
+import { buildProfileSharePath } from '@/data/loaders/profileSlug';
 import { ProfileProjectActivities } from './ProfileProjectActivities';
 
 function WrappedContactEntries({
@@ -141,7 +141,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                const currentUrl = `${window.location.origin}${buildProfilePath(section, id)}`;
+                                const currentUrl = `${window.location.origin}${buildProfileSharePath(section, id, 'card')}`;
 
                                 // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
                                 const selectionlessCopy = () => {
