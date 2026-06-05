@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PatentData } from '@/data/loaders/types';
-import { getProfileBasePath, titleToId } from '@/lib/utils';
+import { getProfileHref, titleToId } from '@/lib/utils';
 
 interface PatentListProps {
   className?: string
@@ -50,8 +50,8 @@ export default function PatentList({ className = '', patents, memberIds = [], al
   const renderAuthors = (patent: PatentData) => {
     return patent.authors.map((author, i) => {
       const hasId = !!author.ID;
-      const basePath = author.ID ? getProfileBasePath(author.ID, memberIds, alumniIds) : null;
-      const hasValidId = !!basePath;
+      const href = author.ID ? getProfileHref(author.ID, memberIds, alumniIds, profileSlugByYamlId) : null;
+      const hasValidId = !!href;
       
       const authorName = (
         <span className={hasValidId ? 'decoration-gray-500 hover:decoration-brand-primary underline underline-offset-[3px]' : ''}>
@@ -63,7 +63,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
         <span key={i}>
           {hasValidId ? (
             <Link 
-              href={`${basePath}/?id=${profileSlugByYamlId[author.ID!] ?? author.ID}`}
+              href={href}
               className="hover:text-brand-primary transition-colors"
             >
               {authorName}

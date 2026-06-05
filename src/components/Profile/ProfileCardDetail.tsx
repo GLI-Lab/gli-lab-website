@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator"
 import { ProfileDetailProps, type StudyData, type PaperData, type PatentData } from '@/data/loaders/types';
 import Link from 'next/link';
 import { titleToId } from '@/lib/utils';
+import { buildProfilePath } from '@/data/loaders/profileSlug';
 import { ProfileProjectActivities } from './ProfileProjectActivities';
 
 function WrappedContactEntries({
@@ -35,6 +36,7 @@ function WrappedContactEntries({
 
 export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolean }> = (props) => {
     const {id, yamlId, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false, isModal = false } = props;
+    const section = isAlumniPage ? 'alumni' : 'members';
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30}, [Fade()]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [displayedStudiesCount, setDisplayedStudiesCount] = useState(5);
@@ -139,7 +141,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                const currentUrl = window.location.origin + window.location.pathname + '?view=card&id=' + encodeURIComponent(id || '');
+                                const currentUrl = `${window.location.origin}${buildProfilePath(section, id)}`;
 
                                 // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
                                 const selectionlessCopy = () => {

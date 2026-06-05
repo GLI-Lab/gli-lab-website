@@ -3,7 +3,7 @@ import { getProfiles } from '../../data/loaders/profileLoader';
 import { getAlumniProfiles } from '../../data/loaders/profileLoader';
 import { StudyData } from '../../data/loaders/types';
 import { StudyHighlightWrapper } from './StudyHighlight';
-import { getProfileBasePath } from '@/lib/utils';
+import { getProfileHref } from '@/lib/utils';
 export { getStudies } from '@/data/loaders/studyLoader';
 
 
@@ -63,12 +63,12 @@ function renderProfileWithLink(participant: string, profiles: any[], alumniProfi
     const profile = profiles.find(p => p.yamlId === profileId || p.id === profileId) || alumniProfiles.find(p => p.yamlId === profileId || p.id === profileId);
     
     if (profile) {
-      const basePath = getProfileBasePath(profileId, profiles, alumniProfiles);
-      if (!basePath) return <span>{participant}</span>;
+      const href = getProfileHref(profileId, profiles, alumniProfiles);
+      if (!href) return <span>{participant}</span>;
 
       return (
         <Link 
-          href={`${basePath}?id=${profile.id}`}
+          href={href}
           className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
           title={`View ${profile.name_ko} (${profile.name_en})`}
         >

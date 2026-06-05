@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { NewsData } from '@/data/loaders/types';
-import { getProfileBasePath, titleToId } from '@/lib/utils';
+import { getProfileHref, titleToId } from '@/lib/utils';
 
 export interface NewsListProps {
   className?: string
@@ -147,14 +147,14 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
     if (type === 'profile') {
       const [fullMatch, profileId, displayName] = match;
       
-      const basePath = getProfileBasePath(profileId, memberIds, alumniIds);
+      const href = getProfileHref(profileId, memberIds, alumniIds, profileSlugByYamlId);
 
-      if (basePath) {
+      if (href) {
         
         elements.push(
           <Link 
             key={`${newsIndex}-${lineIndex}-profile-${profileId}`}
-            href={`${basePath}?id=${profileSlugByYamlId[profileId] ?? profileId}`}
+            href={href}
             className="group hover:text-brand-primary underline-offset-4 hover:underline hover:decoration-1.5"
             title={`View ${displayName}`}
           >

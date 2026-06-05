@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import Link from 'next/link';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { SeminarData } from '@/data/loaders/types';
-import { getProfileBasePath } from '@/lib/utils';
+import { getProfileHref } from '@/lib/utils';
 
 export type SeminarListLayout = 'card' | 'list';
 
@@ -57,11 +57,11 @@ function renderPresenter(
 ): ReactNode {
   const profile = profiles.find((p) => p.yamlId === presenter.ID || p.id === presenter.ID) ?? alumniProfiles.find((p) => p.yamlId === presenter.ID || p.id === presenter.ID);
   if (profile) {
-    const basePath = getProfileBasePath(presenter.ID, profiles, alumniProfiles);
-    if (!basePath) return <span className="text-gray-700">{presenter.name}</span>;
+    const href = getProfileHref(presenter.ID, profiles, alumniProfiles);
+    if (!href) return <span className="text-gray-700">{presenter.name}</span>;
     return (
       <Link
-        href={`${basePath}?id=${profile.id}`}
+        href={href}
         className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary transition-colors"
         title={profile.name_ko ?? profile.name_en}
       >

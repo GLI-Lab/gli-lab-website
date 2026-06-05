@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { ProjectData, ProjectMember } from "@/data/loaders/types";
-import { getProfileBasePath, titleToId } from "@/lib/utils";
+import { getProfileHref, titleToId } from "@/lib/utils";
 
 /** 참여 인원을 프로필 링크와 함께 렌더링 (board/study 페이지의 사람 이름 스타일 참고)
  *  - 현재 멤버(/people/members)와 과거 멤버(alumni, /people/alumni) 모두 링크 가능 */
@@ -16,15 +16,15 @@ function renderMember(
   profileSlugByYamlId: Record<string, string>,
   key: React.Key
 ) {
-  const basePath = member.ID ? getProfileBasePath(member.ID, memberIds, alumniIds) : null;
-  const hasValidId = !!basePath;
+  const href = member.ID ? getProfileHref(member.ID, memberIds, alumniIds, profileSlugByYamlId) : null;
+  const hasValidId = !!href;
   const hasId = !!member.ID;
 
   if (hasValidId) {
     return (
       <Link
         key={key}
-        href={`${basePath}?id=${profileSlugByYamlId[member.ID!] ?? member.ID}`}
+        href={href}
         className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
         title={`View ${member.name}`}
       >
