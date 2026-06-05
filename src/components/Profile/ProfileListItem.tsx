@@ -7,7 +7,7 @@ import { ProfileListDetail } from './ProfileListDetail';
 import { type StudyData, type PaperData, type PatentData, type ProjectData } from '@/data/loaders/types';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
-import { buildProfilePath } from '@/data/loaders/profileSlug';
+import { buildProfileSharePath } from '@/data/loaders/profileSlug';
 
 interface ProfileListItemProps extends ProfileItemProps {
     studies?: StudyData[];
@@ -123,7 +123,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                const currentUrl = `${window.location.origin}${buildProfilePath(section, id, { view: 'list' })}`;
+                                const currentUrl = `${window.location.origin}${buildProfileSharePath(section, id, 'list')}`;
 
                                 // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
                                 const selectionlessCopy = () => {
