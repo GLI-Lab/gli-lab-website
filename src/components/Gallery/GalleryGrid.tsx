@@ -102,7 +102,7 @@ function GalleryGridSynced({
     if (element) {
       element.scrollIntoView({
         behavior: 'smooth',
-        block: window.innerWidth < 768 ? 'start' : 'center',
+        block: 'center',
       });
     }
   }, [selectedItem, activeSlug]);
