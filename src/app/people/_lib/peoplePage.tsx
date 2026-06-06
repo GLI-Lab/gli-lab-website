@@ -114,14 +114,10 @@ export async function renderPeoplePage({ section, params, searchParams }: People
   }
 
   const selectedProfile = resolveSelectedProfile(section, profiles, slugInUrl);
-  const coverTitle =
-    slugInUrl && selectedProfile
-      ? selectedProfile.name_en || selectedProfile.name_ko
-      : config.title;
 
   return (
     <div className="max-w-screen-2xl mx-auto">
-      <SubCover title={coverTitle} pattern="diagonal-lines" colorVariant="sage" showBreadcrumb={false} />
+      <SubCover title={config.title} pattern="diagonal-lines" colorVariant="sage" showBreadcrumb={false} />
       <ProfileCards
         profiles={profiles}
         selectedProfile={selectedProfile}
