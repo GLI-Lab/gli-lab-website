@@ -3,6 +3,7 @@ import path from 'path';
 import yaml from 'js-yaml';
 import { GalleryItem } from './types';
 import { getSortableDate } from './helpers';
+import { dateToGallerySlug } from './gallerySlug';
 
 // Centralized gallery configuration (fallback when config.json doesn't exist)
 const galleryConfig: Record<string, {
@@ -11,79 +12,112 @@ const galleryConfig: Record<string, {
   date?: string;
 }> = {
   // Add your gallery configurations here
-  // Example:
-  // 'sample-project-1': {
-  //   title: 'Sample Project 1',
-  //   description: 'Description for sample project 1',
-  //   date: '2024-01-01'
-  // }
 };
 
-export async function getGalleryItems(): Promise<GalleryItem[]> {
+export interface GetGalleryItemsOptions {
+  /** Only fully load this many newest items (config read for all folders, images for top N only). */
+  count?: number;
+}
+
+function loadFolderConfig(folderPath: string, folder: string): Record<string, unknown> {
+  const configYamlPath = path.join(folderPath, 'config.yaml');
+  let config: Record<string, unknown> = {};
+
+  if (fs.existsSync(configYamlPath)) {
+    try {
+      const configContent = fs.readFileSync(configYamlPath, 'utf-8');
+      config = (yaml.load(configContent) as Record<string, unknown>) ?? {};
+
+      if (config.description && typeof config.description === 'string') {
+        config.description = config.description.replace(/\\n/g, '\n');
+      }
+    } catch (error) {
+      console.warn(`Failed to parse config.yaml in ${folder}:`, error);
+    }
+  }
+
+  if (Object.keys(config).length === 0) {
+    config = galleryConfig[folder] || {};
+  }
+
+  return config;
+}
+
+function loadImageFiles(folderPath: string): string[] {
+  const files = fs.readdirSync(folderPath);
+  return files
+    .filter((file) => /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(file))
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+}
+
+function buildGalleryItem(
+  folder: string,
+  config: Record<string, unknown>,
+  imageFiles: string[]
+): GalleryItem {
+  const imagePaths = imageFiles.map((file) => `/images/gallery/${folder}/${file}`);
+  const date = typeof config.date === 'string' ? config.date : undefined;
+
+  return {
+    id: folder,
+    slug: dateToGallerySlug(date) || folder,
+    title: (typeof config.title === 'string' ? config.title : undefined) || folder,
+    description: typeof config.description === 'string' ? config.description : undefined,
+    images: imagePaths,
+    thumbnail: imagePaths[0],
+    date,
+  };
+}
+
+export async function getGalleryItems(options?: GetGalleryItemsOptions): Promise<GalleryItem[]> {
   const galleryPath = path.join(process.cwd(), 'public/images/gallery');
-  
+  const count = options?.count;
+
   try {
-    const folders = fs.readdirSync(galleryPath, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory())
-      .map(dirent => dirent.name);
+    const folders = fs
+      .readdirSync(galleryPath, { withFileTypes: true })
+      .filter((dirent) => dirent.isDirectory())
+      .map((dirent) => dirent.name);
+
+    if (count !== undefined) {
+      const folderMeta = folders.map((folder) => {
+        const folderPath = path.join(galleryPath, folder);
+        const config = loadFolderConfig(folderPath, folder);
+        const date = typeof config.date === 'string' ? config.date : undefined;
+        return { folder, folderPath, config, sortDate: getSortableDate(date) };
+      });
+
+      folderMeta.sort((a, b) => b.sortDate.getTime() - a.sortDate.getTime());
+
+      const items: GalleryItem[] = [];
+      for (const { folder, folderPath, config } of folderMeta) {
+        if (items.length >= count) break;
+
+        const imageFiles = loadImageFiles(folderPath);
+        if (imageFiles.length === 0) continue;
+
+        items.push(buildGalleryItem(folder, config, imageFiles));
+      }
+
+      return items;
+    }
 
     const items: GalleryItem[] = [];
 
     for (const folder of folders) {
       const folderPath = path.join(galleryPath, folder);
-      const configYamlPath = path.join(folderPath, 'config.yaml');
-      
-      // 폴더 내 이미지 파일들 찾기
-      const files = fs.readdirSync(folderPath);
-      const imageFiles = files.filter(file => 
-        /\.(jpg|jpeg|png|gif|webp|svg)$/i.test(file)
-      ).sort((a, b) => a.localeCompare(b, undefined, { numeric: true })); // 자연순 정렬 (1, 2, ..., 10, 11)
-
+      const imageFiles = loadImageFiles(folderPath);
       if (imageFiles.length === 0) continue;
 
-      let config: any = {};
-      
-      // config.yaml 파일 읽기
-      if (fs.existsSync(configYamlPath)) {
-        try {
-          const configContent = fs.readFileSync(configYamlPath, 'utf-8');
-          config = yaml.load(configContent) as any;
-          
-          // description에서 \n을 실제 줄바꿈으로 변환
-          if (config.description && typeof config.description === 'string') {
-            config.description = config.description.replace(/\\n/g, '\n');
-          }
-        } catch (error) {
-          console.warn(`Failed to parse config.yaml in ${folder}:`, error);
-        }
-      }
-      
-      // 설정 파일이 없거나 실패한 경우
-      if (Object.keys(config).length === 0) {
-        config = galleryConfig[folder] || {};
-      }
-
-      const imagePaths = imageFiles.map(file => `/images/gallery/${folder}/${file}`);
-
-      const item: GalleryItem = {
-        id: folder,
-        title: config.title || folder,
-        description: config.description,
-        images: imagePaths,
-        thumbnail: imagePaths[0],
-        date: config.date
-      };
-
-      items.push(item);
+      const config = loadFolderConfig(folderPath, folder);
+      items.push(buildGalleryItem(folder, config, imageFiles));
     }
 
-    // 날짜순으로 정렬 (최신순) - date range 지원
     return items.sort((a, b) => {
       const dateA = getSortableDate(a.date);
       const dateB = getSortableDate(b.date);
       return dateB.getTime() - dateA.getTime();
     });
-
   } catch (error) {
     console.error('Failed to load gallery items:', error);
     return [];
@@ -91,4 +125,4 @@ export async function getGalleryItems(): Promise<GalleryItem[]> {
 }
 
 // Legacy function name for backward compatibility
-export const getGalleryItemsSecure = getGalleryItems; 
+export const getGalleryItemsSecure = getGalleryItems;

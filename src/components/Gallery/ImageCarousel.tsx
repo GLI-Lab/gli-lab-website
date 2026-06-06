@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import useEmblaCarousel from "embla-carousel-react";
 import Fade from 'embla-carousel-fade';
 import Image from 'next/image';
@@ -15,6 +15,10 @@ interface ImageCarouselProps {
   showIndicators?: boolean;
   currentIndex?: number;
   onImageChange?: (index: number) => void;
+  /** 현재 슬라이드 이미지 로드 시 natural 크기 전달 (중복 fetch 없이 비율 체크용) */
+  onImageLoad?: (index: number, naturalWidth: number, naturalHeight: number) => void;
+  /** prev/next·인디케이터·드래그 시 호출 (카드 클릭과 구분) */
+  onUserInteract?: () => void;
 }
 
 export const ImageCarousel: React.FC<ImageCarouselProps> = ({
@@ -26,10 +30,13 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
   showNavigation = true,
   showIndicators = true,
   currentIndex,
-  onImageChange
+  onImageChange,
+  onImageLoad,
+  onUserInteract,
 }) => {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30 }, [Fade()]);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const naturalSizeByIndexRef = useRef<Record<number, { width: number; height: number }>>({});
 
   useEffect(() => {
     if (currentIndex !== undefined && emblaApi && currentIndex !== selectedIndex) {
@@ -50,19 +57,73 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
     onSelect();
   }, [emblaApi, onSelect]);
 
+  const notifyImageLoad = useCallback(
+    (index: number, naturalWidth: number, naturalHeight: number) => {
+      naturalSizeByIndexRef.current[index] = { width: naturalWidth, height: naturalHeight };
+      if (index === selectedIndex) {
+        onImageLoad?.(index, naturalWidth, naturalHeight);
+      }
+    },
+    [onImageLoad, selectedIndex]
+  );
+
+  useEffect(() => {
+    const cached = naturalSizeByIndexRef.current[selectedIndex];
+    if (cached) {
+      onImageLoad?.(selectedIndex, cached.width, cached.height);
+    }
+  }, [selectedIndex, onImageLoad]);
+
   const onImageNext = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
+    onUserInteract?.();
     emblaApi?.scrollNext();
-  }, [emblaApi]);
+  }, [emblaApi, onUserInteract]);
 
   const onImagePrev = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
+    onUserInteract?.();
     emblaApi?.scrollPrev();
-  }, [emblaApi]);
+  }, [emblaApi, onUserInteract]);
 
   const goToSlide = useCallback((index: number) => {
+    onUserInteract?.();
     emblaApi?.scrollTo(index);
-  }, [emblaApi]);
+  }, [emblaApi, onUserInteract]);
+
+  const handleIndicatorClick = useCallback(
+    (e: React.MouseEvent, index: number) => {
+      e.stopPropagation();
+      goToSlide(index);
+    },
+    [goToSlide]
+  );
+
+  const DRAG_THRESHOLD = 10;
+  const pointerOriginRef = useRef<{ x: number; y: number } | null>(null);
+  const dragStartedRef = useRef(false);
+
+  const handlePointerDown = useCallback((e: React.PointerEvent) => {
+    pointerOriginRef.current = { x: e.clientX, y: e.clientY };
+    dragStartedRef.current = false;
+  }, []);
+
+  const handlePointerMove = useCallback(
+    (e: React.PointerEvent) => {
+      if (!pointerOriginRef.current || dragStartedRef.current) return;
+      const dx = e.clientX - pointerOriginRef.current.x;
+      const dy = e.clientY - pointerOriginRef.current.y;
+      if (Math.abs(dx) > DRAG_THRESHOLD || Math.abs(dy) > DRAG_THRESHOLD) {
+        dragStartedRef.current = true;
+        onUserInteract?.();
+      }
+    },
+    [onUserInteract]
+  );
+
+  const handlePointerUp = useCallback(() => {
+    pointerOriginRef.current = null;
+  }, []);
 
   // ------------------------------------------------------------ 프리로딩 관련
   // 특정 인덱스가 우선순위 로딩 대상인지 확인
@@ -86,7 +147,14 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
 
   return (
     <div className={`${className} group`}>
-      <div className="overflow-hidden h-full" ref={emblaRef}>
+      <div
+        className="overflow-hidden h-full"
+        ref={emblaRef}
+        onPointerDown={handlePointerDown}
+        onPointerMove={handlePointerMove}
+        onPointerUp={handlePointerUp}
+        onPointerCancel={handlePointerUp}
+      >
         <div className="flex h-full">
           {images.map((imageSrc, index) => (
             <div className="flex-shrink-0 flex-grow-0 basis-full relative" key={index}>
@@ -98,6 +166,10 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
                 sizes={sizes}
                 draggable={false}
                 priority={shouldHavePriority(index)}
+                onLoad={(e) => {
+                  const img = e.currentTarget;
+                  notifyImageLoad(index, img.naturalWidth, img.naturalHeight);
+                }}
               />
             </div>
           ))}
@@ -132,7 +204,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
           {images.map((_, index) => (
             <button
               key={index}
-              onClick={() => goToSlide(index)}
+              onClick={(e) => handleIndicatorClick(e, index)}
               className={`w-2 h-2 rounded-full transition-all ${
                 index === selectedIndex ? 'bg-white' : 'bg-white bg-opacity-50'
               }`}
