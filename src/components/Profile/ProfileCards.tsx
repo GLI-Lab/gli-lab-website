@@ -7,7 +7,7 @@ import { ProfileListItem } from './ProfileListItem';
 import { ProfileCardDetail } from './ProfileCardDetail';
 import { type ProfileData, type PaperData, type StudyData, type PatentData, type ProjectData } from '@/data/loaders/types';
 import { getPapersForProfile, getPatentsForProfile } from '@/data/loaders/utils';
-import { buildProfilePath, DEFAULT_MEMBER_PROFILE_YAML_ID, getProfileSectionBasePath } from '@/data/loaders/profileSlug';
+import { buildProfilePath, DEFAULT_MEMBER_PROFILE_YAML_ID, getProfileSectionBasePath, PROFILE_MOBILE_BREAKPOINT } from '@/data/loaders/profileSlug';
 
 interface ProfileCardsProps {
     profiles: ProfileData[];
@@ -20,6 +20,7 @@ interface ProfileCardsProps {
     projects?: ProjectData[];
     isAlumniPage?: boolean; // alumni 페이지인지 여부
     initialIsCardView?: boolean; // SSR 단계에서 초기 뷰 모드 지정
+    initialCardColumns?: 1 | 2; // SSR 단계에서 cols URL 파라미터 반영 (기본 2)
 }
 
 // 현재 프로필과 관련된 스터디를 필터링하는 함수
@@ -36,13 +37,14 @@ const filterStudiesForProfile = (allStudies: StudyData[], profile: ProfileData) 
     );
 };
 
-export function ProfileCards({ profiles, selectedProfile, activeSlug = null, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false, initialIsCardView = true }: ProfileCardsProps) {
+export function ProfileCards({ profiles, selectedProfile, activeSlug = null, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false, initialIsCardView = true, initialCardColumns = 2 }: ProfileCardsProps) {
     const profileBasePath = getProfileSectionBasePath(isAlumniPage ? 'alumni' : 'members');
     const [isAtBottom, setIsAtBottom] = useState(false);
     const [selectedCard, setSelectedCard] = useState<ProfileData | null>(selectedProfile || null);
     
     const searchParams = useSearchParams();
     const pathname = usePathname();
+    const router = useRouter();
     // 모바일 모달: URL detail 파라미터 + detailSuppressed state 조합
     // - urlDetailOpen (?detail=1): 열기의 source of truth. 공유·뒤로가기·리마운트 후에도 유지.
     //   직접 URL 접근(detail 없음) → 모달 안 열림 / 클릭 시 detail=1 → 모달 열림
@@ -62,24 +64,21 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
     // 클라이언트 사이드 렌더링 시 발생하는 화면 깜빡임(flicker) 방지
     const [isCardView, setIsCardView] = useState(initialIsCardView);
 
-    // 1.5xl(1440px) 이상에서 카드 뷰 컬럼 수 (1단/2단). hydration mismatch 방지를 위해 상수로 초기화 후 effect에서 복원
-    const [cardColumns, setCardColumns] = useState<1 | 2>(2);
-
-    useEffect(() => {
-        const stored = typeof window !== 'undefined' ? window.localStorage.getItem('profileCardColumns') : null;
-        if (stored === '1' || stored === '2') {
-            setCardColumns(Number(stored) as 1 | 2);
-        }
-    }, []);
+    // 1.5xl(1440px) 이상 카드 뷰 컬럼 수. URL cols 파라미터로 SSR·공유·뒤로가기 일관성 유지 (기본 2)
+    const [cardColumns, setCardColumns] = useState<1 | 2>(initialCardColumns);
 
     const handleColumnsChange = useCallback((cols: 1 | 2) => {
         setCardColumns(cols);
-        try {
-            window.localStorage.setItem('profileCardColumns', String(cols));
-        } catch {
-            // localStorage 사용 불가 환경 무시
+        const params = new URLSearchParams(searchParams.toString());
+        if (cols === 1) {
+            params.set('cols', '1');
+        } else {
+            params.delete('cols');
         }
-    }, []);
+        const query = params.toString();
+        const nextUrl = query ? `${pathname}?${query}` : pathname;
+        router.replace(nextUrl, { scroll: false });
+    }, [router, pathname, searchParams]);
     
     // members 페이지에서는 default 프로필을 useMemo로 캐싱 (profiles가 변경될 때만 재계산)
     // alumni 페이지에서는 null로, 특정 프로필이 선택되지 않은 상태
@@ -93,10 +92,13 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
         if (view === 'list') setIsCardView(false);
         else if (view === 'card') setIsCardView(true);
     }, [searchParams]);
+
+    useEffect(() => {
+        setCardColumns(searchParams.get('cols') === '1' ? 1 : 2);
+    }, [searchParams]);
     
     const mobilePopupRef = useRef<HTMLDivElement>(null);
     const profileRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-    const router = useRouter();
 
     const closeDetailModal = useCallback(() => {
         setDetailSuppressed(true);
@@ -134,11 +136,43 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
 
     const handleViewChange = useCallback((newView: boolean) => {
         setIsCardView(newView);
-        setSelectedCard(isAlumniPage ? null : (defaultProfile || null));
 
-        const url = newView ? `${profileBasePath}/` : `${profileBasePath}/?view=list`;
-        router.replace(url, { scroll: false });
-    }, [router, profileBasePath, defaultProfile, isAlumniPage]);
+        const section = isAlumniPage ? 'alumni' : 'members';
+        const isMobile = typeof window !== 'undefined' && window.innerWidth < PROFILE_MOBILE_BREAKPOINT;
+
+        if (isMobile) {
+            setDetailSuppressed(true);
+            setSelectedCard(isAlumniPage ? null : (defaultProfile || null));
+
+            const params = new URLSearchParams();
+            if (!newView) params.set('view', 'list');
+            if (newView && cardColumns === 1) params.set('cols', '1');
+            const query = params.toString();
+            router.replace(query ? `${profileBasePath}/?${query}` : `${profileBasePath}/`, { scroll: false });
+            return;
+        }
+
+        const profile = selectedCard ?? (isAlumniPage ? null : defaultProfile);
+
+        const keepProfileInUrl =
+            profile != null &&
+            (activeSlug != null || profile.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID || isAlumniPage);
+
+        if (keepProfileInUrl) {
+            const url = buildProfilePath(section, profile.id, {
+                view: newView ? undefined : 'list',
+                cols: newView && cardColumns === 1 ? 1 : undefined,
+            });
+            router.replace(url, { scroll: false });
+            return;
+        }
+
+        const params = new URLSearchParams();
+        if (!newView) params.set('view', 'list');
+        if (newView && cardColumns === 1) params.set('cols', '1');
+        const query = params.toString();
+        router.replace(query ? `${profileBasePath}/?${query}` : `${profileBasePath}/`, { scroll: false });
+    }, [router, profileBasePath, defaultProfile, isAlumniPage, cardColumns, selectedCard, activeSlug]);
 
     const handleProfileClick = useCallback((profile: ProfileData) => {
         setDetailSuppressed(false);
@@ -148,40 +182,26 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
         const url = buildProfilePath(section, profile.id, {
             view: isCardView ? undefined : 'list',
             detail: isCardView && isMobile,
+            cols: isCardView && cardColumns === 1 ? 1 : undefined,
         });
         router.replace(url, { scroll: false });
-    }, [router, isAlumniPage, isCardView]);
+    }, [router, isAlumniPage, isCardView, cardColumns]);
 
-    // view가 바뀔때 이전에 클릭했던 프로필을 초기화
+    // URL slug(selectedProfile) 변경 시 선택 상태 동기화
     useEffect(() => {
         setSelectedCard(selectedProfile || null);
     }, [selectedProfile]);
 
-    // 자동 스크롤 -> 초기 진입 후 UI 로딩이 완료되기 전에 이동하면서 화면이 불안정함
-    // useEffect(() => {
-    //     if (selectedCard && (isDetailOpen || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID)) {
-    //         const profileElement = profileRefs.current[selectedCard.id];
-    //         if (profileElement) {
-    //             profileElement.scrollIntoView({
-    //                 behavior: 'smooth',
-    //                 block: (!isCardView && window.innerWidth < 768) ? 'start' : 'center'
-    //             });
-    //         }
-    //     }
-    // }, [selectedCard, isCardView, isDetailOpen, activeSlug]);
-    // 자동 스크롤 (지연 200ms) -> 초기 진입 후 UI 로딩이 완료되기 전에 이동하면서 화면이 불안정함. 따라서서 시간을 버는 용도...
+    // 자동 스크롤
     useEffect(() => {
         if (selectedCard && (isDetailOpen || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID)) {
-            const timer = setTimeout(() => {
-                const profileElement = profileRefs.current[selectedCard.id];
-                if (profileElement) {
-                    profileElement.scrollIntoView({
-                        behavior: 'smooth',
-                        block: (!isCardView && window.innerWidth < 768) ? 'start' : 'center'
-                    });
-                }
-            }, 200);
-            return () => clearTimeout(timer);
+            const profileElement = profileRefs.current[selectedCard.id];
+            if (profileElement) {
+                profileElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: (!isCardView && window.innerWidth < 768) ? 'start' : 'center'
+                });
+            }
         }
     }, [selectedCard, isCardView, isDetailOpen, activeSlug]);
 
@@ -259,90 +279,97 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
         }
     };
 
-    return (
-        <div className="max-w-screen-1.5xl mx-auto px-3 sm:px-4 py-8 md:py-12 flex flex-row relative min-w-0 1.5md:gap-12 lg:gap-20">
-            {/* View Toggle Button */}
-            <div className="absolute top-8 md:top-12 right-4 z-10 flex items-center gap-2">
-                {/* Column Toggle (1.5xl 이상, Card View일 때만) */}
-                {isCardView && (
-                    <div className="hidden 1.5xl:flex bg-white border border-gray-300 rounded-lg p-1">
-                        {/* 1 Column Button */}
-                        <button
-                            onClick={() => handleColumnsChange(1)}
-                            className={`flex items-center px-2.5 py-2 rounded-l-md transition-all duration-200 ${
-                                cardColumns === 1
-                                    ? 'bg-interactive-primary text-white shadow-md'
-                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                            }`}
-                            title="1 Column"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <rect x="5" y="4" width="14" height="16" rx="1.5" strokeWidth={2} />
-                            </svg>
-                        </button>
-
-                        {/* 2 Column Button */}
-                        <button
-                            onClick={() => handleColumnsChange(2)}
-                            className={`flex items-center px-2.5 py-2 rounded-r-md transition-all duration-200 ${
-                                cardColumns === 2
-                                    ? 'bg-interactive-primary text-white shadow-md'
-                                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                            }`}
-                            title="2 Columns"
-                        >
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <rect x="3" y="4" width="7.5" height="16" rx="1.5" strokeWidth={2} />
-                                <rect x="13.5" y="4" width="7.5" height="16" rx="1.5" strokeWidth={2} />
-                            </svg>
-                        </button>
-                    </div>
-                )}
-                <div className="bg-white border border-gray-300 rounded-lg p-1 flex">
-                    {/* Card View Button */}
+    const viewToggleButtons = (
+        <div className="flex items-center gap-2">
+            {isCardView && (
+                <div className="hidden 1.5xl:flex bg-white border border-gray-300 rounded-lg p-1">
                     <button
-                        onClick={() => handleViewChange(true)}
-                        className={`flex items-center gap-2 px-2 md:px-3 py-2 rounded-l-md transition-all duration-200 ${
-                            isCardView 
-                                ? 'bg-interactive-primary text-white shadow-md' 
+                        onClick={() => handleColumnsChange(1)}
+                        className={`flex items-center px-2.5 py-2 rounded-l-md transition-all duration-200 ${
+                            cardColumns === 1
+                                ? 'bg-interactive-primary text-white shadow-md'
                                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                         }`}
-                        title="Card View"
+                        title="1 column layout"
+                        aria-label="1 column layout"
                     >
-                        <svg 
-                            className="w-4 h-4" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            viewBox="0 0 24 24"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                            <rect x="5" y="4" width="14" height="16" rx="1.5" strokeWidth={2} />
                         </svg>
-                        <span className="text-sm font-medium">Card View</span>
                     </button>
-                    
-                    {/* List View Button */}
                     <button
-                        onClick={() => handleViewChange(false)}
-                        className={`flex items-center gap-2 px-2 md:px-3 py-2 rounded-r-md transition-all duration-200 ${
-                            !isCardView 
-                                ? 'bg-interactive-primary text-white shadow-md' 
+                        onClick={() => handleColumnsChange(2)}
+                        className={`flex items-center px-2.5 py-2 rounded-r-md transition-all duration-200 ${
+                            cardColumns === 2
+                                ? 'bg-interactive-primary text-white shadow-md'
                                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
                         }`}
-                        title="List View"
+                        title="2 column layout"
+                        aria-label="2 column layout"
                     >
-                        <svg 
-                            className="w-4 h-4" 
-                            fill="none" 
-                            stroke="currentColor" 
-                            viewBox="0 0 24 24"
-                        >
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                            <rect x="3" y="4" width="7.5" height="16" rx="1.5" strokeWidth={2} />
+                            <rect x="13.5" y="4" width="7.5" height="16" rx="1.5" strokeWidth={2} />
                         </svg>
-                        <span className="text-sm font-medium">List View</span>
                     </button>
                 </div>
+            )}
+            <div className="bg-white border border-gray-300 rounded-lg p-1 flex">
+                <button
+                    onClick={() => handleViewChange(true)}
+                    className={`flex items-center gap-1.5 px-2.5 py-2 rounded-l-md transition-all duration-200 ${
+                        isCardView
+                            ? 'bg-interactive-primary text-white shadow-md'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                    title="Card view"
+                    aria-label="Card view"
+                >
+                    <svg
+                        className="w-4 h-4 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                    <span className="text-sm font-medium">Card</span>
+                </button>
+                <button
+                    onClick={() => handleViewChange(false)}
+                    className={`flex items-center gap-1.5 px-2.5 py-2 rounded-r-md transition-all duration-200 ${
+                        !isCardView
+                            ? 'bg-interactive-primary text-white shadow-md'
+                            : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    }`}
+                    title="List view"
+                    aria-label="List view"
+                >
+                    <svg
+                        className="w-4 h-4 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden
+                    >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+                    </svg>
+                    <span className="text-sm font-medium">List</span>
+                </button>
             </div>
+        </div>
+    );
 
+    return (
+        <div className="max-w-screen-1.5xl mx-auto px-3 sm:px-4 py-8 md:py-12">
+            {/* 1.5md+ — Faculty title 높이에서 sticky (column 토글은 1.5xl+) */}
+            <div className="hidden 1.5md:block z-10 h-0 overflow-visible sticky top-20">
+                <div className="absolute right-4 top-0">
+                    {viewToggleButtons}
+                </div>
+            </div>
+            <div className="flex flex-row min-w-0 1.5md:gap-12 lg:gap-20">
             {/* Detailed Profile (left side) - Card View에서만 표시 */}
             {selectedCard && isCardView && (
                 <div className={`hidden 1.5md:block sticky self-start top-16 pt-4 min-w-0 1.5md:flex-1 1.5md:basis-0 ${cardColumns === 2 ? '1.5xl:flex-none 1.5xl:w-[350px]' : '1.5xl:flex-1 1.5xl:basis-0'}`}>
@@ -415,6 +442,12 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
 
             {/* Profile List */}
             <div className={`flex-1 min-w-0 ${isCardView ? '1.5md:min-w-[430px]' : ''} ${isCardView && selectedCard ? '1.5md:flex-1 1.5md:basis-0' : ''} ${isCardView && selectedCard && cardColumns === 1 ? '1.5xl:flex-none 1.5xl:w-[550px]' : isCardView && selectedCard ? '1.5xl:flex-1 1.5xl:basis-0' : ''}`}>
+                {/* 1.5md 미만 — Faculty title 옆 (sticky 없음) */}
+                <div className="1.5md:hidden relative z-10 h-0 overflow-visible">
+                    <div className="absolute right-0 top-0">
+                        {viewToggleButtons}
+                    </div>
+                </div>
                 {categories.map((category) => {
                     const categoryProfiles = profiles.filter(profile => profile.type === category.type);
                     
@@ -480,6 +513,7 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
                 })}
                 {/* Sticky positioning을 위한 하단 여백 */}
                 {isCardView && selectedCard && <div className="h-[50vh]"></div>}
+            </div>
             </div>
         </div>
     );

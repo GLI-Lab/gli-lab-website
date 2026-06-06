@@ -7,7 +7,8 @@ import Fade from 'embla-carousel-fade'
 import { Separator } from "@/components/ui/separator"
 import { ProfileDetailProps } from '@/data/loaders/types';
 import Link from 'next/link';
-import { buildProfileSharePath } from '@/data/loaders/profileSlug';
+import { useSearchParams } from 'next/navigation';
+import { buildProfileSharePath, parseProfileColsParam } from '@/data/loaders/profileSlug';
 import { ProfileDetailPaper } from './ProfileDetailPaper';
 import { ProfileDetailPatent } from './ProfileDetailPatent';
 import { ProfileDetailProject } from './ProfileDetailProject';
@@ -39,6 +40,8 @@ function WrappedContactEntries({
 export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolean }> = (props) => {
     const {id, yamlId, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false, isModal = false } = props;
     const section = isAlumniPage ? 'alumni' : 'members';
+    const searchParams = useSearchParams();
+    const cardColumns = parseProfileColsParam(searchParams.get('cols') ?? undefined);
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30}, [Fade()]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [copied, setCopied] = useState(false);
@@ -122,7 +125,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                const currentUrl = `${window.location.origin}${buildProfileSharePath(section, id, 'card')}`;
+                                const currentUrl = `${window.location.origin}${buildProfileSharePath(section, id, 'card', cardColumns === 1 ? 1 : undefined)}`;
 
                                 // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
                                 const selectionlessCopy = () => {
