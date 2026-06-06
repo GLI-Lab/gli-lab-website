@@ -9,6 +9,16 @@ export type { GalleryItem as GalleryItemType, GalleryData } from './types';
 
 // Utils (server-side only)
 export { getGalleryItems, getGalleryItemsSecure } from './utils';
+export type { GetGalleryItemsOptions } from './utils';
 
 // Helpers (client-side safe)
-export { isNewItem } from './helpers'; 
+export { isNewItem } from './helpers';
+
+// Slug / URL helpers
+export {
+  GALLERY_BASE_PATH,
+  dateToGallerySlug,
+  findGalleryItemBySlug,
+  buildGalleryPath,
+  buildGalleryAsPath,
+} from './gallerySlug'; 

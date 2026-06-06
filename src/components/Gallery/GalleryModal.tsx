@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { GalleryItem } from './types';
@@ -24,27 +24,16 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
     setCurrentImageIndex(index);
   };
 
-  // ------------------------------------------------------------
-  // 현재 이미지 변경 시 비율 확인
-  useEffect(() => {
-    const img = new window.Image();
-    img.onload = () => {
-      checkImageRatio(img.naturalWidth, img.naturalHeight);
-    };
-    img.src = item.images[currentImageIndex];
-  }, [currentImageIndex, item.images]);
-
-  // 이미지 비율 확인 함수
-  const checkImageRatio = (naturalWidth: number, naturalHeight: number) => {
-    const imageRatio = naturalWidth / naturalHeight;
-    const targetRatio = 4 / 3; // 1.333...
-    const tolerance = 0.15; // 허용 오차
-    
-    // 현재 aspect-[4/3]와 비슷한 비율이면 줌 비활성화
-    const shouldDisableZoom = Math.abs(imageRatio - targetRatio) < tolerance;
-    setIsZoomEnabled(!shouldDisableZoom);
-  };
-  // ------------------------------------------------------------
+  const handleCarouselImageLoad = useCallback(
+    (_index: number, naturalWidth: number, naturalHeight: number) => {
+      const imageRatio = naturalWidth / naturalHeight;
+      const targetRatio = 4 / 3;
+      const tolerance = 0.15;
+      const shouldDisableZoom = Math.abs(imageRatio - targetRatio) < tolerance;
+      setIsZoomEnabled(!shouldDisableZoom);
+    },
+    []
+  );
 
   // ------------------------------------------------------------
   const checkBottom = () => {
@@ -156,6 +145,7 @@ export function GalleryModal({ item, onClose }: GalleryModalProps) {
               sizes="100vw"
               currentIndex={currentImageIndex}
               onImageChange={handleImageChange}
+              onImageLoad={handleCarouselImageLoad}
             />
             
             {/* 이미지 표시 모드 전환 버튼 */}

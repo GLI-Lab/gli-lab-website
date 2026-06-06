@@ -17,10 +17,10 @@ export default async function Page() {
         getNews(),
         getMemberIds(),
         getAlumniIds(),
-        getSeminars(),
+        getSeminars({ count: 6 }),
         getProfiles(),
         getAlumniProfiles().catch(() => []),
-        getGalleryItems(),
+        getGalleryItems({ count: 3 }),
     ]);
 
     const profileSlugByYamlId = Object.fromEntries(
@@ -212,7 +212,15 @@ export default async function Page() {
                         alumniProfiles={alumniProfiles}
                     />
                     <SeminarList
-                        className="w-full hidden md:block"
+                        className="w-full hidden md:block lg:hidden"
+                        layout="card"
+                        count={4}
+                        seminarItems={seminars}
+                        profiles={profiles}
+                        alumniProfiles={alumniProfiles}
+                    />
+                    <SeminarList
+                        className="w-full hidden lg:block"
                         layout="card"
                         count={6}
                         seminarItems={seminars}
@@ -234,7 +242,12 @@ export default async function Page() {
                     <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
                         Latest Gallery
                     </p>
-                    <GalleryGrid items={galleryItems.slice(0, 3)} className="w-full gap-x-6 gap-y-6 md:gap-y-12" />
+                    <GalleryGrid
+                        className="w-full [&>*:nth-child(3)]:hidden lg:[&>*:nth-child(3)]:block"
+                        items={galleryItems}
+                        count={3}
+                        syncUrl={false}
+                    />
                     <Link href="/board/gallery"
                         className="px-6 py-2 mt-4 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
                         Read More

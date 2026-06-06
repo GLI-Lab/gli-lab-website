@@ -30,11 +30,14 @@ function extractCVVersion(filename: string): string | undefined {
   return `${year}-${month}-${day}`;
 }
 
+function profileIdsFromYAML(rawData: ProfileYAML[]): Set<string> {
+  return new Set(rawData.map((profile) => profile.id).filter((id): id is string => Boolean(id)));
+}
+
 // CV 파일을 찾는 함수 (URL과 버전 정보 반환)
-async function getProfilesCVDict(isAlumni: boolean = false): Promise<Map<string, { url: string; version?: string }>> {
+async function buildProfilesCVDict(rawData: ProfileYAML[]): Promise<Map<string, { url: string; version?: string }>> {
   try {
-    const rawData = await loadProfilesYAML(isAlumni);
-    const profileIds = new Set(rawData.map(profile => profile.id).filter(id => id));
+    const profileIds = profileIdsFromYAML(rawData);
 
     let files: string[] = [];
     try {
@@ -68,10 +71,9 @@ async function getProfilesCVDict(isAlumni: boolean = false): Promise<Map<string,
 }
 
 // 프로필 디렉토리의 파일들을 ID별로 그룹화하여 Dictionary로 반환
-async function getProfilesPhotosDict(isAlumni: boolean = false): Promise<Map<string, string[]>> {
+async function buildProfilesPhotosDict(rawData: ProfileYAML[]): Promise<Map<string, string[]>> {
   try {
-    const rawData = await loadProfilesYAML(isAlumni);
-    const profileIds = new Set(rawData.map(profile => profile.id).filter(id => id));
+    const profileIds = profileIdsFromYAML(rawData);
 
     const files = await fs.readdir(path.join(process.cwd(), 'public', 'images', 'profiles'));
     
@@ -220,9 +222,11 @@ function findLatestFile(files: string[]): string {
 export async function getProfiles(): Promise<ProfileData[]> {
   try {
     const rawData = await loadProfilesYAML(false);
-    const photosDict = await getProfilesPhotosDict(false);
-    const cvDict = await getProfilesCVDict(false);
-    return rawData.map(profile => transformProfile(profile, photosDict, cvDict));
+    const [photosDict, cvDict] = await Promise.all([
+      buildProfilesPhotosDict(rawData),
+      buildProfilesCVDict(rawData),
+    ]);
+    return rawData.map((profile) => transformProfile(profile, photosDict, cvDict));
   } catch (error) {
     console.error('Error loading profiles data:', error);
     return [];
@@ -233,9 +237,11 @@ export async function getProfiles(): Promise<ProfileData[]> {
 export async function getAlumniProfiles(): Promise<ProfileData[]> {
   try {
     const rawData = await loadProfilesYAML(true);
-    const photosDict = await getProfilesPhotosDict(true);
-    const cvDict = await getProfilesCVDict(true);
-    return rawData.map(profile => transformProfile(profile, photosDict, cvDict));
+    const [photosDict, cvDict] = await Promise.all([
+      buildProfilesPhotosDict(rawData),
+      buildProfilesCVDict(rawData),
+    ]);
+    return rawData.map((profile) => transformProfile(profile, photosDict, cvDict));
   } catch (error) {
     console.error('Error loading alumni data:', error);
     return [];
