@@ -282,7 +282,7 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
     const viewToggleButtons = (
         <div className="flex items-center gap-2">
             {isCardView && (
-                <div className="hidden 1.5xl:flex bg-white border border-gray-300 rounded-lg p-1">
+                <div className="hidden 1.5xl:flex bg-white border border-gray-300 rounded-lg p-1 1.5md:shadow-sm">
                     <button
                         onClick={() => handleColumnsChange(1)}
                         className={`flex items-center px-2.5 py-2 rounded-l-md transition-all duration-200 ${
@@ -314,7 +314,7 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
                     </button>
                 </div>
             )}
-            <div className="bg-white border border-gray-300 rounded-lg p-1 flex">
+            <div className="bg-white border border-gray-300 rounded-lg p-1 flex 1.5md:shadow-sm">
                 <button
                     onClick={() => handleViewChange(true)}
                     className={`flex items-center gap-1.5 px-2.5 py-2 rounded-l-md transition-all duration-200 ${
