@@ -157,7 +157,19 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
         setSelectedCard(selectedProfile || null);
     }, [selectedProfile]);
 
-    // 자동 스크롤
+    // 자동 스크롤 -> 초기 진입 후 UI 로딩이 완료되기 전에 이동하면서 화면이 불안정함
+    // useEffect(() => {
+    //     if (selectedCard && (isDetailOpen || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID)) {
+    //         const profileElement = profileRefs.current[selectedCard.id];
+    //         if (profileElement) {
+    //             profileElement.scrollIntoView({
+    //                 behavior: 'smooth',
+    //                 block: (!isCardView && window.innerWidth < 768) ? 'start' : 'center'
+    //             });
+    //         }
+    //     }
+    // }, [selectedCard, isCardView, isDetailOpen, activeSlug]);
+    // 자동 스크롤 (지연 200ms) -> 초기 진입 후 UI 로딩이 완료되기 전에 이동하면서 화면이 불안정함. 따라서서 시간을 버는 용도...
     useEffect(() => {
         if (selectedCard && (isDetailOpen || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID)) {
             const timer = setTimeout(() => {
