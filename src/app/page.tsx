@@ -102,7 +102,7 @@ export default async function Page() {
                     </p>
 
                     <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
-                        본 연구실은 궁극적으로 Graph Intelligence와 Language Intelligence를 융합하여 얻은 Graph-Language Ingelligence를 Graph-Centric AI, Language-Centric AI, Recommender Systems, Anomaly Detection 등에 적용하는 것을 목적으로 하고 있으며, 다음과 같은 최신 기술들을 연구개발하고 있습니다.
+                        본 연구실은 궁극적으로 Graph Intelligence와 Language Intelligence를 융합하여 얻은 Graph-Language Intelligence를 Graph-Centric AI, Language-Centric AI, Recommender Systems, Anomaly Detection 등에 적용하는 것을 목적으로 하고 있으며, 다음과 같은 최신 기술들을 연구개발하고 있습니다.
                     </p>
 
                     <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center justify-center !mt-6">
