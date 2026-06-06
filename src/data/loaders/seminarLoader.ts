@@ -31,14 +31,12 @@ async function enrichWithSlideExists(items: SeminarData[]): Promise<SeminarData[
   );
 }
 
-export async function getSeminars(options?: GetSeminarsOptions): Promise<SeminarData[]> {
+export async function getSeminarsUncached(): Promise<SeminarData[]> {
   try {
     const filePath = path.join(process.cwd(), 'src', 'data', 'seminar.yaml');
     const yamlText = await fs.readFile(filePath, 'utf8');
     const raw = yaml.load(yamlText) as SeminarData[];
-    const count = options?.count;
-    const selected = count !== undefined ? raw.slice(0, count) : raw;
-    return enrichWithSlideExists(selected);
+    return enrichWithSlideExists(raw);
   } catch (error) {
     console.error('Error loading seminar data:', error);
     return [];

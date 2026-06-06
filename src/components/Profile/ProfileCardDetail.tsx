@@ -8,7 +8,7 @@ import { Separator } from "@/components/ui/separator"
 import { ProfileDetailProps } from '@/data/loaders/types';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { buildProfileSharePath, parseProfileColsParam } from '@/data/loaders/profileSlug';
+import { buildProfileSharePath, parseProfileColsParam } from '@/lib/profileSlug';
 import { ProfileDetailPaper } from './ProfileDetailPaper';
 import { ProfileDetailPatent } from './ProfileDetailPatent';
 import { ProfileDetailProject } from './ProfileDetailProject';

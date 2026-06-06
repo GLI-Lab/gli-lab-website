@@ -2,8 +2,7 @@ import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
 import PatentList from "@/components/Publication/PatentList";
-import { getPatents } from "@/data/loaders/patentLoader";
-import { getMemberIds, getAlumniIds, getProfileSlugByYamlId } from "@/data/loaders/profileLoader";
+import { getPatents, getMemberIds, getAlumniIds, getProfileSlugByYamlId } from "@/data/loaders";
 
 const TITLE = `Patents`
 

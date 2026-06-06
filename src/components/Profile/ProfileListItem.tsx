@@ -7,7 +7,7 @@ import { ProfileListDetail } from './ProfileListDetail';
 import { type StudyData, type PaperData, type PatentData, type ProjectData } from '@/data/loaders/types';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
-import { buildProfileSharePath } from '@/data/loaders/profileSlug';
+import { buildProfileSharePath } from '@/lib/profileSlug';
 
 interface ProfileListItemProps extends ProfileItemProps {
     studies?: StudyData[];

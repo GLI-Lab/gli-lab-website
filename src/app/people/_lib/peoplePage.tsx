@@ -12,8 +12,8 @@ import {
   getProfileOgImagePath,
   parseProfileColsParam,
   type ProfileSection,
-} from '@/data/loaders/profileSlug';
-import { getAlumniProfiles, getProfiles } from '@/data/loaders/profileLoader';
+} from '@/lib/profileSlug';
+import { getAlumniProfiles, getProfiles } from '@/data/loaders';
 import { loadProfilePageData } from '@/app/people/_lib/loadProfilePageData';
 import type { ProfileData } from '@/data/loaders/types';
 

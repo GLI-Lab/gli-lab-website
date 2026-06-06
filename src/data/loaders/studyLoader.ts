@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 import { StudyData } from './types';
 
 // 스터디 데이터를 가져오는 함수
-export async function getStudies(): Promise<StudyData[]> {
+export async function getStudiesUncached(): Promise<StudyData[]> {
   try {
     const filePath = path.join(process.cwd(), 'src', 'data', 'study.yaml');
     const yamlText = await fs.readFile(filePath, 'utf8');

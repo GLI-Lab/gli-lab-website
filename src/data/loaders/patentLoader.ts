@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 import { PatentData } from './types';
 
 // Patent 데이터를 가져오는 함수
-export async function getPatents(): Promise<PatentData[]> {
+export async function getPatentsUncached(): Promise<PatentData[]> {
   try {
     const filePath = path.join(process.cwd(), 'src', 'data', 'patent.yaml');
     const yamlText = await fs.readFile(filePath, 'utf8');

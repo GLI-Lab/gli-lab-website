@@ -1,10 +1,8 @@
 import Link from 'next/link';
-import { getProfiles } from '../../data/loaders/profileLoader';
-import { getAlumniProfiles } from '../../data/loaders/profileLoader';
-import { StudyData } from '../../data/loaders/types';
+import { getProfiles, getAlumniProfiles } from '@/data/loaders';
+import { StudyData } from '@/data/loaders/types';
 import { StudyHighlightWrapper } from './StudyHighlight';
 import { getProfileHref } from '@/lib/utils';
-export { getStudies } from '@/data/loaders/studyLoader';
 
 
 export interface StudyListProps {

@@ -2,7 +2,7 @@ import yaml from 'js-yaml';
 import path from 'path';
 import fs from 'fs/promises';
 import { ProfileYAML, ProfileData } from './types';
-import { generateProfileSlug } from './profileSlug';
+import { generateProfileSlug } from '@/lib/profileSlug';
 
 // YAML 파일을 읽어서 프로필 데이터 반환
 async function loadProfilesYAML(isAlumni: boolean = false): Promise<ProfileYAML[]> {
@@ -219,7 +219,7 @@ function findLatestFile(files: string[]): string {
 }
 
 // 현재 프로필 데이터를 가져오는 함수
-export async function getProfiles(): Promise<ProfileData[]> {
+export async function getProfilesUncached(): Promise<ProfileData[]> {
   try {
     const rawData = await loadProfilesYAML(false);
     const [photosDict, cvDict] = await Promise.all([
@@ -234,7 +234,7 @@ export async function getProfiles(): Promise<ProfileData[]> {
 }
 
 // Alumni 프로필 데이터를 가져오는 함수
-export async function getAlumniProfiles(): Promise<ProfileData[]> {
+export async function getAlumniProfilesUncached(): Promise<ProfileData[]> {
   try {
     const rawData = await loadProfilesYAML(true);
     const [photosDict, cvDict] = await Promise.all([
@@ -246,36 +246,4 @@ export async function getAlumniProfiles(): Promise<ProfileData[]> {
     console.error('Error loading alumni data:', error);
     return [];
   }
-}
-
-// 현재 멤버 ID 리스트만 가져오는 함수
-export async function getMemberIds(): Promise<string[]> {
-  try {
-    const rawData = await loadProfilesYAML(false);
-    return rawData.map(profile => profile.id).filter(id => id);
-  } catch (error) {
-    console.error('Error loading member IDs:', error);
-    return [];
-  }
-}
-
-// Alumni ID 리스트만 가져오는 함수
-export async function getAlumniIds(): Promise<string[]> {
-  try {
-    const rawData = await loadProfilesYAML(true);
-    return rawData.map(profile => profile.id).filter(id => id);
-  } catch (error) {
-    console.error('Error loading alumni IDs:', error);
-    return [];
-  }
-}
-
-/** YAML id -> URL slug 맵 (논문·뉴스 등 외부 링크 생성용) */
-export async function getProfileSlugByYamlId(): Promise<Record<string, string>> {
-  const [members, alumni] = await Promise.all([getProfiles(), getAlumniProfiles()]);
-  const map: Record<string, string> = {};
-  for (const profile of [...members, ...alumni]) {
-    map[profile.yamlId] = profile.id;
-  }
-  return map;
 }

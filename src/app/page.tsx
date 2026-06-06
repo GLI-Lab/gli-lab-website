@@ -6,9 +6,14 @@ import { FaCheck } from "react-icons/fa";
 import { NewsList } from "@/components/Board/NewsList";
 import { SeminarList } from "@/components/Board/SeminarList";
 import { GalleryGrid, getGalleryItems } from "@/components/Gallery";
-import { getNews } from "@/data/loaders/newsLoader";
-import { getMemberIds, getAlumniIds, getProfiles, getAlumniProfiles } from "@/data/loaders/profileLoader";
-import { getSeminars } from "@/data/loaders/seminarLoader";
+import {
+    getNews,
+    getMemberIds,
+    getAlumniIds,
+    getProfiles,
+    getAlumniProfiles,
+    getSeminars,
+} from "@/data/loaders";
 import NewsPopup from "@/components/NewsPopup";
 import { getNewsMarkupAlerts } from "@/lib/newsPaper";
 
