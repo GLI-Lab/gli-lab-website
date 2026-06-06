@@ -10,6 +10,7 @@ import {
   DEFAULT_MEMBER_PROFILE_YAML_ID,
   findProfileById,
   getProfileOgImagePath,
+  parseProfileColsParam,
   type ProfileSection,
 } from '@/data/loaders/profileSlug';
 import { getAlumniProfiles, getProfiles } from '@/data/loaders/profileLoader';
@@ -100,6 +101,7 @@ export async function renderPeoplePage({ section, params, searchParams }: People
   const { slug: slugSegments } = await params;
   const resolvedSearchParams = await searchParams;
   const viewParam = resolvedSearchParams.view as string | undefined;
+  const colsParam = resolvedSearchParams.cols as string | undefined;
 
   const listFallbackPath = buildProfileListPath(
     section,
@@ -128,6 +130,7 @@ export async function renderPeoplePage({ section, params, searchParams }: People
         projects={projects}
         isAlumniPage={config.isAlumni}
         initialIsCardView={viewParam !== 'list'}
+        initialCardColumns={parseProfileColsParam(colsParam)}
       />
     </div>
   );

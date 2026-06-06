@@ -57,29 +57,40 @@ export function getProfileSectionBasePath(section: ProfileSection): `/people/${P
   return `/people/${section}`;
 }
 
+/** URL cols 파라미터 → 카드 뷰 컬럼 수 (기본 2) */
+export function parseProfileColsParam(cols: string | undefined): 1 | 2 {
+  return cols === '1' ? 1 : 2;
+}
+
 /** 프로필 상세 경로 (trailing slash 포함) */
 export function buildProfilePath(
   section: ProfileSection,
   profileId: string,
-  options?: { view?: 'card' | 'list'; detail?: boolean }
+  options?: { view?: 'card' | 'list'; detail?: boolean; cols?: 1 | 2 }
 ): string {
   const path = `/people/${section}/${profileId}/`;
   const params = new URLSearchParams();
   if (options?.view) params.set('view', options.view);
   if (options?.detail) params.set('detail', '1');
+  if (options?.cols === 1) params.set('cols', '1');
   const query = params.toString();
   return query ? `${path}?${query}` : path;
 }
 
-/** 링크 복사용 프로필 URL (모바일이면 detail=1 포함) */
+/** 링크 복사용 프로필 URL (모바일이면 detail=1, 1단 카드 뷰면 cols=1 포함) */
 export function buildProfileSharePath(
   section: ProfileSection,
   profileId: string,
-  view: 'card' | 'list'
+  view: 'card' | 'list',
+  cols?: 1 | 2
 ): string {
   const isMobile =
     typeof window !== 'undefined' && window.innerWidth < PROFILE_MOBILE_BREAKPOINT;
-  return buildProfilePath(section, profileId, { view, detail: isMobile });
+  return buildProfilePath(section, profileId, {
+    view: view === 'list' ? 'list' : undefined,
+    detail: view === 'card' && isMobile,
+    cols: view === 'card' && cols === 1 ? 1 : undefined,
+  });
 }
 
 /** 목록 페이지 경로 (trailing slash 포함) */
