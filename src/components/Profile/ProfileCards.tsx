@@ -195,10 +195,15 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
     }, [router, isAlumniPage, isCardView, cardColumns]);
 
     // URL slug(selectedProfile) 변경 시 선택 상태 동기화
-    // detailPending 중에는 클릭한 프로필 유지 (서버 props가 이전 slug면 덮어쓰지 않음)
+    // detailPending 중: 클릭한 프로필 유지 (이전 slug 덮어쓰기 방지)
+    // URL 따라잡힌 뒤: 같은 id면 객체 교체 생략 → 모달 사진·Embla 깜빡임 방지
     useEffect(() => {
         if (detailPending) return;
-        setSelectedCard(selectedProfile || null);
+        if (!selectedProfile) {
+            setSelectedCard(null);
+            return;
+        }
+        setSelectedCard((prev) => (prev?.id === selectedProfile.id ? prev : selectedProfile));
     }, [selectedProfile, detailPending]);
 
     useEffect(() => {
