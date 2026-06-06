@@ -45,20 +45,21 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const router = useRouter();
-    // 모바일 모달: URL detail 파라미터 + detailSuppressed state 조합
-    // - urlDetailOpen (?detail=1): 열기의 source of truth. 공유·뒤로가기·리마운트 후에도 유지.
-    //   직접 URL 접근(detail 없음) → 모달 안 열림 / 클릭 시 detail=1 → 모달 열림
-    // - detailSuppressed: 닫기 즉시 반영용 optimistic state. X·배경·ESC 시 router URL 갱신을
-    //   UI가 기다리지 않도록 함 (searchParams만 쓰면 router.replace 완료까지 모달이 남음)
-    // - isDetailOpen = urlDetailOpen && !detailSuppressed
-    // init과 달리 state는 닫기만 담당하고 URL과 같은 방향(닫힘)이라 리마운트 시 충돌 없음
+    // 모바일 모달: URL detail + optimistic state 조합 (Gallery 패턴)
+    // - urlDetailOpen (?detail=1): 공유·뒤로가기·리마운트 후 source of truth
+    // - detailPending: 모바일 카드 클릭 시 URL·RSC 왕복 전 모달 즉시 열기
+    // - detailSuppressed: 닫기 즉시 반영 (router 완료까지 UI 대기 방지)
+    // - isDetailOpen = (urlDetailOpen || detailPending) && !detailSuppressed
     const urlDetailOpen = searchParams.get('detail') === '1';
+    const [detailPending, setDetailPending] = useState(false);
     const [detailSuppressed, setDetailSuppressed] = useState(false);
-    const isDetailOpen = urlDetailOpen && !detailSuppressed;
+    const isDetailOpen = (urlDetailOpen || detailPending) && !detailSuppressed;
 
-    // detail=1이 URL에 다시 생기면(다른 프로필 클릭 등) suppressed 해제
     useEffect(() => {
-        if (urlDetailOpen) setDetailSuppressed(false);
+        if (urlDetailOpen) {
+            setDetailSuppressed(false);
+            setDetailPending(false);
+        }
     }, [urlDetailOpen]);
     // URL 파라미터 'view'의 값으로 첫 렌더링 시 뷰 모드를 설정하여
     // 클라이언트 사이드 렌더링 시 발생하는 화면 깜빡임(flicker) 방지
@@ -99,8 +100,10 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
     
     const mobilePopupRef = useRef<HTMLDivElement>(null);
     const profileRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+    const lastScrolledIdRef = useRef<string | null>(null);
 
     const closeDetailModal = useCallback(() => {
+        setDetailPending(false);
         setDetailSuppressed(true);
         document.body.style.overflow = 'auto';
         const params = new URLSearchParams(searchParams.toString());
@@ -141,6 +144,7 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
         const isMobile = typeof window !== 'undefined' && window.innerWidth < PROFILE_MOBILE_BREAKPOINT;
 
         if (isMobile) {
+            setDetailPending(false);
             setDetailSuppressed(true);
             setSelectedCard(isAlumniPage ? null : (defaultProfile || null));
 
@@ -178,7 +182,10 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
         setDetailSuppressed(false);
         setSelectedCard(profile);
         const section = isAlumniPage ? 'alumni' : 'members';
-        const isMobile = typeof window !== 'undefined' && window.innerWidth < 880;
+        const isMobile = typeof window !== 'undefined' && window.innerWidth < PROFILE_MOBILE_BREAKPOINT;
+        if (isCardView && isMobile) {
+            setDetailPending(true);
+        }
         const url = buildProfilePath(section, profile.id, {
             view: isCardView ? undefined : 'list',
             detail: isCardView && isMobile,
@@ -188,22 +195,33 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
     }, [router, isAlumniPage, isCardView, cardColumns]);
 
     // URL slug(selectedProfile) 변경 시 선택 상태 동기화
+    // detailPending 중에는 클릭한 프로필 유지 (서버 props가 이전 slug면 덮어쓰지 않음)
     useEffect(() => {
+        if (detailPending) return;
         setSelectedCard(selectedProfile || null);
-    }, [selectedProfile]);
+    }, [selectedProfile, detailPending]);
 
-    // 자동 스크롤
     useEffect(() => {
-        if (selectedCard && (isDetailOpen || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID)) {
-            const profileElement = profileRefs.current[selectedCard.id];
-            if (profileElement) {
-                profileElement.scrollIntoView({
-                    behavior: 'smooth',
-                    block: (!isCardView && window.innerWidth < 768) ? 'start' : 'center'
-                });
-            }
+        if (!activeSlug) lastScrolledIdRef.current = null;
+    }, [activeSlug]);
+
+    // 자동 스크롤 — activeSlug와 선택 프로필이 일치할 때
+    // 모바일: /slug/ 만 있어도 해당 카드로 이동, /slug/?detail=1 이면 같은 위치 + 모달
+    // 클릭 직후(detailPending)는 activeSlug가 아직 이전 URL이라 여기서 스크롤하지 않음
+    useEffect(() => {
+        if (!selectedCard || activeSlug !== selectedCard.id) return;
+
+        if (lastScrolledIdRef.current === selectedCard.id) return;
+        lastScrolledIdRef.current = selectedCard.id;
+
+        const profileElement = profileRefs.current[selectedCard.id];
+        if (profileElement) {
+            profileElement.scrollIntoView({
+                behavior: 'smooth',
+                block: (!isCardView && typeof window !== 'undefined' && window.innerWidth < 768) ? 'start' : 'center',
+            });
         }
-    }, [selectedCard, isCardView, isDetailOpen, activeSlug]);
+    }, [selectedCard, activeSlug, isCardView]);
 
     const checkBottom = useCallback(() => {
         if (mobilePopupRef.current) {
@@ -413,7 +431,7 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
                             className="overflow-y-auto w-full max-h-[calc(95vh-20px)] relative overscroll-none scrollbar-hide pt-2 pb-10" 
                             onScroll={handleScroll}
                         >
-                            <ProfileCardDetail {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} patents={selectedProfilePatents} projects={projects} isAlumniPage={isAlumniPage} isModal />
+                            <ProfileCardDetail key={selectedCard.id} {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} patents={selectedProfilePatents} projects={projects} isAlumniPage={isAlumniPage} isModal />
                         </div>
 
                         {/* 스크롤 인디케이터 - 모달 전체 하단에 고정 */}

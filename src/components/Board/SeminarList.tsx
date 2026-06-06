@@ -199,14 +199,14 @@ export function SeminarList({
                       <span className="text-gray-600 select-none">·</span>
                     )}
                     {item.slide && item.slideExists !== false ? (
-                      <Link
+                      <a
                         href={item.slide}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="flex-shrink-0 px-3 py-1 text-[13px] md:text-[15px] hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 rounded shadow-sm hover:shadow transition duration-200"
                       >
                         Slide
-                      </Link>
+                      </a>
                     ) : (
                       <span className="flex-shrink-0 px-3 py-1 text-[13px] md:text-[15px] text-red-600 border border-red-200 rounded" title="슬라이드 파일 없음">
                         Slide

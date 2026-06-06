@@ -34,7 +34,7 @@ export async function generateGalleryMetadata(
     if (selected) {
       return getMetadata({
         title: `${selected.title}`,
-        description: `Photo gallery: ${selected.title} - GLI Lab`,
+        description: `Explore the photos of GLI Lab`,
         asPath: buildGalleryAsPath(selected.slug),
       });
     }
@@ -43,7 +43,7 @@ export async function generateGalleryMetadata(
   return getMetadata({
     title: TITLE,
     description:
-      'Photo gallery and visual content from GLI Lab - Graph Learning and Intelligence Laboratory at Konkuk University',
+      'Explore the photos of GLI Lab',
     asPath: buildGalleryAsPath(),
   });
 }
