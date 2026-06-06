@@ -61,9 +61,13 @@ function GalleryGridSynced({
   const pathname = usePathname();
   const router = useRouter();
 
+  // URL detail + optimistic state (ProfileCards와 동일 패턴)
+  // - detailPending: 클릭 직후 URL·RSC 왕복 전 모달 즉시 열기
+  // - detailSuppressed: 닫기 즉시 반영
   const urlDetailOpen = searchParams.get('detail') === '1';
+  const [detailPending, setDetailPending] = useState(false);
   const [detailSuppressed, setDetailSuppressed] = useState(false);
-  const isDetailOpen = urlDetailOpen && !detailSuppressed;
+  const isDetailOpen = (urlDetailOpen || detailPending) && !detailSuppressed;
 
   const [selectedItem, setSelectedItem] = useState<GalleryItemType | null>(null);
   const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -76,23 +80,32 @@ function GalleryGridSynced({
   }, [pathname]);
 
   useEffect(() => {
-    if (urlDetailOpen) setDetailSuppressed(false);
+    if (urlDetailOpen) {
+      setDetailSuppressed(false);
+      setDetailPending(false);
+    }
   }, [urlDetailOpen]);
 
   // layout 유지 시 page가 갱신되지 않아도 URL slug로 selectedItem 동기화
+  // detailPending 중에는 클릭한 item 유지 (activeSlug가 이전 URL이면 덮어쓰지 않음)
   useEffect(() => {
+    if (detailPending) return;
+
     if (!activeSlug) {
       if (!urlDetailOpen) setSelectedItem(null);
       return;
     }
     const match = findGalleryItemBySlug(items, activeSlug);
     if (match) setSelectedItem(match);
-  }, [activeSlug, items, urlDetailOpen]);
+  }, [activeSlug, items, urlDetailOpen, detailPending]);
 
   useEffect(() => {
     if (!activeSlug) lastScrolledIdRef.current = null;
   }, [activeSlug]);
 
+  // activeSlug와 선택 항목이 일치할 때 스크롤
+  // /slug/ 만 있어도 해당 카드로 이동, /slug/?detail=1 이면 같은 위치 + 모달
+  // 클릭 직후(detailPending)는 activeSlug가 아직 이전 URL이라 여기서 스크롤하지 않음
   useEffect(() => {
     if (!selectedItem || activeSlug !== selectedItem.slug) return;
     if (lastScrolledIdRef.current === selectedItem.id) return;
@@ -109,6 +122,7 @@ function GalleryGridSynced({
 
   const closeDetailModal = useCallback(() => {
     document.body.style.overflow = 'auto';
+    setDetailPending(false);
     setDetailSuppressed(true);
     const params = new URLSearchParams(searchParams.toString());
     params.delete('detail');
@@ -122,6 +136,7 @@ function GalleryGridSynced({
     (item: GalleryItemType) => {
       setSelectedItem(item);
       setDetailSuppressed(false);
+      setDetailPending(true);
       router.replace(buildGalleryPath(item.slug, { detail: true }), { scroll: false });
     },
     [router]
@@ -144,7 +159,9 @@ function GalleryGridSynced({
         ))}
       </div>
 
-      {modalItem && <GalleryModal item={modalItem} onClose={closeDetailModal} />}
+      {modalItem && (
+        <GalleryModal key={modalItem.id} item={modalItem} onClose={closeDetailModal} />
+      )}
     </>
   );
 }
