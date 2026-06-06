@@ -9,7 +9,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 import {pretendard} from "./fonts"
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { getMetadata } from "@/lib/GetMetadata";
 import Header from "@/components/Header/Header";
