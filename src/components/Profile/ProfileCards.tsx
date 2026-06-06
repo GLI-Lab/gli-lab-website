@@ -7,7 +7,7 @@ import { ProfileListItem } from './ProfileListItem';
 import { ProfileCardDetail } from './ProfileCardDetail';
 import { type ProfileData, type PaperData, type StudyData, type PatentData, type ProjectData } from '@/data/loaders/types';
 import { getPapersForProfile, getPatentsForProfile } from '@/data/loaders/utils';
-import { buildProfilePath, DEFAULT_MEMBER_PROFILE_YAML_ID, getProfileSectionBasePath, PROFILE_MOBILE_BREAKPOINT } from '@/data/loaders/profileSlug';
+import { buildProfilePath, DEFAULT_MEMBER_PROFILE_YAML_ID, getProfileSectionBasePath, PROFILE_MOBILE_BREAKPOINT } from '@/lib/profileSlug';
 
 interface ProfileCardsProps {
     profiles: ProfileData[];

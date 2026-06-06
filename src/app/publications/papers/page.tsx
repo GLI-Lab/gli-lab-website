@@ -2,8 +2,7 @@ import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
 import PaperList from "@/components/Publication/PaperList";
-import { getPapers } from "@/data/loaders/paperLoader";
-import { getMemberIds, getAlumniIds, getProfileSlugByYamlId } from "@/data/loaders/profileLoader";
+import { getPapers, getMemberIds, getAlumniIds, getProfileSlugByYamlId } from "@/data/loaders";
 
 const TITLE = `Papers`
 

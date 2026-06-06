@@ -4,7 +4,7 @@ import fs from 'fs/promises';
 import { NewsData } from './types';
 
 // 뉴스 데이터를 가져오는 함수
-export async function getNews(): Promise<NewsData[]> {
+export async function getNewsUncached(): Promise<NewsData[]> {
   try {
     const filePath = path.join(process.cwd(), 'src', 'data', 'news.yaml');
     const yamlText = await fs.readFile(filePath, 'utf8');

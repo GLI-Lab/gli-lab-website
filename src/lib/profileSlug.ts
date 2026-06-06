@@ -1,4 +1,4 @@
-import type { ProfileData } from './types';
+import type { ProfileData } from '@/data/loaders/types';
 
 /** members 페이지 기본 선택 프로필 (YAML id) */
 export const DEFAULT_MEMBER_PROFILE_YAML_ID = '[2024.03] 오병국';

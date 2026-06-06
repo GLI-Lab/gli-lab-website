@@ -2,8 +2,7 @@ import { Metadata } from "next";
 import { getMetadata } from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
 import { SeminarList } from "@/components/Board/SeminarList";
-import { getSeminars } from "@/data/loaders/seminarLoader";
-import { getProfiles, getAlumniProfiles } from "@/data/loaders/profileLoader";
+import { getSeminars, getProfiles, getAlumniProfiles } from "@/data/loaders";
 
 const TITLE = "Seminar";
 

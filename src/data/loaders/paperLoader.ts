@@ -9,7 +9,7 @@ import { PaperData } from './types';
 // - publications/paper가 동적 페이지(ƒ) 라면
 //   - fs.readFile은 fetch와 달리 Next.js 데이터 캐싱하지 않음
 //   - 따라서 동적 렌더링이 꼭 필요하면 unstable_cache() 같은 별도 캐시 처리를 고려
-export async function getPapers(): Promise<PaperData[]> {
+export async function getPapersUncached(): Promise<PaperData[]> {
   try {
     // console.log(`[getPapers] YAML 읽기 호출됨: ${new Date().toISOString()}`);
     const filePath = path.join(process.cwd(), 'src', 'data', 'paper.yaml');

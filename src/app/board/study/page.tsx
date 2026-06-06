@@ -2,8 +2,7 @@ import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
 import {StudyList} from "@/components/Study";
-import {getStudies} from "@/data/loaders/studyLoader";
-import { getProfiles } from "@/data/loaders/profileLoader";
+import { getStudies, getProfiles } from "@/data/loaders";
 
 const TITLE = `Study`
 

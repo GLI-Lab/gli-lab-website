@@ -1,8 +1,7 @@
 import { Metadata } from "next";
 import { getMetadata } from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
-import { getProjects } from "@/data/loaders/projectLoader";
-import { getMemberIds, getAlumniIds, getProfileSlugByYamlId } from "@/data/loaders/profileLoader";
+import { getProjects, getMemberIds, getAlumniIds, getProfileSlugByYamlId } from "@/data/loaders";
 import ProjectList from "@/components/Research/ProjectList";
 
 const TITLE = "Projects";

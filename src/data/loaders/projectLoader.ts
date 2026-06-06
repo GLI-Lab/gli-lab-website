@@ -101,7 +101,7 @@ function transformProjectData(raw: ProjectYAML): ProjectData {
   };
 }
 
-export async function getProjects(): Promise<ProjectData[]> {
+export async function getProjectsUncached(): Promise<ProjectData[]> {
   try {
     const filePath = path.join(process.cwd(), 'src', 'data', 'project.yaml');
     const yamlText = await fs.readFile(filePath, 'utf8');
