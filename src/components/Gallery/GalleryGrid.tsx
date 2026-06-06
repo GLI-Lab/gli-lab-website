@@ -24,6 +24,11 @@ function GalleryGridLocal({
   const visibleItems = count != null ? items.slice(0, count) : items;
   const [localModalOpen, setLocalModalOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<GalleryItemType | null>(null);
+  const [imageIndexByItemId, setImageIndexByItemId] = useState<Record<string, number>>({});
+
+  const handleItemImageIndexChange = useCallback((itemId: string, index: number) => {
+    setImageIndexByItemId((prev) => (prev[itemId] === index ? prev : { ...prev, [itemId]: index }));
+  }, []);
 
   const closeDetailModal = useCallback(() => {
     document.body.style.overflow = 'auto';
@@ -40,12 +45,24 @@ function GalleryGridLocal({
     <>
       <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 md:gap-y-12 text-left ${className}`}>
         {visibleItems.map((item) => (
-          <GalleryItem key={item.id} item={item} onCardClick={handleCardClick} />
+          <GalleryItem
+            key={item.id}
+            item={item}
+            onCardClick={handleCardClick}
+            imageIndex={imageIndexByItemId[item.id] ?? 0}
+            onImageIndexChange={(index) => handleItemImageIndexChange(item.id, index)}
+          />
         ))}
       </div>
 
       {localModalOpen && selectedItem && (
-        <GalleryModal item={selectedItem} onClose={closeDetailModal} />
+        <GalleryModal
+          key={selectedItem.id}
+          item={selectedItem}
+          initialImageIndex={imageIndexByItemId[selectedItem.id] ?? 0}
+          onImageIndexChange={(index) => handleItemImageIndexChange(selectedItem.id, index)}
+          onClose={closeDetailModal}
+        />
       )}
     </>
   );
@@ -70,8 +87,13 @@ function GalleryGridSynced({
   const isDetailOpen = (urlDetailOpen || detailPending) && !detailSuppressed;
 
   const [selectedItem, setSelectedItem] = useState<GalleryItemType | null>(null);
+  const [imageIndexByItemId, setImageIndexByItemId] = useState<Record<string, number>>({});
   const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const lastScrolledIdRef = useRef<string | null>(null);
+
+  const handleItemImageIndexChange = useCallback((itemId: string, index: number) => {
+    setImageIndexByItemId((prev) => (prev[itemId] === index ? prev : { ...prev, [itemId]: index }));
+  }, []);
 
   const activeSlug = useMemo(() => {
     const prefix = `${GALLERY_BASE_PATH}/`;
@@ -152,6 +174,8 @@ function GalleryGridSynced({
             key={item.id}
             item={item}
             onCardClick={handleCardClick}
+            imageIndex={imageIndexByItemId[item.id] ?? 0}
+            onImageIndexChange={(index) => handleItemImageIndexChange(item.id, index)}
             setItemRef={(el) => {
               itemRefs.current[item.id] = el;
             }}
@@ -160,7 +184,13 @@ function GalleryGridSynced({
       </div>
 
       {modalItem && (
-        <GalleryModal key={modalItem.id} item={modalItem} onClose={closeDetailModal} />
+        <GalleryModal
+          key={modalItem.id}
+          item={modalItem}
+          initialImageIndex={imageIndexByItemId[modalItem.id] ?? 0}
+          onImageIndexChange={(index) => handleItemImageIndexChange(modalItem.id, index)}
+          onClose={closeDetailModal}
+        />
       )}
     </>
   );

@@ -57,10 +57,13 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
         onSelect(); // 초기 선택된 슬라이드 설정
     }, [emblaApi, onSelect]);
 
+    const photoUrlsKey = photo.join('|');
+
     useEffect(() => {
+        if (!emblaApi) return;
         setSelectedIndex(0);
-        emblaApi?.scrollTo(0); // embla를 초기화하여 첫 번째 슬라이드로 이동
-    }, [photo]); // photo 배열이 변경될 때마다 실행
+        emblaApi.scrollTo(0);
+    }, [photoUrlsKey, emblaApi]);
 
     const renderEducation = (
         label: string,
@@ -96,9 +99,14 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                 <div className="overflow-hidden" ref={emblaRef}>
                     <div className="flex w-[280px] h-[330px] 1.5md:w-[320px] 1.5md:h-[400px]">
                         {photo.map((src, index) => (
-                            <div className="flex-shrink-0 flex-grow-0 basis-full relative" key={index}>
-                                <Image fill sizes="(max-width: 880px) 560px, 640px"
-                                        className="object-cover rounded-lg" src={src} alt={`Profile ${index}`}
+                            <div className="flex-shrink-0 flex-grow-0 basis-full relative" key={src}>
+                                <Image
+                                    fill
+                                    sizes="(max-width: 880px) 560px, 640px"
+                                    className="object-cover rounded-lg"
+                                    src={src}
+                                    alt={`Profile ${index}`}
+                                    priority={isModal && index === 0}
                                 />
                             </div>
                         ))}

@@ -10,19 +10,31 @@ import { isNewItem, formatDateForDisplay } from './helpers';
 
 interface GalleryModalProps {
   item: GalleryItem;
+  initialImageIndex?: number;
+  onImageIndexChange?: (index: number) => void;
   onClose: () => void;
 }
 
-export function GalleryModal({ item, onClose }: GalleryModalProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+export function GalleryModal({
+  item,
+  initialImageIndex = 0,
+  onImageIndexChange,
+  onClose,
+}: GalleryModalProps) {
+  const [currentImageIndex, setCurrentImageIndex] = useState(initialImageIndex);
+
+  useEffect(() => {
+    setCurrentImageIndex(initialImageIndex);
+  }, [item.id, initialImageIndex]);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const [imageDisplayMode, setImageDisplayMode] = useState<'contain' | 'cover'>('cover');
   const [isZoomEnabled, setIsZoomEnabled] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const handleImageChange = (index: number) => {
+  const handleImageChange = useCallback((index: number) => {
     setCurrentImageIndex(index);
-  };
+    onImageIndexChange?.(index);
+  }, [onImageIndexChange]);
 
   const handleCarouselImageLoad = useCallback(
     (_index: number, naturalWidth: number, naturalHeight: number) => {

@@ -74,6 +74,10 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
     }
   }, [selectedIndex, onImageLoad]);
 
+  const stopPointerBubble = useCallback((e: React.PointerEvent) => {
+    e.stopPropagation();
+  }, []);
+
   const onImageNext = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
     onUserInteract?.();
@@ -180,16 +184,24 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
       {showNavigation && images.length > 1 && (
         <>
           <button
+            type="button"
             onClick={onImagePrev}
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 transition-all bg-white bg-opacity-50 text-gray-700 p-1.5 rounded-full hover:bg-white hover:bg-opacity-95 hover:text-gray-900 opacity-0 group-hover:opacity-100 shadow-lg backdrop-blur-sm"
+            onPointerDown={stopPointerBubble}
+            onPointerUp={stopPointerBubble}
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 transition-all bg-white bg-opacity-50 text-gray-700 p-1.5 rounded-full hover:bg-white hover:bg-opacity-95 hover:text-gray-900 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg backdrop-blur-sm"
+            aria-label="Previous image"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
           </button>
           <button
+            type="button"
             onClick={onImageNext}
-            className="absolute right-3 top-1/2 transform -translate-y-1/2 transition-all bg-white bg-opacity-50 text-gray-700 p-1.5 rounded-full hover:bg-white hover:bg-opacity-95 hover:text-gray-900 opacity-0 group-hover:opacity-100 shadow-lg backdrop-blur-sm"
+            onPointerDown={stopPointerBubble}
+            onPointerUp={stopPointerBubble}
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 transition-all bg-white bg-opacity-50 text-gray-700 p-1.5 rounded-full hover:bg-white hover:bg-opacity-95 hover:text-gray-900 opacity-100 md:opacity-0 md:group-hover:opacity-100 shadow-lg backdrop-blur-sm"
+            aria-label="Next image"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
