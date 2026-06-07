@@ -98,8 +98,7 @@ const GalleryItemComponent = ({
       openedFromPointerRef.current = false;
       return;
     }
-    // 마우스: 버튼 클릭 후에도 새 클릭에서 모달 열림
-    carouselInteractedRef.current = false;
+    // carouselInteractedRef는 openDetail에서 소비 (드래그 직후 click 1회 무시)
     openDetail();
   }, [openDetail]);
 

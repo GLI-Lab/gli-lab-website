@@ -6,6 +6,10 @@ import { GalleryItem as GalleryItemType } from './types';
 import { GalleryModal } from './GalleryModal';
 import { GalleryItem } from './GalleryItem';
 import { buildGalleryPath, findGalleryItemBySlug, GALLERY_BASE_PATH } from './gallerySlug';
+import { preloadGalleryModalImages } from '@/lib/preloadImages';
+
+/** scrollend 미지원·이미 뷰포트 내일 때 너무 빠르게 scroll이 완료되니깐 대기 */
+const SCROLL_WAIT_FALLBACK_MS = 600;
 
 interface GalleryGridProps {
   items: GalleryItemType[];
@@ -39,7 +43,9 @@ function GalleryGridLocal({
   const handleCardClick = useCallback((item: GalleryItemType) => {
     setSelectedItem(item);
     setLocalModalOpen(true);
-  }, []);
+    const imageIndex = imageIndexByItemId[item.id] ?? 0;
+    void preloadGalleryModalImages(item.images, imageIndex);
+  }, [imageIndexByItemId]);
 
   return (
     <>
@@ -78,14 +84,14 @@ function GalleryGridSynced({
   const pathname = usePathname();
   const router = useRouter();
 
-  // URL detail + optimistic state (ProfileCards와 동일 패턴)
-  // - detailPending: 클릭 직후 URL·RSC 왕복 전 모달 즉시 열기
-  // - detailSuppressed: 닫기 즉시 반영
   const urlDetailOpen = searchParams.get('detail') === '1';
   const [detailPending, setDetailPending] = useState(false);
   const [detailSuppressed, setDetailSuppressed] = useState(false);
   const isDetailOpen = (urlDetailOpen || detailPending) && !detailSuppressed;
 
+  const modalOpenGenerationRef = useRef(0);
+  /** 클릭 직후 pathname(activeSlug)이 따라잡기 전까지 이전 URL slug 무시 */
+  const [pendingItemSlug, setPendingItemSlug] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<GalleryItemType | null>(null);
   const [imageIndexByItemId, setImageIndexByItemId] = useState<Record<string, number>>({});
   const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
@@ -101,6 +107,8 @@ function GalleryGridSynced({
     return pathname.slice(prefix.length).replace(/\/$/, '') || null;
   }, [pathname]);
 
+  const isUrlStale = pendingItemSlug != null && activeSlug !== pendingItemSlug;
+
   useEffect(() => {
     if (urlDetailOpen) {
       setDetailSuppressed(false);
@@ -108,10 +116,57 @@ function GalleryGridSynced({
     }
   }, [urlDetailOpen]);
 
-  // layout 유지 시 page가 갱신되지 않아도 URL slug로 selectedItem 동기화
-  // detailPending 중에는 클릭한 item 유지 (activeSlug가 이전 URL이면 덮어쓰지 않음)
+  const cancelPendingOpen = useCallback(() => {
+    modalOpenGenerationRef.current += 1;
+    setDetailPending(false);
+    setPendingItemSlug(null);
+  }, []);
+
+  const scrollToItem = useCallback((itemId: string) => {
+    lastScrolledIdRef.current = itemId;
+    itemRefs.current[itemId]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, []);
+
+  const scrollToItemThen = useCallback((itemId: string, generation: number, onDone: () => void) => {
+    lastScrolledIdRef.current = itemId;
+    const element = itemRefs.current[itemId];
+
+    const finish = () => {
+      if (modalOpenGenerationRef.current !== generation) return;
+      onDone();
+    };
+
+    if (!element) {
+      finish();
+      return;
+    }
+
+    let settled = false;
+    const complete = () => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(fallback);
+      window.removeEventListener('scrollend', onScrollEnd);
+      finish();
+    };
+
+    const onScrollEnd = () => complete();
+    const fallback = window.setTimeout(complete, SCROLL_WAIT_FALLBACK_MS);
+
+    window.addEventListener('scrollend', onScrollEnd, { once: true });
+    element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, []);
+
+  // pathname(activeSlug)가 클릭 대상과 일치하면 pending 해제
   useEffect(() => {
-    if (detailPending) return;
+    if (!pendingItemSlug || activeSlug !== pendingItemSlug) return;
+    setPendingItemSlug(null);
+  }, [activeSlug, pendingItemSlug]);
+
+  // layout 유지 시 page가 갱신되지 않아도 URL slug로 selectedItem 동기화
+  // detailPending·stale slug 동안: 클릭한 item 유지
+  useEffect(() => {
+    if (detailPending || isUrlStale) return;
 
     if (!activeSlug) {
       if (!urlDetailOpen) setSelectedItem(null);
@@ -119,32 +174,25 @@ function GalleryGridSynced({
     }
     const match = findGalleryItemBySlug(items, activeSlug);
     if (match) setSelectedItem(match);
-  }, [activeSlug, items, urlDetailOpen, detailPending]);
+  }, [activeSlug, items, urlDetailOpen, detailPending, isUrlStale]);
 
   useEffect(() => {
+    if (pendingItemSlug) return;
     if (!activeSlug) lastScrolledIdRef.current = null;
-  }, [activeSlug]);
+  }, [activeSlug, pendingItemSlug]);
 
-  // activeSlug와 선택 항목이 일치할 때 스크롤
-  // /slug/ 만 있어도 해당 카드로 이동, /slug/?detail=1 이면 같은 위치 + 모달
-  // 클릭 직후(detailPending)는 activeSlug가 아직 이전 URL이라 여기서 스크롤하지 않음
+  // 외부 URL 진입·뒤로가기 시 스크롤 (페이지 내 클릭은 handleCardClick에서 처리)
   useEffect(() => {
+    if (detailPending || pendingItemSlug) return;
     if (!selectedItem || activeSlug !== selectedItem.slug) return;
     if (lastScrolledIdRef.current === selectedItem.id) return;
 
-    lastScrolledIdRef.current = selectedItem.id;
-    const element = itemRefs.current[selectedItem.id];
-    if (element) {
-      element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'center',
-      });
-    }
-  }, [selectedItem, activeSlug]);
+    scrollToItem(selectedItem.id);
+  }, [selectedItem, activeSlug, detailPending, pendingItemSlug, scrollToItem]);
 
   const closeDetailModal = useCallback(() => {
+    cancelPendingOpen();
     document.body.style.overflow = 'auto';
-    setDetailPending(false);
     setDetailSuppressed(true);
     const params = new URLSearchParams(searchParams.toString());
     params.delete('detail');
@@ -152,16 +200,26 @@ function GalleryGridSynced({
     const nextUrl = query ? `${pathname}?${query}` : pathname;
     window.history.replaceState(null, '', nextUrl);
     router.replace(nextUrl, { scroll: false });
-  }, [router, pathname, searchParams]);
+  }, [router, pathname, searchParams, cancelPendingOpen]);
 
   const handleCardClick = useCallback(
     (item: GalleryItemType) => {
+      const generation = ++modalOpenGenerationRef.current;
       setSelectedItem(item);
+      setPendingItemSlug(item.slug);
       setDetailSuppressed(false);
-      setDetailPending(true);
-      router.replace(buildGalleryPath(item.slug, { detail: true }), { scroll: false });
+      setDetailPending(false);
+
+      const imageIndex = imageIndexByItemId[item.id] ?? 0;
+      void preloadGalleryModalImages(item.images, imageIndex);
+
+      const url = buildGalleryPath(item.slug, { detail: true });
+      window.history.replaceState(null, '', url);
+      router.replace(url, { scroll: false });
+
+      scrollToItemThen(item.id, generation, () => setDetailPending(true));
     },
-    [router]
+    [router, imageIndexByItemId, scrollToItemThen]
   );
 
   const modalItem = isDetailOpen ? selectedItem : null;

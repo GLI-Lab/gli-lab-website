@@ -17,7 +17,7 @@ interface ImageCarouselProps {
   onImageChange?: (index: number) => void;
   /** 현재 슬라이드 이미지 로드 시 natural 크기 전달 (중복 fetch 없이 비율 체크용) */
   onImageLoad?: (index: number, naturalWidth: number, naturalHeight: number) => void;
-  /** prev/next·인디케이터·드래그 시 호출 (카드 클릭과 구분) */
+  /** 드래그 시작 시 호출 (드래그 후 click으로 모달 열리는 것 방지) */
   onUserInteract?: () => void;
 }
 
@@ -87,20 +87,17 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
 
   const onImageNext = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    onUserInteract?.();
     emblaApi?.scrollNext();
-  }, [emblaApi, onUserInteract]);
+  }, [emblaApi]);
 
   const onImagePrev = useCallback((e: React.MouseEvent) => {
     e.stopPropagation();
-    onUserInteract?.();
     emblaApi?.scrollPrev();
-  }, [emblaApi, onUserInteract]);
+  }, [emblaApi]);
 
   const goToSlide = useCallback((index: number) => {
-    onUserInteract?.();
     emblaApi?.scrollTo(index);
-  }, [emblaApi, onUserInteract]);
+  }, [emblaApi]);
 
   const handleIndicatorClick = useCallback(
     (e: React.MouseEvent, index: number) => {
