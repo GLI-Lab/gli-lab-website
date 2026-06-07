@@ -57,6 +57,14 @@ export function getProfileSectionBasePath(section: ProfileSection): `/people/${P
   return `/people/${section}`;
 }
 
+/** pathname에서 프로필 slug 추출 (클라이언트 라우터 URL, trailing slash 대응) */
+export function getProfileSlugFromPathname(pathname: string, section: ProfileSection): string | null {
+  const prefix = `${getProfileSectionBasePath(section)}/`;
+  if (!pathname.startsWith(prefix) || pathname.length <= prefix.length) return null;
+  const slug = pathname.slice(prefix.length).replace(/\/$/, '');
+  return slug || null;
+}
+
 /** URL cols 파라미터 → 카드 뷰 컬럼 수 (기본 2) */
 export function parseProfileColsParam(cols: string | undefined): 1 | 2 {
   return cols === '1' ? 1 : 2;
@@ -77,19 +85,15 @@ export function buildProfilePath(
   return query ? `${path}?${query}` : path;
 }
 
-/** 링크 복사용 프로필 URL (모바일이면 detail=1, 1단 카드 뷰면 cols=1 포함) */
+/** 링크 복사용 프로필 URL (항상 카드 뷰 + detail=1, 1단 카드면 cols=1) */
 export function buildProfileSharePath(
   section: ProfileSection,
   profileId: string,
-  view: 'card' | 'list',
   cols?: 1 | 2
 ): string {
-  const isMobile =
-    typeof window !== 'undefined' && window.innerWidth < PROFILE_MOBILE_BREAKPOINT;
   return buildProfilePath(section, profileId, {
-    view: view === 'list' ? 'list' : undefined,
-    detail: view === 'card' && isMobile,
-    cols: view === 'card' && cols === 1 ? 1 : undefined,
+    detail: true,
+    cols: cols === 1 ? 1 : undefined,
   });
 }
 

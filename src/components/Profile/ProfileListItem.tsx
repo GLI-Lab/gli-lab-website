@@ -123,7 +123,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                const currentUrl = `${window.location.origin}${buildProfileSharePath(section, id, 'list')}`;
+                                const currentUrl = `${window.location.origin}${buildProfileSharePath(section, id)}`;
 
                                 // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
                                 const selectionlessCopy = () => {

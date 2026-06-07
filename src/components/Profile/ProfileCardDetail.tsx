@@ -133,7 +133,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                         <button
                             onClick={(e) => {
                                 e.stopPropagation();
-                                const currentUrl = `${window.location.origin}${buildProfileSharePath(section, id, 'card', cardColumns === 1 ? 1 : undefined)}`;
+                                const currentUrl = `${window.location.origin}${buildProfileSharePath(section, id, cardColumns === 1 ? 1 : undefined)}`;
 
                                 // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
                                 const selectionlessCopy = () => {

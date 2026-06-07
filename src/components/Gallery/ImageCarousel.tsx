@@ -34,8 +34,15 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
   onImageLoad,
   onUserInteract,
 }) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30 }, [Fade()]);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const startIndex = Math.min(
+    Math.max(0, currentIndex ?? 0),
+    Math.max(0, images.length - 1)
+  );
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, duration: 30, startIndex },
+    [Fade()]
+  );
+  const [selectedIndex, setSelectedIndex] = useState(startIndex);
   const naturalSizeByIndexRef = useRef<Record<number, { width: number; height: number }>>({});
 
   useEffect(() => {
