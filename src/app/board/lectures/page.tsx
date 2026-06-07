@@ -4,6 +4,7 @@ import {SubCover} from "@/components/Covers";
 import { LectureList, getLectureItems } from "@/components/Board/LectureList";
 
 const TITLE = 'Lectures'
+const PATHNAME = '/board/lectures'
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
@@ -20,7 +21,7 @@ export default async function Page() {
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
-                <SubCover title={TITLE} pattern="diagonal-lines" colorVariant="sage" showBreadcrumb={false} />
+                <SubCover title={TITLE} pathname={PATHNAME} pattern="diagonal-lines" colorVariant="sage" showBreadcrumb={false} />
             </div>
             
             <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">

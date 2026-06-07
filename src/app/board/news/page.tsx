@@ -5,6 +5,7 @@ import { NewsList } from "@/components/Board/NewsList";
 import { getNews, getMemberIds, getAlumniIds, getProfileSlugByYamlId } from "@/data/loaders";
 
 const TITLE = 'News'
+const PATHNAME = '/board/news'
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
@@ -25,7 +26,7 @@ export default async function Page() {
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
-                <SubCover title={TITLE} showBreadcrumb={false}/>
+                <SubCover title={TITLE} pathname={PATHNAME} showBreadcrumb={false}/>
             </div>
             <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
                 <NewsList 

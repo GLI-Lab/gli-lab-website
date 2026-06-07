@@ -10,11 +10,13 @@ import { loadProfilePageData } from './loadProfilePageData';
 const SECTION_CONFIG = {
   members: {
     title: 'Members',
+    pathname: '/people/members',
     isAlumni: false,
     getProfiles: getProfiles,
   },
   alumni: {
     title: 'Alumni',
+    pathname: '/people/alumni',
     isAlumni: true,
     getProfiles: getAlumniProfiles,
   },
@@ -47,6 +49,7 @@ export async function renderPeopleLayout(section: ProfileSection, children: Reac
     <div className="max-w-screen-2xl mx-auto">
       <SubCover
         title={config.title}
+        pathname={config.pathname}
         pattern="diagonal-lines"
         colorVariant="sage"
         showBreadcrumb={false}

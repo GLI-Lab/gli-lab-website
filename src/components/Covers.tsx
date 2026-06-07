@@ -1,11 +1,22 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
 import { Breadcrumb } from "@/components/Breadcrumb";
 
 interface CoverProps {
   title: string;
+  href?: string;
+  pathname?: string;
   backgroundImage?: string;
   pattern?: 'diagonal-lines' | 'none';
   colorVariant?: 'neutral' | 'slate' | 'sage';
   showBreadcrumb?: boolean;
+}
+
+function isExternalUrl(url: string) {
+  return url.startsWith("http://") || url.startsWith("https://");
 }
 
 // https://github.com/bansal/pattern.css
@@ -68,12 +79,19 @@ const getPatternStyle = (pattern?: string, colorVariant?: string) => {
 };
 
 export function SubCover({ 
-  title, 
+  title,
+  href,
+  pathname,
   backgroundImage = '/images/cover/main4-3-dark.webp',
   pattern,
   colorVariant = 'neutral',
   showBreadcrumb = true
 }: CoverProps) {    
+  const currentPathname = usePathname();
+  const linkHref = href ?? pathname ?? currentPathname;
+  const titleClassName = `tracking-tight font-bold block hover:text-green-900 hover:underline underline-offset-4
+                      ${showBreadcrumb ? 'text-[30px] md:text-[34px] lg:text-[38px] xl:text-[40px]' : 'text-[32px] md:text-[36px] lg:text-[40px] xl:text-[44px] py-1'}`;
+
   const isPattern = pattern && pattern !== 'none';
   const patternStyle = isPattern ? getPatternStyle(pattern, colorVariant) : {};
   const imageStyle = !isPattern ? { backgroundImage: `url('${backgroundImage}')` } : {};
@@ -88,10 +106,20 @@ export function SubCover({
     >
       <div className={`bg-white bg-opacity-50 rounded-md leading-none space-y-0 mx-auto
                       w-auto min-w-[200px] md:min-w-[300px] lg:min-w-[400px] inline-block px-8 md:px-10 lg:px-12 xl:px-14 py-3 md:py-4 lg:py-5`}>
-        <p className={`tracking-tight font-bold
-                      ${showBreadcrumb ? 'text-[30px] md:text-[34px] lg:text-[38px] xl:text-[40px]' : 'text-[32px] md:text-[36px] lg:text-[40px] xl:text-[44px] py-1'}`}>
-          {title}
-        </p>
+        {isExternalUrl(linkHref) ? (
+          <a
+            href={linkHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={titleClassName}
+          >
+            {title}
+          </a>
+        ) : (
+          <Link href={linkHref} className={titleClassName}>
+            {title}
+          </Link>
+        )}
         {showBreadcrumb && (
           <div className="pt-[9px] md:pt-[10px] lg:pt-[11px] xl:pt-[12px] text-[#555] text-[14px] md:text-[15px] lg:text-[16px]">
             <Breadcrumb />

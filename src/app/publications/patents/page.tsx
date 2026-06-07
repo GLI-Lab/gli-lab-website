@@ -5,6 +5,7 @@ import PatentList from "@/components/Publication/PatentList";
 import { getPatents, getMemberIds, getAlumniIds, getProfileSlugByYamlId } from "@/data/loaders";
 
 const TITLE = `Patents`
+const PATHNAME = '/publications/patents'
 
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
@@ -25,7 +26,7 @@ export default async function Page() {
     return (
         <>
             <div className="max-w-screen-2xl mx-auto">
-            <SubCover title={TITLE} pattern="diagonal-lines" colorVariant="sage" showBreadcrumb={false} />
+            <SubCover title={TITLE} pathname={PATHNAME} pattern="diagonal-lines" colorVariant="sage" showBreadcrumb={false} />
             </div>
             <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
                 <PatentList 
