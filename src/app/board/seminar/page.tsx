@@ -5,6 +5,7 @@ import { SeminarList } from "@/components/Board/SeminarList";
 import { getSeminars, getProfiles, getAlumniProfiles } from "@/data/loaders";
 
 const TITLE = "Seminar";
+const PATHNAME = "/board/seminar";
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return getMetadata({
@@ -24,7 +25,7 @@ export default async function Page() {
   return (
     <>
       <div className="max-w-screen-2xl mx-auto">
-        <SubCover title={TITLE} showBreadcrumb={false} />
+        <SubCover title={TITLE} pathname={PATHNAME} showBreadcrumb={false} />
       </div>
 
       <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">

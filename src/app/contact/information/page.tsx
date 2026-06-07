@@ -6,6 +6,7 @@ import KakaoMap from "@/components/KakaoMap";
 import { getMetadata } from "@/lib/GetMetadata";
 
 const TITLE = "Information";
+const PATHNAME = "/contact/information";
 
 export const generateMetadata = async (): Promise<Metadata> => {
   return getMetadata({
@@ -19,6 +20,7 @@ export default function Page() {
       <div className="max-w-screen-2xl mx-auto">
         <SubCover
           title={TITLE}
+          pathname={PATHNAME}
           pattern="diagonal-lines"
           colorVariant="sage"
           showBreadcrumb={false}

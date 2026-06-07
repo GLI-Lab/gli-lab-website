@@ -2,6 +2,7 @@ import { SubCover } from '@/components/Covers';
 import { GalleryGrid, getGalleryItems } from '@/components/Gallery';
 
 const TITLE = 'Gallery';
+const PATHNAME = '/board/gallery';
 
 export default async function GalleryLayout({
   children,
@@ -15,6 +16,7 @@ export default async function GalleryLayout({
       <div className="max-w-screen-2xl mx-auto">
         <SubCover
           title={TITLE}
+          pathname={PATHNAME}
           pattern="diagonal-lines"
           colorVariant="sage"
           showBreadcrumb={false}
