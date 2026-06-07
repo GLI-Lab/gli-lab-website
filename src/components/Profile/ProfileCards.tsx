@@ -7,81 +7,48 @@ import { ProfileListItem } from './ProfileListItem';
 import { ProfileCardDetail } from './ProfileCardDetail';
 import { type ProfileData, type PaperData, type StudyData, type PatentData, type ProjectData } from '@/data/loaders/types';
 import { getPapersForProfile, getPatentsForProfile } from '@/data/loaders/utils';
-import { buildProfilePath, DEFAULT_MEMBER_PROFILE_YAML_ID, getProfileSectionBasePath, getProfileSlugFromPathname, PROFILE_MOBILE_BREAKPOINT, type ProfileSection } from '@/lib/profileSlug';
-import { preloadProfileModalPhoto, stopSmoothScroll } from '@/lib/preloadImages';
+import { buildProfilePath, DEFAULT_MEMBER_PROFILE_YAML_ID, findProfileById, getProfileSectionBasePath, getProfileSlugFromPathname, PROFILE_MOBILE_BREAKPOINT, type ProfileSection } from '@/lib/profileSlug';
+import { preloadProfileModalPhoto } from '@/lib/preloadImages';
 
-// 이전에는 URL을 바꾸고 요청을 보내서 받을때까지 모달이 띄워지지 않았음
+// SelectedItem / selectedCard  : 선택항목 A. 클릭하자마자 B로 바뀜
+// pendingItem / pendingProfile : 클릭항목 B. 이동이 끝나면 null로 바뀜
+// replaceState()               : Router.replace응답 받기 전, 주소창을 B로 바꿈
+// usePathname() + activeSlug   : Next.js 클라이언트 라우터가 “이미 반영했다”고 보는 pathname. 
+//                                Router.replace응답 받기 전, 선택항목 A
+//                                Router.replace응답 받은 후, 클릭항목 B
 
-//   → (대기) router.replace / RSC     ← 이 구간에 모달 DOM 없음 → 상세 이미지 요청 없음
-//   → (대기) 배경 scrollIntoView      ← 카드 썸네일만 보일 수 있음
-//   → 모달 마운트
-//   → 그때서야 모달 이미지 fetch 시작
+// selected = 지금 UI에 쓰는 선택(B로 즉시 변경)
+// pending = “URL이 아직 A인 동안 B를 지켜라” → replaceState로 주소창만 앞서게 함 -> activeSlug(router.replace응답완료)가 B가 되면 null
+// open = router.replace 응답이 빠르거나 scroll 완료/timeout인 경우 모달 오픈
 
-// 모달을 먼저 띄우고나서 URL을 바꾸는 방식은 아래와 같은 장점을 얻음
-// # 장점: RSC 기다리는 시간에 이미지 fetch를 시작할 수 있음.
-// # detailPending이 true면 urlDetailOpen이 아직 false여도 모달이 즉시 열립니다. URL은 router.replace로 뒤에서 맞춰집니다.
+// // ─────────────────────────────────────────────────────────────────────────
+// 다른 카드 선택
+//   + 즉시 주소창 변경 (replaceState())
+//   + 즉시 router.replace 요청 (주소창이 변경되는건 아니기 때문에 replaceState가 필요)
+//   + 즉시 photo 전체 preload
+//   + 즉시 클릭항목으로 스크롤 (profileElement.scrollIntoView({ behavior: 'smooth', block: 'center' });)
+//   + 이전 URL 반영을 방어 (isUrlStale)
 
-//   → 모달 즉시 마운트 → 이미지 fetch 시작  ─┐
-//   → router.replace (백그라운드)            ├─ 동시에
-//   → (나중) activeSlug 맞으면 스크롤       ─┘
+// 모달 오픈 (isDetailOpen = (urlDetailOpen || detailPending) && !detailSuppressed) =
+//   scroll 완료 (scrollend 또는 600ms)
+//     → detailPending=true → 모달 바로 오픈 (router.replace응답/preloading 상관없이, “방금 클릭해서 모달 열어야 함”)
+//   OR router가 scroll보다 먼저 완료 (urlDetailOpen=true)
 
-// 문제는 그 다음에 다른 카드를 눌러서 모달이 띄워지면, router.replace가 먼저 실행되는게 아니라, 모달이 띄워지고나서 실행되니깐, 띄워진 모달은 이전 URL 영향을 받는다는 것
+// 모달 닫기 (!(urlDetailOpen || detailPending) 또는 detailSuppressed === true) =
+//   router가 detail=1을 주지않고(urlDetailOpen) detailPending이 false인 경우
+//   OR 사용자가 직접 모달을 닫아서 (detailSuppressed = true)가 되는 경우
+// // ─────────────────────────────────────────────────────────────────────────
 
-// 1. B 카드 클릭 → setSelectedItem(B) → detailPending=true → 모달 열림 (B여야 함)
-// 2. 그런데 activeSlug는 아직 A (이전 URL)
-// 3. useEffect: "URL slug로 selectedItem 맞춰라" → setSelectedItem(A)  ← 덮어씀!
-// 4. 모달엔 잠깐 A 사진
-// 5. router.replace 끝나면 activeSlug=B → 다시 B로 바뀜
-
-// 일부 해결
-// # 3번에서 이전 URL(A)로 덮어쓰지 않고, 5번에서 URL이 따라잡힌 뒤에만 다시 URL 기준 동기화를 켭니다.
-
-// 1. B 카드 클릭 → setSelectedItem(B) → detailPending=true → 모달 열림 (B여야 함)
-// 2. activeSlug는 아직 A (이전 URL) — router.replace는 아직 진행 중
-// 3. useEffect: detailPending === true → return (동기화 스킵) → selectedItem은 B 유지
-// 4. 모달엔 B 사진만 표시 (key={B.id}로 이전 모달 state도 리셋)
-// 5. router.replace 완료 → activeSlug=B, urlDetailOpen=true
-//    → detailPending=false
-//    → useEffect 다시 실행 → activeSlug로 맞춤 → 이미 B라 변화 없음
-
-// ⭐️드디어 해결⭐️
-
-// # 다른 카드 선택 -> 즉시 router.replace 요청 (주소창이 변경되는건 아님)
-//                     + 즉시 주소창 변경 (replaceState(url))
-//                     + 즉시 다른 카드의 photo 전체 preload (photo[0]만 대기, 나머지는 백그라운드)
-//                     + 즉시 스크롤 (profileElement.scrollIntoView({ behavior: 'smooth', block: 'center' });)
-// # 데스크탑도 selectedCard로 왼쪽 패널이 바로 갱신하지않고 대기
-// # router.replace는 "서버에 RSC 요청 전송" -> "클라이언트가 응답 파싱" 할 때까지 URL이 안 바뀜
-// # 다른 카드를 클릭하며 이전 URL이 여전히 남아있어서 slug를 읽어와서 영향을 받기때문에, 다른 카드 클릭하면 이전 URL을 읽지말고 영향을 받지 않기
-// # photo[0] + router.replace 응답 받으면 모달 오픈 (대기 MAX 800ms timeout)
-
-// 주소창 변경
-//   window.history.replaceState(null, '', url);
-// 이전 URL (주소창과 다름) 방어
-//   pendingProfileId + isServerUrlStale  # 이전 URL을 읽지 말 것
-// 모달 오픈 =
-//   photo[0] preload 완료
-//   AND clientSlug === pendingProfileId  # 모달을 열 때 “URL이 B로 바뀌었나?” 를 확인하는 조건
-//   AND urlDetailOpen (?detail=1)
-//   → stopSmoothScroll() 후 모달 오픈    # 800ms 지나면 preload 완료를 안 기다리고 모달을 엽니다.
-
-
-const MAX_MODAL_OPEN_WAIT_MS = 800;
-
-type RevealKind = 'modal' | 'panel';
+/** scrollend 미지원·이미 뷰포트 내일 때 smooth scroll 완료 대기 */
+const SCROLL_WAIT_FALLBACK_MS = 600;
 
 interface ProfileCardsProps {
     profiles: ProfileData[];
-    selectedProfile?: ProfileData | null;
-    /** URL path에 포함된 slug (목록 페이지면 null) */
-    activeSlug?: string | null;
     studies?: StudyData[];
     papers?: PaperData[];
     patents?: PatentData[];
     projects?: ProjectData[];
-    isAlumniPage?: boolean; // alumni 페이지인지 여부
-    initialIsCardView?: boolean; // SSR 단계에서 초기 뷰 모드 지정
-    initialCardColumns?: 1 | 2; // SSR 단계에서 cols URL 파라미터 반영 (기본 2)
+    isAlumniPage?: boolean;
 }
 
 // 현재 프로필과 관련된 스터디를 필터링하는 함수
@@ -98,44 +65,57 @@ const filterStudiesForProfile = (allStudies: StudyData[], profile: ProfileData) 
     );
 };
 
-export function ProfileCards({ profiles, selectedProfile, activeSlug = null, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false, initialIsCardView = true, initialCardColumns = 2 }: ProfileCardsProps) {
+/** URL slug 또는 members 기본 교수로 첫 렌더 선택 프로필 결정 (useEffect 전 패널 깜빡임 방지) */
+function resolveInitialSelected(
+    profiles: ProfileData[],
+    pathname: string,
+    section: ProfileSection,
+    isAlumniPage: boolean,
+): ProfileData | null {
+    const slug = getProfileSlugFromPathname(pathname, section);
+    if (slug) return findProfileById(profiles, slug) ?? null;
+    if (!isAlumniPage) {
+        return profiles.find((p) => p.yamlId === DEFAULT_MEMBER_PROFILE_YAML_ID) ?? profiles[0] ?? null;
+    }
+    return null;
+}
+
+export function ProfileCards({ profiles, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false }: ProfileCardsProps) {
     const profileSection: ProfileSection = isAlumniPage ? 'alumni' : 'members';
     const profileBasePath = getProfileSectionBasePath(profileSection);
-    const [isAtBottom, setIsAtBottom] = useState(false);
-    const [selectedCard, setSelectedCard] = useState<ProfileData | null>(selectedProfile || null);
-    /** 데스크톱 왼쪽 패널에 표시 중인 프로필 (클릭 즉시 갱신하지 않음) */
-    const [panelCard, setPanelCard] = useState<ProfileData | null>(selectedProfile || null);
-    
+
     const searchParams = useSearchParams();
     const pathname = usePathname();
     const router = useRouter();
-    // 카드 클릭 공통: replaceState + router.replace + scroll + photo preload + pendingProfileId
-    // revealPending: 카드 뷰에서 preload + router 준비 전까지 UI 갱신 대기
-    //   - 'modal': 모바일 ?detail=1 모달 오픈 대기
-    //   - 'panel': 데스크톱 왼쪽 패널(panelCard) 갱신 대기
-    // - urlDetailOpen (?detail=1): 모바일 모달 source of truth
-    // - isDetailOpen = urlDetailOpen && revealPending !== 'modal' && !detailSuppressed
+
+    const [isAtBottom, setIsAtBottom] = useState(false);
+    const [selectedCard, setSelectedCard] = useState<ProfileData | null>(() =>
+        resolveInitialSelected(profiles, pathname, profileSection, isAlumniPage)
+    );
+    const [panelCard, setPanelCard] = useState<ProfileData | null>(() => {
+        if (searchParams.get('view') === 'list') return null;
+        return resolveInitialSelected(profiles, pathname, profileSection, isAlumniPage);
+    });
+
     const urlDetailOpen = searchParams.get('detail') === '1';
-    const [revealPending, setRevealPending] = useState<RevealKind | null>(null);
+    const [detailPending, setDetailPending] = useState(false);
     const [detailSuppressed, setDetailSuppressed] = useState(false);
-    const isDetailOpen = urlDetailOpen && revealPending !== 'modal' && !detailSuppressed;
+    const isDetailOpen = (urlDetailOpen || detailPending) && !detailSuppressed;
 
     const modalOpenGenerationRef = useRef(0);
-    const [preloadReady, setPreloadReady] = useState(false);
-    /** 클릭 직후 서버 activeSlug가 따라잡기 전까지 이전 URL 무시 */
-    const [pendingProfileId, setPendingProfileId] = useState<string | null>(null);
+    /** 클릭 직후 pathname(activeSlug)이 따라잡기 전까지 이전 URL slug 무시 */
+    const [pendingProfile, setPendingProfile] = useState<string | null>(null);
 
-    const clientSlug = useMemo(
+    const activeSlug = useMemo(
         () => getProfileSlugFromPathname(pathname, profileSection),
         [pathname, profileSection]
     );
-    const isServerUrlStale = pendingProfileId != null && activeSlug !== pendingProfileId;
-    // URL 파라미터 'view'의 값으로 첫 렌더링 시 뷰 모드를 설정하여
-    // 클라이언트 사이드 렌더링 시 발생하는 화면 깜빡임(flicker) 방지
-    const [isCardView, setIsCardView] = useState(initialIsCardView);
+    const isUrlStale = pendingProfile != null && activeSlug !== pendingProfile;
 
-    // 1.5xl(1440px) 이상 카드 뷰 컬럼 수. URL cols 파라미터로 SSR·공유·뒤로가기 일관성 유지 (기본 2)
-    const [cardColumns, setCardColumns] = useState<1 | 2>(initialCardColumns);
+    const [isCardView, setIsCardView] = useState(() => searchParams.get('view') !== 'list');
+    const [cardColumns, setCardColumns] = useState<1 | 2>(() =>
+        searchParams.get('cols') === '1' ? 1 : 2
+    );
 
     const handleColumnsChange = useCallback((cols: 1 | 2) => {
         setCardColumns(cols);
@@ -173,20 +153,54 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
 
     const scrollToProfile = useCallback((profileId: string) => {
         lastScrolledIdRef.current = profileId;
-        const profileElement = profileRefs.current[profileId];
-        if (!profileElement) return;
-
-        profileElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        profileRefs.current[profileId]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, []);
 
-    const cancelPendingReveal = useCallback(() => {
+    const scrollToProfileThen = useCallback((profileId: string, generation: number, onDone: () => void) => {
+        lastScrolledIdRef.current = profileId;
+        const element = profileRefs.current[profileId];
+
+        const finish = () => {
+            if (modalOpenGenerationRef.current !== generation) return;
+            onDone();
+        };
+
+        if (!element) {
+            finish();
+            return;
+        }
+
+        let settled = false;
+        const complete = () => {
+            if (settled) return;
+            settled = true;
+            window.clearTimeout(fallback);
+            window.removeEventListener('scrollend', onScrollEnd);
+            finish();
+        };
+
+        const onScrollEnd = () => complete();
+        const fallback = window.setTimeout(complete, SCROLL_WAIT_FALLBACK_MS);
+
+        window.addEventListener('scrollend', onScrollEnd, { once: true });
+        element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, []);
+
+    const cancelPendingOpen = useCallback(() => {
         modalOpenGenerationRef.current += 1;
-        setPreloadReady(false);
-        setRevealPending(null);
+        setDetailPending(false);
+        setPendingProfile(null);
     }, []);
+
+    useEffect(() => {
+        if (urlDetailOpen) {
+            setDetailSuppressed(false);
+            setDetailPending(false);
+        }
+    }, [urlDetailOpen]);
 
     const closeDetailModal = useCallback(() => {
-        cancelPendingReveal();
+        cancelPendingOpen();
         setDetailSuppressed(true);
         document.body.style.overflow = 'auto';
         const params = new URLSearchParams(searchParams.toString());
@@ -195,14 +209,13 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
         const nextUrl = query ? `${pathname}?${query}` : pathname;
         window.history.replaceState(null, '', nextUrl);
         router.replace(nextUrl, { scroll: false });
-    }, [router, pathname, searchParams, cancelPendingReveal]);
+    }, [router, pathname, searchParams, cancelPendingOpen]);
 
     const isProfileSelected = useCallback((profile: ProfileData) => {
         if (!selectedCard || profile.id !== selectedCard.id) return false;
-        // 네비게이션 중에는 클릭한 카드만 선택 (이전 activeSlug 무시)
-        if (pendingProfileId) return true;
-        return isDetailOpen || revealPending === 'modal' || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID;
-    }, [selectedCard, isDetailOpen, revealPending, pendingProfileId, activeSlug]);
+        if (pendingProfile) return true;
+        return isDetailOpen || detailPending || activeSlug != null || selectedCard.yamlId !== DEFAULT_MEMBER_PROFILE_YAML_ID;
+    }, [selectedCard, isDetailOpen, detailPending, pendingProfile, activeSlug]);
 
     // console.log('ProfileCards rendered');
     
@@ -224,13 +237,13 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
 
     const handleViewChange = useCallback((newView: boolean) => {
         setIsCardView(newView);
-        cancelPendingReveal();
+        cancelPendingOpen();
 
         const section = isAlumniPage ? 'alumni' : 'members';
         const isMobile = typeof window !== 'undefined' && window.innerWidth < PROFILE_MOBILE_BREAKPOINT;
 
         if (isMobile) {
-            setPendingProfileId(null);
+            setPendingProfile(null);
             setDetailSuppressed(true);
             setSelectedCard(isAlumniPage ? null : (defaultProfile || null));
 
@@ -262,16 +275,21 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
         if (newView && cardColumns === 1) params.set('cols', '1');
         const query = params.toString();
         router.replace(query ? `${profileBasePath}/?${query}` : `${profileBasePath}/`, { scroll: false });
-    }, [router, profileBasePath, defaultProfile, isAlumniPage, cardColumns, selectedCard, activeSlug, cancelPendingReveal]);
+    }, [router, profileBasePath, defaultProfile, isAlumniPage, cardColumns, selectedCard, activeSlug, cancelPendingOpen]);
 
     const handleProfileClick = useCallback((profile: ProfileData) => {
-        setDetailSuppressed(false);
-        setSelectedCard(profile);
-        setPendingProfileId(profile.id);
+        const generation = ++modalOpenGenerationRef.current;
         const isMobile = typeof window !== 'undefined' && window.innerWidth < PROFILE_MOBILE_BREAKPOINT;
         const isMobileCardModal = isCardView && isMobile;
         const isDesktopCardPanel = isCardView && !isMobile;
-        const needsAwaitedReveal = isMobileCardModal || isDesktopCardPanel;
+
+        setDetailSuppressed(false);
+        setSelectedCard(profile);
+        setPendingProfile(profile.id);
+        setDetailPending(false);
+
+        void preloadProfileModalPhoto(profile);
+
         const url = buildProfilePath(profileSection, profile.id, {
             view: isCardView ? undefined : 'list',
             detail: isMobileCardModal,
@@ -279,101 +297,64 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
         });
 
         window.history.replaceState(null, '', url);
-        scrollToProfile(profile.id);
-
-        if (needsAwaitedReveal) {
-            const generation = ++modalOpenGenerationRef.current;
-            setRevealPending(isMobileCardModal ? 'modal' : 'panel');
-            setPreloadReady(false);
-            preloadProfileModalPhoto(profile).then(() => {
-                if (modalOpenGenerationRef.current !== generation) return;
-                setPreloadReady(true);
-            });
-        } else {
-            void preloadProfileModalPhoto(profile);
-        }
-
         router.replace(url, { scroll: false });
-    }, [router, profileSection, isCardView, cardColumns, scrollToProfile]);
 
-    // 서버 activeSlug가 클릭 대상과 일치하면 pending 해제
+        scrollToProfileThen(profile.id, generation, () => {
+            if (isMobileCardModal) setDetailPending(true);
+            if (isDesktopCardPanel) setPanelCard(profile);
+        });
+    }, [router, profileSection, isCardView, cardColumns, scrollToProfileThen]);
+
+    // pathname(activeSlug)가 클릭 대상과 일치하면 pending 해제
     useEffect(() => {
-        if (!pendingProfileId || activeSlug !== pendingProfileId) return;
-        setPendingProfileId(null);
-    }, [activeSlug, pendingProfileId]);
+        if (!pendingProfile || activeSlug !== pendingProfile) return;
+        setPendingProfile(null);
+    }, [activeSlug, pendingProfile]);
 
-    // preload + 클라이언트 URL 도착 시 reveal (모바일 모달 / 데스크톱 패널)
+    // layout 유지 시 page가 갱신되지 않아도 URL slug로 selectedCard 동기화
+    // detailPending·stale slug 동안: 클릭한 프로필 유지
     useEffect(() => {
-        if (!revealPending || !pendingProfileId || !preloadReady) return;
-        if (clientSlug !== pendingProfileId) return;
-        if (revealPending === 'modal' && !urlDetailOpen) return;
+        if (detailPending || isUrlStale) return;
 
-        stopSmoothScroll();
-        if (revealPending === 'panel' && selectedCard) setPanelCard(selectedCard);
-        setPreloadReady(false);
-        setRevealPending(null);
-    }, [revealPending, pendingProfileId, clientSlug, urlDetailOpen, preloadReady, selectedCard]);
-
-    // 느린 네트워크 대비 최대 대기 후 강제 reveal
-    useEffect(() => {
-        if (!revealPending) return;
-
-        const kind = revealPending;
-        const timer = window.setTimeout(() => {
-            console.warn(
-                `[ProfileCards] reveal timeout (${MAX_MODAL_OPEN_WAIT_MS}ms) — preload/URL 미완료, 강제 reveal`,
-                {
-                    profileId: selectedCard?.id,
-                    pendingProfileId,
-                    revealPending: kind,
-                    preloadReady,
-                    clientSlug,
-                    urlDetailOpen,
-                }
-            );
-            stopSmoothScroll();
-            if (kind === 'panel' && selectedCard) setPanelCard(selectedCard);
-            setPreloadReady(false);
-            setRevealPending(null);
-        }, MAX_MODAL_OPEN_WAIT_MS);
-
-        return () => window.clearTimeout(timer);
-    }, [revealPending, pendingProfileId]);
-
-    // URL slug(selectedProfile) 변경 시 선택 상태 동기화
-    // pending 중(서버 URL stale) 또는 reveal 준비 중: 클릭한 프로필 유지
-    useEffect(() => {
-        if (isServerUrlStale || revealPending != null) return;
-        if (!selectedProfile) {
-            setSelectedCard(null);
+        if (!activeSlug) {
+            if (!urlDetailOpen) {
+                const fallback = !isAlumniPage ? (defaultProfile ?? null) : null;
+                setSelectedCard(fallback);
+            }
             return;
         }
-        setSelectedCard((prev) => (prev?.id === selectedProfile.id ? prev : selectedProfile));
-    }, [selectedProfile, isServerUrlStale, revealPending]);
 
-    // 외부 URL 진입·뒤로가기 시 데스크톱 패널 동기화 (reveal 대기 중이 아닐 때)
+        const match = findProfileById(profiles, activeSlug);
+        if (match) setSelectedCard(match);
+    }, [activeSlug, profiles, urlDetailOpen, detailPending, isUrlStale, isAlumniPage, defaultProfile]);
+
+    // 외부 URL 진입·뒤로가기 시 데스크톱 패널 동기화
     useEffect(() => {
-        if (revealPending != null || isServerUrlStale) return;
+        if (detailPending || isUrlStale || pendingProfile) return;
+        if (!isCardView) {
+            setPanelCard(null);
+            return;
+        }
         if (!selectedCard) {
             setPanelCard(null);
             return;
         }
         setPanelCard((prev) => (prev?.id === selectedCard.id ? prev : selectedCard));
-    }, [selectedCard, revealPending, isServerUrlStale]);
+    }, [selectedCard, detailPending, isUrlStale, pendingProfile, isCardView]);
 
     useEffect(() => {
-        if (pendingProfileId) return;
+        if (pendingProfile) return;
         if (!activeSlug) lastScrolledIdRef.current = null;
-    }, [activeSlug, pendingProfileId]);
+    }, [activeSlug, pendingProfile]);
 
-    // 자동 스크롤 — 외부 URL 진입·뒤로가기 (페이지 내 클릭은 handleProfileClick에서 처리)
+    // 외부 URL 진입·뒤로가기 시 스크롤 (페이지 내 클릭은 handleProfileClick에서 처리)
     useEffect(() => {
-        if (pendingProfileId || revealPending != null) return;
+        if (detailPending || pendingProfile) return;
         if (!selectedCard || activeSlug !== selectedCard.id) return;
         if (lastScrolledIdRef.current === selectedCard.id) return;
 
         scrollToProfile(selectedCard.id);
-    }, [selectedCard, activeSlug, pendingProfileId, revealPending, scrollToProfile]);
+    }, [selectedCard, activeSlug, detailPending, pendingProfile, scrollToProfile]);
 
     const checkBottom = useCallback(() => {
         if (mobilePopupRef.current) {
@@ -563,7 +544,7 @@ export function ProfileCards({ profiles, selectedProfile, activeSlug = null, stu
             )}
 
             {/* Detailed Profile (popup) - ?detail=1 일 때만 모바일에서 팝업 표시 */}
-            {selectedCard && isCardView && isDetailOpen && (
+            {isDetailOpen && selectedCard && isCardView && (
                 <div
                     onClick={handleBackdropClick}
                     className="fixed inset-0 z-modal bg-black bg-opacity-75 flex items-center justify-center px-2 py-2 md:p-4 1.5md:hidden"
