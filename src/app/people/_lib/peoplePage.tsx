@@ -2,21 +2,15 @@ import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { getMetadata } from '@/lib/GetMetadata';
-import { SubCover } from '@/components/Covers';
-import { ProfileCards } from '@/components/Profile';
 import {
   buildProfileAsPath,
   buildProfileListPath,
-  DEFAULT_MEMBER_PROFILE_YAML_ID,
   findProfileById,
   getProfileOgImagePath,
-  parseProfileColsParam,
   type ProfileSection,
 } from '@/lib/profileSlug';
 import { getAlumniProfiles, getProfiles } from '@/data/loaders';
 import { loadProfilePageData } from '@/app/people/_lib/loadProfilePageData';
-import type { ProfileData } from '@/data/loaders/types';
-
 const SECTION_CONFIG = {
   members: {
     title: 'Members',
@@ -34,22 +28,6 @@ const SECTION_CONFIG = {
 
 function resolveSlugParam(slug: string[] | undefined): string | undefined {
   return slug?.[0];
-}
-
-function resolveSelectedProfile(
-  section: ProfileSection,
-  profiles: ProfileData[],
-  slugInUrl?: string
-): ProfileData | null {
-  if (slugInUrl) {
-    return findProfileById(profiles, slugInUrl) ?? null;
-  }
-
-  if (section === 'members') {
-    return profiles.find((p) => p.yamlId === DEFAULT_MEMBER_PROFILE_YAML_ID) ?? profiles[0] ?? null;
-  }
-
-  return null;
 }
 
 export async function generatePeopleStaticParams(section: ProfileSection) {
@@ -101,7 +79,6 @@ export async function renderPeoplePage({ section, params, searchParams }: People
   const { slug: slugSegments } = await params;
   const resolvedSearchParams = await searchParams;
   const viewParam = resolvedSearchParams.view as string | undefined;
-  const colsParam = resolvedSearchParams.cols as string | undefined;
 
   const listFallbackPath = buildProfileListPath(
     section,
@@ -109,29 +86,12 @@ export async function renderPeoplePage({ section, params, searchParams }: People
   );
 
   const slugInUrl = resolveSlugParam(slugSegments);
-  const { profiles, studies, papers, patents, projects } = await loadProfilePageData(config.isAlumni);
+  const { profiles } = await loadProfilePageData(config.isAlumni);
 
   if (slugInUrl && !findProfileById(profiles, slugInUrl)) {
     redirect(listFallbackPath);
   }
 
-  const selectedProfile = resolveSelectedProfile(section, profiles, slugInUrl);
-
-  return (
-    <div className="max-w-screen-2xl mx-auto">
-      <SubCover title={config.title} pattern="diagonal-lines" colorVariant="sage" showBreadcrumb={false} />
-      <ProfileCards
-        profiles={profiles}
-        selectedProfile={selectedProfile}
-        activeSlug={slugInUrl ?? null}
-        studies={studies}
-        papers={papers}
-        patents={patents}
-        projects={projects}
-        isAlumniPage={config.isAlumni}
-        initialIsCardView={viewParam !== 'list'}
-        initialCardColumns={parseProfileColsParam(colsParam)}
-      />
-    </div>
-  );
+  // ProfileCards는 layout에 고정 — slug·metadata만 page에서 처리
+  return null;
 }
