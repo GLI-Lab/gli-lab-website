@@ -27,6 +27,19 @@ function formatDate(dateString: string): string {
   }
 }
 
+/** "2026-07-15 (TBC)" → { date: '2026.07.15', note: '(TBC)' } */
+function parseSeminarDate(dateValue: string | Date): { date: string; note?: string } {
+  // js-yaml은 순수 날짜(2026-02-19)를 Date 객체로, "(TBC)"가 붙은 값은 문자열로 파싱함
+  if (typeof dateValue !== 'string') {
+    return { date: formatDate(dateValue as unknown as string) };
+  }
+  const match = dateValue.match(/^(.*?)\s*(\([^)]*\))\s*$/);
+  if (match) {
+    return { date: formatDate(match[1].trim()), note: match[2] };
+  }
+  return { date: formatDate(dateValue) };
+}
+
 /** tag.topic 객체에서 라벨 배열 추출 (YAML { topic: { A, B } } → ['A','B']) */
 function getTopicTags(item: SeminarData): string[] {
   const topic = item.tag?.topic;
@@ -115,21 +128,29 @@ export function SeminarList({
             {group.items.map((item, idx) => (
               <div
                 key={`${item.date}-${item.title}-${idx}`}
-                className={`flex flex-col bg-white px-4 py-2 rounded-xl border border-gray-200 shadow-sm hover:border-brand-primary hover:shadow-md transition-all duration-200 min-h-0 ${listMd ? 'md:py-4 md:flex-row md:items-center md:gap-5' : 'h-full gap-2 md:py-4 md:gap-3'}`}
+                className={`flex flex-col bg-white px-4 py-2 rounded-xl border border-gray-200 shadow-sm hover:border-brand-primary hover:shadow-md transition-all duration-200 min-h-0 ${listMd ? 'md:py-4 md:flex-row md:items-center md:gap-6' : 'h-full gap-2 md:py-4 md:gap-3'}`}
               >
                 <span
                   className={`text-[14px] md:text-[16px] font-medium text-gray-600 leading-snug tabular-nums shrink-0 text-center block ${listMd ? 'mb-0 md:w-20 md:text-right' : 'mb-0'}`}
                 >
-                  {formatDate(item.date)}
+                  {(() => {
+                    const { date, note } = parseSeminarDate(item.date);
+                    return (
+                      <>
+                        {date}
+                        {note && <span className="block text-center">{note}</span>}
+                      </>
+                    );
+                  })()}
                 </span>
                 <div
-                  className={`flex-1 min-w-0 flex flex-col min-h-0 ${listMd ? 'md:flex-row md:justify-start md:items-center gap-2 md:gap-4' : 'gap-2 md:gap-2'}`}
+                  className={`flex-1 min-w-0 flex flex-col min-h-0 ${listMd ? 'md:flex-row md:justify-start md:items-center gap-2 md:gap-4' : 'gap-2 md:gap-3'}`}
                 >
                   <div
                     className={`min-w-0 flex flex-col items-center text-center ${listMd ? 'flex-1 md:items-start md:text-left' : 'flex-1 min-h-0 justify-center'}`}
                   >
-                    <p className={`text-[16px] md:text-[18px] font-semibold text-gray-800 leading-snug ${listMd ? 'mb-0' : ''}`}>
-                      {(() => {
+                    <p className={`text-[16px] md:text-[18px] font-semibold text-gray-800 leading-snug ${listMd ? 'mb-0' : 'min-h-[2.75rem] md:min-h-[3.125rem] flex items-center justify-center'}`}>
+                      <span>{(() => {
                         const title = item.title ?? '';
                         const words = title.trim().split(/\s+/).filter(Boolean);
                         const isNew = isNewSeminar(item);
@@ -154,7 +175,7 @@ export function SeminarList({
                             </span>
                           </>
                         );
-                      })()}
+                      })()}</span>
                     </p>
                     {listMd && (getTopicTags(item).length > 0 || getAreaTags(item).length > 0) && (
                       <div className="flex flex-wrap justify-center gap-x-2 gap-y-1 mt-1 md:mt-2 md:justify-start">

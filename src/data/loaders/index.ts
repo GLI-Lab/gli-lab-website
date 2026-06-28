@@ -9,8 +9,13 @@ import { getSeminarsUncached, type GetSeminarsOptions } from './seminarLoader';
 import { getStudiesUncached } from './studyLoader';
 
 const REVALIDATE_SECONDS = 3600;
+const isDev = process.env.NODE_ENV === 'development';
 
 function createCachedLoader<T>(key: string, loader: () => Promise<T>, tags: string[]): () => Promise<T> {
+  // 개발 모드에서는 캐시를 우회해서 YAML 변경이 즉시 반영되도록
+  if (isDev) {
+    return loader;
+  }
   return () =>
     unstable_cache(loader, [key], {
       revalidate: REVALIDATE_SECONDS,
