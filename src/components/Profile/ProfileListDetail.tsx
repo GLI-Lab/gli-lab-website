@@ -7,9 +7,12 @@ import { ProfileDetailPaper } from './ProfileDetailPaper';
 import { ProfileDetailPatent } from './ProfileDetailPatent';
 import { ProfileDetailProject } from './ProfileDetailProject';
 import { ProfileDetailStudy } from './ProfileDetailStudy';
+import { ProfileDetailSeminar } from './ProfileDetailSeminar';
+import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText';
+import { getSeminarsForProfile } from '@/data/loaders/utils';
 
 export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
-    const {id, yamlId, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false } = props;
+    const {id, yamlId, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false } = props;
 
     const renderEducation = (
         label: string,
@@ -69,6 +72,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
     const filteredStudies = filterStudiesForProfile(studies, { id });
     const filteredPapers = getPapersForProfile(papers, yamlId);
     const filteredPatents = getPatentsForProfile(patents, yamlId);
+    const filteredSeminars = getSeminarsForProfile(seminars, yamlId);
 
 
     return (
@@ -85,15 +89,27 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                 </div> */}
 
                 {/* Status */}
-                <div className="grid grid-cols-[auto,1fr] gap-x-4 items-center">
+                <div className="grid grid-cols-[auto,1fr] gap-x-4 gap-y-0.5 items-center">
+                    {joined_start && joined_end && (
+                        <><span className={`text-text-accent font-medium`}>Joined</span><span className="text-[15.5px] md:text-[16.5px]">{joined_start} - {joined_end}</span></>
+                    )}
                     {graduation && (
                         <><span className={`text-text-accent font-medium`}>Graduation</span><span className="text-[15.5px] md:text-[16.5px]">{graduation}</span></>
                     )}
+                    {isAlumniPage && hasAffiliation(affiliation) && (
+                        <>
+                            <span className={`text-text-accent font-medium self-start`}>Affiliation</span>
+                            <span className="text-[15.5px] md:text-[16.5px] self-start min-w-0">
+                                <ProfileAffiliationText
+                                    affiliation={affiliation}
+                                    showVerified
+                                    currentClassName="font-semibold underline"
+                                />
+                            </span>
+                        </>
+                    )}
                     {admission && (
                         <><span className={`text-text-accent font-medium`}>Admission</span><span className="text-[15.5px] md:text-[16.5px]">{admission}</span></>
-                    )}
-                    {joined_start && joined_end && (
-                        <><span className={`text-text-accent font-medium`}>Joined</span><span className="text-[15.5px] md:text-[16.5px]">{joined_start} - {joined_end}</span></>
                     )}
                 </div>
                 
@@ -194,6 +210,7 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                 <ProfileDetailPaper papers={filteredPapers} profileYamlId={yamlId} />
                 <ProfileDetailPatent patents={filteredPatents} profileYamlId={yamlId} />
                 <ProfileDetailProject projects={projects} profileId={yamlId} />
+                <ProfileDetailSeminar seminars={filteredSeminars} profileYamlId={yamlId} />
                 <ProfileDetailStudy studies={filteredStudies} profileYamlId={yamlId} />
             </div>
         </div>

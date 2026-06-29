@@ -148,6 +148,16 @@ function transformProfile(yamlProfile: ProfileYAML, photosDict: Map<string, stri
   const yamlId = yamlProfile.id || "";
   const slug = generateProfileSlug(yamlId, yamlProfile.name.en || "");
 
+  const normalizeAffiliation = (
+    value: ProfileYAML['status']['affiliation'],
+  ): ProfileData['affiliation'] => {
+    if (!value || typeof value !== 'object') return undefined;
+    const current = typeof value.current === 'string' ? value.current.trim() : '';
+    if (!current) return undefined;
+    const verified = typeof value.verified === 'string' ? value.verified.trim() : '';
+    return verified ? { current, verified } : { current };
+  };
+
   return {
     id: slug,
     yamlId,
@@ -162,7 +172,7 @@ function transformProfile(yamlProfile: ProfileYAML, photosDict: Map<string, stri
     graduation: yamlProfile.status.period.graduation || "",
     joined_start: yamlProfile.status.joined.start || "",
     joined_end: yamlProfile.status.joined.end || "",
-    affiliation: yamlProfile.status.affiliation || "",
+    affiliation: normalizeAffiliation(yamlProfile.status.affiliation),
     interest: yamlProfile.interests || [],
     photo: photoUrls,
     email: yamlProfile.contacts.emails || [],

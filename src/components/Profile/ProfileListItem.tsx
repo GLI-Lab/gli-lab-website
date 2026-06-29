@@ -4,20 +4,22 @@ import Image from 'next/image';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ProfileItemProps } from '@/data/loaders/types';
 import { ProfileListDetail } from './ProfileListDetail';
-import { type StudyData, type PaperData, type PatentData, type ProjectData } from '@/data/loaders/types';
+import { type StudyData, type PaperData, type PatentData, type ProjectData, type SeminarData } from '@/data/loaders/types';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
 import { buildProfileSharePath } from '@/lib/profileSlug';
+import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText';
 
 interface ProfileListItemProps extends ProfileItemProps {
     studies?: StudyData[];
     papers?: PaperData[];
     patents?: PatentData[];
     projects?: ProjectData[];
+    seminars?: SeminarData[];
 }
 
 export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
-    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage = false, studies = [], papers = [], patents = [], projects = [], bs, ms, phd, interest, homepage, github, linkedin, scholar, cv, title, id } = props;
+    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage = false, studies = [], papers = [], patents = [], projects = [], seminars = [], bs, ms, phd, interest, homepage, github, linkedin, scholar, cv, title, id } = props;
     const section = isAlumniPage ? 'alumni' : 'members';
     const [isExpanded, setIsExpanded] = useState(false);
     const [copied, setCopied] = useState(false);
@@ -203,13 +205,18 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                     
 
                     {/* Status */}
-                    <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-0 tracking-normal sm:tracking-normal text-base md:text-lg ${type === "faculty" ? "mt-3" : ""} text-left`}>
-                        {isAlumniPage && (affiliation || joined_start || joined_end) ? (
+                    <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-0 tracking-normal sm:tracking-normal text-base md:text-lg items-center ${type === "faculty" ? "mt-3" : ""} text-left`}>
+                        {isAlumniPage && (hasAffiliation(affiliation) || joined_start || joined_end) ? (
                             <>
-                                {affiliation && (
+                                {hasAffiliation(affiliation) && (
                                     <>
-                                        <span className={`font-medium`}>Status</span>
-                                        <span className="font-semibold underline">{affiliation}</span>
+                                        <span className="font-medium self-start">Affiliation</span>
+                                        <span className="self-start min-w-0">
+                                            <ProfileAffiliationText
+                                                affiliation={affiliation}
+                                                currentClassName="font-semibold underline"
+                                            />
+                                        </span>
                                     </>
                                 )}
                                 <span className={`font-medium`}>Joined</span>
@@ -394,6 +401,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                         papers={papers} 
                         patents={patents}
                         projects={projects}
+                        seminars={seminars}
                         isAlumniPage={isAlumniPage}
                     />
                 </div>

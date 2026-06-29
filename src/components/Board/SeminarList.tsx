@@ -1,8 +1,11 @@
+"use client";
+
 import type { ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { SeminarData } from '@/data/loaders/types';
-import { getProfileHref } from '@/lib/utils';
+import { getProfileHref, getSeminarHashId } from '@/lib/utils';
 
 export type SeminarListLayout = 'card' | 'list';
 
@@ -98,6 +101,50 @@ export function SeminarList({
   profiles = [],
   alumniProfiles = [],
 }: SeminarListProps) {
+  const [highlightedSeminarId, setHighlightedSeminarId] = useState<string | null>(null);
+
+  useEffect(() => {
+    let highlightTimer: NodeJS.Timeout | null = null;
+
+    const checkHash = () => {
+      const hash = window.location.hash;
+      if (!hash.startsWith('#seminar-')) {
+        setHighlightedSeminarId(null);
+        return;
+      }
+
+      const targetId = decodeURIComponent(hash.substring(1));
+      setHighlightedSeminarId(targetId);
+
+      if (highlightTimer) clearTimeout(highlightTimer);
+
+      let attempts = 0;
+      const maxAttempts = 10;
+      const scrollToElement = () => {
+        const element = document.getElementById(targetId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'auto', block: 'center' });
+        } else if (attempts < maxAttempts) {
+          attempts++;
+          requestAnimationFrame(scrollToElement);
+        }
+      };
+      requestAnimationFrame(scrollToElement);
+
+      highlightTimer = setTimeout(() => {
+        setHighlightedSeminarId(null);
+      }, 1500);
+    };
+
+    checkHash();
+    window.addEventListener('hashchange', checkHash);
+
+    return () => {
+      window.removeEventListener('hashchange', checkHash);
+      if (highlightTimer) clearTimeout(highlightTimer);
+    };
+  }, [seminarItems]);
+
   /** list일 때만 md 이상에서 가로형; card일 때는 항상 세로형 */
   const listMd = layout === 'list';
   const items = seminarItems.length
@@ -125,10 +172,18 @@ export function SeminarList({
             <SectionHeader title={group.season} size="small" className="first:mt-0" />
           )}
           <div className={`grid gap-4 md:gap-5 grid-cols-1 ${listMd ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
-            {group.items.map((item, idx) => (
+            {group.items.map((item, idx) => {
+              const seminarId = getSeminarHashId(item.title ?? '');
+              const isHighlighted = highlightedSeminarId === seminarId;
+              return (
               <div
                 key={`${item.date}-${item.title}-${idx}`}
-                className={`flex flex-col bg-white px-4 py-2 rounded-xl border border-gray-200 shadow-sm hover:border-brand-primary hover:shadow-md transition-all duration-200 min-h-0 ${listMd ? 'md:py-4 md:flex-row md:items-center md:gap-6' : 'h-full gap-2 md:py-4 md:gap-3'}`}
+                id={seminarId}
+                className={`flex flex-col bg-white px-4 py-2 rounded-xl border shadow-sm hover:border-brand-primary hover:shadow-md transition-all duration-200 min-h-0 ${listMd ? 'md:py-4 md:flex-row md:items-center md:gap-6' : 'h-full gap-2 md:py-4 md:gap-3'} ${
+                  isHighlighted
+                    ? 'border-brand-primary bg-brand-primary/10 shadow-lg animate-pulse'
+                    : 'border-gray-200'
+                }`}
               >
                 <span
                   className={`text-[14px] md:text-[16px] font-medium text-gray-600 leading-snug tabular-nums shrink-0 text-center block ${listMd ? 'mb-0 md:w-20 md:text-right' : 'mb-0'}`}
@@ -210,33 +265,36 @@ export function SeminarList({
                       )}
                     </div>
                   )}
-                  <div
-                    className={`flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-gray-600 shrink-0 pt-2 border-t border-gray-200 w-full ${listMd ? 'md:pt-0 md:border-t-0 md:w-auto md:justify-end' : 'md:pt-4'}`}
-                  >
-                    {item.Presenter && (
-                      <span className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-normal">{renderPresenter(item.Presenter, profiles, alumniProfiles)}</span>
-                    )}
-                    {item.Presenter && (
-                      <span className="text-gray-600 select-none">·</span>
-                    )}
-                    {item.slide && item.slideExists !== false ? (
-                      <a
-                        href={item.slide}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-shrink-0 px-3 py-1 text-[13px] md:text-[15px] hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 rounded shadow-sm hover:shadow transition duration-200"
+                  {(() => {
+                    const slideUrl = item.slide && item.slideExists !== false ? item.slide : null;
+                    const hasSlide = Boolean(slideUrl);
+                    return (
+                      <div
+                        className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-gray-600 shrink-0 pt-2 border-t border-gray-200 w-full ${listMd ? 'md:pt-0 md:border-t-0 md:w-auto md:justify-end' : 'md:pt-4 justify-center'} ${listMd ? (hasSlide ? 'justify-center' : 'justify-end') : ''}`}
                       >
-                        Slide
-                      </a>
-                    ) : (
-                      <span className="flex-shrink-0 px-3 py-1 text-[13px] md:text-[15px] text-red-600 border border-red-200 rounded" title="슬라이드 파일 없음">
-                        Slide
-                      </span>
-                    )}
-                  </div>
+                        {item.Presenter && (
+                          <span className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-normal">{renderPresenter(item.Presenter, profiles, alumniProfiles)}</span>
+                        )}
+                        {item.Presenter && hasSlide && (
+                          <span className="text-gray-600 select-none">·</span>
+                        )}
+                        {slideUrl && (
+                          <a
+                            href={slideUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-shrink-0 px-3 py-1 text-[13px] md:text-[15px] hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 rounded shadow-sm hover:shadow transition duration-200"
+                          >
+                            Slide
+                          </a>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
               </div>
-            ))}
+            );
+            })}
           </div>
         </section>
       ))}

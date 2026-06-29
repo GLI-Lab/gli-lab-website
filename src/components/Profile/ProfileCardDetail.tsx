@@ -13,6 +13,8 @@ import { ProfileDetailPaper } from './ProfileDetailPaper';
 import { ProfileDetailPatent } from './ProfileDetailPatent';
 import { ProfileDetailProject } from './ProfileDetailProject';
 import { ProfileDetailStudy } from './ProfileDetailStudy';
+import { ProfileDetailSeminar } from './ProfileDetailSeminar';
+import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText';
 
 function WrappedContactEntries({
     items,
@@ -38,7 +40,7 @@ function WrappedContactEntries({
 }
 
 export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolean }> = (props) => {
-    const {id, yamlId, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false, isModal = false } = props;
+    const {id, yamlId, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false, isModal = false } = props;
     const section = isAlumniPage ? 'alumni' : 'members';
     const searchParams = useSearchParams();
     const cardColumns = parseProfileColsParam(searchParams.get('cols') ?? undefined);
@@ -198,21 +200,30 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 mb-1`}>
                     <span className={`text-brand-primary highlight text-[18px] md:text-[19px] whitespace-nowrap`}>{title}</span>
                 </div>
-                <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 mb-1`}>
-                    <span className={`text-brand-primary highlight-2 text-[18px] md:text-[19px]`}>{affiliation}</span>
-                </div>
-                <div className="my-3"></div>
+                <div className="my-4"></div>
 
                 {/* Status */}
-                <div className="grid grid-cols-[auto,1fr] gap-x-4 items-center">
+                <div className="grid grid-cols-[auto,1fr] gap-x-4 gap-y-0.5 items-center">
+                    {joined_start && joined_end && (
+                        <><span className={`text-text-accent font-medium`}>Joined</span><span className="text-[15.5px] md:text-[16.5px]">{joined_start} - {joined_end}</span></>
+                    )}
                     {graduation && (
                         <><span className={`text-text-accent font-medium`}>Graduation</span><span className="text-[15.5px] md:text-[16.5px]">{graduation}</span></>
                     )}
+                    {isAlumniPage && hasAffiliation(affiliation) && (
+                        <>
+                            <span className={`text-text-accent font-medium self-start`}>Affiliation</span>
+                            <span className="text-[15.5px] md:text-[16.5px] self-start min-w-0">
+                                <ProfileAffiliationText
+                                    affiliation={affiliation}
+                                    showVerified
+                                    currentClassName="font-semibold underline"
+                                />
+                            </span>
+                        </>
+                    )}
                     {admission && (
                         <><span className={`text-text-accent font-medium`}>Admission</span><span className="text-[15.5px] md:text-[16.5px]">{admission}</span></>
-                    )}
-                    {joined_start && joined_end && (
-                        <><span className={`text-text-accent font-medium`}>Joined</span><span className="text-[15.5px] md:text-[16.5px]">{joined_start} - {joined_end}</span></>
                     )}
                 </div>
                 
@@ -335,6 +346,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                 <ProfileDetailPaper papers={papers} profileYamlId={yamlId || ''} />
                 <ProfileDetailPatent patents={patents} profileYamlId={yamlId || ''} />
                 <ProfileDetailProject projects={projects} profileId={yamlId || ''} />
+                <ProfileDetailSeminar seminars={seminars} profileYamlId={yamlId || ''} />
                 <ProfileDetailStudy studies={studies} profileYamlId={yamlId || ''} />
             </div>
         </div>

@@ -43,7 +43,7 @@ function ProfileCardsFallback() {
 
 export async function renderPeopleLayout(section: ProfileSection, children: React.ReactNode) {
   const config = SECTION_CONFIG[section];
-  const { profiles, studies, papers, patents, projects } = await loadProfilePageData(config.isAlumni);
+  const { profiles, studies, papers, patents, projects, seminars } = await loadProfilePageData(config.isAlumni);
 
   return (
     <div className="max-w-screen-2xl mx-auto">
@@ -61,6 +61,7 @@ export async function renderPeopleLayout(section: ProfileSection, children: Reac
           papers={papers}
           patents={patents}
           projects={projects}
+          seminars={seminars}
           isAlumniPage={config.isAlumni}
         />
       </Suspense>

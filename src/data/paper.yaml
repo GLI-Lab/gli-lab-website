@@ -2,6 +2,8 @@
 # scope: "international", "domestic"
 # status: "Accepted", "In Progress", "Under Review"
 
+# venue: { name: "To Appear in The ACM Web Conference", acronym: "WWW" }
+
 # https://gli.konkuk.ac.kr/publications/papers/#diversifying-differentiable-graph-retrieval-with-topic-adaptive-multi-intent-learning
 # https://gli.konkuk.ac.kr/publications/papers/#image-guided-debiasing-distillation-with-preference-alignment-across-multi-news-histories
 # https://gli.konkuk.ac.kr/publications/papers/#reliable-distillation-of-recommendation-rationales-from-large-language-models-for-conversational-recommendation
@@ -166,54 +168,111 @@
 ########################################################################################
 # Accepted
 ########################################################################################
-# - title: "Graph Pattern Machine-based Node Anomaly Detection via Substructure Reconstruction (그래프 패턴 머신 기반 서브구조 복원을 이용한 그래프 노드 이상 탐지)"
-#   filter: {"type": "conference", "scope": "domestic"}
-#   status: "Accepted"
-#   year: 2026
-#   venue: { name: "Korea Computer Congress", acronym: "KCC" }
-#   links: 
-#     Link: null
-#     Code: null
-#   notes: {"normal": "", "important": ""}
-#   authors:
-#     - { name: "Minjung Kim", position : first }
-#     - { name: "Xiongnan Jin", position : co }
-#     - { name: "Jooik Jung", position : co }
-#     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position : co }
-#     - { name: "Kyong-Ho Lee", position : co, isCorresponding : true }
 
+- title:
+    ko: 그래프 패턴 머신 기반 서브구조 복원을 이용한 그래프 노드 이상 탐지
+    en: Graph Pattern Machine-based Node Anomaly Detection via Substructure Reconstruction
+  filter: {"type": "conference", "scope": "domestic"}
+  status: "Accepted"
+  year: 2026
+  venue: { name: "Korea Computer Congress", acronym: "KCC" }
+  links: 
+    Poster: /pdf/poster/[260624][이동현] 그래프 패턴 머신 기반 서브구조 복원을 이용한 그래프 노드 이상 탐지.pdf
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2025.07] 이동현", name: Donghyun Lee, position: first }
+    - { ID: "[2025.01] 구해윤", name: Hae-Yoon Koo, position: co }
+    - { ID: "[2024.03] 오병국", name: Byungkook Oh, position: co, isCorresponding: true }
 
+- title:
+    ko: 언어 모델과 그래프 신경망의 태스크 정렬을 통한 프로비넌스 그래프 APT 탐지
+    en: Provenance Graph-based APT Detection via Task Alignment of Language Models and Graph Neural Networks
+  filter: {"type": "conference", "scope": "domestic"}
+  status: "Accepted"
+  year: 2026
+  venue: { name: "Korea Computer Congress", acronym: "KCC" }
+  links: 
+    Poster: /pdf/poster/[260624][이재진] 언어 모델과 그래프 신경망의 태스크 정렬을 통한 프로비넌스 그래프 APT 탐지.pdf
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2025.07] 이재진", name: Jaejin Lee, position: first }
+    - { ID: "[2025.04] 구본유", name: Bonyou Koo, position: co }
+    - { name: Insung Han, position: co }
+    - { name: Jungsik Lee, position: co }
+    - { name: Sung-Jin Park, position: co }
+    - { name: Sun-Young Im, position: co }
+    - { ID: "[2024.03] 오병국", name: Byungkook Oh, position: co, isCorresponding: true }
 
+- title:
+    ko: 의미·빈도 정보를 반영한 로그 복합 임베딩 기반 이상 탐지 기법
+    en: Semantic and Frequency-Aware Hybrid Log Embedding for Anomaly Detection
+  filter: {"type": "conference", "scope": "domestic"}
+  status: "Accepted"
+  year: 2026
+  venue: { name: "Korea Computer Congress", acronym: "KCC" }
+  links: 
+    Poster: /pdf/poster/[260624][김예은] 의미·빈도 정보를 반영한 로그 복합 임베딩 기반 이상 탐지 기법.pdf
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2025.08] 김예은", name: Yeeun Kim, position: first }
+    - { ID: "[2025.04] 구본유", name: Bonyou Koo, position: co }
+    - { name: Insung Han, position: co }
+    - { name: Jungsik Lee, position: co }
+    - { name: Sung-Jin Park, position: co }
+    - { name: Sun-Young Im, position: co }
+    - { ID: "[2024.03] 오병국", name: Byungkook Oh, position: co, isCorresponding: true }
 
+- title:
+    ko: 문서 수준 관계 추출을 위한 멘션-문맥 하이퍼그래프 기반 집계 기법
+    en: Mention-Context Hypergraph Aggregation for Document-level Relation Extraction
+  filter: {"type": "conference", "scope": "domestic"}
+  status: "Accepted"
+  year: 2026
+  venue: { name: "Korea Computer Congress", acronym: "KCC" }
+  links: 
+    Poster: /pdf/poster/[260624][지상준] 문서 수준 관계 추출을 위한 멘션-문맥 하이퍼그래프 기반 집계 기법.pdf
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2024.07] 지상준", name: Sangjun Ji, position: first }
+    - { ID: "[2024.07] 백혜윤", name: Hye-Yoon Baek, position: co }
+    - { ID: "[2025.07] 이동현", name: Donghyun Lee, position: co }
+    - { ID: "[2024.03] 오병국", name: Byungkook Oh, position: co, isCorresponding: true }
 
+- title:
+    ko: 멀티모달 의미 확장 기반의 해석 가능한 계층적 Textual ID 생성 기법
+    en: Interpretable Hierarchical Textual ID Generation via Multimodal Semantic Enrichment
+  filter: {"type": "conference", "scope": "domestic"}
+  status: "Accepted"
+  year: 2026
+  venue: { name: "Korea Computer Congress", acronym: "KCC" }
+  links: 
+    Poster: /pdf/poster/[260624][사예원] 멀티모달 의미 확장 기반의 해석 가능한 계층적 Textual ID 생성 기법.pdf
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2025.07] 사예원", name: Yewon Sa, position: first }
+    - { ID: "[2025.01] 구해윤", name: Hae-Yoon Koo, position: co }
+    - { name: Insung Han, position: co }
+    - { name: Jungsik Lee, position: co }
+    - { name: Sung-Jin Park, position: co }
+    - { name: Sun-Young Im, position: co }
+    - { ID: "[2024.03] 오병국", name: Byungkook Oh, position: co, isCorresponding: true }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- title:
+    ko: 객체 탐지를 통한 PCB 부품 단위 이상 탐지 파이프라인 제안
+    en: Proposal of PCB Component-Level Anomaly Detection Pipeline via Object Detection 
+  filter: {"type": "conference", "scope": "domestic"}
+  status: "Accepted"
+  year: 2026
+  venue: { name: "Korea Computer Congress", acronym: "KCC" }
+  links: 
+    Poster: /pdf/poster/[260624][김세영] 객체 탐지를 통한 PCB 부품 단위 이상 탐지 파이프라인 제안.pdf
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2025.07] 김세영", name: Seyeong Kim, position: first }
+    - { ID: "[2024.11] 이동천", name: Dongcheon Lee, position: co }
+    - { name: Jengwon hwang, position: co }
+    - { name: Sengho kang, position: co }
+    - { ID: "[2024.03] 오병국", name: Byungkook Oh, position: co, isCorresponding: true }
 
 - title: "Disentangled Global-Local Representations via Relation-Entity Pair Encoding for Hyper-Relational KGs"
   filter: {"type": "conference", "scope": "international"}
@@ -223,6 +282,7 @@
   links: 
     Link: null
     Code: null
+    News: https://www.konkuk.ac.kr/bbs/konkuk/259/1175786/artclView.do
   notes: {"normal": "Research Track (Acceptance Rate: 18.5%)", "important": ""}
   authors:
     - { ID: "[2024.07] 지상준", name: "Sangjun Ji", position: first }
@@ -236,7 +296,7 @@
   filter: {"type": "conference", "scope": "international"}
   status: "Accepted"
   year: 2026
-  venue: { name: "To Appear in The ACM Web Conference", acronym: "WWW" }
+  venue: { name: "The ACM Web Conference", acronym: "WWW" }
   links: 
     Link: https://doi.org/10.1145/3774904.3792529
     Code: https://github.com/leedongcheon/TARD
@@ -254,7 +314,7 @@
   filter: {"type": "conference", "scope": "international"}
   status: "Accepted"
   year: 2026
-  venue: { name: "To Appear in ACM International Conference on Web Search and Data Mining", acronym: "WSDM" }
+  venue: { name: "ACM International Conference on Web Search and Data Mining", acronym: "WSDM" }
   links: 
     Link: https://doi.org/10.1145/3773966.3777983
     Code: https://github.com/seojmm/IGKnow
@@ -664,7 +724,9 @@
     - { name : "Jooik Jung", position : co }
     - { name : "Kyong-Ho Lee", position : co, isCorresponding : true }
 
-- title: "Web Service Selection based on a Probabilistic QoS Model (확률적 QoS 모델 기반 웹서비스 선택 방법)"
+- title:
+    ko: 확률적 QoS 모델 기반 웹서비스 선택 방법
+    en: Web Service Selection based on a Probabilistic QoS Model
   filter: {"type": "conference", "scope": "domestic"}
   status: "Accepted"
   year: 2015

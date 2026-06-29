@@ -45,52 +45,55 @@ export function ProfileDetailStudy({ studies, profileYamlId }: ProfileDetailStud
     const showLess = displayedCount > STUDY_PREVIEW_LIMIT;
 
     return (
-        <div className="grid gap-x-4 gap-y-1">
-            <ProfileDetailSectionLink href="/board/study" title="Go to study page">
-                Study
-            </ProfileDetailSectionLink>
-            <div>
-                {visibleStudies.map((study, index) => (
-                    <div key={study.title} className="mb-1.5 leading-snug">
-                        <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-start">
-                            <div className="flex items-start">
-                                <ProfileDetailListMarker index={index} showNumbering={SHOW_ITEM_NUMBERING}/>
-                                <Link
-                                    href={`/board/study#study-${study.title.replace(/\s+/g, '-').toLowerCase()}`}
-                                    className="text-[14.5px] md:text-[15.5px] hover:text-interactive-hover hover:underline underline-offset-4"
-                                    title="View in study page"
-                                >
-                                    {study.title}
-                                </Link>
-                            </div>
-                            <div />
-                            <div className="flex items-center gap-1 flex-shrink-0 mt-0.5">
-                                <span className="text-[13px] md:text-[14px] text-text-secondary">
-                                    {formatStudyDate(study.start_date)}
-                                    {study.end_date ? ` ~ ${formatStudyDate(study.end_date)}` : ' ~ '}
-                                </span>
-                                {isOngoingStudy(study.end_date) && (
-                                    <span className="inline-block font-semibold bg-brand-primary/10 text-brand-primary text-[10px] px-1.5 py-0.5 rounded-md">
-                                        NOW
+        <>
+            <div className="grid gap-x-4 gap-y-1">
+                <ProfileDetailSectionLink href="/board/study" title="Go to study page">
+                    Study
+                </ProfileDetailSectionLink>
+                <div>
+                    {visibleStudies.map((study, index) => (
+                        <div key={study.title} className="mb-1.5 leading-snug">
+                            <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-start">
+                                <div className="flex items-start">
+                                    <ProfileDetailListMarker index={index} showNumbering={SHOW_ITEM_NUMBERING}/>
+                                    <Link
+                                        href={`/board/study#study-${study.title.replace(/\s+/g, '-').toLowerCase()}`}
+                                        className="text-[14.5px] md:text-[15.5px] hover:text-interactive-hover hover:underline underline-offset-4"
+                                        title="View in study page"
+                                    >
+                                        {study.title}
+                                    </Link>
+                                </div>
+                                <div />
+                                <div className="flex items-center gap-1 flex-shrink-0 mt-0.5">
+                                    <span className="text-[13px] md:text-[14px] text-text-secondary">
+                                        {formatStudyDate(study.start_date)}
+                                        {study.end_date ? ` ~ ${formatStudyDate(study.end_date)}` : ' ~ '}
                                     </span>
-                                )}
+                                    {isOngoingStudy(study.end_date) && (
+                                        <span className="inline-block font-semibold bg-brand-primary/10 text-brand-primary text-[10px] px-1.5 py-0.5 rounded-md">
+                                            NOW
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
-                {(showMore || showLess) && (
-                    <ProfileDetailExpandToggle
-                        showMore={showMore}
-                        showLess={showLess}
-                        onShowMore={() =>
-                            setDisplayedCount((count) =>
-                                Math.min(count + STUDY_EXPAND_STEP, studies.length)
-                            )
-                        }
-                        onShowLess={() => setDisplayedCount(STUDY_PREVIEW_LIMIT)}
-                    />
-                )}
+                    ))}
+                    {(showMore || showLess) && (
+                        <ProfileDetailExpandToggle
+                            showMore={showMore}
+                            showLess={showLess}
+                            onShowMore={() =>
+                                setDisplayedCount((count) =>
+                                    Math.min(count + STUDY_EXPAND_STEP, studies.length)
+                                )
+                            }
+                            onShowLess={() => setDisplayedCount(STUDY_PREVIEW_LIMIT)}
+                        />
+                    )}
+                </div>
             </div>
-        </div>
+            <div className="my-4" />
+        </>
     );
 }

@@ -7,6 +7,10 @@
 ########################################################################################
 # 2026
 ########################################################################################
+- date: "2026-06-13"
+  type: Member
+  content: "Welcome to GLI lab, <profile=[2026.03] 윤종우>Jongwoo Yun (윤종우)</> and <profile=[2026.04] 박원규>Won-Gyu Park (박원규)</>, as master students! 😊"
+
 - date: "2026-06-05"
   type: General
   content: "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</> and <profile=[2024.12] 최진호>Jinho Choi (최진호)</> have been selected for the <b>2026 AI Seoul Tech Research Support Program (Master's)</b> 👏"
