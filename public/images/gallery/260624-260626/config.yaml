@@ -1,0 +1,34 @@
+date: "2026-06-24 ~ 2026-06-26"
+title: "KCC'26 국내학회 참석 및 발표 (한국, 제주도)"
+description: |
+  우리 연구실은 한국정보과학회 2026 한국컴퓨터종합학술대회(KCC 2026)에 참석하여
+  최신 인공지능·데이터마이닝·정보보안 관련 연구 동향을 파악하고, 포스터 논문 6편을 발표하였습니다.
+  
+  학회 일정 외에도 학부연구생 6명, 대학원생 6명이 함께 모여 즐거운 추억을 쌓았습니다.
+  
+  학기 마무리와 더불어 잠시 동안 제안서, 프로젝트, 논문 등 바쁜 일상을 내려놓고 다 같이 시간을 보내며 서로를 더 알아갈 수 있었던, 
+  가장 오래 기억에 남을 소중한 시간이었습니다.
+
+  - "그래프 패턴 머신 기반 서브구조 복원을 이용한 그래프 노드 이상 탐지"
+    (Graph Pattern Machine-based Node Anomaly Detection via Substructure Reconstruction)
+    저자: Donghyun Lee, Hae-Yoon Koo, Byungkook Oh
+
+  - "언어 모델과 그래프 신경망의 태스크 정렬을 통한 프로비넌스 그래프 APT 탐지"
+    (Provenance Graph-based APT Detection via Task Alignment of Language Models and Graph Neural Networks)
+    저자: Jaejin Lee, Bonyou Koo, Insung Han, Jungsik Lee, Sung-Jin Park, Sun-Young Im, Byungkook Oh
+
+  - "의미·빈도 정보를 반영한 로그 복합 임베딩 기반 이상 탐지 기법"
+    (Semantic and Frequency-Aware Hybrid Log Embedding for Anomaly Detection)
+    저자: Yeeun Kim, Bonyou Koo, Insung Han, Jungsik Lee, Sung-Jin Park, Sun-Young Im, Byungkook Oh
+
+  - "문서 수준 관계 추출을 위한 멘션-문맥 하이퍼그래프 기반 집계 기법"
+    (Mention-Context Hypergraph Aggregation for Document-level Relation Extraction)
+    저자: Sangjun Ji, Hye-Yoon Baek, Donghyun Lee, Byungkook Oh
+
+  - "멀티모달 의미 확장 기반의 해석 가능한 계층적 Textual ID 생성 기법"
+    (Interpretable Hierarchical Textual ID Generation via Multimodal Semantic Enrichment)
+    저자: Yewon Sa, Hae-Yoon Koo, Insung Han, Jungsik Lee, Sung-Jin Park, Sun-Young Im, Byungkook Oh
+
+  - "객체 탐지를 통한 PCB 부품 단위 이상 탐지 파이프라인 제안"
+    (Proposal of PCB Component-Level Anomaly Detection Pipeline via Object Detection)
+    저자: Seyeong Kim, Dongcheon Lee, Jengwon Hwang, Sengho Kang, Byungkook Oh
