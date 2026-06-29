@@ -4,6 +4,11 @@
 // Profile Types
 // =====================================================
 
+export interface ProfileAffiliation {
+  current: string;
+  verified?: string;
+}
+
 export interface ProfileYAML {
   id: string;
   role: {
@@ -37,7 +42,10 @@ export interface ProfileYAML {
       start: string | null;
       end: string | null;
     };
-    affiliation: string | null;
+    affiliation: {
+      current: string | null;
+      verified: string | null;
+    } | null;
   };
 }
 
@@ -57,7 +65,7 @@ export interface ProfileData {
   joined_start: string;
   joined_end: string;
   graduation?: string;
-  affiliation?: string;
+  affiliation?: ProfileAffiliation;
   interest: string[];
   photo: string[];
   email: string[];
@@ -80,6 +88,7 @@ export interface ProfileDetailProps extends ProfileData {
   papers?: PaperData[];
   patents?: PatentData[];
   projects?: ProjectData[];
+  seminars?: SeminarData[];
   isAlumniPage?: boolean;
 }
 
@@ -98,8 +107,10 @@ export interface AuthorData {
   isCorresponding?: boolean;
 }
 
+export type PaperTitle = string | { ko: string; en: string };
+
 interface BasePaperData {
-  title: string;
+  title: PaperTitle;
   year: number;
   venue: { name: string; acronym: string };
   links?: {

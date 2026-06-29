@@ -1,3 +1,5 @@
+import type { PaperTitle } from '@/data/loaders/types';
+
 export function titleToId(title: string): string {
   return title
     .toLowerCase()
@@ -5,6 +7,22 @@ export function titleToId(title: string): string {
     .replace(/\s+/g, '-')                  // 공백을 하이픈으로
     .replace(/-+/g, '-')                   // 연속된 하이픈을 하나로
     .replace(/^-|-$/g, '');                // 앞뒤 하이픈 제거
+}
+
+export function isLocalizedPaperTitle(title: PaperTitle): title is { ko: string; en: string } {
+  return typeof title === 'object' && title !== null && 'ko' in title;
+}
+
+export function getPaperTitleId(title: PaperTitle): string {
+  return titleToId(isLocalizedPaperTitle(title) ? title.ko : title);
+}
+
+export function getPaperTitleKey(title: PaperTitle): string {
+  return isLocalizedPaperTitle(title) ? `${title.ko}\n${title.en}` : title;
+}
+
+export function getSeminarHashId(title: string): string {
+  return `seminar-${title.replace(/\s+/g, '-').toLowerCase()}`;
 }
 
 type ProfileIdSource = string | { id: string; yamlId?: string };

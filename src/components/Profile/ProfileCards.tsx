@@ -5,8 +5,8 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { ProfileCardItem } from './ProfileCardItem';
 import { ProfileListItem } from './ProfileListItem';
 import { ProfileCardDetail } from './ProfileCardDetail';
-import { type ProfileData, type PaperData, type StudyData, type PatentData, type ProjectData } from '@/data/loaders/types';
-import { getPapersForProfile, getPatentsForProfile } from '@/data/loaders/utils';
+import { type ProfileData, type PaperData, type StudyData, type PatentData, type ProjectData, type SeminarData } from '@/data/loaders/types';
+import { getPapersForProfile, getPatentsForProfile, getSeminarsForProfile } from '@/data/loaders/utils';
 import { buildProfilePath, DEFAULT_MEMBER_PROFILE_YAML_ID, findProfileById, getProfileSectionBasePath, getProfileSlugFromPathname, PROFILE_MOBILE_BREAKPOINT, type ProfileSection } from '@/lib/profileSlug';
 import { preloadProfileModalPhoto } from '@/lib/preloadImages';
 
@@ -48,6 +48,7 @@ interface ProfileCardsProps {
     papers?: PaperData[];
     patents?: PatentData[];
     projects?: ProjectData[];
+    seminars?: SeminarData[];
     isAlumniPage?: boolean;
 }
 
@@ -80,7 +81,7 @@ function resolveInitialSelected(
     return null;
 }
 
-export function ProfileCards({ profiles, studies = [], papers = [], patents = [], projects = [], isAlumniPage = false }: ProfileCardsProps) {
+export function ProfileCards({ profiles, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false }: ProfileCardsProps) {
     const profileSection: ProfileSection = isAlumniPage ? 'alumni' : 'members';
     const profileBasePath = getProfileSectionBasePath(profileSection);
 
@@ -398,6 +399,16 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
         [patents, panelCard]
     );
 
+    const selectedProfileSeminars = useMemo(() =>
+        selectedCard ? getSeminarsForProfile(seminars, selectedCard.yamlId) : [],
+        [seminars, selectedCard]
+    );
+
+    const panelProfileSeminars = useMemo(() =>
+        panelCard ? getSeminarsForProfile(seminars, panelCard.yamlId) : [],
+        [seminars, panelCard]
+    );
+
     // 배경 스크롤 방지 및 ESC 키 처리
     useEffect(() => {
         if (isDetailOpen && selectedCard && window.innerWidth < 880 && isCardView) {
@@ -538,7 +549,7 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
             {panelCard && isCardView && (
                 <div className={`hidden 1.5md:block sticky self-start top-16 pt-4 min-w-0 1.5md:flex-1 1.5md:basis-0 ${cardColumns === 2 ? '1.5xl:flex-none 1.5xl:w-[350px]' : '1.5xl:flex-1 1.5xl:basis-0'}`}>
                     <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pr-8 -mr-8 pb-20">
-                        <ProfileCardDetail key={panelCard.id} {...panelCard} studies={panelProfileStudies} papers={panelProfilePapers} patents={panelProfilePatents} projects={projects} isAlumniPage={isAlumniPage}/>
+                        <ProfileCardDetail key={panelCard.id} {...panelCard} studies={panelProfileStudies} papers={panelProfilePapers} patents={panelProfilePatents} projects={projects} seminars={panelProfileSeminars} isAlumniPage={isAlumniPage}/>
                     </div>
                 </div>
             )}
@@ -577,7 +588,7 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
                             className="overflow-y-auto w-full max-h-[calc(95vh-20px)] relative overscroll-none scrollbar-hide pt-2 pb-10" 
                             onScroll={handleScroll}
                         >
-                            <ProfileCardDetail key={selectedCard.id} {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} patents={selectedProfilePatents} projects={projects} isAlumniPage={isAlumniPage} isModal />
+                            <ProfileCardDetail key={selectedCard.id} {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} patents={selectedProfilePatents} projects={projects} seminars={selectedProfileSeminars} isAlumniPage={isAlumniPage} isModal />
                         </div>
 
                         {/* 스크롤 인디케이터 - 모달 전체 하단에 고정 */}
@@ -661,6 +672,7 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
                                                 papers={papers}
                                                 patents={patents}
                                                 projects={projects}
+                                                seminars={seminars}
                                                 {...profile}
                                             />
                                             {/* Clean Divider - except for last item */}

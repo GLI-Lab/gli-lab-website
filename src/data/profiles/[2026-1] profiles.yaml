@@ -101,31 +101,31 @@
     joined: {start: "2024.12", end: "Current"}
     affiliation: null
 
-###############################################
-# Incoming MS Students
-###############################################
 - id: "[2026.03] 윤종우"
-  role: {type: ims, title: Pre-M.S. Students}
+  role: {type: ms, title: M.S. Student (0학기)}
   name: {en: Jongwoo Yun, ko: 윤종우}
   education: {bs: ["Business Administration, Kangwon National University", "AI and Data Science, Kangwon National University"], ms: null, phd: null}
   interests: [Graph ML/DL]
   contacts: {emails: ["jooo316@naver.com"], homepage: null, github: ["jongwoogit"], linkedin: null}
   status: 
-    period: {admission: null, graduation: null}
+    period: {admission: "2026.09", graduation: null}
     joined: {start: "2026.03", end: "Current"}
     affiliation: null
 
 - id: "[2026.04] 박원규"
-  role: {type: ims, title: Pre-M.S. Students}
+  role: {type: ms, title: M.S. Student (0학기)}
   name: {en: Won-Gyu Park, ko: 박원규}
   education: {bs: ["Department of Information Communications Engineering, Soonchunhyang University", "Intelligent Information and Communications, Soonchunhyang University"], ms: null, phd: null}
   interests: [Graph ML/DL]
   contacts: {emails: ["parkwongyu0408@gmail.com"], homepage: null, github: ["Won-Gyu01"], linkedin: null}
   status: 
-    period: {admission: null, graduation: null}
+    period: {admission: "2026.09", graduation: null}
     joined: {start: "2026.04", end: "Current"}
     affiliation: null
-    
+
+###############################################
+# Incoming MS Students
+###############################################
 - id: "[2025.07] 김세영"
   role: {type: ims, title: Undergraduate Student (4학년 1학기)}
   name: {en: Seyeong Kim, ko: 김세영}
@@ -155,17 +155,6 @@
 ###############################################
 # Interns
 ###############################################
-- id: "[2024.07] 지상준"
-  role: {type: intern, title: Undergraduate Student (4학년 1학기)}
-  name: {en: Sangjun Ji, ko: 지상준}
-  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
-  interests: [Graph ML/DL, Hyper-Relational KG, Rule-aware LLM]
-  contacts: {emails: ["wltkdwns0220@naver.com", "wltkdwns0220@konkuk.ac.kr"], homepage: ["approxy02.github.io/homepage/"], github: ["Approxy02"], linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2024.07", end: "Current"}
-    affiliation: null
-
 - id: "[2025.07] 박상현"
   role: {type: intern, title: Undergraduate Student (2학년 1학기)}
   name: {en: Sang-Hyun Park, ko: 박상현}
@@ -183,17 +172,6 @@
   education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
   interests: [Graph ML/DL, LLM-based Recommender Systems]
   contacts: {emails: ["bear100152@gmail.com"], homepage: null, github: ["BearYeWon"], linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
-    affiliation: null
-
-- id: "[2025.07] 이재진"
-  role: {type: intern, title: Undergraduate Student (4학년 1학기)}
-  name: {en: Jaejin Lee, ko: 이재진}
-  education: {bs: ["Computer Science & Engineering, Konkuk University", "Applied Statistics, Konkuk University"], ms: null, phd: null}
-  interests: [Graph ML/DL, Graph Anomaly Detection]
-  contacts: {emails: ["y62945@naver.com"], homepage: null, github: ["jin1ee-02"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2025.07", end: "Current"}

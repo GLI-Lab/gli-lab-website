@@ -37,6 +37,28 @@
 ###############################################
 # Interns
 ###############################################    
+- id: "[2024.07] 지상준"
+  role: {type: intern, title: Undergraduate Student}
+  name: {en: Sangjun Ji, ko: 지상준}
+  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
+  interests: [Graph ML/DL, Hyper-Relational KG, Rule-aware LLM]
+  contacts: {emails: ["wltkdwns0220@naver.com", "wltkdwns0220@konkuk.ac.kr"], homepage: ["approxy02.github.io/homepage/"], github: ["Approxy02"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2024.07", end: "2026.06"}
+    affiliation: {current: 카이스트 인턴, verified: "2026.07"}
+
+- id: "[2025.07] 이재진"
+  role: {type: intern, title: Undergraduate Student}
+  name: {en: Jaejin Lee, ko: 이재진}
+  education: {bs: ["Computer Science & Engineering, Konkuk University", "Applied Statistics, Konkuk University"], ms: null, phd: null}
+  interests: [Graph ML/DL, Graph Anomaly Detection]
+  contacts: {emails: ["y62945@naver.com"], homepage: null, github: ["jin1ee-02"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2025.07", end: "2026.06"}
+    affiliation: {current: null, verified: null}
+
 - id: "[2024.06] 이영호"
   role: {type: intern, title: Undergraduate Student}
   name: {en: Youngho Lee, ko: 이영호}
@@ -45,7 +67,7 @@
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2024.06", end: "2026.04"}
-    affiliation: null
+    affiliation: {current: null, verified: null}
 
 - id: "[2024.12] 최진호"
   role: {type: intern, title: Undergraduate Student}
@@ -55,7 +77,7 @@
   status: 
     period: {admission: null, graduation: "2026.02"}
     joined: {start: "2024.12", end: "2026.02"}
-    affiliation: "건국대학교 석사과정 (GLI Lab)"
+    affiliation: {current: 건국대학교 석사과정 (GLI Lab), verified: "2026.02"}
     
 - id: "[2025.03] 조은영"
   role: {type: intern, title: Undergraduate Student}
@@ -65,7 +87,7 @@
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2025.03", end: "2026.01"}
-    affiliation: "고려대학교 인턴"
+    affiliation: {current: 고려대학교 인턴, verified: null}
 
 - id: "[2025.03] 김상준"
   role: {type: intern, title: Undergraduate Student}
@@ -75,7 +97,7 @@
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2025.03", end: "2026.01"}
-    affiliation: "카이스트 석사과정"
+    affiliation: {current: 카이스트 인턴, verified: "2026.01"}
 
 - id: "[2024.10] 김영진"
   role: {type: intern, title: Undergraduate Student}
@@ -85,7 +107,7 @@
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2024.10", end: "2025.11"}
-    affiliation: "포항공대 인턴"
+    affiliation: {current: 포항공대 인턴, verified: "2025.11"}
 
 - id: "[2024.07] 정우석"
   role: {type: intern, title: Undergraduate Student}
@@ -95,7 +117,7 @@
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2024.07", end: "2025.11"}
-    affiliation: "연세대학교 인턴"
+    affiliation: {current: 연세대학교 인턴, verified: "2025.11"}
 
 - id: "[2024.07] 박지연"
   role: {type: intern, title: Undergraduate Student}
@@ -105,7 +127,7 @@
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2024.07", end: "2025.07"}
-    affiliation: "삼성화재"
+    affiliation: {current: 삼성화재, verified: "2026.07"}
 
 - id: "[2024.03] 김윤진"
   role: {type: intern, title: Undergraduate Student}
@@ -115,7 +137,7 @@
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2024.03", end: "2025.06"}
-    affiliation: null
+    affiliation: {current: null, verified: null}
 
 - id: "[2025.01] 금민석"
   role: {type: intern, title: Undergraduate Student}
@@ -125,7 +147,7 @@
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2025.01", end: "2025.04"}
-    affiliation: null
+    affiliation: {current: null, verified: null}
 
 - id: "[2024.06] 서지명"
   role: {type: intern, title: Undergraduate Student}
@@ -136,7 +158,7 @@
   status: 
     period: {admission: null, graduation: "2025.02"}
     joined: {start: "2024.06", end: "2025.02"}
-    affiliation: "건국대학교 석사과정 (GLI Lab)"
+    affiliation: {current: 건국대학교 석사과정 (GLI Lab), verified: "2025.02"}
 
 - id: "[2024.07] 백혜윤"
   role: {type: intern, title: Undergraduate Student}
@@ -146,4 +168,4 @@
   status: 
     period: {admission: null, graduation: "2025.02"}
     joined: {start: "2024.07", end: "2025.02"}
-    affiliation: "건국대학교 석사과정 (GLI Lab)"
+    affiliation: {current: 건국대학교 석사과정 (GLI Lab), verified: "2025.02"}

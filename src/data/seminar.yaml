@@ -20,14 +20,14 @@
 - title: Knowledge Graph Foundation Model
   season: 2026 Summer
   date: 2026-07-29 (TBC)
-  Presenter: { ID: "[2025.??] 이동현", name: Donghyeon Lee (이동현) }
+  Presenter: { ID: "[2025.07] 이동현", name: Donghyun Lee (이동현) }
   tag: { area: { Graph Int., Graph-Centric AI }, topic: { Graph Foundation Model } }
   slide: 
 
 - title: Temporal KG Forecasting
   season: 2026 Summer
   date: 2026-07-29 (TBC)
-  Presenter: { ID: "[2025.??] 김세영", name: Seyoung Kim (김세영) }
+  Presenter: { ID: "[2025.07] 김세영", name: Seyeong Kim (김세영) }
   tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Temporal KG Forecasting } }
   slide: 
 
@@ -52,7 +52,7 @@
   tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Temporal KG Reasoning } }
   slide: 
 
-- title: Neuro-Symbolic AI (with LLM)
+- title: Neuro-Symbolic AI from an LLM-Graph Integration Perspective
   season: 2026 Summer
   date: 2026-07-15 (TBC)
   Presenter: { ID: "[2024.07] 백혜윤", name: Hye-Yoon Baek (백혜윤) }

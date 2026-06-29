@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import React from 'react';
 import { ProfileItemProps } from '@/data/loaders/types';
+import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText';
 
 export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
     const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage } = props;
@@ -27,14 +28,19 @@ export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
                         <div className={`text-xs sm:text-sm ${isSelected ? 'text-interactive-primary underline 1.5md:hidden' : 'text-gray-600 group-hover:underline group-hover:text-interactive-primary'}`}>See more</div>
                     </div>
                 </div>
-                <div className={`grid grid-cols-[auto,1fr] gap-x-2 sm:gap-x-3 tracking-tight sm:tracking-normal text-sm sm:text-base
+                <div className={`grid grid-cols-[auto,1fr] gap-x-2 sm:gap-x-3 tracking-tight sm:tracking-normal text-sm sm:text-base items-center
                                  ${isSelected ? 'text-gray-600 1.5md:text-white' : 'text-gray-600'}`}>
-                    {isAlumniPage && (affiliation || joined_start || joined_end) ? (
+                    {isAlumniPage && (hasAffiliation(affiliation) || joined_start || joined_end) ? (
                         <>
-                            {affiliation && (
+                            {hasAffiliation(affiliation) && (
                                 <>
-                                    <span className={`${isSelected ? 'text-interactive-primary 1.5md:text-white' : 'group-hover:text-interactive-primary'}`}>Status</span>
-                                    <span className="font-semibold underline">{affiliation}</span>
+                                    <span className={`self-start ${isSelected ? 'text-interactive-primary 1.5md:text-white' : 'group-hover:text-interactive-primary'}`}>Affiliation</span>
+                                    <span className="self-start min-w-0">
+                                        <ProfileAffiliationText
+                                            affiliation={affiliation}
+                                            currentClassName="font-semibold underline"
+                                        />
+                                    </span>
                                 </>
                             )}
                             <span className={`${isSelected ? 'text-interactive-primary 1.5md:text-white' : 'group-hover:text-interactive-primary'}`}>Joined</span>

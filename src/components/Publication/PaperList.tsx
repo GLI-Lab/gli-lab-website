@@ -1,10 +1,35 @@
 "use client";
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, type ReactNode } from "react";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { PaperData } from '@/data/loaders/types';
-import { getProfileHref, titleToId } from '@/lib/utils';
+import { PaperData, type PaperTitle } from '@/data/loaders/types';
+import { getPaperTitleId, getProfileHref, isLocalizedPaperTitle, titleToId } from '@/lib/utils';
+
+function renderPaperTitle(title: PaperTitle, copyButton?: ReactNode, prefix?: ReactNode) {
+  if (isLocalizedPaperTitle(title)) {
+    return (
+      <>
+        <div className="leading-snug">
+          {prefix}
+          {title.ko}
+          {copyButton}
+        </div>
+        <div className="text-[14.5px] md:text-[16.5px] leading-tight">
+          {title.en}
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {prefix}
+      {title}
+      {copyButton}
+    </>
+  );
+}
 
 
 interface PaperListProps {
@@ -95,7 +120,7 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
         const targetId = titleToId(decodeURIComponent(hash.substring(1)));
         
         // 해시 대상 논문을 전체 목록에서 찾고, 필요하면 해당 섹션을 먼저 노출한다.
-        const targetPaper = papers.find(p => titleToId(p.title) === targetId);
+        const targetPaper = papers.find((p) => getPaperTitleId(p.title) === targetId);
         if (targetPaper) {
           if (targetPaper.status === 'In Progress') {
             setShowInProgress(true);
@@ -491,7 +516,7 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
               {filteredPublications
                 .filter(pub => pub.status === 'In Progress')
                 .map((publication, index) => {
-                  const paperId = titleToId(publication.title);
+                  const paperId = getPaperTitleId(publication.title);
                   const isHighlighted = highlightedPaperId === paperId;
                   return (
                     <li 
@@ -504,9 +529,12 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
                           ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
                           : ''
                       }`}>
-                        <div className="text-[16px] md:text-[18px] font-medium text-gray-800 leading-snug mb-1">
-                          <span className="font-normal">(🛠)</span> <span>{publication.title}</span>
-                          {renderCopyButton(paperId)}
+                        <div className="text-[16px] md:text-[18px] font-medium text-gray-800 mb-1">
+                          {renderPaperTitle(
+                            publication.title,
+                            renderCopyButton(paperId),
+                            <><span className="font-normal">(🛠)</span>{' '}</>,
+                          )}
                         </div>
                         <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">
                           {renderAuthors(publication)}
@@ -541,7 +569,7 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
               {filteredPublications
                 .filter(pub => pub.status === 'Under Review')
                 .map((publication, index) => {
-                  const paperId = titleToId(publication.title);
+                  const paperId = getPaperTitleId(publication.title);
                   const isHighlighted = highlightedPaperId === paperId;
                   return (
                     <li 
@@ -554,9 +582,8 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
                           ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
                           : ''
                       }`}>
-                        <div className="text-[16px] md:text-[18px] font-medium text-gray-800 leading-snug mb-1">
-                          {publication.title}
-                          {renderCopyButton(paperId)}
+                        <div className="text-[16px] md:text-[18px] font-medium text-gray-800 mb-1">
+                          {renderPaperTitle(publication.title, renderCopyButton(paperId))}
                         </div>
                         <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">
                           {renderAuthors(publication)}
@@ -576,7 +603,7 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
           <SectionHeader title={year} className="" underline={true} size="small"/>
           <ul className="list-disc space-y-5 md:space-y-7 pl-5 md:pl-6">
             {publicationsByYear[year].map((publication, index) => {
-              const paperId = titleToId(publication.title);
+              const paperId = getPaperTitleId(publication.title);
               const isHighlighted = highlightedPaperId === paperId;
               return (
                 <li 
@@ -589,9 +616,8 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
                       ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
                       : ''
                   }`}>
-                    <div className="text-[16px] md:text-[18px] font-medium text-gray-800 leading-snug mb-1">
-                      {publication.title}
-                      {renderCopyButton(paperId)}
+                    <div className="text-[16px] md:text-[18px] font-medium text-gray-800 mb-1">
+                      {renderPaperTitle(publication.title, renderCopyButton(paperId))}
                     </div>
                     <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">
                       {renderAuthors(publication)}
