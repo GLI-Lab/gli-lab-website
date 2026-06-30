@@ -15,6 +15,8 @@ import { ProfileDetailProject } from './ProfileDetailProject';
 import { ProfileDetailStudy } from './ProfileDetailStudy';
 import { ProfileDetailSeminar } from './ProfileDetailSeminar';
 import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText';
+import { isActiveCaptain, ProfileCaptainBadge } from './ProfileCaptainBadge';
+import { hasCaptain, ProfileCaptainText } from './ProfileCaptainText';
 
 function WrappedContactEntries({
     items,
@@ -40,7 +42,7 @@ function WrappedContactEntries({
 }
 
 export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolean }> = (props) => {
-    const {id, yamlId, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false, isModal = false } = props;
+    const {id, yamlId, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, captain, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false, isModal = false } = props;
     const section = isAlumniPage ? 'alumni' : 'members';
     const searchParams = useSearchParams();
     const cardColumns = parseProfileColsParam(searchParams.get('cols') ?? undefined);
@@ -98,21 +100,24 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
     return (
         <div className={`bg-white flex flex-col w-full ${isModal ? 'items-center' : 'items-start'}`}>
             <div className="embla w-[280px] 1.5md:w-[320px] shrink-0">
-                <div className="overflow-hidden" ref={emblaRef}>
-                    <div className="flex w-[280px] h-[330px] 1.5md:w-[320px] 1.5md:h-[400px]">
-                        {photo.map((src, index) => (
-                            <div className="flex-shrink-0 flex-grow-0 basis-full relative" key={src}>
-                                <Image
-                                    fill
-                                    sizes="(max-width: 880px) 560px, 640px"
-                                    className="object-cover rounded-lg"
-                                    src={src}
-                                    alt={`Profile ${index}`}
-                                    priority={isModal && index === 0}
-                                />
-                            </div>
-                        ))}
+                <div className="relative">
+                    <div className="overflow-hidden" ref={emblaRef}>
+                        <div className="flex w-[280px] h-[330px] 1.5md:w-[320px] 1.5md:h-[400px]">
+                            {photo.map((src, index) => (
+                                <div className="flex-shrink-0 flex-grow-0 basis-full relative" key={src}>
+                                    <Image
+                                        fill
+                                        sizes="(max-width: 880px) 560px, 640px"
+                                        className="object-cover rounded-lg"
+                                        src={src}
+                                        alt={`Profile ${index}`}
+                                        priority={isModal && index === 0}
+                                    />
+                                </div>
+                            ))}
+                        </div>
                     </div>
+                    {isActiveCaptain(captain) && captain && <ProfileCaptainBadge captain={captain} size="detail" />}
                 </div>
                 
                 {/* 이미지 인디케이터 */}
@@ -205,15 +210,26 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                 {/* Status */}
                 <div className="grid grid-cols-[auto,1fr] gap-x-4 gap-y-0.5 items-center">
                     {joined_start && joined_end && (
-                        <><span className={`text-text-accent font-medium`}>Joined</span><span className="text-[15.5px] md:text-[16.5px]">{joined_start} - {joined_end}</span></>
+                        <><span className={`text-text-accent font-medium`}>Joined</span><span className="text-[15.5px] md:text-[16.5px] pl-1">{joined_start} - {joined_end}</span></>
                     )}
                     {graduation && (
                         <><span className={`text-text-accent font-medium`}>Graduation</span><span className="text-[15.5px] md:text-[16.5px]">{graduation}</span></>
                     )}
-                    {isAlumniPage && hasAffiliation(affiliation) && (
+                    {admission && (
+                        <><span className={`text-text-accent font-medium`}>Admission</span><span className="text-[15.5px] md:text-[16.5px] pl-1">{admission}</span></>
+                    )}
+                    {hasCaptain(captain) && (
+                        <>
+                            <span className={`text-text-accent font-medium self-start`}>Captain</span>
+                            <span className="text-[15.5px] md:text-[16.5px] self-start min-w-0">
+                                <ProfileCaptainText captain={captain} />
+                            </span>
+                        </>
+                    )}
+                    {hasAffiliation(affiliation) && (
                         <>
                             <span className={`text-text-accent font-medium self-start`}>Affiliation</span>
-                            <span className="text-[15.5px] md:text-[16.5px] self-start min-w-0">
+                            <span className="text-[15.5px] md:text-[16.5px] self-start min-w-0 pl-1">
                                 <ProfileAffiliationText
                                     affiliation={affiliation}
                                     showVerified
@@ -221,9 +237,6 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                                 />
                             </span>
                         </>
-                    )}
-                    {admission && (
-                        <><span className={`text-text-accent font-medium`}>Admission</span><span className="text-[15.5px] md:text-[16.5px]">{admission}</span></>
                     )}
                 </div>
                 

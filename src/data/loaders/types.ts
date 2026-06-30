@@ -9,6 +9,11 @@ export interface ProfileAffiliation {
   verified?: string;
 }
 
+export interface ProfileCaptain {
+  start: string;
+  end: string;
+}
+
 export interface ProfileYAML {
   id: string;
   role: {
@@ -42,10 +47,14 @@ export interface ProfileYAML {
       start: string | null;
       end: string | null;
     };
+    captain?: {
+      start: string | null;
+      end: string | null;
+    };
     affiliation: {
       current: string | null;
       verified: string | null;
-    } | null;
+    };
   };
 }
 
@@ -66,6 +75,7 @@ export interface ProfileData {
   joined_end: string;
   graduation?: string;
   affiliation?: ProfileAffiliation;
+  captain?: ProfileCaptain;
   interest: string[];
   photo: string[];
   email: string[];

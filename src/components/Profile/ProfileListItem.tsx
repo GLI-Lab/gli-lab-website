@@ -9,6 +9,7 @@ import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
 import { buildProfileSharePath } from '@/lib/profileSlug';
 import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText';
+import { isActiveCaptain, ProfileCaptainBadge } from './ProfileCaptainBadge';
 
 interface ProfileListItemProps extends ProfileItemProps {
     studies?: StudyData[];
@@ -19,7 +20,7 @@ interface ProfileListItemProps extends ProfileItemProps {
 }
 
 export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
-    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage = false, studies = [], papers = [], patents = [], projects = [], seminars = [], bs, ms, phd, interest, homepage, github, linkedin, scholar, cv, title, id } = props;
+    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, captain, isAlumniPage = false, studies = [], papers = [], patents = [], projects = [], seminars = [], bs, ms, phd, interest, homepage, github, linkedin, scholar, cv, title, id } = props;
     const section = isAlumniPage ? 'alumni' : 'members';
     const [isExpanded, setIsExpanded] = useState(false);
     const [copied, setCopied] = useState(false);
@@ -85,20 +86,23 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                 {/* Profile Image */}
                 <div className="w-[280px] h-[330px] md:w-[250px] md:h-[300px] relative flex-shrink-0 mx-auto md:mx-0">
                     <div className="embla w-full h-full">
-                        <div className="overflow-hidden w-full h-full" ref={emblaRef}>
-                            <div className="flex w-full h-full">
-                                {photo.map((src, index) => (
-                                    <div className="flex-shrink-0 flex-grow-0 basis-full relative w-full h-full" key={index}>
-                                        <Image 
-                                            fill 
-                                            sizes="(max-width: 880px) 280px, 280px"
-                                            className="object-cover rounded-md" 
-                                            src={src} 
-                                            alt={`Profile ${index}`}
-                                        />
-                                    </div>
-                                ))}
+                        <div className="relative w-full h-full">
+                            <div className="overflow-hidden w-full h-full" ref={emblaRef}>
+                                <div className="flex w-full h-full">
+                                    {photo.map((src, index) => (
+                                        <div className="flex-shrink-0 flex-grow-0 basis-full relative w-full h-full" key={index}>
+                                            <Image 
+                                                fill 
+                                                sizes="(max-width: 880px) 280px, 280px"
+                                                className="object-cover rounded-md" 
+                                                src={src} 
+                                                alt={`Profile ${index}`}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
+                            {isActiveCaptain(captain) && captain && <ProfileCaptainBadge captain={captain} size="list" />}
                         </div>
                         
                         {/* 이미지 인디케이터 */}
