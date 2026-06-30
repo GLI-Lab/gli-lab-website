@@ -4,9 +4,10 @@ import Image from 'next/image';
 import React from 'react';
 import { ProfileItemProps } from '@/data/loaders/types';
 import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText';
+import { isActiveCaptain, ProfileCaptainBadge } from './ProfileCaptainBadge';
 
 export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
-    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, isAlumniPage } = props;
+    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, captain, isAlumniPage } = props;
     // console.log('----ProfileCardItem rendered:', name_ko);
 
     return (
@@ -17,6 +18,7 @@ export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
         >
             <div className="w-[115px] h-[135px] sm:w-[140px] sm:h-[160px] lg:w-[150px] lg:h-[170px] relative flex-shrink-0">
                 <Image src={photo[0]} sizes="(max-width: 640px) 230px, (max-width: 1024px) 280px, 300px" alt="Profile" fill className="object-cover rounded-md"/>
+                {isActiveCaptain(captain) && captain && <ProfileCaptainBadge captain={captain} size="card" />}
             </div>
             <div className="flex-1 py-3 pr-1 flex flex-col justify-between">
                 <div className="flex flex-row justify-between">
