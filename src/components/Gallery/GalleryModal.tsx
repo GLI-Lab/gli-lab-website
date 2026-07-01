@@ -208,7 +208,7 @@ export function GalleryModal({
         {/* 콘텐츠 (주소창 고려해서 -60px) */}
         <div 
           ref={contentRef}
-          className="overflow-y-auto max-h-[calc(95vh-20px)] md:max-h-[calc(98vh-8px)] relative overscroll-none text-left scrollbar-hide" 
+          className="overflow-y-auto max-h-[calc(95vh-20px)] lg:max-h-[calc(98vh-8px)] relative overscroll-none text-left scrollbar-hide" 
           onScroll={handleScroll}
         >
           {/* 이미지 섹션 */}

@@ -4,8 +4,15 @@ import { Suspense, useState, useEffect, useCallback, useRef, useMemo } from 'rea
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { GalleryItem as GalleryItemType } from './types';
 import { GalleryModal } from './GalleryModal';
-import { GalleryItem } from './GalleryItem';
+import { GalleryItem, GallerySkeletonCard } from './GalleryItem';
 import { buildGalleryPath, findGalleryItemBySlug, GALLERY_BASE_PATH } from './gallerySlug';
+import {
+  buildGallerySnapAnchors,
+  getFocalAlignedScrollY,
+  getGalleryYearNavStickyScrollY,
+  type GallerySnapLabelFormat,
+} from './helpers';
+import { GalleryYearIndexFloating, GalleryYearIndexRail } from './GalleryYearIndex';
 import { preloadGalleryModalImages } from '@/lib/preloadImages';
 
 // SelectedItem / selectedCard  : 선택항목 A. 클릭하자마자 B로 바뀜
@@ -39,6 +46,56 @@ import { preloadGalleryModalImages } from '@/lib/preloadImages';
 
 /** scrollend 미지원·이미 뷰포트 내일 때 너무 빠르게 scroll이 완료되니깐 대기 */
 const SCROLL_WAIT_FALLBACK_MS = 600;
+const GALLERY_SNAP_POINT_COUNT_BELOW_MD = 5;
+const GALLERY_SNAP_POINT_COUNT_MD_UP = 8;
+const GALLERY_SNAP_POINT_COUNT_XL_UP = 10;
+const MD_MIN_WIDTH_QUERY = '(min-width: 768px)';
+const XL_MIN_WIDTH_QUERY = '(min-width: 1280px)';
+const GALLERY_MD_MIN_WIDTH_QUERY = '(min-width: 768px)';
+
+function useGallerySnapLabelFormat(): GallerySnapLabelFormat {
+  // SSR 기본값(yy)과 동일 — hydration 후 실제 breakpoint 반영
+  const [format, setFormat] = useState<GallerySnapLabelFormat>('yy');
+
+  useEffect(() => {
+    const mq = window.matchMedia(GALLERY_MD_MIN_WIDTH_QUERY);
+    const update = () => setFormat(mq.matches ? 'yyyy' : 'yy');
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  return format;
+}
+
+function useGallerySnapPointCount(override?: number) {
+  // SSR 기본값(below-md)과 동일 — hydration 후 실제 breakpoint 반영
+  const [snapTier, setSnapTier] = useState<'below-md' | 'md' | 'xl'>('below-md');
+
+  useEffect(() => {
+    const mdMq = window.matchMedia(MD_MIN_WIDTH_QUERY);
+    const xlMq = window.matchMedia(XL_MIN_WIDTH_QUERY);
+
+    const update = () => {
+      if (xlMq.matches) setSnapTier('xl');
+      else if (mdMq.matches) setSnapTier('md');
+      else setSnapTier('below-md');
+    };
+
+    update();
+    mdMq.addEventListener('change', update);
+    xlMq.addEventListener('change', update);
+    return () => {
+      mdMq.removeEventListener('change', update);
+      xlMq.removeEventListener('change', update);
+    };
+  }, []);
+
+  if (override != null) return override;
+  if (snapTier === 'xl') return GALLERY_SNAP_POINT_COUNT_XL_UP;
+  if (snapTier === 'md') return GALLERY_SNAP_POINT_COUNT_MD_UP;
+  return GALLERY_SNAP_POINT_COUNT_BELOW_MD;
+}
 
 interface GalleryGridProps {
   items: GalleryItemType[];
@@ -47,6 +104,8 @@ interface GalleryGridProps {
   count?: number | null;
   /** true: slug URL + detail param (gallery page). false: modal only, no router (home embed) */
   syncUrl?: boolean;
+  /** 날짜 탐색 스냅 포인트 수 — 슬라이더·레일 공통 (미지정 시 md 미만 5, xl 미만 8, xl 이상 10) */
+  snapPointCount?: number;
 }
 
 function GalleryGridLocal({
@@ -107,8 +166,15 @@ function GalleryGridSynced({
   items,
   className = '',
   count = null,
+  snapPointCount,
 }: GalleryGridProps) {
   const visibleItems = count != null ? items.slice(0, count) : items;
+  const resolvedSnapPointCount = useGallerySnapPointCount(snapPointCount);
+  const snapLabelFormat = useGallerySnapLabelFormat();
+  const dateAnchors = useMemo(
+    () => buildGallerySnapAnchors(visibleItems, resolvedSnapPointCount, snapLabelFormat),
+    [visibleItems, resolvedSnapPointCount, snapLabelFormat]
+  );
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const router = useRouter();
@@ -125,6 +191,11 @@ function GalleryGridSynced({
   const [imageIndexByItemId, setImageIndexByItemId] = useState<Record<string, number>>({});
   const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const lastScrolledIdRef = useRef<string | null>(null);
+
+  const getGalleryItemElement = useCallback(
+    (itemId: string) => itemRefs.current[itemId] ?? null,
+    []
+  );
 
   const handleItemImageIndexChange = useCallback((itemId: string, index: number) => {
     setImageIndexByItemId((prev) => (prev[itemId] === index ? prev : { ...prev, [itemId]: index }));
@@ -151,10 +222,27 @@ function GalleryGridSynced({
     setPendingItem(null);
   }, []);
 
-  const scrollToItem = useCallback((itemId: string) => {
-    lastScrolledIdRef.current = itemId;
-    itemRefs.current[itemId]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, []);
+  const scrollToItem = useCallback(
+    (
+      itemId: string,
+      behavior: ScrollBehavior = 'smooth',
+      options?: { scrollToSticky?: boolean }
+    ) => {
+      lastScrolledIdRef.current = itemId;
+
+      if (options?.scrollToSticky) {
+        const nav = document.querySelector<HTMLElement>('[data-gallery-year-nav]');
+        window.scrollTo({ top: getGalleryYearNavStickyScrollY(nav), behavior });
+        return;
+      }
+
+      const el = itemRefs.current[itemId];
+      if (!el) return;
+      // 스크롤스파이 기준선(focal)에 맞춰 이동 → 이동 후 sync가 같은 snap을 골라 재이동 없음
+      window.scrollTo({ top: getFocalAlignedScrollY(el), behavior });
+    },
+    []
+  );
 
   const scrollToItemThen = useCallback((itemId: string, generation: number, onDone: () => void) => {
     lastScrolledIdRef.current = itemId;
@@ -255,19 +343,40 @@ function GalleryGridSynced({
 
   return (
     <>
-      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 md:gap-y-12 text-left ${className}`}>
-        {visibleItems.map((item) => (
-          <GalleryItem
-            key={item.id}
-            item={item}
-            onCardClick={handleCardClick}
-            imageIndex={imageIndexByItemId[item.id] ?? 0}
-            onImageIndexChange={(index) => handleItemImageIndexChange(item.id, index)}
-            setItemRef={(el) => {
-              itemRefs.current[item.id] = el;
-            }}
-          />
-        ))}
+      <GalleryYearIndexFloating
+        anchors={dateAnchors}
+        onSelectSnap={scrollToItem}
+        getItemElement={getGalleryItemElement}
+      />
+
+      <div className="mb-2 md:mb-4" data-gallery-total>
+        <p className="text-gray-600 text-base md:text-lg">
+          Total{' '}
+          <span className="font-semibold text-gray-900">{visibleItems.length}</span> items
+        </p>
+      </div>
+
+      <div className="relative overflow-visible" data-gallery-grid-wrap>
+        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-6 md:gap-y-12 text-left ${className}`}>
+          {visibleItems.map((item) => (
+            <GalleryItem
+              key={item.id}
+              item={item}
+              onCardClick={handleCardClick}
+              imageIndex={imageIndexByItemId[item.id] ?? 0}
+              onImageIndexChange={(index) => handleItemImageIndexChange(item.id, index)}
+              setItemRef={(el) => {
+                itemRefs.current[item.id] = el;
+              }}
+            />
+          ))}
+        </div>
+
+        <GalleryYearIndexRail
+          anchors={dateAnchors}
+          onSelectSnap={scrollToItem}
+          getItemElement={getGalleryItemElement}
+        />
       </div>
 
       {modalItem && (
@@ -291,13 +400,7 @@ function GalleryGridSyncedWithSuspense(props: GalleryGridProps) {
       aria-hidden
     >
       {Array.from({ length: visibleCount }, (_, i) => (
-        <div key={i} className="rounded-xl border border-gray-200 bg-white overflow-hidden">
-          <div className="aspect-[8/5] bg-gray-200 animate-pulse" />
-          <div className="p-3 space-y-2">
-            <div className="h-5 bg-gray-200 rounded animate-pulse" />
-            <div className="h-4 bg-gray-200 rounded animate-pulse w-1/3" />
-          </div>
-        </div>
+        <GallerySkeletonCard key={i} />
       ))}
     </div>
   );
