@@ -30,6 +30,61 @@ export function GalleryModal({
   const [imageDisplayMode, setImageDisplayMode] = useState<'contain' | 'cover'>('cover');
   const [isZoomEnabled, setIsZoomEnabled] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
+  const zoomPointerOriginRef = useRef<{ x: number; y: number } | null>(null);
+  const scrollTopAtImagePointerDownRef = useRef(0);
+  const carouselInteractedRef = useRef(false);
+  const backdropMouseDownRef = useRef(false);
+
+  const ZOOM_TAP_THRESHOLD = 10;
+
+  const markCarouselInteract = useCallback(() => {
+    carouselInteractedRef.current = true;
+  }, []);
+
+  const handleImagePointerDown = useCallback((e: React.PointerEvent) => {
+    if (e.button !== 0) return;
+    carouselInteractedRef.current = false;
+    scrollTopAtImagePointerDownRef.current = contentRef.current?.scrollTop ?? 0;
+    zoomPointerOriginRef.current = { x: e.clientX, y: e.clientY };
+  }, []);
+
+  const clearImagePointer = useCallback(() => {
+    zoomPointerOriginRef.current = null;
+  }, []);
+
+  const handleImagePointerUp = useCallback(
+    (e: React.PointerEvent) => {
+      if (!isZoomEnabled) {
+        zoomPointerOriginRef.current = null;
+        return;
+      }
+      if (carouselInteractedRef.current) {
+        carouselInteractedRef.current = false;
+        zoomPointerOriginRef.current = null;
+        return;
+      }
+      const scrollDelta = Math.abs(
+        (contentRef.current?.scrollTop ?? 0) - scrollTopAtImagePointerDownRef.current
+      );
+      if (scrollDelta > 2) {
+        zoomPointerOriginRef.current = null;
+        return;
+      }
+      const origin = zoomPointerOriginRef.current;
+      zoomPointerOriginRef.current = null;
+      if (!origin) return;
+
+      const dx = e.clientX - origin.x;
+      const dy = e.clientY - origin.y;
+      if (
+        Math.abs(dx) <= ZOOM_TAP_THRESHOLD &&
+        Math.abs(dy) <= ZOOM_TAP_THRESHOLD
+      ) {
+        setImageDisplayMode((prev) => (prev === 'contain' ? 'cover' : 'contain'));
+      }
+    },
+    [isZoomEnabled]
+  );
 
   const handleImageChange = useCallback((index: number) => {
     setCurrentImageIndex(index);
@@ -100,19 +155,35 @@ export function GalleryModal({
     return () => document.removeEventListener('keydown', handleEsc);
   }, [onClose]);
 
-  // 배경 클릭으로 모달 닫기
-  const handleBackdropClick = (e: React.MouseEvent) => {
+  // 배경 클릭으로 모달 닫기 (드래그가 모달 밖에서 끝나도 닫히지 않도록 mousedown/up 쌍으로 처리)
+  const handleBackdropMouseDown = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {
+      backdropMouseDownRef.current = true;
+    }
+  };
+
+  const handleBackdropMouseUp = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget && backdropMouseDownRef.current) {
       onClose();
     }
+    backdropMouseDownRef.current = false;
+  };
+
+  const clearBackdropMouseDown = () => {
+    backdropMouseDownRef.current = false;
   };
 
   const modal = (
     <div
       className="fixed inset-0 z-modal bg-black bg-opacity-75 flex items-center justify-center px-2 py-2 md:p-4"
-      onClick={handleBackdropClick}
+      onMouseDown={handleBackdropMouseDown}
+      onMouseUp={handleBackdropMouseUp}
     >
-      <div className="max-w-5xl w-full bg-white rounded-lg overflow-hidden relative">
+      <div
+        className="max-w-5xl w-full bg-white rounded-lg overflow-hidden relative"
+        onMouseDown={clearBackdropMouseDown}
+        onMouseUp={clearBackdropMouseDown}
+      >
         {/* 닫기버튼 */}
           <button
             onClick={onClose}
@@ -137,7 +208,7 @@ export function GalleryModal({
         {/* 콘텐츠 (주소창 고려해서 -60px) */}
         <div 
           ref={contentRef}
-          className="overflow-y-auto max-h-[calc(95vh-20px)] relative overscroll-none text-left scrollbar-hide" 
+          className="overflow-y-auto max-h-[calc(95vh-20px)] md:max-h-[calc(98vh-8px)] relative overscroll-none text-left scrollbar-hide" 
           onScroll={handleScroll}
         >
           {/* 이미지 섹션 */}
@@ -147,7 +218,9 @@ export function GalleryModal({
                 ? (imageDisplayMode === 'contain' ? 'cursor-zoom-in' : 'cursor-zoom-out')
                 : 'cursor-default'
             }`}
-            onClick={isZoomEnabled ? () => setImageDisplayMode(prev => prev === 'contain' ? 'cover' : 'contain') : undefined}
+            onPointerDown={handleImagePointerDown}
+            onPointerUp={handleImagePointerUp}
+            onPointerCancel={clearImagePointer}
           >
             <ImageCarousel
               images={item.images}
@@ -158,11 +231,15 @@ export function GalleryModal({
               currentIndex={currentImageIndex}
               onImageChange={handleImageChange}
               onImageLoad={handleCarouselImageLoad}
+              onUserInteract={markCarouselInteract}
             />
             
             {/* 이미지 표시 모드 전환 버튼 */}
             {isZoomEnabled && (
               <button
+                type="button"
+                onPointerDown={(e) => e.stopPropagation()}
+                onPointerUp={(e) => e.stopPropagation()}
                 onClick={(e) => {
                   e.stopPropagation();
                   setImageDisplayMode(prev => prev === 'contain' ? 'cover' : 'contain');
