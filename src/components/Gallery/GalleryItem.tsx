@@ -117,7 +117,7 @@ const GalleryItemComponent = ({
     >
       {!isInViewport && (
         <>
-          <div className="aspect-[7/5] bg-gray-200 animate-pulse">
+          <div className="aspect-[8/5] md:aspect-[7/5] bg-gray-200 animate-pulse">
             <div className="w-full h-full flex items-center justify-center">
               <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
             </div>
@@ -139,7 +139,7 @@ const GalleryItemComponent = ({
             <ImageCarousel
               images={item.images}
               title={item.title}
-              className="relative aspect-[8/5] md:aspect-[6/5]"
+              className="relative aspect-[8/5] md:aspect-[7/5]"
               imageClassName="object-cover overflow-hidden select-none transform transition-all duration-500 md:hover:scale-105 brightness-85 saturate-60 contrast-90 grayscale-[50%] md:hover:brightness-100 md:hover:saturate-100 md:hover:contrast-100 md:hover:grayscale-0"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
               showNavigation={!isCardHovered}
