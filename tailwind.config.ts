@@ -93,13 +93,15 @@ const config = {
     ],
     prefix: "",
     theme: {
-        screens: {  // Mobile < 'sm' < ⭐'md' < iPad Mini(768px) < '1.5md' < ⭐'lg' < iPad Pro < ⭐'xl' < Desktop < '2xl'
+        screens: {  
+            // Mobile < 'sm' < iPad Mini(세로) < ⭐'md' < '1.5md' < iPad Pro 11 < ⭐'lg' < iPad Pro 12.9 < ⭐'xl' < Desktop < '2xl'
             'sm'   : '640px',  // 기본값
             'md'   : '768px',  // 기본값
             '1.5md': '880px',  // 추가
             'lg'   : '1024px', // 기본값
             'xl'   : '1280px', // 컨텐츠(default), 기본값
             '1.5xl': '1440px', // 컨텐츠(Members), 추가
+            'gallery-rail': '1601px', // 갤러리 날짜 레일 (1600px 이하: 상단 슬라이더)
             '2xl'  : '1600px', // 커버, 기본값(1536px) 변경
         },
         extend: {

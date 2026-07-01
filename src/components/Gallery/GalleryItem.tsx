@@ -14,6 +14,41 @@ interface GalleryItemProps {
   onImageIndexChange?: (index: number) => void;
 }
 
+/**
+ * 스켈레톤 — 실제 콘텐츠(GalleryItem)와 픽셀 단위로 높이가 같아야 새로고침 시
+ * 스크롤 복원이 정확히 착지하고 앵커 위치가 흔들리지 않는다.
+ * 이미지: aspect-[8/5] md:aspect-[7/5] (실제와 동일)
+ * 텍스트: p-3 + 제목(h-6 md:h-7) + mb-1 + 행(h-5) → 실제 text-base/lg + text-sm 높이와 일치
+ */
+export function GallerySkeletonContent() {
+  return (
+    <>
+      <div className="aspect-[8/5] md:aspect-[7/5] bg-gray-200 animate-pulse">
+        <div className="w-full h-full flex items-center justify-center">
+          <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
+        </div>
+      </div>
+
+      <div className="p-3">
+        <div className="h-6 md:h-7 bg-gray-200 rounded animate-pulse mb-1"></div>
+        <div className="flex justify-between items-center">
+          <div className="h-5 bg-gray-200 rounded animate-pulse w-24"></div>
+          <div className="h-5 bg-gray-200 rounded animate-pulse w-16"></div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+/** Suspense fallback용 — 실제 카드와 동일한 외곽(border/rounded) + 공용 스켈레톤 */
+export function GallerySkeletonCard() {
+  return (
+    <div className="relative bg-white overflow-hidden rounded-xl border border-gray-200 shadow-sm">
+      <GallerySkeletonContent />
+    </div>
+  );
+}
+
 const GalleryItemComponent = ({
   item,
   onCardClick,
@@ -102,6 +137,8 @@ const GalleryItemComponent = ({
     openDetail();
   }, [openDetail]);
 
+  const showContent = isInViewport;
+
   return (
     <div
       ref={(el) => {
@@ -115,25 +152,9 @@ const GalleryItemComponent = ({
       onPointerCancel={handlePointerUp}
       onClick={handleClick}
     >
-      {!isInViewport && (
-        <>
-          <div className="aspect-[8/5] md:aspect-[7/5] bg-gray-200 animate-pulse">
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
-            </div>
-          </div>
+      {!showContent && <GallerySkeletonContent />}
 
-          <div className="p-3">
-            <div className="h-6 bg-gray-200 rounded animate-pulse mb-2"></div>
-            <div className="flex justify-between items-center">
-              <div className="h-4 bg-gray-200 rounded animate-pulse w-24"></div>
-              <div className="h-4 bg-gray-200 rounded animate-pulse w-16"></div>
-            </div>
-          </div>
-        </>
-      )}
-
-      {isInViewport && (
+      {showContent && (
         <>
           <div className="relative overflow-hidden">
             <ImageCarousel
