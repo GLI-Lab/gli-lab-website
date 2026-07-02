@@ -17,13 +17,13 @@ interface GalleryItemProps {
 /**
  * 스켈레톤 — 실제 콘텐츠(GalleryItem)와 픽셀 단위로 높이가 같아야 새로고침 시
  * 스크롤 복원이 정확히 착지하고 앵커 위치가 흔들리지 않는다.
- * 이미지: aspect-[8/5] md:aspect-[7/5] (실제와 동일)
+ * 이미지: aspect-[8/5] md:aspect-[6.5/5] (실제와 동일)
  * 텍스트: p-3 + 제목(h-6 md:h-7) + mb-1 + 행(h-5) → 실제 text-base/lg + text-sm 높이와 일치
  */
 export function GallerySkeletonContent() {
   return (
     <>
-      <div className="aspect-[8/5] md:aspect-[7/5] bg-gray-200 animate-pulse">
+      <div className="aspect-[8/5] md:aspect-[6.5/5] bg-gray-200 animate-pulse">
         <div className="w-full h-full flex items-center justify-center">
           <div className="w-8 h-8 border-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
         </div>
@@ -160,7 +160,7 @@ const GalleryItemComponent = ({
             <ImageCarousel
               images={item.images}
               title={item.title}
-              className="relative aspect-[8/5] md:aspect-[7/5]"
+              className="relative aspect-[8/5] md:aspect-[6.5/5]"
               imageClassName="object-cover overflow-hidden select-none transform transition-all duration-500 md:hover:scale-105 brightness-85 saturate-60 contrast-90 grayscale-[50%] md:hover:brightness-100 md:hover:saturate-100 md:hover:contrast-100 md:hover:grayscale-0"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
               showNavigation={!isCardHovered}
