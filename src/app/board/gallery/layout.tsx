@@ -23,7 +23,7 @@ export default async function GalleryLayout({
         />
       </div>
 
-      <div className="max-w-screen-1.5xl mx-auto overflow-visible px-4 md:px-6 py-4 md:py-8">
+      <div className="max-w-screen-xl mx-auto overflow-visible px-4 md:px-6 py-4 md:py-8">
         <GalleryGrid items={galleryItems} />
       </div>
 
