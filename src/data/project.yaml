@@ -21,11 +21,11 @@
 ########################################################################################
 # 2026
 ########################################################################################
-- title: 제조 도메인 지식그래프 구축 및 멀티턴 질의응답 기술 개발
+- title: 제조 도메인 지식그래프 기반 멀티턴 질의응답 기술 개발
   type: 산업체·위탁
   role: 연구책임자
   parent: { funder: null, program: null }
-  main: { funder: LG생산기술원, program: null }
+  main: { funder: LG전자 생산기술원, program: null }
   start_date: 2026-05
   end_date: 2026-12
   image: { url: /images/projects/lg.png, width: 200px }

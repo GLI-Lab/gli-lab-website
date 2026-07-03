@@ -31,8 +31,8 @@
   type: Funding
   selected: true
   content: |
-    Our team has been supported by LG생산기술원 👏
-    <project>제조 도메인 지식그래프 구축 및 멀티턴 질의응답 기술 개발</>
+    Our team has been supported by LG전자 생산기술원 👏
+    <project>제조 도메인 지식그래프 기반 멀티턴 질의응답 기술 개발</>
     
 - date: "2026-05-01"
   type: Member
