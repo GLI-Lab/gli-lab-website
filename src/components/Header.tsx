@@ -5,7 +5,64 @@ import Link from "next/link"
 import { useState, useEffect } from "react"
 
 import { IoChevronDown } from "react-icons/io5";
-import { SITE_HEADER_BAR_ID, useHeaderHeight, useHeaderScrolled } from "./headerScroll";
+
+const HEADER_SCROLL_THRESHOLD = 10;
+const SITE_HEADER_BAR_ID = "site-header-bar";
+
+/** Fallback before mount / measure */
+const DEFAULT_HEADER_HEIGHT = 76;
+
+function useHeaderScrolled(): boolean {
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > HEADER_SCROLL_THRESHOLD);
+        };
+
+        handleScroll();
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    return isScrolled;
+}
+
+/**
+ * `#site-header-bar` 높이를 측정해 state와 `:root`의 `--header-height`에 반영합니다.
+ * 포함: 로고 행(항상), 데스크톱 메인 내비(md+). 모바일은 로고 행만.
+ * 제외: 모바일 펼침 메뉴·데스크톱 드롭다운(오버레이, 레이아웃 높이에 미포함).
+ * 용도: Header spacer·배경, NewsPopup 배너 top, 모바일 메뉴 top. 초기값 76px.
+ */
+function useHeaderHeight(): number {
+    const [height, setHeight] = useState(DEFAULT_HEADER_HEIGHT);
+
+    useEffect(() => {
+        const el = document.getElementById(SITE_HEADER_BAR_ID);
+        if (!el) return;
+
+        const update = () => {
+            const next = el.getBoundingClientRect().bottom;
+            setHeight(next);
+            document.documentElement.style.setProperty("--header-height", `${next}px`);
+        };
+
+        update();
+
+        const observer = new ResizeObserver(update);
+        observer.observe(el);
+        window.addEventListener("scroll", update, { passive: true });
+        window.addEventListener("resize", update, { passive: true });
+
+        return () => {
+            observer.disconnect();
+            window.removeEventListener("scroll", update);
+            window.removeEventListener("resize", update);
+        };
+    }, []);
+
+    return height;
+}
 
 interface SubMenu {
     title: string;
@@ -134,12 +191,12 @@ export default function Header() {
                     {/* ##################################################### */}
                     {/* # 네비게이션 로고/텍스트 + 네비게이션 햄버거 아이콘 # */}
                     {/* ##################################################### */}
-                    <div className={`flex items-center justify-between w-full ${isScrolled ? "py-1" : "py-2"}`}>
+                    <div className={`flex items-center justify-between w-full ${isScrolled ? "py-0.5 sm:py-1" : "py-1 sm:py-2"}`}>
                         <Link href="/" className="items-center flex min-w-[250px]">
-                            <div className={` ${isScrolled ? "h-[50px] w-[50px]" : "h-[60px] w-[60px] lg:h-[70px] lg:w-[70px]"}`}>
+                            <div className={` ${isScrolled ? "h-[40px] w-[40px] sm:h-[50px] sm:w-[50px]" : "h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] lg:h-[70px] lg:w-[70px]"}`}>
                                 <Image src={`${isScrolled ? "/images/logo/GLI_logo_black.png" : "/images/logo/GLI_logo_green.png"}`} alt="logo" width="96" height="96"/>
                             </div>
-                            <div className={`-space-y-2 ml-3 tracking-tighter ${isScrolled ? "text-[20px]" : "text-[21px] lg:text-[23.5px]"}`}>
+                            <div className={`-space-y-2 ml-3 tracking-tighter ${isScrolled ? "text-[18px] sm:text-[20px]" : "text-[20px] sm:text-[21px] lg:text-[23.5px]"}`}>
                                 <p>Graph & Language</p>
                                 <p>Intelligence Lab.</p>
                             </div>
