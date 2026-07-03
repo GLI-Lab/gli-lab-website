@@ -176,7 +176,7 @@ const GalleryItemComponent = ({
             onMouseEnter={() => setIsCardHovered(true)}
             onMouseLeave={() => setIsCardHovered(false)}
           >
-            <div className="text-base md:text-lg font-semibold text-gray-800 truncate mb-1">
+            <div className="text-[16px] md:text-[17px] font-semibold text-gray-800 truncate mb-1">
               {item.title}
               {isNewItem(item.date) && (
                 <span className="ml-1.5 text-xs font-bold text-red-500 inline-flex ">
