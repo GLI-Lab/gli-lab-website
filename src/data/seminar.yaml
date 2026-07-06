@@ -10,21 +10,21 @@
   tag: { area: { Graph Int., Graph-Centric AI }, topic: { Knowledge Distillation } }
   slide: 
 
-- title: Graph Foundation Model for Anomaly Detection
+- title: Graph Foundation Models for Generalizable Anomaly Detection Across Diverse Graph Domains
   season: 2026 Summer
   date: 2026-08-05 (TBC)
   Presenter: { ID: "[2025.04] 구본유", name: Bonyou Koo (구본유) }
   tag: { area: { Graph Int., Anomaly Detection }, topic: { Graph Foundation Model } }
   slide: 
 
-- title: Knowledge Graph Foundation Model
+- title: Structural Signal-based Inductive Reasoning in Knowledge Graph Foundation Models
   season: 2026 Summer
   date: 2026-07-29 (TBC)
   Presenter: { ID: "[2025.07] 이동현", name: Donghyun Lee (이동현) }
   tag: { area: { Graph Int., Graph-Centric AI }, topic: { Graph Foundation Model } }
   slide: 
 
-- title: Temporal KG Forecasting
+- title: Leveraging LLM-derived Knowledge Priors for Temporal Knowledge Graph Forecasting
   season: 2026 Summer
   date: 2026-07-29 (TBC)
   Presenter: { ID: "[2025.07] 김세영", name: Seyeong Kim (김세영) }
@@ -45,21 +45,21 @@
   tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Agentic RAG } }
   slide: 
 
-- title: Temporal KG Reasoning with Logical Pattern Mining
+- title: Time-Aware Logical Pattern Mining for Temporal Knowledge Graph Reasoning
   season: 2026 Summer
   date: 2026-07-15 (TBC)
   Presenter: { ID: "[2024.11] 이동천", name: Dongcheon Lee (이동천) }
   tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Temporal KG Reasoning } }
   slide: 
 
-- title: Neuro-Symbolic AI from an LLM-Graph Integration Perspective
+- title: Neuro-Symbolic Reasoning with LLMs for Logic-Constrained Language Generation
   season: 2026 Summer
   date: 2026-07-15 (TBC)
   Presenter: { ID: "[2024.07] 백혜윤", name: Hye-Yoon Baek (백혜윤) }
   tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Neuro-Symbolic AI } }
   slide: 
 
-- title: Techniques for Differentiable Discrete Choice
+- title: Logical Foundations for KG Rule Mining and Differentiable Discrete Choice Techniques
   season: 2026 Summer
   date: 2026-07-15 (TBC)
   Presenter: { ID: "[2024.03] 오병국", name: Byungkook Oh (오병국) }
