@@ -6,6 +6,7 @@ import Link from 'next/link';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { SeminarData } from '@/data/loaders/types';
 import { getProfileHref, getSeminarHashId } from '@/lib/utils';
+import { renderSeminarDescription, renderSeminarTitle, type SeminarTitleBadge } from '@/lib/seminarTitle';
 
 export type SeminarListLayout = 'card' | 'list';
 
@@ -13,34 +14,39 @@ export interface SeminarListProps {
   className?: string;
   layout?: SeminarListLayout;
   count?: number | null;
+  showTags?: boolean;
   seminarItems?: SeminarData[];
   profiles?: { id: string; yamlId?: string; name_ko?: string; name_en?: string }[];
   alumniProfiles?: { id: string; yamlId?: string; name_ko?: string; name_en?: string }[];
 }
 
-function formatDate(dateString: string): string {
-  try {
-    const date = new Date(dateString);
-    const year = date.getFullYear().toString();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}.${month}.${day}`;
-  } catch {
-    return dateString;
-  }
+function getSeminarDateKey(dateValue: string): string | null {
+  const match = dateValue.match(/^(\d{4}-\d{2}-\d{2})/);
+  return match ? match[1] : null;
 }
 
-/** "2026-07-15 (TBC)" → { date: '2026.07.15', note: '(TBC)' } */
-function parseSeminarDate(dateValue: string | Date): { date: string; note?: string } {
-  // js-yaml은 순수 날짜(2026-02-19)를 Date 객체로, "(TBC)"가 붙은 값은 문자열로 파싱함
-  if (typeof dateValue !== 'string') {
-    return { date: formatDate(dateValue as unknown as string) };
-  }
-  const match = dateValue.match(/^(.*?)\s*(\([^)]*\))\s*$/);
-  if (match) {
-    return { date: formatDate(match[1].trim()), note: match[2] };
-  }
-  return { date: formatDate(dateValue) };
+function getTodayDateKey(): string {
+  const today = new Date();
+  const year = today.getFullYear().toString();
+  const month = (today.getMonth() + 1).toString().padStart(2, '0');
+  const day = today.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function formatDate(dateValue: string): string {
+  const dateKey = getSeminarDateKey(dateValue);
+  if (!dateKey) return dateValue;
+  const [year, month, day] = dateKey.split('-');
+  return `${year}.${month}.${day}`;
+}
+
+function getSixMonthsAgoDateKey(): string {
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+  const year = sixMonthsAgo.getFullYear().toString();
+  const month = (sixMonthsAgo.getMonth() + 1).toString().padStart(2, '0');
+  const day = sixMonthsAgo.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 /** tag.topic 객체에서 라벨 배열 추출 (YAML { topic: { A, B } } → ['A','B']) */
@@ -57,13 +63,46 @@ function getAreaTags(item: SeminarData): string[] {
   return Object.keys(area).filter(Boolean);
 }
 
-/** 최근 6개월 이내 세미나인지 (date 기준) */
+function renderSeminarTags(item: SeminarData, className: string): ReactNode | null {
+  const areaTags = getAreaTags(item);
+  const topicTags = getTopicTags(item);
+  if (areaTags.length === 0 && topicTags.length === 0) return null;
+
+  return (
+    <div className={className}>
+      {areaTags.map((label) => (
+        <span key={`area-${label}`} className="inline-block text-gray-600 bg-gray-100 px-2 py-0.5 md:py-0.25 rounded-md shrink-0 text-[12.5px] md:text-[14.5px]">
+          {label}
+        </span>
+      ))}
+      {topicTags.map((label) => (
+        <span key={`topic-${label}`} className="inline-block text-brand-primary bg-brand-primary/10 px-2 py-0.5 md:py-0.25 rounded-md shrink-0 text-[12.5px] md:text-[14.5px]">
+          {label}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+/** 오늘 이후 날짜인지 (YYYY-MM-DD 문자열 비교) */
+function isFutureSeminar(item: SeminarData): boolean {
+  const dateKey = getSeminarDateKey(item.date);
+  if (!dateKey) return false;
+  return dateKey > getTodayDateKey();
+}
+
+/** 최근 6개월 이내 세미나인지 (date 기준, 미래 날짜 제외) */
 function isNewSeminar(item: SeminarData): boolean {
-  if (!item.date) return false;
-  const seminarDate = new Date(item.date);
-  const sixMonthsAgo = new Date();
-  sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
-  return seminarDate >= sixMonthsAgo;
+  if (!item.date || isFutureSeminar(item)) return false;
+  const dateKey = getSeminarDateKey(item.date);
+  if (!dateKey) return false;
+  return dateKey >= getSixMonthsAgoDateKey();
+}
+
+function getSeminarTitleBadge(item: SeminarData): SeminarTitleBadge {
+  if (isFutureSeminar(item)) return 'todo';
+  if (isNewSeminar(item)) return 'new';
+  return 'none';
 }
 
 function renderPresenter(
@@ -97,6 +136,7 @@ export function SeminarList({
   className = '',
   layout = 'list',
   count = null,
+  showTags = false,
   seminarItems = [],
   profiles = [],
   alumniProfiles = [],
@@ -188,15 +228,7 @@ export function SeminarList({
                 <span
                   className={`text-[14px] md:text-[16px] font-medium text-gray-600 leading-snug tabular-nums shrink-0 text-center block ${listMd ? 'mb-0 md:w-20 md:text-right' : 'mb-0'}`}
                 >
-                  {(() => {
-                    const { date, note } = parseSeminarDate(item.date);
-                    return (
-                      <>
-                        {date}
-                        {note && <span className="block text-center">{note}</span>}
-                      </>
-                    );
-                  })()}
+                  {formatDate(item.date)}
                 </span>
                 <div
                   className={`flex-1 min-w-0 flex flex-col min-h-0 ${listMd ? 'md:flex-row md:justify-start md:items-center gap-2 md:gap-4' : 'gap-2 md:gap-3'}`}
@@ -204,65 +236,19 @@ export function SeminarList({
                   <div
                     className={`min-w-0 flex flex-col items-center text-center ${listMd ? 'flex-1 md:items-start md:text-left' : 'flex-1 min-h-0 justify-center'}`}
                   >
-                    <p className={`text-[16px] md:text-[18px] font-semibold text-gray-800 leading-snug ${listMd ? 'mb-0' : 'min-h-[2.75rem] md:min-h-[3.125rem] flex items-center justify-center'}`}>
-                      <span>{(() => {
-                        const title = item.title ?? '';
-                        const words = title.trim().split(/\s+/).filter(Boolean);
-                        const isNew = isNewSeminar(item);
-                        const newBadge = (
-                          <span className="ml-1.5 text-xs font-bold text-red-500 inline-flex">
-                            <span className="animate-bounce" style={{ animationDelay: '0ms' }}>N</span>
-                            <span className="animate-bounce" style={{ animationDelay: '100ms' }}>e</span>
-                            <span className="animate-bounce" style={{ animationDelay: '200ms' }}>w</span>
-                          </span>
-                        );
-                        if (!isNew || words.length === 0) {
-                          return <>{title}{isNew ? newBadge : null}</>;
-                        }
-                        const lastTwo = words.slice(-2).join(' ');
-                        const rest = words.slice(0, -2).join(' ');
-                        return (
-                          <>
-                            {rest && <>{rest}{' '}</>}
-                            <span className="whitespace-nowrap">
-                              {lastTwo}
-                              {newBadge}
-                            </span>
-                          </>
-                        );
-                      })()}</span>
+                    <p className={`text-[16px] md:text-[17.5px] font-semibold text-gray-800 leading-snug ${listMd ? 'mb-0' : `${item.description?.trim() ? '' : 'min-h-[2.75rem] md:min-h-[3.125rem] '}flex items-center justify-center`}`}>
+                      <span>{renderSeminarTitle(item.title ?? '', getSeminarTitleBadge(item))}</span>
                     </p>
-                    {listMd && (getTopicTags(item).length > 0 || getAreaTags(item).length > 0) && (
-                      <div className="flex flex-wrap justify-center gap-x-2 gap-y-1 mt-1 md:mt-2 md:justify-start">
-                        {getAreaTags(item).map((label) => (
-                          <span key={`area-${label}`} className="inline-block text-gray-600 bg-gray-100 px-2 py-0.5 md:py-0.25 rounded-md shrink-0 text-[12.5px] md:text-[14.5px]">
-                            {label}
-                          </span>
-                        ))}
-                        {getTopicTags(item).map((label) => (
-                          <span key={`topic-${label}`} className="inline-block text-brand-primary bg-brand-primary/10 px-2 py-0.5 md:py-0.25 rounded-md shrink-0 text-[12.5px] md:text-[14.5px]">
-                            {label}
-                          </span>
-                        ))}
-                      </div>
+                    {item.description?.trim() && (
+                      <p className={`text-[14.5px] md:text-[16px] text-gray-600 leading-snug mt-1 ${listMd ? 'md:mt-4' : 'mt-4'}`}>
+                        {renderSeminarDescription(item.description.trim())}
+                      </p>
                     )}
+                    {showTags && listMd && renderSeminarTags(item, 'flex flex-wrap justify-center gap-x-2 gap-y-1 mt-1 md:mt-2 md:justify-start')}
                   </div>
-                  {!listMd && (
+                  {!listMd && showTags && (
                     <div className="flex-1 min-h-0 flex flex-col items-center justify-center">
-                      {(getTopicTags(item).length > 0 || getAreaTags(item).length > 0) && (
-                        <div className="flex flex-wrap justify-center gap-x-2 gap-y-1">
-                          {getAreaTags(item).map((label) => (
-                            <span key={`area-${label}`} className="inline-block text-gray-600 bg-gray-100 px-2 py-0.5 md:py-0.25 rounded-md shrink-0 text-[12.5px] md:text-[14.5px]">
-                              {label}
-                            </span>
-                          ))}
-                          {getTopicTags(item).map((label) => (
-                            <span key={`topic-${label}`} className="inline-block text-brand-primary bg-brand-primary/10 px-2 py-0.5 md:py-0.25 rounded-md shrink-0 text-[12.5px] md:text-[14.5px]">
-                              {label}
-                            </span>
-                          ))}
-                        </div>
-                      )}
+                      {renderSeminarTags(item, 'flex flex-wrap justify-center gap-x-2 gap-y-1')}
                     </div>
                   )}
                   {(() => {
@@ -273,7 +259,7 @@ export function SeminarList({
                         className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-gray-600 shrink-0 pt-2 border-t border-gray-200 w-full ${listMd ? 'md:pt-0 md:border-t-0 md:w-auto md:justify-end' : 'md:pt-4 justify-center'} ${listMd ? (hasSlide ? 'justify-center' : 'justify-end') : ''}`}
                       >
                         {item.Presenter && (
-                          <span className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-normal">{renderPresenter(item.Presenter, profiles, alumniProfiles)}</span>
+                          <span className="text-[15px] md:text-[16.5px] text-gray-600 leading-normal">{renderPresenter(item.Presenter, profiles, alumniProfiles)}</span>
                         )}
                         {item.Presenter && hasSlide && (
                           <span className="text-gray-600 select-none">·</span>
@@ -283,7 +269,7 @@ export function SeminarList({
                             href={slideUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex-shrink-0 px-3 py-1 text-[13px] md:text-[15px] hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 rounded shadow-sm hover:shadow transition duration-200"
+                            className="flex-shrink-0 px-3 py-1 text-[13.5px] md:text-[15px] hover:bg-gray-50 border border-gray-200 hover:border-gray-300 text-gray-600 hover:text-gray-800 rounded shadow-sm hover:shadow transition duration-200"
                           >
                             Slide
                           </a>
