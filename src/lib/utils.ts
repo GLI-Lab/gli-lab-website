@@ -22,7 +22,7 @@ export function getPaperTitleKey(title: PaperTitle): string {
 }
 
 export function getSeminarHashId(title: string): string {
-  return `seminar-${title.replace(/\s+/g, '-').toLowerCase()}`;
+  return `seminar-${title.replace(/\\+/g, '-').replace(/\s+/g, '-').replace(/-+/g, '-').toLowerCase()}`;
 }
 
 type ProfileIdSource = string | { id: string; yamlId?: string };

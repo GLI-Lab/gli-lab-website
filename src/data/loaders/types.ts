@@ -169,6 +169,7 @@ export interface SeminarTag {
 export interface SeminarData {
   title: string;
   date: string;
+  description?: string | null;
   season?: string | null;
   Presenter?: { ID: string; name: string } | null;
   tag?: SeminarTag | null;

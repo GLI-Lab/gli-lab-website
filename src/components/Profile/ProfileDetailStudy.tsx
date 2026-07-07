@@ -52,7 +52,7 @@ export function ProfileDetailStudy({ studies, profileYamlId }: ProfileDetailStud
                 </ProfileDetailSectionLink>
                 <div>
                     {visibleStudies.map((study, index) => (
-                        <div key={study.title} className="mb-1.5 leading-snug">
+                        <div key={study.title} className="mb-2 leading-snug">
                             <div className="grid grid-cols-[auto,1fr,auto] gap-0 items-start">
                                 <div className="flex items-start">
                                     <ProfileDetailListMarker index={index} showNumbering={SHOW_ITEM_NUMBERING}/>
