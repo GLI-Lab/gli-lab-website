@@ -8,6 +8,19 @@
 # linkedin   : https://www.linkedin.com/in/[THIS]
 # photos     : public/images/profiles
 
+# - id: "[2025.04] 구본유"
+#   role: {type: phd, title: Ph.D. Student (2학기)}
+#   name: {en: Bonyou Koo, ko: 구본유}
+#   education: {bs: "Computer Science & Engineering, Pukyong National University", ms: "Information Convergence Engineering, Pusan National University", phd: null}
+#   interests: [Graph ML/DL, Graph Anomaly Detection, Text-Attributed Graph]
+#   contacts: {emails: ["number9you@gmail.com"], homepage: ["sites.google.com/view/bonyoukoo/home"], github: ["ninethyou"], linkedin: null}
+#   status: 
+#     period: {admission: "2025.09", graduation: null}
+#     joined: {start: "2025.04", end: "Current"}
+#     affiliation: {current: null, verified: null}
+#   quote: 해보기나 했어?
+#   reflection: 
+
 # https://gli.konkuk.ac.kr/people/members/2024-06-jimyeung-seo/
 # https://gli.konkuk.ac.kr/people/members/2024-03-byungkook-oh/
 # https://gli.konkuk.ac.kr/people/members/2024-06-jimyeung-seo/?view=list
@@ -201,6 +214,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.07", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 성공은 한 번의 선택보다 매일의 태도에서 온다
+  reflection: 
 
 - id: "[2025.07] 최환"
   role: {type: intern, title: Undergraduate Student (3학년 1학기)}
@@ -212,6 +227,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.07", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 
+  reflection: 
 
 - id: "[2025.08] 김예은"
   role: {type: intern, title: Undergraduate Student (5학년 1학기)}
@@ -223,6 +240,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.08", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 
+  reflection: 
 
 - id: "[2025.10] 박규민"
   role: {type: intern, title: Undergraduate Student (3학년 1학기)}
@@ -247,6 +266,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.11", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 10년 전의 내가 존경할 사람이 되자
+  reflection: 
 
 - id: "[2025.12] 최지현"
   role: {type: intern, title: Undergraduate Student (3학년 1학기)}
@@ -258,6 +279,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.12", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 오늘 걷지 않으면 내일은 뛰어야 한다
+  reflection: 
 
 - id: "[2025.12] 홍다연"
   role: {type: intern, title: Undergraduate Student (4학년 2학기)}
@@ -269,6 +292,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.12", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 피할 수 없는 고통이라면 즐겨라
+  reflection: 
 
 - id: "[2026.05] 김진겸"
   role: {type: intern, title: Undergraduate Student (4학년 1학기)}
@@ -280,6 +305,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2026.05", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 
+  reflection: 
 
 - id: "[2026.06] 권준희"
   role: {type: intern, title: Undergraduate Student (3학년 1학기)}
@@ -291,3 +318,5 @@
     period: {admission: null, graduation: null}
     joined: {start: "2026.06", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 인내심을 갖고 꾸준히 쌓아가자
+  reflection: 
