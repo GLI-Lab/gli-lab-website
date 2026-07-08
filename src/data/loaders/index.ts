@@ -10,6 +10,12 @@ import { getStudiesUncached } from './studyLoader';
 
 const REVALIDATE_SECONDS = 3600;
 const isDev = process.env.NODE_ENV === 'development';
+/** 배포마다 바뀌면 Data Cache 엔트리가 새로 만들어짐 (Vercel: VERCEL_DEPLOYMENT_ID) */
+const DEPLOY_CACHE_BUST =
+  process.env.VERCEL_DEPLOYMENT_ID ||
+  process.env.VERCEL_GIT_COMMIT_SHA ||
+  process.env.NEXT_BUILD_ID ||
+  'local';
 
 function createCachedLoader<T>(key: string, loader: () => Promise<T>, tags: string[]): () => Promise<T> {
   // 개발 모드에서는 캐시를 우회해서 YAML 변경이 즉시 반영되도록
@@ -17,7 +23,7 @@ function createCachedLoader<T>(key: string, loader: () => Promise<T>, tags: stri
     return loader;
   }
   return () =>
-    unstable_cache(loader, [key], {
+    unstable_cache(loader, [key, DEPLOY_CACHE_BUST], {
       revalidate: REVALIDATE_SECONDS,
       tags: ['loaders', ...tags],
     })();
