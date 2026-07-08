@@ -211,7 +211,7 @@ export function SeminarList({
           {groupIdx > 0 && group.season && (
             <SectionHeader title={group.season} size="small" className="first:mt-0" />
           )}
-          <div className={`grid gap-4 md:gap-5 grid-cols-1 ${listMd ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
+          <div className={`grid gap-4 md:gap-x-5 md:gap-y-7 grid-cols-1 ${listMd ? 'grid-cols-1' : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'}`}>
             {group.items.map((item, idx) => {
               const seminarId = getSeminarHashId(item.title ?? '');
               const isHighlighted = highlightedSeminarId === seminarId;
@@ -219,7 +219,7 @@ export function SeminarList({
               <div
                 key={`${item.date}-${item.title}-${idx}`}
                 id={seminarId}
-                className={`flex flex-col bg-white px-4 py-2 rounded-xl border shadow-sm hover:border-brand-primary hover:shadow-md transition-all duration-200 min-h-0 ${listMd ? 'md:py-4 md:flex-row md:items-center md:gap-6' : 'h-full gap-2 md:py-4 md:gap-3'} ${
+                className={`flex flex-col bg-white px-4 py-2 rounded-xl border shadow-sm hover:border-brand-primary hover:shadow-md transition-all duration-200 min-h-0 ${listMd ? 'md:py-4 md:flex-row md:items-center md:gap-6' : 'h-full gap-2 md:py-4 md:gap-4'} ${
                   isHighlighted
                     ? 'border-brand-primary bg-brand-primary/10 shadow-lg animate-pulse'
                     : 'border-gray-200'
@@ -240,7 +240,7 @@ export function SeminarList({
                       <span>{renderSeminarTitle(item.title ?? '', getSeminarTitleBadge(item))}</span>
                     </p>
                     {item.description?.trim() && (
-                      <p className={`text-[14.5px] md:text-[16px] text-gray-600 leading-snug mt-1 ${listMd ? 'md:mt-4' : 'mt-4'}`}>
+                      <p className={`text-[14.5px] md:text-[16px] text-gray-600 leading-snug mt-1 ${listMd ? 'md:mt-4' : 'mt-3 md:mt-4'}`}>
                         {renderSeminarDescription(item.description.trim())}
                       </p>
                     )}
