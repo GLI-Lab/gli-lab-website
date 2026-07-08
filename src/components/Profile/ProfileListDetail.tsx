@@ -10,10 +10,11 @@ import { ProfileDetailStudy } from './ProfileDetailStudy';
 import { ProfileDetailSeminar } from './ProfileDetailSeminar';
 import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText';
 import { hasCaptain, ProfileCaptainText } from './ProfileCaptainText';
+import { ProfileQuoteText } from './ProfileQuoteText';
 import { getSeminarsForProfile } from '@/data/loaders/utils';
 
 export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
-    const {id, yamlId, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, captain, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false } = props;
+    const {id, yamlId, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, captain, cv, cvVersion, quote, reflection, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false } = props;
 
     const renderEducation = (
         label: string,
@@ -79,6 +80,16 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
     return (
         <div className="flex flex-col">
             <div className="w-full text-[16px] md:text-[17px]">
+                <div className="mb-4 py-px">
+                    <ProfileQuoteText
+                        quote={quote}
+                        reflection={reflection}
+                        isAlumniPage={isAlumniPage}
+                        align="left"
+                        className=""
+                    />
+                </div>
+
                 {/* <div className="mb-6">
                     <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 mb-1`}>
                         <span className={`text-brand-primary highlight text-[18px] md:text-[19px] whitespace-nowrap`}>{title}</span>

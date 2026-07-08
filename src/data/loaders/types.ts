@@ -56,6 +56,8 @@ export interface ProfileYAML {
       verified: string | null;
     };
   };
+  quote?: string | null;
+  reflection?: string | null;
 }
 
 export interface ProfileData {
@@ -85,6 +87,8 @@ export interface ProfileData {
   scholar: string[];
   cv?: string;
   cvVersion?: string;
+  quote?: string;
+  reflection?: string;
 }
 
 export interface ProfileItemProps extends ProfileData {
