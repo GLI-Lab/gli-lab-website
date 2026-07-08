@@ -60,6 +60,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.07", end: "2026.06"}
     affiliation: {current: null, verified: null}
+  quote: 
+  reflection: 
 
 - id: "[2024.06] 이영호"
   role: {type: intern, title: Undergraduate Student}
@@ -70,6 +72,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2024.06", end: "2026.04"}
     affiliation: {current: null, verified: null}
+  quote: 
+  reflection: 연구실에서 배운 소중한 경험과 교수님의 지도 덕분에 학업적으로 크게 성장할 수 있었습니다. 이 단단한 밑거름이 있었기에 연구실 너머 더 많은 일에 도전하고 실제로 큰 성취들을 이뤄낼 수 있었습니다. 귀중한 시작점을 만들어주셔서 진심으로 감사드립니다.
 
 - id: "[2024.12] 최진호"
   role: {type: intern, title: Undergraduate Student}
@@ -80,6 +84,8 @@
     period: {admission: null, graduation: "2026.02"}
     joined: {start: "2024.12", end: "2026.02"}
     affiliation: {current: 건국대학교 석사과정 (GLI Lab), verified: "2026.02"}
+  quote: 
+  reflection: 
     
 - id: "[2025.03] 조은영"
   role: {type: intern, title: Undergraduate Student}
@@ -90,6 +96,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.03", end: "2026.01"}
     affiliation: {current: 고려대학교 인턴, verified: null}
+  quote: 
+  reflection: GLI 연구실에서 보낸 시간은 제게 연구의 과정과 태도를 배울 수 있었던 소중한 경험이었습니다. 논문 연구에 함께 참여하며 좋은 결과를 경험할 수 있었던 것은 교수님의 세심한 지도와 연구실의 든든한 지원 덕분이었습니다. 그동안 많은 가르침을 주셔서 진심으로 감사드립니다.
 
 - id: "[2025.03] 김상준"
   role: {type: intern, title: Undergraduate Student}
@@ -102,6 +110,7 @@
     affiliation: {current: 카이스트 인턴, verified: "2026.01"}
   quote: 
   reflection: 첫 연구실 생활이라 서툰 점이 많았지만, 교수님의 열정적인 지도와 따뜻한 격려 덕분에 연구자로서의 태도와 배움의 즐거움을 하나씩 익혀갈 수 있었습니다. 돌이켜보면 GLI에서 연구 생활을 시작할 수 있었던 것은 제게 큰 행운이었고, 그 시간 동안 이끌어주신 교수님께 진심으로 감사드립니다
+
 - id: "[2024.10] 김영진"
   role: {type: intern, title: Undergraduate Student}
   name: {en: Young-Jin Kim, ko: 김영진}
