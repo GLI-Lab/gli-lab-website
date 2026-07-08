@@ -47,6 +47,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2024.07", end: "2026.06"}
     affiliation: {current: 카이스트 인턴, verified: "2026.07"}
+  quote: 
+  reflection: 돌이켜보면 논문 억셉까지 처음부터 끝까지 교수님의 꼼꼼한 지도와 아낌없는 지원이 있었기에 가능한 일이었습니다. 그동안 지도해주시고 이끌어주셔서 진심으로 감사했습니다.
 
 - id: "[2025.07] 이재진"
   role: {type: intern, title: Undergraduate Student}

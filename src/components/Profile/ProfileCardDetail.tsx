@@ -17,6 +17,7 @@ import { ProfileDetailSeminar } from './ProfileDetailSeminar';
 import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText';
 import { isActiveCaptain, ProfileCaptainBadge } from './ProfileCaptainBadge';
 import { hasCaptain, ProfileCaptainText } from './ProfileCaptainText';
+import { ProfileQuoteText } from './ProfileQuoteText';
 
 function WrappedContactEntries({
     items,
@@ -42,7 +43,7 @@ function WrappedContactEntries({
 }
 
 export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolean }> = (props) => {
-    const {id, yamlId, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, captain, cv, cvVersion, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false, isModal = false } = props;
+    const {id, yamlId, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, captain, cv, cvVersion, quote, reflection, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false, isModal = false } = props;
     const section = isAlumniPage ? 'alumni' : 'members';
     const searchParams = useSearchParams();
     const cardColumns = parseProfileColsParam(searchParams.get('cols') ?? undefined);
@@ -133,7 +134,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                 </div>
             </div>
             <div className={`w-full min-w-0 pt-4 text-[16px] md:text-[17px] ${isModal ? 'px-4 sm:px-6' : ''}`}>
-                <div className="mb-6">
+                <div>
                     <div className="flex items-center gap-1.5">
                         <h1 className="text-[24px] md:text-[26px] font-medium leading-none tracking-tight">{name_en}</h1>
                         {/* URL 복사 링크 아이콘 */}
@@ -201,6 +202,14 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                         </button>
                     </div>
                     <h1 className="text-[20px] md:text-[22px]">{name_ko}</h1>
+                </div>
+                <div className="pt-2 pb-4">
+                    <ProfileQuoteText
+                        quote={quote}
+                        reflection={reflection}
+                        isAlumniPage={isAlumniPage}
+                        className="md:mt-1"
+                    />
                 </div>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 mb-1`}>
                     <span className={`text-brand-primary highlight text-[18px] md:text-[19px] whitespace-nowrap`}>{title}</span>

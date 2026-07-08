@@ -27,6 +27,8 @@
     period: {admission: null, graduation: null}
     joined: {start: null, end: null}
     affiliation: {current: null, verified: null}
+  quote: 날뛰어라
+  reflection: 
 
 ###############################################
 # PhD Students
@@ -41,6 +43,8 @@
     period: {admission: "2025.09", graduation: null}
     joined: {start: "2025.04", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 해보기나 했어?
+  reflection: 
     
 ###############################################
 # MS Students
@@ -56,6 +60,8 @@
     period: {admission: "2025.03", graduation: null}
     joined: {start: "2024.06", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 도망쳐서 도착한 곳에 낙원은 없다
+  reflection: 
 
 - id: "[2024.07] 백혜윤"
   role: {type: ms, title: M.S. Student (3학기)}
@@ -68,6 +74,8 @@
     joined: {start: "2024.07", end: "Current"}
     captain: {start: "2026.07", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 모든 벽은 문이다
+  reflection: 
 
 - id: "[2024.11] 이동천"
   role: {type: ms, title: M.S. Student (3학기)}
@@ -79,6 +87,8 @@
     period: {admission: "2025.03", graduation: null}
     joined: {start: "2024.11", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 오늘의 서툶이 내일의 실력이 된다
+  reflection: 
 
 - id: "[2025.01] 구해윤"
   role: {type: ms, title: M.S. Student (2학기)}
@@ -90,6 +100,8 @@
     period: {admission: "2025.09", graduation: null}
     joined: {start: "2025.01", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: No Pain, No Gain
+  reflection: 
   
 - id: "[2024.12] 최진호"
   role: {type: ms, title: M.S. Student (1학기)}
@@ -101,6 +113,8 @@
     period: {admission: "2026.03", graduation: null}
     joined: {start: "2024.12", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 기회는 스스로 만드는것
+  reflection: 
 
 - id: "[2026.03] 윤종우"
   role: {type: ms, title: M.S. Student (0학기)}
@@ -112,6 +126,8 @@
     period: {admission: "2026.09", graduation: null}
     joined: {start: "2026.03", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 인생은 선택의 연속이다
+  reflection: 
 
 - id: "[2026.04] 박원규"
   role: {type: ms, title: M.S. Student (0학기)}
@@ -123,6 +139,8 @@
     period: {admission: "2026.09", graduation: null}
     joined: {start: "2026.04", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 실패하지 않는다는 것을 안다면, 얼마나 큰 꿈을 꿀 것인가?
+  reflection: 
 
 ###############################################
 # Incoming MS Students
@@ -137,6 +155,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.07", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 나를 이기는 사람이 되자
+  reflection: 
 
 - id: "[2025.07] 이동현"
   role: {type: ims, title: Undergraduate Student (4학년 1학기)}
@@ -148,6 +168,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.07", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 깨부숴라
+  reflection: 
 
 ###############################################
 # Researchers

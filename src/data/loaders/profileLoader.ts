@@ -192,6 +192,8 @@ function transformProfile(yamlProfile: ProfileYAML, photosDict: Map<string, stri
     scholar: scholarUrls,
     cv: cvInfo?.url,
     cvVersion: cvInfo?.version,
+    quote: typeof yamlProfile.quote === 'string' ? yamlProfile.quote.trim() || undefined : undefined,
+    reflection: typeof yamlProfile.reflection === 'string' ? yamlProfile.reflection.trim() || undefined : undefined,
   };
 }
 
