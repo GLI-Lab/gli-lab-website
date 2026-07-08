@@ -100,7 +100,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.03", end: "2026.01"}
     affiliation: {current: 카이스트 인턴, verified: "2026.01"}
-
+  quote: 
+  reflection: 첫 연구실 생활이라 서툰 점이 많았지만, 교수님의 열정적인 지도와 따뜻한 격려 덕분에 연구자로서의 태도와 배움의 즐거움을 하나씩 익혀갈 수 있었습니다. 돌이켜보면 GLI에서 연구 생활을 시작할 수 있었던 것은 제게 큰 행운이었고, 그 시간 동안 이끌어주신 교수님께 진심으로 감사드립니다
 - id: "[2024.10] 김영진"
   role: {type: intern, title: Undergraduate Student}
   name: {en: Young-Jin Kim, ko: 김영진}

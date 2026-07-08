@@ -188,6 +188,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.07", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: Just do it
+  reflection: 
 
 - id: "[2025.07] 사예원"
   role: {type: intern, title: Undergraduate Student (3학년 1학기)}
@@ -232,6 +234,8 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.10", end: "Current"}
     affiliation: {current: null, verified: null}
+  quote: 행복은 내가 선택하는 것
+  reflection: 
 
 - id: "[2025.11] 손원희"
   role: {type: intern, title: Undergraduate Student (4학년 1학기)}
