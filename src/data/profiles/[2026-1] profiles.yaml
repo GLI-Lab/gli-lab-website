@@ -240,7 +240,7 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.08", end: "Current"}
     affiliation: {current: null, verified: null}
-  quote: 
+  quote: To infinity and beyond
   reflection: 
 
 - id: "[2025.10] 박규민"
@@ -305,7 +305,7 @@
     period: {admission: null, graduation: null}
     joined: {start: "2026.05", end: "Current"}
     affiliation: {current: null, verified: null}
-  quote: 
+  quote: Memento mori
   reflection: 
 
 - id: "[2026.06] 권준희"
