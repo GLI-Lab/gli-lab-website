@@ -229,6 +229,7 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
     ] : [
         {title: 'Faculty', type: 'faculty'},
         {title: 'PhD Students', type: 'phd'},
+        {title: 'Integrated MS/PhD Students', type: 'phd-ms'},
         {title: 'MS Students', type: 'ms'},
         // {title: 'Incoming PhD Students', type: 'iphd'},
         {title: 'Incoming MS Students', type: 'ims'},

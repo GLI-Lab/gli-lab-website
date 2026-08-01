@@ -7,13 +7,24 @@
 ########################################################################################
 # 2026
 ########################################################################################
+- date: "2026-07-31"
+  type: Funding
+  selected: true
+  content: |
+    Our team has been supported by 정보통신기획평가원, as part of <b>AI최고급신진연구자지원</b>, in a consortium with Jeju National University (lead), joined by NC AI, AIVIS, and Metsakuur Company 👏
+    <project>AI스타펠로우십지원(제주대학교, 학제연계형) — 조립형 AI 생애주기 원천기술 개발</>
+
+- date: "2026-07-30"
+  type: Member
+  content: "We are so happy to have <profile=[2024.07] 백혜윤>Hye-Yoon Baek (백혜윤)</> and <profile=[2024.11] 이동천>Dongcheon Lee (이동천)</> staying with GLI lab as integrated M.S./Ph.D. students. We look forward to the exciting research journey ahead together! 😊"
+
 - date: "2026-06-13"
   type: Member
   content: "Welcome to GLI lab, <profile=[2026.03] 윤종우>Jongwoo Yun (윤종우)</> and <profile=[2026.04] 박원규>Won-Gyu Park (박원규)</>, as master students! 😊"
 
 - date: "2026-06-05"
   type: General
-  content: "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</> and <profile=[2024.12] 최진호>Jinho Choi (최진호)</> have been selected for the <b>2026 AI Seoul Tech Research Support Program (Master's)</b> 👏"
+  content: "<profile=[2024.06] 서지명>Jimyeung Seo (서지명)</> and <profile=[2024.12] 최진호>Jinho Choi (최진호)</> have been selected for the <link=https://www.seoulfuture.or.kr/home/kor/M075356964/scholarship/info/view.do?idx=cb00d1a0008a85e71a41b8741facbffe0da50bb4e2a1672fcc14ff2318200bfa&idx3=cb00d1a0008a85e71a41b8741facbffe0da50bb4e2a1672fcc14ff2318200bfa&act=&tabPos3=C><b>2026 AI Seoul Tech Research Support Program (Master's)</b></> 👏"
 
 - date: "2026-06-01"
   type: Member
