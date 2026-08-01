@@ -1,7 +1,7 @@
 # YAML에서 tab은 금지. 반드시 space 2개 사용
-# role.type  : faculty, phd, ms, iphd, ims, researcher, intern
-# role.title : Pre-Ph.D. Students, Ph.D. Students (X학기), Joint M.S./Ph.D. Students (X학기), 
-#              Pre-M.S. Students, M.S. Students (X학기), Undergraduate Student (X학년 X학기)
+# role.type  : faculty, phd, phd-ms, ms, iphd, ims, researcher, intern
+# role.title : Pre-Ph.D. Student, Ph.D. Student (X학기), Integrated M.S./Ph.D. Student (X학기), 
+#              Pre-M.S. Student, M.S. Student (X학기), Undergraduate Student (X학년 X학기)
 # CV         : public/pdf/cv
 # homepage   : https://[THIS]
 # github     : https://github.com/[THIS]
@@ -58,7 +58,37 @@
     affiliation: {current: null, verified: null}
   quote: 해보기나 했어?
   reflection: 
-    
+
+###############################################
+# Integrated MS/PhD Student
+###############################################
+- id: "[2024.07] 백혜윤"
+  role: {type: phd-ms, title: Integrated M.S./Ph.D. Student (3학기)}
+  name: {en: Hye-Yoon Baek, ko: 백혜윤}
+  education: {bs: ["English Language & Literature, Konkuk University", "Smart ICT Convergence, Konkuk University"], ms: "Computer Science & Engineering, Konkuk University", phd: null}
+  interests: [Graph ML/DL, Information Retrieval, LLM Knowledge Distillation, Rule-aware LLM]
+  contacts: {emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"], homepage: null, github: ["hyeyoon100"], linkedin: ["hye-yoon-baek1205"]}
+  status: 
+    period: {admission: "2025.03", graduation: null}
+    joined: {start: "2024.07", end: "Current"}
+    captain: {start: "2026.07", end: "Current"}
+    affiliation: {current: null, verified: null}
+  quote: 모든 벽은 문이다
+  reflection: 
+
+- id: "[2024.11] 이동천"
+  role: {type: phd-ms, title: Integrated M.S./Ph.D. Student (3학기)}
+  name: {en: Dongcheon Lee, ko: 이동천}
+  education: {bs: "Mathematics, Gyeongsang National University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
+  interests: [Graph ML/DL, Retrieval-Augmented LLM, KG-Based Question Answering]
+  contacts: {emails: ["ehdcjs987@gmail.com"], homepage: null, github: ["leedongcheon"], linkedin: null}
+  status: 
+    period: {admission: "2025.03", graduation: null}
+    joined: {start: "2024.11", end: "Current"}
+    affiliation: {current: null, verified: null}
+  quote: 오늘의 서툶이 내일의 실력이 된다
+  reflection: 
+
 ###############################################
 # MS Students
 ###############################################
@@ -74,33 +104,6 @@
     joined: {start: "2024.06", end: "Current"}
     affiliation: {current: null, verified: null}
   quote: 도망쳐서 도착한 곳에 낙원은 없다
-  reflection: 
-
-- id: "[2024.07] 백혜윤"
-  role: {type: ms, title: M.S. Student (3학기)}
-  name: {en: Hye-Yoon Baek, ko: 백혜윤}
-  education: {bs: ["English Language & Literature, Konkuk University", "Smart ICT Convergence, Konkuk University"], ms: "Computer Science & Engineering, Konkuk University", phd: null}
-  interests: [Graph ML/DL, Information Retrieval, LLM Knowledge Distillation, Rule-aware LLM]
-  contacts: {emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"], homepage: null, github: ["hyeyoon100"], linkedin: ["hye-yoon-baek1205"]}
-  status: 
-    period: {admission: "2025.03", graduation: null}
-    joined: {start: "2024.07", end: "Current"}
-    captain: {start: "2026.07", end: "Current"}
-    affiliation: {current: null, verified: null}
-  quote: 모든 벽은 문이다
-  reflection: 
-
-- id: "[2024.11] 이동천"
-  role: {type: ms, title: M.S. Student (3학기)}
-  name: {en: Dongcheon Lee, ko: 이동천}
-  education: {bs: "Mathematics, Gyeongsang National University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
-  interests: [Graph ML/DL, Retrieval-Augmented LLM, KG-Based Question Answering]
-  contacts: {emails: ["ehdcjs987@gmail.com"], homepage: null, github: ["leedongcheon"], linkedin: null}
-  status: 
-    period: {admission: "2025.03", graduation: null}
-    joined: {start: "2024.11", end: "Current"}
-    affiliation: {current: null, verified: null}
-  quote: 오늘의 서툶이 내일의 실력이 된다
   reflection: 
 
 - id: "[2025.01] 구해윤"
@@ -162,7 +165,7 @@
   role: {type: ims, title: Undergraduate Student (4학년 1학기)}
   name: {en: Seyeong Kim, ko: 김세영}
   education: {bs: ["Computer Science & Engineering, Konkuk University", "Applied Statistics, Konkuk University"], ms: null, phd: null}
-  interests: [Graph ML/DL, Graph-based RAG, KG-Based Question Answering]
+  interests: [Graph ML/DL, Temporal KG Forecasting, Graph-based RAG, KG-Based Question Answering]
   contacts: {emails: ["people7261@naver.com"], homepage: null, github: ["k-seyeong"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
@@ -175,13 +178,26 @@
   role: {type: ims, title: Undergraduate Student (4학년 1학기)}
   name: {en: Donghyun Lee, ko: 이동현}
   education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
-  interests: [Graph ML/DL, LLM-based Recommender Systems]
+  interests: [Graph ML/DL, Knowledge Graph Foundation ModelLLM-based Recommender Systems]
   contacts: {emails: ["donghyunlee01@gmail.com"], homepage: null, github: ["DunkelH"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
     joined: {start: "2025.07", end: "Current"}
     affiliation: {current: null, verified: null}
   quote: 깨부숴라
+  reflection: 
+
+- id: "[2025.11] 손원희"
+  role: {type: ims, title: Undergraduate Student (4학년 1학기)}
+  name: {en: Wonhee Son, ko: 손원희}
+  education: {bs: ["Computer Science & Engineering, Konkuk University"], ms: null, phd: null}
+  interests: [Graph ML/DL]
+  contacts: {emails: ["whsonwh@gmail.com"], homepage: null, github: ["sonwh123"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2025.11", end: "Current"}
+    affiliation: {current: null, verified: null}
+  quote: 10년 전의 내가 존경할 사람이 되자
   reflection: 
 
 ###############################################
@@ -227,7 +243,7 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.07", end: "Current"}
     affiliation: {current: null, verified: null}
-  quote: 
+  quote: Life is a matter of direction, Not speed
   reflection: 
 
 - id: "[2025.08] 김예은"
@@ -254,19 +270,6 @@
     joined: {start: "2025.10", end: "Current"}
     affiliation: {current: null, verified: null}
   quote: 행복은 내가 선택하는 것
-  reflection: 
-
-- id: "[2025.11] 손원희"
-  role: {type: intern, title: Undergraduate Student (4학년 1학기)}
-  name: {en: Wonhee Son, ko: 손원희}
-  education: {bs: ["Computer Science & Engineering, Konkuk University"], ms: null, phd: null}
-  interests: [Graph ML/DL]
-  contacts: {emails: ["whsonwh@gmail.com"], homepage: null, github: ["sonwh123"], linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2025.11", end: "Current"}
-    affiliation: {current: null, verified: null}
-  quote: 10년 전의 내가 존경할 사람이 되자
   reflection: 
 
 - id: "[2025.12] 최지현"

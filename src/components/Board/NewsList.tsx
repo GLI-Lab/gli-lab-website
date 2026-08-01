@@ -59,21 +59,37 @@ export function getAvailableYears(newsItems: NewsData[]): number[] {
 }
 
 
+// 텍스트 내 <b>텍스트</b>를 <strong>으로 변환 (링크 텍스트 등 중첩용)
+function renderTextWithBold(text: string, keyPrefix: string): React.ReactNode {
+  const parts = text.split(/<b>([^<]+)<\/b>/g);
+  if (parts.length === 1) return text;
+  
+  return parts.map((part, i) =>
+    i % 2 === 1 ? (
+      <strong key={`${keyPrefix}-b-${i}`} className="font-semibold">{part}</strong>
+    ) : (
+      part
+    )
+  );
+}
+
 // 텍스트에서 프로필/논문/특허/프로젝트 마크업과 bold 태그를 찾아서 변환하는 함수
 function renderContentWithMarkup(content: string, memberIds: string[], alumniIds: string[], profileSlugByYamlId: Record<string, string>, newsIndex: number, lineIndex: number): React.ReactNode {
   if (!content) return content;
   
-  // <profile=ID>이름</>, <paper>제목</>, <patent>제목</>, <project>제목</>, <b>텍스트</b> 패턴을 찾는 정규식
+  // <profile=ID>이름</>, <paper>제목</>, <patent>제목</>, <project>제목</>, <link=URL>텍스트</>, <b>텍스트</b> 패턴을 찾는 정규식
   const profilePattern = /<profile=([^>]+)>([^<]+)<\/>/g;
   const paperPattern = /<paper>([^<]+)<\/>/g;
   const patentPattern = /<patent>([^<]+)<\/>/g;
   const projectPattern = /<project>([^<]+)<\/>/g;
+  // 링크 텍스트 안에는 <b>텍스트</b> 중첩 허용
+  const linkPattern = /<link=([^>]+)>((?:[^<]|<\/?b>)+)<\/>/g;
   const boldPattern = /<b>([^<]+)<\/b>/g;
   
   const elements: React.ReactNode[] = [];
   let lastIndex = 0;
   
-  const allMatches: Array<{type: 'profile' | 'paper' | 'patent' | 'project' | 'bold', match: RegExpExecArray, index: number}> = [];
+  const allMatches: Array<{type: 'profile' | 'paper' | 'patent' | 'project' | 'link' | 'bold', match: RegExpExecArray, index: number}> = [];
   
   // 프로필 매치 찾기
   let profileMatch;
@@ -115,6 +131,16 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
     });
   }
   
+  // 외부 링크 매치 찾기
+  let linkMatch;
+  while ((linkMatch = linkPattern.exec(content)) !== null) {
+    allMatches.push({
+      type: 'link',
+      match: linkMatch,
+      index: linkMatch.index
+    });
+  }
+  
   // bold 매치 찾기
   let boldMatch;
   while ((boldMatch = boldPattern.exec(content)) !== null) {
@@ -131,6 +157,9 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
   // 각 매치를 순서대로 처리
   allMatches.forEach((matchInfo) => {
     const { type, match, index } = matchInfo;
+    
+    // 이미 처리된 구간(예: 링크 내부의 <b>)과 겹치는 매치는 건너뜀
+    if (index < lastIndex) return;
     
     // 매치 이전의 텍스트
     if (index > lastIndex) {
@@ -237,6 +266,27 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
         </Link>
+      );
+      
+      lastIndex = index + fullMatch.length;
+    } else if (type === 'link') {
+      const [fullMatch, linkUrl, linkText] = match;
+      
+      // 외부 링크로 변환 (새 탭에서 열림)
+      elements.push(
+        <a 
+          key={`${newsIndex}-${lineIndex}-link-${index}`}
+          href={linkUrl.trim()}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-1.5"
+          title={linkUrl.trim()}
+        >
+          {renderTextWithBold(linkText, `${newsIndex}-${lineIndex}-link-${index}`)}
+          <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
       );
       
       lastIndex = index + fullMatch.length;
