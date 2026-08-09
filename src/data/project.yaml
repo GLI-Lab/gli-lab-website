@@ -26,8 +26,8 @@
   role: 참여연구자
   parent: { funder: null, program: null }
   main: { funder: 정보통신기획평가원, program: AI최고급신진연구자지원 }
-  start_date: 2026-08
-  end_date: 2032-07
+  start_date: 2026-07
+  end_date: 2031-12
   image: { url: /images/projects/iitp.png, width: 140px }
   managers: []
   participants: []
