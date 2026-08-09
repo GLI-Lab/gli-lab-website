@@ -149,8 +149,15 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
     }, [searchParams]);
     
     const mobilePopupRef = useRef<HTMLDivElement>(null);
+    const mobilePopupContainerRef = useRef<HTMLDivElement>(null);
     const profileRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
     const lastScrolledIdRef = useRef<string | null>(null);
+
+    // Pull-to-close 상태
+    const [pullDistance, setPullDistance] = useState(0);
+    const [isPulling, setIsPulling] = useState(false);
+    const touchStartYRef = useRef<number | null>(null);
+    const PULL_THRESHOLD = 100; // 이 거리 이상 당기면 닫힘
 
     const scrollToProfile = useCallback((profileId: string) => {
         lastScrolledIdRef.current = profileId;
@@ -455,6 +462,45 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
         }
     };
 
+    // Pull-to-close 터치 핸들러
+    const handleTouchStart = useCallback((e: React.TouchEvent) => {
+        const scrollTop = mobilePopupRef.current?.scrollTop ?? 0;
+        if (scrollTop <= 0) {
+            touchStartYRef.current = e.touches[0].clientY;
+            setIsPulling(true);
+        }
+    }, []);
+
+    const handleTouchMove = useCallback((e: React.TouchEvent) => {
+        if (touchStartYRef.current === null) return;
+        
+        const scrollTop = mobilePopupRef.current?.scrollTop ?? 0;
+        const currentY = e.touches[0].clientY;
+        const diff = currentY - touchStartYRef.current;
+        
+        // 스크롤이 맨 위이고 아래로 당기는 경우에만 pull 동작
+        if (scrollTop <= 0 && diff > 0) {
+            e.preventDefault();
+            // 저항감을 주기 위해 거리에 따라 감속
+            const dampedDistance = Math.min(diff * 0.5, 200);
+            setPullDistance(dampedDistance);
+        } else {
+            // 스크롤 중이면 pull 상태 리셋
+            touchStartYRef.current = null;
+            setPullDistance(0);
+            setIsPulling(false);
+        }
+    }, []);
+
+    const handleTouchEnd = useCallback(() => {
+        if (pullDistance >= PULL_THRESHOLD) {
+            closeDetailModal();
+        }
+        touchStartYRef.current = null;
+        setPullDistance(0);
+        setIsPulling(false);
+    }, [pullDistance, closeDetailModal]);
+
     const viewToggleButtons = (
         <div className="flex items-center gap-2">
             {isCardView && (
@@ -560,8 +606,32 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
                 <div
                     onClick={handleBackdropClick}
                     className="fixed inset-0 z-modal bg-black bg-opacity-75 flex items-center justify-center px-2 py-2 md:p-4 1.5md:hidden"
+                    style={{
+                        backgroundColor: `rgba(0, 0, 0, ${Math.max(0.75 - pullDistance / 400, 0.3)})`,
+                    }}
                 >
-                    <div className="w-full max-w-5xl max-h-[95vh] bg-white rounded-lg overflow-hidden relative">
+                    <div 
+                        ref={mobilePopupContainerRef}
+                        className="w-full max-w-5xl max-h-[95vh] bg-white rounded-lg overflow-hidden relative"
+                        style={{
+                            transform: `translateY(${pullDistance}px) scale(${1 - pullDistance / 1000})`,
+                            transition: isPulling ? 'none' : 'transform 0.3s ease-out',
+                            opacity: 1 - pullDistance / 300,
+                        }}
+                    >
+                        {/* Pull-to-close 인디케이터 */}
+                        {pullDistance > 0 && (
+                            <div className="absolute top-0 left-0 right-0 flex justify-center pt-1 z-10 pointer-events-none">
+                                <div 
+                                    className="w-10 h-1 bg-gray-400 rounded-full transition-all"
+                                    style={{
+                                        transform: `scaleX(${Math.min(1 + pullDistance / 200, 1.5)})`,
+                                        opacity: Math.min(pullDistance / 50, 1),
+                                    }}
+                                />
+                            </div>
+                        )}
+                        
                         {/* 닫기버튼 */}
                         <button
                             onClick={closeDetailModal}
@@ -588,6 +658,9 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
                             ref={mobilePopupRef}
                             className="overflow-y-auto w-full max-h-[calc(95vh-20px)] relative overscroll-none scrollbar-hide pt-2 pb-10" 
                             onScroll={handleScroll}
+                            onTouchStart={handleTouchStart}
+                            onTouchMove={handleTouchMove}
+                            onTouchEnd={handleTouchEnd}
                         >
                             <ProfileCardDetail key={selectedCard.id} {...selectedCard} studies={selectedProfileStudies} papers={selectedProfilePapers} patents={selectedProfilePatents} projects={projects} seminars={selectedProfileSeminars} isAlumniPage={isAlumniPage} isModal />
                         </div>
