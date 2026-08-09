@@ -148,15 +148,19 @@
     - { name: "Sun-Young Im", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-- title: "Top-HiCL: Hierarchical Contrastive Learning for Job-Skill Matching with Topological Awareness"
-  filter: {"type": "", "scope": ""}
-  status: "Under Review"
+
+########################################################################################
+# Accepted
+########################################################################################
+- title: "Taxonomy-Guided Contrastive Learning with Competency-Calibrated Graphs for Job Recommendation"
+  filter: {"type": "conference", "scope": "international"}
+  status: "Accepted"
   year: 2026
-  venue: { name: "", acronym: "" }
+  venue: { name: "ACM International Conference on Information and Knowledge Management", acronym: "CIKM" }
   links: 
     Link: null
     Code: null
-  notes: {"normal": "", "important": ""}
+  notes: {"normal": "Short Research Paper (Acceptance Rate: 30.9% = 236/764)", "important": ""}
   authors:
     - { name: "Wonseok Son", position: first }
     - { ID: "[2025.01] 구해윤", name: "Haeyoon Koo", position: first }
@@ -164,10 +168,6 @@
     - { name: "Jungkyu Han", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co }
     - { name: "Sejin Chun", position: co, isCorresponding: true }
-
-########################################################################################
-# Accepted
-########################################################################################
 
 - title:
     ko: 그래프 패턴 머신 기반 서브구조 복원을 이용한 그래프 노드 이상 탐지

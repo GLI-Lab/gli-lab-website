@@ -7,6 +7,13 @@
 ########################################################################################
 # 2026
 ########################################################################################
+- date: "2026-08-07"
+  type: Publication
+  content: |
+    One Short Research Paper has been accepted at <b>CIKM 2026</b> ✏️
+    - <paper>Taxonomy-Guided Contrastive Learning with Competency-Calibrated Graphs for Job Recommendation</>
+    Wonseok Son, Haeyoon Koo, Jeonghyeon Park, Jungkyu Han, Byungkook Oh, Sejin Chun
+
 - date: "2026-07-31"
   type: Funding
   selected: true
