@@ -9,8 +9,11 @@
 ########################################################################################
 - date: "2026-08-07"
   type: Publication
+  selected: true
   content: |
-    One Short Research Paper has been accepted at <b>CIKM 2026</b> ✏️
+    One Short and One Full Research Papers have been accepted at <b>CIKM 2026</b> (GLI Lab-led) ✏️
+    - <paper>Causality-Guided Spurious Evidence Pruning with GFlowNet for Faithful Graph Retrieval</>
+    Jinho Choi, Hye-Yoon Baek, Sang-Hyun Park, Sangjune Kim, Hyeongjun Yang, Byungkook Oh
     - <paper>Taxonomy-Guided Contrastive Learning with Competency-Calibrated Graphs for Job Recommendation</>
     Wonseok Son, Haeyoon Koo, Jeonghyeon Park, Jungkyu Han, Byungkook Oh, Sejin Chun
 
