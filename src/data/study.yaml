@@ -17,8 +17,8 @@
 - title: "Deep Learning 101 Paper (#4)"
   link: "https://bkoh509.notion.site/deep-learning-101-paper-4"
   description: "word2vec부터 Transformer, 사전학습, 정렬(RLHF)까지 NLP 대표 논문 30여 편으로 <h>딥러닝</h>의 핵심 아이디어와 발전 흐름을 따라갑니다.<br>(※ 문장 표현과 instruction tuning 2주차 추가)"
-  start_date: "2026-01-07"
-  end_date: "2026-01-26"
+  start_date: "2026-06-27"
+  end_date: "2026-08-11"
   participants:
     - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2026.06] 권준희>Junhui Kwon (권준희)</>"
