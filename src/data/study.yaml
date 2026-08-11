@@ -1,6 +1,31 @@
 # YAML에서 tab은 금지. 반드시 space 2개 사용
 # end_date: null  # 종료일이 없는 경우
 
+
+- title: "Graph RL 101 Paper (#7)"
+  link: "https://bkoh509.notion.site/graph-rl-101-paper-7"
+  description: "그래프, 지식그래프, 이종그래프 등을 대상으로 <h>그래프 표현학습</h>을 수행하고 이를 <h>자연어처리</h>, <h>추천시스템</h>, 그리고 <h>이상탐지</h>에 응용하는 기초 논문 스터디입니다."
+  start_date: "2026-08-14"
+  end_date: null
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
+    - "<profile=[2026.06] 권준희>Junhui Kwon (권준희)</>"
+    - "<profile=[2026.05] 김진겸>Jin-Gyeom Kim (김진겸)</>"
+    - "<profile=[2026.03] 윤종우>Jongwoo Yun (윤종우)</>"
+    - "<profile=[2026.04] 박원규>Won-Gyu Park (박원규)</>"
+
+- title: "Deep Learning 101 Paper (#4)"
+  link: "https://bkoh509.notion.site/deep-learning-101-paper-4"
+  description: "word2vec부터 Transformer, 사전학습, 정렬(RLHF)까지 NLP 대표 논문 30여 편으로 <h>딥러닝</h>의 핵심 아이디어와 발전 흐름을 따라갑니다.<br>(※ 문장 표현과 instruction tuning 2주차 추가)"
+  start_date: "2026-01-07"
+  end_date: "2026-01-26"
+  participants:
+    - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
+    - "<profile=[2026.06] 권준희>Junhui Kwon (권준희)</>"
+    - "<profile=[2026.05] 김진겸>Jin-Gyeom Kim (김진겸)</>"
+    - "<profile=[2026.03] 윤종우>Jongwoo Yun (윤종우)</>"
+    - "<profile=[2026.04] 박원규>Won-Gyu Park (박원규)</>"
+
 - title: "Deep Learning 101 Paper (#3)"
   link: "https://bkoh509.notion.site/deep-learning-101-paper-3"
   description: "NLP 관점에서의 대표 논문들을 통해 <h>딥러닝</h> 기초 개념부터 주요 아키텍처까지 학습하는 스터디입니다.<br>(※ 2개의 그룹으로 운영)"
@@ -19,7 +44,7 @@
   link: "https://bkoh509.notion.site/graph-rl-101-paper-6"
   description: "그래프, 지식그래프, 이종그래프 등을 대상으로 <h>그래프 표현학습</h>을 수행하고 이를 <h>자연어처리</h>, <h>추천시스템</h>, 그리고 <h>이상탐지</h>에 응용하는 기초 논문 스터디입니다.<br>(※ 2개의 그룹으로 운영)"
   start_date: "2025-12-23"
-  end_date: null
+  end_date: "2026-08-07"
   participants:
     - "<profile=[2024.03] 오병국>Byungkook Oh (오병국)</>"
     - "<profile=[2025.10] 박규민>Gyumin Park (박규민)</>"
