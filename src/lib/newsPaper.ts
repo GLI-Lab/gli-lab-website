@@ -52,6 +52,7 @@ function extractHeadline(content: string): string {
     .replace(/<paper>[^<]+<\/>/g, '')
     .replace(/<patent>[^<]+<\/>/g, '')
     .replace(/<project>[^<]+<\/>/g, '')
+    .replace(/<note>[^<]+<\/>/g, '')
     .replace(/<profile=[^>]+>[^<]+<\/>/g, '')
     .trim();
 }
