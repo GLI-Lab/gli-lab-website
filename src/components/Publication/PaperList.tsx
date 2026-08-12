@@ -133,8 +133,10 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
           }
 
           if (targetPaper.status === 'Accepted') {
-            setFilterType(targetPaper.filter.type);
-            setFilterScope(targetPaper.filter.scope);
+            setFilterType('all');
+            setFilterScope(
+              targetPaper.filter.scope === 'domestic' ? 'domestic' : 'international'
+            );
           }
 
           setHighlightedPaperId(targetId);
