@@ -7,11 +7,18 @@
 ########################################################################################
 # 2026
 ########################################################################################
+- date: "2026-08-13"
+  type: Publication
+  content: |
+    One regular paper has been accepted at <b>IEEE Transactions on Knowledge and Data Engineering</b> ✏️
+    - <paper>Reliable Distillation of Recommendation Rationales from Large Language Models for Conversational Recommendation</>
+    Hyeongjun Yang, Donghyun Kim, Kyuhwan Yeom, Kyong-Ho Lee, Byungkook Oh, Xiongnan Jin
+
 - date: "2026-08-07"
   type: Publication
   selected: true
   content: |
-    One Short and One Full Research Papers have been accepted at <b>CIKM 2026</b> (GLI Lab-led) ✏️
+    One short and one full research papers have been accepted at <b>CIKM 2026</b> (GLI Lab-led) ✏️
     - <paper>Causality-Guided Spurious Evidence Pruning with GFlowNet for Faithful Graph Retrieval</>
     Jinho Choi, Hye-Yoon Baek, Sang-Hyun Park, Sangjune Kim, Hyeongjun Yang, Byungkook Oh
     - <paper>Taxonomy-Guided Contrastive Learning with Competency-Calibrated Graphs for Job Recommendation</>

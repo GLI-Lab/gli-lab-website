@@ -21,11 +21,11 @@
     Code: null
   notes: {"normal": "", "important": ""}
   authors:
-    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: first }
-    - { ID: "[2025.07] 김세영", name: "Seyeong Kim", position: co }
+    - { ID: "[2025.07] 사예원", name: "Yewon Sa", position: first }
+    - { ID: "[2025.12] 최지현", name: "Jihyun Choi", position: first }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-- title: "Collaborative Graph Agent-based Fake News Detection"
+- title: "Temporal Knowledge Graph Forecasting"
   filter: {"type": "", "scope": ""}
   status: "In Progress"
   year: 2026
@@ -35,16 +35,60 @@
     Code: null
   notes: {"normal": "", "important": ""}
   authors:
+    - { ID: "[2025.07] 김세영", name: "Seyeong Kim", position: first }
+    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
+
+- title: "Knowledge Graph Foundation Model"
+  filter: {"type": "", "scope": ""}
+  status: "In Progress"
+  year: 2026
+  venue: { name: "", acronym: "" }
+  links: 
+    Link: null
+    Code: null
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2025.07] 이동현", name: "Donghyun Lee", position: first }
+    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
+
+- title: "User-Item Graph Tokenization for Recommendation"
+  filter: {"type": "", "scope": ""}
+  status: "In Progress"
+  year: 2026
+  venue: { name: "", acronym: "" }
+  links: 
+    Link: null
+    Code: null
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: first }
+    - { ID: "[2025.07] 김세영", name: "Seyeong Kim", position: co }
+    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
+
+########################################################################################
+# Ongoing Work (Under Review)
+########################################################################################
+
+- title: "Distributional Future Guidance over Unfolding Propagation Graphs for Early Fake News Detection"
+  filter: {"type": "conference", "scope": "international"}
+  status: "Under Review"
+  year: 2026
+  venue: { name: "", acronym: "" }
+  links: 
+    Link: null
+    Code: null
+  notes: {"normal": "", "important": ""}
+  authors:
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: first }
-    - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: co }
-    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: co }
     - { ID: "[2025.12] 홍다연", name: "Dayeon Hong", position: co }
+    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: co }
+    - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: co }
     - { name: "Donghyun Kim", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-- title: "Graph Anomaly Detection with Clustering-based Spectral Scoring"
-  filter: {"type": "", "scope": ""}
-  status: "In Progress"
+- title: "Prototype Learning with Causally Disentangled Patterns for Graph Anomaly Detection"
+  filter: {"type": "conference", "scope": "international"}
+  status: "Under Review"
   year: 2026
   venue: { name: "", acronym: "" }
   links: 
@@ -59,12 +103,8 @@
     - { ID: "[2025.07] 이재진", name: "JaeJin Lee", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-########################################################################################
-# Ongoing Work (Under Review)
-########################################################################################
-
 - title: "Internalizing Negation-Gated Logical Rules into LLMs for Document-Level Relation Extraction"
-  filter: {"type": "", "scope": ""}
+  filter: {"type": "conference", "scope": "international"}
   status: "Under Review"
   year: 2026
   venue: { name: "", acronym: "" }
@@ -80,8 +120,8 @@
     - { name: "Xiongnan Jin", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-- title: "Information-Adaptive Textual Tokenization for Generative Recommendation under Text Sparsity"
-  filter: {"type": "", "scope": ""}
+- title: "Adaptive Tokenization with Collaborative Usable Information for Generative Recommendation"
+  filter: {"type": "conference", "scope": "international"}
   status: "Under Review"
   year: 2026
   venue: { name: "", acronym: "" }
@@ -97,25 +137,8 @@
     - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-- title: "Reliable Distillation of Recommendation Rationales from Large Language Models for Conversational Recommendation"
-  filter: {"type": "", "scope": ""}
-  status: "Under Review"
-  year: 2026
-  venue: { name: "", acronym: "" }
-  links: 
-    Link: null
-    Code: null
-  notes: {"normal": "", "important": ""}
-  authors:
-    - { name: "Hyeongjun Yang", position: first }
-    - { name: "Donghyun Kim", position: co }
-    - { name: "Kyuhwan Yeom", position: co }
-    - { name: "Kyong-Ho Lee", position: co, isCorresponding: true }
-    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co }
-    - { name: "Xiongnan Jin", position: co }
-
 - title: "An Empirical Analysis of Stability and Sensitivity in Node-level Graph Anomaly Detection"
-  filter: {"type": "", "scope": ""}
+  filter: {"type": "conference", "scope": "international"}
   status: "Under Review"
   year: 2026
   venue: { name: "", acronym: "" }
@@ -135,6 +158,23 @@
 ########################################################################################
 # Accepted
 ########################################################################################
+- title: "Reliable Distillation of Recommendation Rationales from Large Language Models for Conversational Recommendation"
+  filter: {"type": "journal", "scope": "international"}
+  status: "Accepted"
+  year: 2026
+  venue: { name: "IEEE Transactions on Knowledge and Data Engineering", acronym: "" }
+  links: 
+    Link: null
+    Code: null
+  notes: {"normal": "", "important": ""}
+  authors:
+    - { name: "Hyeongjun Yang", position: first }
+    - { name: "Donghyun Kim", position: co }
+    - { name: "Kyuhwan Yeom", position: co }
+    - { name: "Kyong-Ho Lee", position: co, isCorresponding: true }
+    - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co }
+    - { name: "Xiongnan Jin", position: co }
+
 - title: "Causality-Guided Spurious Evidence Pruning with GFlowNet for Faithful Graph Retrieval"
   filter: {"type": "conference", "scope": "international"}
   status: "Accepted"
