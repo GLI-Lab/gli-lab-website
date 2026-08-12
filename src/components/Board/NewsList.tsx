@@ -77,11 +77,12 @@ function renderTextWithBold(text: string, keyPrefix: string): React.ReactNode {
 function renderContentWithMarkup(content: string, memberIds: string[], alumniIds: string[], profileSlugByYamlId: Record<string, string>, newsIndex: number, lineIndex: number): React.ReactNode {
   if (!content) return content;
   
-  // <profile=ID>이름</>, <paper>제목</>, <patent>제목</>, <project>제목</>, <link=URL>텍스트</>, <b>텍스트</b> 패턴을 찾는 정규식
+  // <profile=ID>이름</>, <paper>제목</>, <patent>제목</>, <project>제목</>, <note>텍스트</>, <link=URL>텍스트</>, <b>텍스트</b> 패턴을 찾는 정규식
   const profilePattern = /<profile=([^>]+)>([^<]+)<\/>/g;
   const paperPattern = /<paper>([^<]+)<\/>/g;
   const patentPattern = /<patent>([^<]+)<\/>/g;
   const projectPattern = /<project>([^<]+)<\/>/g;
+  const notePattern = /<note>([^<]+)<\/>/g;
   // 링크 텍스트 안에는 <b>텍스트</b> 중첩 허용
   const linkPattern = /<link=([^>]+)>((?:[^<]|<\/?b>)+)<\/>/g;
   const boldPattern = /<b>([^<]+)<\/b>/g;
@@ -89,7 +90,7 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
   const elements: React.ReactNode[] = [];
   let lastIndex = 0;
   
-  const allMatches: Array<{type: 'profile' | 'paper' | 'patent' | 'project' | 'link' | 'bold', match: RegExpExecArray, index: number}> = [];
+  const allMatches: Array<{type: 'profile' | 'paper' | 'patent' | 'project' | 'note' | 'link' | 'bold', match: RegExpExecArray, index: number}> = [];
   
   // 프로필 매치 찾기
   let profileMatch;
@@ -128,6 +129,16 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
       type: 'project',
       match: projectMatch,
       index: projectMatch.index
+    });
+  }
+
+  // note 매치 찾기
+  let noteMatch;
+  while ((noteMatch = notePattern.exec(content)) !== null) {
+    allMatches.push({
+      type: 'note',
+      match: noteMatch,
+      index: noteMatch.index
     });
   }
   
@@ -229,6 +240,19 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
       );
       
       lastIndex = index + fullMatch.length;
+    } else if (type === 'note') {
+      const [fullMatch, noteText] = match;
+
+      elements.push(
+        <span
+          key={`${newsIndex}-${lineIndex}-note-${index}`}
+          className="text-[0.9em] text-gray-500 font-normal"
+        >
+          {noteText}
+        </span>
+      );
+
+      lastIndex = index + fullMatch.length;
     } else if (type === 'patent') {
       const [fullMatch, patentTitle] = match;
       const patentId = titleToId(patentTitle);
@@ -253,7 +277,9 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
     } else if (type === 'project') {
       const [fullMatch, projectTitle] = match;
       const projectId = titleToId(projectTitle);
-      
+
+      // 프로젝트 제목을 링크로 변환 (paper와 동일한 스타일)
+      // URL 해시에 한글이 포함될 수 있으므로 encodeURIComponent 사용
       elements.push(
         <Link 
           key={`${newsIndex}-${lineIndex}-project-${index}`}
@@ -262,7 +288,7 @@ function renderContentWithMarkup(content: string, memberIds: string[], alumniIds
           title="View project details"
         >
           {projectTitle}
-          <svg className="w-[0.66em] h-[0.66em] ml-1 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
         </Link>
