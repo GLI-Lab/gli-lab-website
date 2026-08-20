@@ -2,6 +2,7 @@ import yaml from 'js-yaml';
 import path from 'path';
 import fs from 'fs/promises';
 import { SeminarData } from './types';
+import { listPublicFiles } from './publicFileIndex';
 
 /** js-yaml Date / ISO 문자열 → YYYY-MM-DD (타임존 무관) */
 function normalizeSeminarDate(date: unknown): string {
@@ -30,16 +31,12 @@ function toPublicRelative(slidePath: string): string {
 /**
  * 디렉터리 안 파일명을 NFC 키로 조회.
  * macOS에서 올린 한글 PDF는 NFD, YAML은 NFC인 경우가 많아 둘 다 매칭한다.
+ * public/ 원본을 readdir 하지 않고 prebuild 파일명 인덱스를 쓴다 (Vercel 250MB 제한).
  */
-async function loadSlideLookup(dirRelative: string): Promise<Map<string, string>> {
+function loadSlideLookup(dirRelative: string): Map<string, string> {
   const lookup = new Map<string, string>();
-  try {
-    const files = await fs.readdir(path.join(process.cwd(), 'public', dirRelative));
-    for (const file of files) {
-      lookup.set(file.normalize('NFC'), file);
-    }
-  } catch {
-    // directory missing
+  for (const file of listPublicFiles(dirRelative)) {
+    lookup.set(file.normalize('NFC'), file);
   }
   return lookup;
 }
@@ -50,18 +47,13 @@ export interface GetSeminarsOptions {
 }
 
 async function enrichWithSlideExists(items: SeminarData[]): Promise<SeminarData[]> {
-  const dirs = new Set<string>();
+  const lookups = new Map<string, Map<string, string>>();
   for (const item of items) {
     const slide = item.slide?.trim();
-    if (slide) dirs.add(path.posix.dirname(toPublicRelative(slide)));
+    if (!slide) continue;
+    const dir = path.posix.dirname(toPublicRelative(slide));
+    if (!lookups.has(dir)) lookups.set(dir, loadSlideLookup(dir));
   }
-
-  const lookups = new Map<string, Map<string, string>>();
-  await Promise.all(
-    [...dirs].map(async (dir) => {
-      lookups.set(dir, await loadSlideLookup(dir));
-    })
-  );
 
   return items.map((item) => {
     const slide = item.slide?.trim();

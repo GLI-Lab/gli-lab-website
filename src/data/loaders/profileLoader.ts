@@ -3,6 +3,7 @@ import path from 'path';
 import fs from 'fs/promises';
 import { ProfileYAML, ProfileData } from './types';
 import { generateProfileSlug } from '@/lib/profileSlug';
+import { listPublicFiles } from './publicFileIndex';
 
 // YAML 파일을 읽어서 프로필 데이터 반환
 async function loadProfilesYAML(isAlumni: boolean = false): Promise<ProfileYAML[]> {
@@ -38,20 +39,14 @@ function profileIdsFromYAML(rawData: ProfileYAML[]): Set<string> {
 async function buildProfilesCVDict(rawData: ProfileYAML[]): Promise<Map<string, { url: string; version?: string }>> {
   try {
     const profileIds = profileIdsFromYAML(rawData);
-
-    let files: string[] = [];
-    try {
-      files = await fs.readdir(path.join(process.cwd(), 'public', 'pdf', 'cv'));
-    } catch (error) {
-      return new Map();
-    }
+    const files = listPublicFiles('pdf/cv');
     
     const cvDict = new Map<string, { url: string; version?: string }>();
     
     // 각 프로필 ID로 시작하는 PDF 파일 찾기
     for (const profileId of profileIds) {
-      const matchingFile = files.find(file => 
-        file.startsWith(profileId) && file.endsWith('.pdf')
+      const matchingFile = files.find((file) =>
+        file.normalize('NFC').startsWith(profileId.normalize('NFC')) && file.endsWith('.pdf')
       );
       
       if (matchingFile) {
@@ -74,15 +69,14 @@ async function buildProfilesCVDict(rawData: ProfileYAML[]): Promise<Map<string, 
 async function buildProfilesPhotosDict(rawData: ProfileYAML[]): Promise<Map<string, string[]>> {
   try {
     const profileIds = profileIdsFromYAML(rawData);
-
-    const files = await fs.readdir(path.join(process.cwd(), 'public', 'images', 'profiles'));
+    const files = listPublicFiles('images/profiles');
     
     const photosDict = new Map<string, string[]>();
     
     // 각 프로필 ID로 시작하는 파일들 찾기
     for (const profileId of profileIds) {
-      const matchingFiles = files.filter(file => 
-        file.startsWith(profileId)
+      const matchingFiles = files.filter((file) =>
+        file.normalize('NFC').startsWith(profileId.normalize('NFC'))
       );
       
       if (matchingFiles.length > 0) {
