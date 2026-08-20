@@ -22,15 +22,26 @@ function normalizeSeminarDate(date: unknown): string {
   return String(date);
 }
 
-async function slideFileExists(slidePath: string): Promise<boolean> {
-  const relative = slidePath.replace(/^\//, '');
-  const absolute = path.join(process.cwd(), 'public', relative);
+/** public/ 아래 상대경로를 POSIX 형태로 정규화 */
+function toPublicRelative(slidePath: string): string {
+  return slidePath.replace(/^\//, '').replace(/\\/g, '/');
+}
+
+/**
+ * 디렉터리 안 파일명을 NFC 키로 조회.
+ * macOS에서 올린 한글 PDF는 NFD, YAML은 NFC인 경우가 많아 둘 다 매칭한다.
+ */
+async function loadSlideLookup(dirRelative: string): Promise<Map<string, string>> {
+  const lookup = new Map<string, string>();
   try {
-    await fs.access(absolute);
-    return true;
+    const files = await fs.readdir(path.join(process.cwd(), 'public', dirRelative));
+    for (const file of files) {
+      lookup.set(file.normalize('NFC'), file);
+    }
   } catch {
-    return false;
+    // directory missing
   }
+  return lookup;
 }
 
 export interface GetSeminarsOptions {
@@ -39,15 +50,30 @@ export interface GetSeminarsOptions {
 }
 
 async function enrichWithSlideExists(items: SeminarData[]): Promise<SeminarData[]> {
-  return Promise.all(
-    items.map(async (item) => {
-      if (item.slide?.trim()) {
-        const exists = await slideFileExists(item.slide.trim());
-        return { ...item, slideExists: exists };
-      }
-      return { ...item, slideExists: false };
+  const dirs = new Set<string>();
+  for (const item of items) {
+    const slide = item.slide?.trim();
+    if (slide) dirs.add(path.posix.dirname(toPublicRelative(slide)));
+  }
+
+  const lookups = new Map<string, Map<string, string>>();
+  await Promise.all(
+    [...dirs].map(async (dir) => {
+      lookups.set(dir, await loadSlideLookup(dir));
     })
   );
+
+  return items.map((item) => {
+    const slide = item.slide?.trim();
+    if (!slide) return { ...item, slideExists: false };
+
+    const relative = toPublicRelative(slide);
+    const dir = path.posix.dirname(relative);
+    const actualName = lookups.get(dir)?.get(path.posix.basename(relative).normalize('NFC'));
+    if (!actualName) return { ...item, slideExists: false };
+
+    return { ...item, slide: `/${dir}/${actualName}`, slideExists: true };
+  });
 }
 
 export async function getSeminarsUncached(): Promise<SeminarData[]> {

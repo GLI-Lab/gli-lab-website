@@ -1,4 +1,7 @@
 # YAML에서 tab은 금지. 반드시 space 2개 사용
+# slide: /pdf/seminar/[YYMMDD][이름] 제목.pdf  (public/pdf/seminar)
+#        YAML 한글은 NFC로 작성. macOS에서 올린 NFD 파일명도 로더가 매칭함
+
 
 ###############################################
 # 2026 Summer
@@ -6,74 +9,65 @@
 - title: <br>Cross-Architecture Distillation</br> \\of LLM Knowledge for Non-LLM Model Enhancement
   description: LLM의 지식과 reasoning signal을 비-LLM 구조로 증류해 task-specific 성능과 일반화 능력 향상
   season: 2026 Summer
-  date: 2026-08-05
+  date: 2026-08-12
   Presenter: { ID: "[2024.06] 서지명", name: Jimyeung Seo (서지명) }
-  tag: { area: { Graph Int., Graph-Centric AI }, topic: { Knowledge Distillation } }
-  slide: 
-
-- title: Graph Foundation Models \\for <br>Generalizable Anomaly Detection</br> \\Across Diverse Graph Domains
-  description: 특정 그래프가 아니라 다양한 도메인 그래프에서도 구조·속성 차이에 robust하게 전이 가능한 이상탐지
-  season: 2026 Summer
-  date: 2026-08-05
-  Presenter: { ID: "[2025.04] 구본유", name: Bonyou Koo (구본유) }
-  tag: { area: { Graph Int., Anomaly Detection }, topic: { Graph Foundation Model } }
-  slide: 
-
-- title: <br>Structural Signal-based Inductive Reasoning</br> in Knowledge Graph Foundation Models
-  description: 노드 ID에 의존하지 않는 경로·관계 구조 신호를 KG Foundation Model의 추론 신호로 활용
-  season: 2026 Summer
-  date: 2026-07-29
-  Presenter: { ID: "[2025.07] 이동현", name: Donghyun Lee (이동현) }
-  tag: { area: { Graph Int., Graph-Centric AI }, topic: { Graph Foundation Model } }
-  slide: 
-
-- title: Leveraging <br>LLM-derived Knowledge Priors</br> for Temporal Knowledge Graph Forecasting
-  description: LLM이 가진 배경지식·세계지식을 temporal KG forecasting의 보조 prior로 활용
-  season: 2026 Summer
-  date: 2026-07-29
-  Presenter: { ID: "[2025.07] 김세영", name: Seyeong Kim (김세영) }
-  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Temporal KG Forecasting } }
-  slide: 
+  slide: /pdf/seminar/[260812][서지명] Cross-Architecture Distillation of LLM Knowledge for Non-LLM Model Enhancement.pdf
 
 - title: <br>LLM-based Recommendation Agents</br> \\for Personalized Conversational Recommender Systems
   description: LLM 기반 에이전트가 대화 맥락과 사용자 피드백을 바탕으로 선호를 추론·갱신하며 개인화된 추천을 수행
   season: 2026 Summer
-  date: 2026-07-22
+  date: 2026-08-12
   Presenter: { ID: "[2025.01] 구해윤", name: Hae-Yoon Koo (구해윤) }
-  tag: { area: { Language Int., Recommender Systems }, topic: { Recommendation Agent } }
-  slide: 
+  slide: /pdf/seminar/[260812][구해윤] LLM-based Recommendation Agents for Personalized Conversational Recommender Systems.pdf
 
-- title: <br>Hypergraph-Guided Agentic RAG</br> \\for Adaptive Evidence Exploration, Selection, and Refinement
-  description: hypergraph 기반 evidence space를 활용해 agent가 evidence를 탐색·선택·보정하고, 검색공간을 최적화
+- title: Graph Foundation Models \\for <br>Generalizable Anomaly Detection</br> \\Across Diverse Graph Domains
+  description: 특정 그래프가 아니라 다양한 도메인 그래프에서도 전이 가능한 이상탐지
+  season: 2026 Summer
+  date: 2026-08-05
+  Presenter: { ID: "[2025.04] 구본유", name: Bonyou Koo (구본유) }
+  slide: /pdf/seminar/[260805][구본유] Graph Foundation Models for Generalizable Anomaly Detection Across Diverse Graph Domains.pdf
+
+- title: <br>Structural Signal-based Inductive Reasoning</br> in Knowledge Graph Foundation Model
+  description: 노드 ID에 의존하지 않는 경로·관계 구조 신호를 KG Foundation Model의 추론 신호로 활용
+  season: 2026 Summer
+  date: 2026-08-05
+  Presenter: { ID: "[2025.07] 이동현", name: Donghyun Lee (이동현) }
+  slide: /pdf/seminar/[260805][이동현] Structural Signal-based Inductive Reasoning in Knowledge Graph Foundation Model.pdf
+
+- title: <br>Hyper-relational Knowledge Graphs and Beyond</br> - \\From Representation Learning to Retrieval-Augmented Generation
+  description: relation-entity pair 단위로 전역 구조와 fact 내부 의미를 함께 학습하는 HKG 표현학습(KDD'26)과 hypergraph 기반 RAG 동향
+  season: 2026 Summer
+  date: 2026-07-29
+  Presenter: { ID: "[2024.07] 지상준", name: Sangjun Ji (지상준) }
+  slide: /pdf/seminar/[260729][지상준] Hyper-relational Knowledge Graphs and Beyond - From Representation Learning to Retrieval-Augmented Generation.pdf
+
+- title: <br>Neuro-Symbolic Integration for LLM Reasoning</br> \\- Differentiable Logical Constraints and Rule Internalization
+  description: LLM 추론에 symbolic knowledge를 결합하여 논리적 추론의 일관성을 향상
+  season: 2026 Summer
+  date: 2026-07-29
+  Presenter: { ID: "[2024.07] 백혜윤", name: Hye-Yoon Baek (백혜윤) }
+  slide: /pdf/seminar/[260729][백혜윤] Neuro-Symbolic Integration for LLM Reasoning - Differentiable Logical Constraints and Rule Internalization.pdf
+
+- title: <br>Graph-Guided Agentic RAG</br> \\for Adaptive Evidence Exploration, Selection, and Refinement
+  description: Graph 기반 evidence space를 활용해 agent가 evidence를 탐색·선택·보정하고, 검색공간을 최적화
+  season: 2026 Summer
+  date: 2026-07-29
+  Presenter: { ID: "[2024.12] 최진호", name: Jinho Choi (최진호) }
+  slide: /pdf/seminar/[260729][최진호] Graph-Guided Agentic RAG for Adaptive Evidence Exploration, Selection, and Refinement.pdf
+
+- title: Leveraging <br>LLM-derived Knowledge Priors</br> for Temporal Knowledge Graph Forecasting
+  description: LLM이 가진 배경지식·세계지식을 temporal KG forecasting의 보조 prior로 활용
   season: 2026 Summer
   date: 2026-07-22
-  Presenter: { ID: "[2024.12] 최진호", name: Jinho Choi (최진호) }
-  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Agentic RAG } }
-  slide: 
+  Presenter: { ID: "[2025.07] 김세영", name: Seyeong Kim (김세영) }
+  slide: /pdf/seminar/[260722][김세영] Leveraging LLM-derived Knowledge Priors for Temporal Knowledge Graph Forecasting.pdf
 
 - title: <br>Time-Aware Logical Pattern Mining</br> \\for Temporal Knowledge Graph Reasoning
   description: 시간에 따라 반복·변화하는 논리 패턴을 마이닝해서 time-aware reasoning 수행
   season: 2026 Summer
   date: 2026-07-15
   Presenter: { ID: "[2024.11] 이동천", name: Dongcheon Lee (이동천) }
-  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Temporal KG Reasoning } }
-  slide: 
-
-- title: Neuro-Symbolic Reasoning with LLMs for \\<br>Logic-Constrained Language Generation</br>
-  description: LLM의 언어생성에 논리 규칙, symbolic constraint, reasoning consistency를 결합
-  season: 2026 Summer
-  date: 2026-07-15
-  Presenter: { ID: "[2024.07] 백혜윤", name: Hye-Yoon Baek (백혜윤) }
-  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Neuro-Symbolic AI } }
-  slide: 
-
-- title: <br>Logical Rule Fundamentals</br> and <br>Differentiable \\Discrete Selection Techniques</br>
-  description: KG rule mining의 논리적 기초 및 이산 선택 과정을 미분 가능하게 다루는 기법 소개
-  season: 2026 Summer
-  date: 2026-07-15
-  Presenter: { ID: "[2024.03] 오병국", name: Byungkook Oh (오병국) }
-  tag: { area: { Graph Int., Graph-Centric AI }, topic: { Differentiable Discrete Choice } }
-  slide: 
+  slide: /pdf/seminar/[260715][이동천] Time-Aware Logical Pattern Mining for Temporal Knowledge Graph Reasoning.pdf
 
 
 ###############################################
@@ -84,7 +78,6 @@
   season: 2025 Winter
   date: 2026-02-19 
   Presenter: { ID: "[2025.04] 구본유", name: Bonyou Koo (구본유) }
-  tag: { area: { Graph Int., Anomaly Detection }, topic: { Dirichlet Energy, Rayleigh Quotient } }
   slide: /pdf/seminar/[260219][구본유] Recent Advances in Spectral Perspectives for Anomaly Detection.pdf
 
 - title: <br>Semantic IDs for Recommender Systems</br> \\via Vector Quantization and Generative Models
@@ -92,7 +85,6 @@
   season: 2025 Winter
   date: 2026-02-12
   Presenter: { ID: "[2025.01] 구해윤", name: Hae-Yoon Koo (구해윤) }
-  tag: { area: { Language Int., Recommender Systems }, topic: { Semantic/Textual IDs } }
   slide: /pdf/seminar/[260212][구해윤] Semantic IDs for Recommender Systems via Vector Quantization and Generative Models.pdf
 
 - title: Efficient <br>Knowledge Graph Evidence Utilization</br> \\for Retrieval-Augmented Question Answering
@@ -100,7 +92,6 @@
   season: 2025 Winter
   date: 2026-01-20
   Presenter: { ID: "[2024.12] 최진호", name: Jinho Choi (최진호) }
-  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Question Answering } }
   slide: /pdf/seminar/[260120][최진호] Efficient Knowledge Graph Evidence Utilization for Retrieval-Augmented Question Answering.pdf
 
 - title: Question Answering over Temporal Knowledge Graphs
@@ -108,7 +99,6 @@
   season: 2025 Winter
   date: 2026-01-13
   Presenter: { ID: "[2024.11] 이동천", name: Dongcheon Lee (이동천) }
-  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Temporal Question Answering } }
   slide: /pdf/seminar/[260113][이동천] Question Answering over Temporal Knowledge Graphs.pdf
 
 - title: <br>Integrating Logical Rules into LLM Reasoning</br> \\for Document-level Relation Extraction
@@ -116,7 +106,6 @@
   season: 2025 Winter
   date: 2026-01-08
   Presenter: { ID: "[2024.07] 백혜윤", name: Hye-Yoon Baek (백혜윤) }
-  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Relation Extraction } }
   slide: /pdf/seminar/[260108][백혜윤] Integrating Logical Rules into LLM Reasoning for Document-level Relation Extraction.pdf
 
 - title: Explainability in Graph Neural Networks
@@ -124,7 +113,6 @@
   season: 2025 Winter
   date: 2026-01-06
   Presenter: { ID: "[2024.06] 서지명", name: Jimyeung Seo (서지명) }
-  tag: { area: { Graph Int., Graph-Centric AI }, topic: { Explainability, Agent-based GNNs } }
   slide: /pdf/seminar/[260106][서지명] Explainability in Graph Neural Networks.pdf
 
 - title: <br>From Pointer Network to GFlowNet</br> \\for Combinatorial Optimization
@@ -132,7 +120,6 @@
   season: 2025 Winter
   date: 2025-12-23
   Presenter: { ID: "[2024.03] 오병국", name: Byungkook Oh (오병국) }
-  tag: { area: { Graph Int., Graph-Centric AI }, topic: { Combinatorial Optimization } }
   slide: /pdf/seminar/[251223][오병국] From Pointer Network to GFlowNet for Combinatorial Optimization.pdf
 
 
@@ -144,7 +131,6 @@
   season: 2025 Summer
   date: 2025-07-31
   Presenter: { ID: "[2025.04] 구본유", name: Bonyou Koo (구본유) }
-  tag: { area: { Graph Int., Anomaly Detection }, topic: { Autoencoder } }
   slide: /pdf/seminar/[250731][구본유] Recent Advances in Graph Anomaly Detection.pdf
 
 - title: LLM-based Recommendation \\- From Basics to Beyond
@@ -152,7 +138,6 @@
   season: 2025 Summer
   date: 2025-07-24
   Presenter: { ID: "[2025.01] 구해윤", name: Hae-Yoon Koo (구해윤) }
-  tag: { area: { Language Int., Recommender Systems }, topic: { LLM-based Recommendation } }
   slide: /pdf/seminar/[250724][구해윤] LLM-based Recommendation - From Basics to Beyond.pdf
 
 - title: GraphRAG for KGQA \\- Trends in Advanced Retrieval Methods
@@ -160,7 +145,6 @@
   season: 2025 Summer
   date: 2025-07-17
   Presenter: { ID: "[2024.11] 이동천", name: Dongcheon Lee (이동천) }
-  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Question Answering } }
   slide: /pdf/seminar/[250717][이동천] GraphRAG for KGQA - Trends in Advanced Retrieval Methods.pdf
 
 - title: Trends in Joint Information Extraction
@@ -168,7 +152,6 @@
   season: 2025 Summer
   date: 2025-07-10
   Presenter: { ID: "[2024.07] 백혜윤", name: Hye-Yoon Baek (백혜윤) }
-  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Joint Information Extraction } }
   slide: /pdf/seminar/[250710][백혜윤] Trends in Joint Information Extraction.pdf
 
 - title: Instruction Tuning for LLMs with Graphs
@@ -176,5 +159,4 @@
   season: 2025 Summer
   date: 2025-07-03
   Presenter: { ID: "[2024.06] 서지명", name: Jimyeung Seo (서지명) }
-  tag: { area: { Graph-Language Int., Language-Centric AI }, topic: { Instruction Tuning } }
   slide: /pdf/seminar/[250703][서지명] Instruction Tuning for LLMs with Graphs.pdf
