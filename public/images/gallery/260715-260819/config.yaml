@@ -1,0 +1,61 @@
+date: "2026-07-15 ~ 2026-08-19"
+title: "2026 Summer Seminar"
+description: |
+  2026년 7월 15일부터 8월 19일까지 6주간 매주 수요일마다 연구실 세미나를 진행하였습니다.
+  석사 및 박사과정 연구원과 학부연구생이 함께 참여하여 다음과 같은 주제로 발표를 진행했습니다.
+
+  무더운 여름 내내 한 주도 빠짐없이 자리를 채워준 모든 구성원들이 자랑스럽습니다.
+  학부연구생과 멘토링 프로젝트에 참여한 학부생들까지 매 세미나에 함께해 주었고, 발표자들은 어려운 최신 연구 주제를 모두가 이해할 수 있도록 잘 정리해 전달해 주었습니다.
+  준비하느라 애쓴 모든 발표자 여러분, 정말 수고 많으셨고 고맙습니다.
+
+  [7월 15일]
+  - 이동천 석사과정: "Time-Aware Logical Pattern Mining for Temporal Knowledge Graph Reasoning"
+    시간에 따라 반복·변화하는 논리 패턴을 마이닝하여 time-aware reasoning을 수행하는 방법
+
+  [7월 22일]
+  - 김세영 석사과정: "Leveraging LLM-derived Knowledge Priors for Temporal Knowledge Graph Forecasting"
+    LLM이 보유한 배경지식·세계지식을 temporal KG forecasting의 보조 prior로 활용
+
+  [7월 29일]
+  - 지상준 석사과정: "Hyper-relational Knowledge Graphs and Beyond: From Representation Learning to Retrieval-Augmented Generation"
+    relation-entity pair 단위로 전역 구조와 fact 내부 의미를 함께 학습하는 HKG 표현학습(KDD'26) 및 hypergraph 기반 RAG 동향
+  - 백혜윤 석사과정: "Neuro-Symbolic Reasoning with LLMs for Logic-Constrained Language Generation"
+    LLM의 언어생성에 논리 규칙, symbolic constraint, reasoning consistency를 결합
+  - 최진호 석사과정: "Graph-Guided Agentic RAG for Adaptive Evidence Exploration, Selection, and Refinement"
+    hypergraph 기반 evidence space를 활용해 agent가 evidence를 탐색·선택·보정하고 검색공간을 최적화
+
+  [8월 5일]
+  - 구본유 박사과정: "Graph Foundation Models for Generalizable Anomaly Detection Across Diverse Graph Domains"
+    특정 그래프에 국한되지 않고 다양한 도메인 그래프에 전이 가능한 이상탐지
+  - 이동현 석사과정: "Structural Signal-based Inductive Reasoning in Knowledge Graph Foundation Models"
+    노드 ID에 의존하지 않는 경로·관계 구조 신호를 KG Foundation Model의 추론 신호로 활용
+
+  [8월 12일]
+  - 서지명 석사과정: "Cross-Architecture Distillation of LLM Knowledge for Non-LLM Model Enhancement"
+    LLM의 지식과 reasoning signal을 비-LLM 구조로 증류하여 task-specific 성능과 일반화 능력 향상
+  - 구해윤 석사과정: "LLM-based Recommendation Agents for Personalized Conversational Recommender Systems"
+    LLM 기반 에이전트가 대화 맥락과 사용자 피드백을 바탕으로 선호를 추론·갱신하며 개인화된 추천을 수행
+
+  [8월 19일]
+  - 박상현 학부연구생: "Graph Foundation Models as Retrievers"
+  - 박규민 학부연구생: "Skeleton-Driven Text-to-SQL"
+  - 김예은 학부연구생: "Skeleton-based ExampleQuery for Domain-Specific Text-to-SQL"
+  - 손원희 학부연구생: "Lightweight Graph-Based Retrieval-Augmented Generation with LightRAG and MiniRAG"
+  - 권준희 학부연구생: "MITRE ATT&CK-Aligned Knowledge Graph Construction with CTIKG"
+
+  사진#2: 이동천 석사과정
+  사진#4: 김세영 석사과정
+  사진#6: 지상준 석사과정
+  사진#7: 최진호 석사과정
+  사진#8: 백혜윤 석사과정
+  사진#10: 구본유 박사과정
+  사진#11: 이동현 석사과정
+  사진#13: 서지명 석사과정
+  사진#14: 구해윤 석사과정
+  사진#16: 박상현 학부연구생
+  사진#17: 박규민 학부연구생
+  사진#18: 김예은 학부연구생
+  사진#19: 손원희 학부연구생
+  사진#20: 권준희 학부연구생
+  사진#1, 3, 5, 9, 12, 15: 참석자 전체
+  \n
