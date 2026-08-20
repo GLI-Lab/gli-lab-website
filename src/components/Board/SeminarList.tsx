@@ -14,7 +14,6 @@ export interface SeminarListProps {
   className?: string;
   layout?: SeminarListLayout;
   count?: number | null;
-  showTags?: boolean;
   seminarItems?: SeminarData[];
   profiles?: { id: string; yamlId?: string; name_ko?: string; name_en?: string }[];
   alumniProfiles?: { id: string; yamlId?: string; name_ko?: string; name_en?: string }[];
@@ -47,41 +46,6 @@ function getSixMonthsAgoDateKey(): string {
   const month = (sixMonthsAgo.getMonth() + 1).toString().padStart(2, '0');
   const day = sixMonthsAgo.getDate().toString().padStart(2, '0');
   return `${year}-${month}-${day}`;
-}
-
-/** tag.topic 객체에서 라벨 배열 추출 (YAML { topic: { A, B } } → ['A','B']) */
-function getTopicTags(item: SeminarData): string[] {
-  const topic = item.tag?.topic;
-  if (!topic || typeof topic !== 'object') return [];
-  return Object.keys(topic).filter(Boolean);
-}
-
-/** tag.area 객체에서 라벨 배열 추출 */
-function getAreaTags(item: SeminarData): string[] {
-  const area = item.tag?.area;
-  if (!area || typeof area !== 'object') return [];
-  return Object.keys(area).filter(Boolean);
-}
-
-function renderSeminarTags(item: SeminarData, className: string): ReactNode | null {
-  const areaTags = getAreaTags(item);
-  const topicTags = getTopicTags(item);
-  if (areaTags.length === 0 && topicTags.length === 0) return null;
-
-  return (
-    <div className={className}>
-      {areaTags.map((label) => (
-        <span key={`area-${label}`} className="inline-block text-gray-600 bg-gray-100 px-2 py-0.5 md:py-0.25 rounded-md shrink-0 text-[12.5px] md:text-[14.5px]">
-          {label}
-        </span>
-      ))}
-      {topicTags.map((label) => (
-        <span key={`topic-${label}`} className="inline-block text-brand-primary bg-brand-primary/10 px-2 py-0.5 md:py-0.25 rounded-md shrink-0 text-[12.5px] md:text-[14.5px]">
-          {label}
-        </span>
-      ))}
-    </div>
-  );
 }
 
 /** 오늘 이후 날짜인지 (YYYY-MM-DD 문자열 비교) */
@@ -136,7 +100,6 @@ export function SeminarList({
   className = '',
   layout = 'list',
   count = null,
-  showTags = false,
   seminarItems = [],
   profiles = [],
   alumniProfiles = [],
@@ -244,13 +207,7 @@ export function SeminarList({
                         {renderSeminarDescription(item.description.trim())}
                       </p>
                     )}
-                    {showTags && listMd && renderSeminarTags(item, 'flex flex-wrap justify-center gap-x-2 gap-y-1 mt-1 md:mt-2 md:justify-start')}
                   </div>
-                  {!listMd && showTags && (
-                    <div className="flex-1 min-h-0 flex flex-col items-center justify-center">
-                      {renderSeminarTags(item, 'flex flex-wrap justify-center gap-x-2 gap-y-1')}
-                    </div>
-                  )}
                   {(() => {
                     const slideUrl = item.slide && item.slideExists !== false ? item.slide : null;
                     const hasSlide = Boolean(slideUrl);
