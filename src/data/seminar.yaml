@@ -1,7 +1,7 @@
 # YAML에서 tab은 금지. 반드시 space 2개 사용
 
 ###############################################
-# 2026 Summar
+# 2026 Summer
 ###############################################
 - title: <br>Cross-Architecture Distillation</br> \\of LLM Knowledge for Non-LLM Model Enhancement
   description: LLM의 지식과 reasoning signal을 비-LLM 구조로 증류해 task-specific 성능과 일반화 능력 향상

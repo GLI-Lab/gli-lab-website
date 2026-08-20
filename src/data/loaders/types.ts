@@ -165,18 +165,12 @@ export interface StudyData {
 // Seminar Types
 // =====================================================
 
-export interface SeminarTag {
-  area?: Record<string, unknown>;
-  topic?: Record<string, unknown>;
-}
-
 export interface SeminarData {
   title: string;
   date: string;
   description?: string | null;
   season?: string | null;
   Presenter?: { ID: string; name: string } | null;
-  tag?: SeminarTag | null;
   slide?: string | null;
   slideExists?: boolean;
 }

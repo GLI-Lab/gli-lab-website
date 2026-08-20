@@ -35,7 +35,7 @@ export default async function Page() {
                     </p>
                 </div>
 
-                <SeminarList layout="card" showTags={false} seminarItems={seminars} profiles={profiles} alumniProfiles={alumniProfiles} />
+                <SeminarList layout="card" seminarItems={seminars} profiles={profiles} alumniProfiles={alumniProfiles} />
             </div>
 
             <div className="h-40"></div>
