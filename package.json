@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/optimize-images.js && node scripts/generate-og-images.js",
+    "prebuild": "node scripts/generate-public-file-index.js && node scripts/optimize-images.js && node scripts/generate-og-images.js",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

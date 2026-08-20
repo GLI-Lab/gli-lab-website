@@ -1,6 +1,7 @@
 # YAML에서 tab은 금지. 반드시 space 2개 사용
 # slide: /pdf/seminar/[YYMMDD][이름] 제목.pdf  (public/pdf/seminar)
-#        YAML 한글은 NFC로 작성. macOS에서 올린 NFD 파일명도 로더가 매칭함
+#        YAML 한글은 NFC. macOS NFD 파일명은 빌드 시 파일명 인덱스로 매칭함
+
 
 
 ###############################################
