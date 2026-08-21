@@ -7,6 +7,14 @@
 ########################################################################################
 # 2026
 ########################################################################################
+- date: "2026-08-21"
+  type: Publication
+  selected: true
+  content: |
+    One findings paper has been accepted at <b>Findings of EMNLP 2026</b> ✏️
+    - <paper>Internalizing Negation-Gated Logical Rules into LLMs for Document-Level Relation Extraction</> <note>(GLI Lab-led)</>
+    Hye-Yoon Baek, Sangjun Ji, Jimyeung Seo, Hae-Yoon Koo, Xiongnan Jin, Byungkook Oh
+
 - date: "2026-08-13"
   type: Publication
   content: |
