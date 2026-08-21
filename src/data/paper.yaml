@@ -184,7 +184,7 @@
   venue: { name: "ACM International Conference on Information and Knowledge Management", acronym: "CIKM" }
   links: 
     Link: null
-    Code: null
+    # Code: https://github.com/ChoiPi2/CaseFlow
   notes: {"normal": "Full Research Paper (Acceptance Rate: 27.0% = 597/2,216)", "important": ""}  # refer mail
   authors:
     - { ID: "[2024.12] 최진호", name: "Jinho Choi", position: first }
@@ -324,6 +324,7 @@
   links: 
     Link: https://dl.acm.org/doi/10.1145/3770855.3818000
     Code: https://github.com/Approxy02/GLoRE
+    Poster: /pdf/poster/GLoRE.pdf
     News: https://www.konkuk.ac.kr/bbs/konkuk/259/1175786/artclView.do
   notes: {"normal": "Research Track (Acceptance Rate: 18.5%)", "important": ""}
   authors:
@@ -395,7 +396,7 @@
   links:
     Link: https://doi.org/10.1145/3746252.3761243
     Code: https://github.com/hyeyoon100/RePooL
-    Slide: /pdf/research/RePooL.pdf
+    Slide: /pdf/slide/RePooL.pdf
   notes: {"normal": "Full Research Paper (Acceptance Rate: 27.2% = 443/1,627)", "important": ""}  # refer: mail
   authors:
     - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: first }
