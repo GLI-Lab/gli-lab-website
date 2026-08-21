@@ -3,8 +3,8 @@
 # status: "Accepted", "In Progress", "Under Review"
 
 # venue: { name: "To Appear in The ACM Web Conference", acronym: "WWW" }
-# 메인: 2025.emnlp-main.xxx → Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing
-# Findings: 2025.findings-emnlp.xxx → Findings of the Association for Computational Linguistics: EMNLP 2025
+# Conference on Empirical Methods in Natural Language Processing
+# Findings of the Association for Computational Linguistics: EMNLP 2025
 
 # https://gli.konkuk.ac.kr/publications/papers/#diversifying-differentiable-graph-retrieval-with-topic-adaptive-multi-intent-learning
 # https://gli.konkuk.ac.kr/publications/papers/#image-guided-debiasing-distillation-with-preference-alignment-across-multi-news-histories
