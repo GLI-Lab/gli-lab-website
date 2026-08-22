@@ -1,9 +1,13 @@
 date: "2025-11-10 ~ 2025-11-14"
-title: "CIKM'25 학회 참석 및 발표 (한국, 서울)"
+title: "CIKM'25 최우수학술대회 발표 (한국, 서울)"
 description: |
-  우리 연구실은 CIKM 2025(ACM Conference on Information and Knowledge Management)에 참석하여 
+  우리 연구실은 CIKM 2025(ACM Conference on Information and Knowledge Management)에 참석하여
   최신 정보검색·데이터마이닝·지식관리 관련 연구 동향을 파악하고, full research paper 연구 결과 1편을 발표하였습니다.
-  
+  CIKM은 정보검색 및 지식관리 분야 최우수 국제학술대회로, 2025년에는 서울에서 개최되었습니다.
+
   - "Relation-Faceted Graph Pooling with LLM Guidance for Dynamic Span-Aware Information Extraction"
-    저자: Hye-Yoon Baek, Jinho Choi, Jimyeung Seo, Dongcheon Lee, Xiongnan Jin, Byungkook Oh
+    주제: 관계별 facet 단위로 그래프를 pooling하고 LLM의 guidance를 활용하여 동적 span 인식 기반 정보추출 성능을 높이는 방법을 제안
+    1저자: Hye-Yoon Baek
+    교신저자: Byungkook Oh
+    공동저자: Jinho Choi, Jimyeung Seo, Dongcheon Lee, Xiongnan Jin
   \n

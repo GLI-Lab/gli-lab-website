@@ -1,0 +1,15 @@
+date: "2026-08-09 ~ 2026-08-13"
+title: "KDD'26 최우수학술대회 발표 (한국, 제주도)"
+description: |
+  우리 연구실은 KDD 2026(ACM SIGKDD Conference on Knowledge Discovery and Data Mining)에 참석하여
+  최신 정보검색·데이터마이닝·지식관리 관련 연구 동향을 파악하고, research paper 연구 결과 1편을 발표하였습니다.
+  KDD는 데이터마이닝 분야 최우수 국제학술대회로, 2026년에는 제주도에서 개최되었습니다.
+  
+  - "Disentangled Global-Local Representations via Relation-Entity Pair Encoding for Hyper-Relational KGs"
+    주제: relation-entity pair 단위로 전역 구조와 fact 내부 의미를 함께 학습하여 hyper-relational KG의 표현력을 높이는 방법을 제안
+    1저자: Sangjun Ji
+    교신저자: Byungkook Oh
+    공동저자: Sangjune Kim, Youngho Lee, Bonyou Koo, Xiongnan Jin
+    
+    http://gli.konkuk.ac.kr/publications/papers/#disentangled-global-local-representations-via-relation-entity-pair-encoding-for-hyper-relational-kgs
+  \n
