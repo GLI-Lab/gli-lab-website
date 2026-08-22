@@ -9,6 +9,7 @@ import { type ProfileData, type PaperData, type StudyData, type PatentData, type
 import { getPapersForProfile, getPatentsForProfile, getSeminarsForProfile } from '@/data/loaders/utils';
 import { buildProfilePath, DEFAULT_MEMBER_PROFILE_YAML_ID, findProfileById, getProfileSectionBasePath, getProfileSlugFromPathname, PROFILE_MOBILE_BREAKPOINT, type ProfileSection } from '@/lib/profileSlug';
 import { preloadProfileModalPhoto } from '@/lib/preloadImages';
+import { useDragToDismiss } from '@/hooks/useDragToDismiss';
 
 // SelectedItem / selectedCard  : 선택항목 A. 클릭하자마자 B로 바뀜
 // pendingItem / pendingProfile : 클릭항목 B. 이동이 끝나면 null로 바뀜
@@ -149,6 +150,9 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
     }, [searchParams]);
     
     const mobilePopupRef = useRef<HTMLDivElement>(null);
+    const detailBackdropRef = useRef<HTMLDivElement>(null);
+    const detailSheetRef = useRef<HTMLDivElement>(null);
+    const backdropMouseDownRef = useRef(false);
     const profileRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
     const lastScrolledIdRef = useRef<string | null>(null);
 
@@ -211,6 +215,15 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
         window.history.replaceState(null, '', nextUrl);
         router.replace(nextUrl, { scroll: false });
     }, [router, pathname, searchParams, cancelPendingOpen]);
+
+    // 아래로 스와이프하면 시트가 따라오고, 이동 거리 또는 튕긴 속도가 충분하면 닫힘
+    const { requestClose: requestDetailClose } = useDragToDismiss({
+        sheetRef: detailSheetRef,
+        backdropRef: detailBackdropRef,
+        contentRef: mobilePopupRef,
+        onClose: closeDetailModal,
+        enabled: isDetailOpen && selectedCard != null && isCardView,
+    });
 
     const isProfileSelected = useCallback((profile: ProfileData) => {
         if (!selectedCard || profile.id !== selectedCard.id) return false;
@@ -417,7 +430,7 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
 
             const handleEsc = (event: KeyboardEvent) => {
                 if (event.key === 'Escape') {
-                    closeDetailModal();
+                    requestDetailClose();
                 }
             };
             document.addEventListener('keydown', handleEsc);
@@ -429,7 +442,7 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
         } else {
             document.body.style.overflow = 'auto';
         }
-    }, [isDetailOpen, selectedCard, isCardView, closeDetailModal]);
+    }, [isDetailOpen, selectedCard, isCardView, requestDetailClose]);
 
     // 컴포넌트 마운트 시 스크롤 상태 확인 및 윈도우 리사이즈 감지
     useEffect(() => {
@@ -448,11 +461,22 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
         };
     }, [selectedCard, checkBottom]);
 
-    // 배경 클릭으로 모달 닫기
-    const handleBackdropClick = (e: React.MouseEvent) => {
+    // 배경 클릭으로 모달 닫기 (드래그가 모달 밖에서 끝나도 닫히지 않도록 mousedown/up 쌍으로 처리)
+    const handleBackdropMouseDown = (e: React.MouseEvent) => {
         if (e.target === e.currentTarget) {
-            closeDetailModal();
+            backdropMouseDownRef.current = true;
         }
+    };
+
+    const handleBackdropMouseUp = (e: React.MouseEvent) => {
+        if (e.target === e.currentTarget && backdropMouseDownRef.current) {
+            requestDetailClose();
+        }
+        backdropMouseDownRef.current = false;
+    };
+
+    const clearBackdropMouseDown = () => {
+        backdropMouseDownRef.current = false;
     };
 
     const viewToggleButtons = (
@@ -558,13 +582,21 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
             {/* Detailed Profile (popup) - ?detail=1 일 때만 모바일에서 팝업 표시 */}
             {isDetailOpen && selectedCard && isCardView && (
                 <div
-                    onClick={handleBackdropClick}
-                    className="fixed inset-0 z-modal bg-black bg-opacity-75 flex items-center justify-center px-2 py-2 md:p-4 1.5md:hidden"
+                    ref={detailBackdropRef}
+                    onMouseDown={handleBackdropMouseDown}
+                    onMouseUp={handleBackdropMouseUp}
+                    style={{ backgroundColor: 'rgba(0,0,0,0.75)' }}
+                    className="fixed inset-0 z-modal flex items-center justify-center px-2 py-2 md:p-4 1.5md:hidden"
                 >
-                    <div className="w-full max-w-5xl max-h-[95vh] bg-white rounded-lg overflow-hidden relative">
+                    <div
+                        ref={detailSheetRef}
+                        onMouseDown={clearBackdropMouseDown}
+                        onMouseUp={clearBackdropMouseDown}
+                        className="w-full max-w-5xl max-h-[95vh] bg-white rounded-lg overflow-hidden relative will-change-transform"
+                    >
                         {/* 닫기버튼 */}
                         <button
-                            onClick={closeDetailModal}
+                            onClick={requestDetailClose}
                             className="absolute top-2 right-2 md:top-3 md:right-3 z-modal-controls"
                         >
                             <svg
