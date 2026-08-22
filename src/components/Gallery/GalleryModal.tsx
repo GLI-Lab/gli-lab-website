@@ -7,6 +7,7 @@ import { GalleryItem } from './types';
 import { Separator } from '../ui/separator';
 import { ImageCarousel } from './ImageCarousel';
 import { isNewItem, formatDateForDisplay } from './helpers';
+import { useDragToDismiss } from '@/hooks/useDragToDismiss';
 
 interface GalleryModalProps {
   item: GalleryItem;
@@ -30,6 +31,9 @@ export function GalleryModal({
   const [imageDisplayMode, setImageDisplayMode] = useState<'contain' | 'cover'>('cover');
   const [isZoomEnabled, setIsZoomEnabled] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
+  const backdropRef = useRef<HTMLDivElement>(null);
+  const sheetRef = useRef<HTMLDivElement>(null);
+  const handleRef = useRef<HTMLDivElement>(null);
   const zoomPointerOriginRef = useRef<{ x: number; y: number } | null>(null);
   const scrollTopAtImagePointerDownRef = useRef(0);
   const carouselInteractedRef = useRef(false);
@@ -144,16 +148,43 @@ export function GalleryModal({
     };
   }, []);
 
-  // ESC 키로 모달 닫기
+  // 아래로 스와이프하면 시트가 따라오고, 이동 거리 또는 튕긴 속도가 충분하면 닫힘
+  const { requestClose: closeModal } = useDragToDismiss({
+    sheetRef,
+    backdropRef,
+    contentRef,
+    handleRef,
+    onClose,
+    onDragStart: markCarouselInteract,
+  });
+
+  // 키보드 조작: ESC로 닫기, 방향키로 이미지 탐색
   useEffect(() => {
-    const handleEsc = (event: KeyboardEvent) => {
+    const total = item.images.length;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.defaultPrevented || event.metaKey || event.ctrlKey || event.altKey) return;
+
       if (event.key === 'Escape') {
-        onClose();
+        closeModal();
+        return;
       }
+
+      if (total < 2) return;
+
+      let next: number | null = null;
+      if (event.key === 'ArrowRight') next = 1;
+      else if (event.key === 'ArrowLeft') next = -1;
+      if (next === null) return;
+
+      event.preventDefault();
+      const step = next;
+      setCurrentImageIndex((prev) => (prev + step + total) % total);
     };
-    document.addEventListener('keydown', handleEsc);
-    return () => document.removeEventListener('keydown', handleEsc);
-  }, [onClose]);
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [closeModal, item.images.length]);
 
   // 배경 클릭으로 모달 닫기 (드래그가 모달 밖에서 끝나도 닫히지 않도록 mousedown/up 쌍으로 처리)
   const handleBackdropMouseDown = (e: React.MouseEvent) => {
@@ -164,7 +195,7 @@ export function GalleryModal({
 
   const handleBackdropMouseUp = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget && backdropMouseDownRef.current) {
-      onClose();
+      closeModal();
     }
     backdropMouseDownRef.current = false;
   };
@@ -175,19 +206,32 @@ export function GalleryModal({
 
   const modal = (
     <div
-      className="fixed inset-0 z-modal bg-black bg-opacity-75 flex items-center justify-center px-2 py-2 md:p-4"
+      ref={backdropRef}
+      className="fixed inset-0 z-modal flex items-center justify-center px-2 py-2 md:p-4"
+      style={{ backgroundColor: 'rgba(0,0,0,0.75)' }}
       onMouseDown={handleBackdropMouseDown}
       onMouseUp={handleBackdropMouseUp}
     >
       <div
-        className="max-w-5xl w-full bg-white rounded-lg overflow-hidden relative"
+        ref={sheetRef}
+        className="max-w-5xl w-full bg-white rounded-lg overflow-hidden relative will-change-transform"
         onMouseDown={clearBackdropMouseDown}
         onMouseUp={clearBackdropMouseDown}
       >
-        {/* 닫기버튼 */}
+        <div className="absolute top-0 inset-x-0 z-modal-controls h-9 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent" />
+          <div
+            ref={handleRef}
+            className="absolute inset-0 flex justify-center items-center cursor-grab active:cursor-grabbing touch-none select-none pointer-events-auto"
+            aria-hidden
+          >
+            <div className="w-10 h-1 rounded-full bg-white/80 shadow-sm" />
+          </div>
           <button
-            onClick={onClose}
-            className="absolute top-2 right-2 md:top-3 md:right-3 z-modal-controls"
+            onClick={closeModal}
+            onPointerDown={(e) => e.stopPropagation()}
+            className="absolute right-2 md:right-3 top-1/2 -translate-y-1/2 text-white drop-shadow pointer-events-auto"
+            aria-label="Close"
           >
             <svg
               className="w-8 h-8"
@@ -204,6 +248,7 @@ export function GalleryModal({
               />
             </svg>
           </button>
+        </div>
 
         {/* 콘텐츠 (주소창 고려해서 -60px) */}
         <div 
@@ -244,7 +289,7 @@ export function GalleryModal({
                   e.stopPropagation();
                   setImageDisplayMode(prev => prev === 'contain' ? 'cover' : 'contain');
                 }}
-                className="absolute top-2 left-2 bg-black bg-opacity-50 hover:bg-opacity-70 rounded-full p-1.5 text-white transition-all"
+                className="absolute top-10 left-2 bg-black bg-opacity-50 hover:bg-opacity-70 rounded-full p-1.5 text-white transition-all"
                 title={imageDisplayMode === 'contain' ? '이미지 채우기' : '이미지 맞추기'}
               >
                 <svg
