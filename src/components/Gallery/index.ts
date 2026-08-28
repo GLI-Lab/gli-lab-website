@@ -18,6 +18,9 @@ export { isNewItem } from './helpers';
 export {
   GALLERY_BASE_PATH,
   dateToGallerySlug,
+  galleryFolderSequence,
+  toGallerySlug,
+  uniquifyGallerySlugs,
   findGalleryItemBySlug,
   buildGalleryPath,
   buildGalleryAsPath,
