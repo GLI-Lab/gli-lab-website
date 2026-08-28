@@ -3,7 +3,7 @@ import path from 'path';
 import yaml from 'js-yaml';
 import { GalleryItem } from './types';
 import { getSortableDate } from './helpers';
-import { dateToGallerySlug } from './gallerySlug';
+import { toGallerySlug, uniquifyGallerySlugs } from './gallerySlug';
 
 // Centralized gallery configuration (fallback when config.json doesn't exist)
 const galleryConfig: Record<string, {
@@ -60,7 +60,7 @@ function buildGalleryItem(
 
   return {
     id: folder,
-    slug: dateToGallerySlug(date) || folder,
+    slug: toGallerySlug(date, folder),
     title: (typeof config.title === 'string' ? config.title : undefined) || folder,
     description: typeof config.description === 'string' ? config.description : undefined,
     images: imagePaths,
@@ -99,7 +99,7 @@ export async function getGalleryItems(options?: GetGalleryItemsOptions): Promise
         items.push(buildGalleryItem(folder, config, imageFiles));
       }
 
-      return items;
+      return uniquifyGallerySlugs(items);
     }
 
     const items: GalleryItem[] = [];
@@ -113,11 +113,13 @@ export async function getGalleryItems(options?: GetGalleryItemsOptions): Promise
       items.push(buildGalleryItem(folder, config, imageFiles));
     }
 
-    return items.sort((a, b) => {
+    items.sort((a, b) => {
       const dateA = getSortableDate(a.date);
       const dateB = getSortableDate(b.date);
       return dateB.getTime() - dateA.getTime();
     });
+
+    return uniquifyGallerySlugs(items);
   } catch (error) {
     console.error('Failed to load gallery items:', error);
     return [];
