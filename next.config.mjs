@@ -69,20 +69,34 @@ const nextConfig = {
                 destination: 'https://bkoh509.github.io/:path*',
             },
             // --------------------------------------------------------
+            // ===== ML 2026 Spring =====
             // 1. 루트 경로 (Next.js가 슬래시 유무 상관없이 모두 매칭하여, 끝에 슬래시가 붙은 목적지로 보냄)
             {
-                source: '/board/lectures/machine-learning',
-                destination: 'https://gli-lab.github.io/machine-learning-course/',
+                source: '/board/lectures/ml-2026-spring',
+                destination: 'https://gli-lab.github.io/ml-2026-spring/',
             },
             // 2. 확장자가 있는 파일 → 그대로 전달 (슬래시를 포함한 전체 경로 매칭)
             {
-                source: '/board/lectures/machine-learning/:path(.*\\..*)',
-                destination: 'https://gli-lab.github.io/machine-learning-course/:path',
+                source: '/board/lectures/ml-2026-spring/:path(.*\\..*)',
+                destination: 'https://gli-lab.github.io/ml-2026-spring/:path',
             },
             // 3. 확장자 없는 디렉토리 → index.html 강제 주입 (301 리다이렉트 방지)
             {
-                source: '/board/lectures/machine-learning/:path*',
-                destination: 'https://gli-lab.github.io/machine-learning-course/:path*/index.html',
+                source: '/board/lectures/ml-2026-spring/:path*',
+                destination: 'https://gli-lab.github.io/ml-2026-spring/:path*/index.html',
+            },
+            // ===== DM 2026 Fall =====
+            {
+                source: '/board/lectures/dm-2026-fall',
+                destination: 'https://gli-lab.github.io/dm-2026-fall/',
+            },
+            {
+                source: '/board/lectures/dm-2026-fall/:path(.*\\..*)',
+                destination: 'https://gli-lab.github.io/dm-2026-fall/:path',
+            },
+            {
+                source: '/board/lectures/dm-2026-fall/:path*',
+                destination: 'https://gli-lab.github.io/dm-2026-fall/:path*/index.html',
             },
             // --------------------------------------------------------
             {
