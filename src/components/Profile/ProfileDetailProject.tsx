@@ -71,7 +71,7 @@ export function ProfileDetailProject({ projects = [], profileId }: ProfileDetail
                                                     <span>
                                                         {' '}
                                                         <span className="inline-block align-middle text-[13px] px-2 py-1/2 rounded-full bg-brand-primary/10 text-brand-primary font-medium">
-                                                            실무책임자{manager.until ? ' (이전)' : ''}
+                                                            실무책임자
                                                         </span>
                                                     </span>
                                                 )}

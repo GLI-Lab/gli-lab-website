@@ -7,7 +7,46 @@
 ###############################################
 # 출원 (filed)
 ###############################################
-- title:
+- title:  # 14
+    ko: "텍스트 풍부도 및 일관성에 기반한 아이템 식별자 생성 방법 및 장치"
+    en: "Method and Apparatus for Generating Item Identifier Based on Text Richness and Consistency"
+  scope: "domestic"
+  status:
+    filed: {date: 2026-09-16, number: "10-2026-0177146"}
+    registered: {date: null, number: null}
+  link: null
+  authors:
+    - { ID: "[2025.01] 구해윤", name: "구해윤" }
+    - { ID: "[2024.12] 최진호", name: "최진호" }
+    - { ID: "[2024.03] 오병국", name: "오병국" }
+
+- title:  # 13
+    ko: "인과적 기여도에 기초하여 지식그래프의 부분그래프를 검색하는 방법 및 장치"
+    en: "Method and apparatus for retrieving subgraph of knowledge graph based on causal contribution"
+  scope: "domestic"
+  status:
+    filed: {date: 2026-09-16, number: "10-2026-0177305"}
+    registered: {date: null, number: null}
+  link: null
+  authors:
+    - { ID: "[2024.12] 최진호", name: "최진호" }
+    - { ID: "[2024.07] 백혜윤", name: "백혜윤" }
+    - { ID: "[2024.03] 오병국", name: "오병국" }
+
+- title:  # 12
+    ko: "언어 모델을 이용한 문서 내 개체 쌍의 관계 결정 방법 및 장치"
+    en: "Method and Apparatus for Determining a Relation between Entity Pairs in a Document Using a Language Model"
+  scope: "domestic"
+  status:
+    filed: {date: 2026-09-16, number: "10-2026-0177145"}
+    registered: {date: null, number: null}
+  link: null
+  authors:
+    - { ID: "[2024.07] 백혜윤", name: "백혜윤" }
+    - { ID: "[2025.01] 구해윤", name: "구해윤" }
+    - { ID: "[2024.03] 오병국", name: "오병국" }
+
+- title:  # 11
     ko: "지식 그래프 기반 질의 응답 시스템의 최적화 방법 및 장치"
     en: "Method and Apparatus for Optimization of a Knowledge Graph-based Question Answering System"
   scope: "domestic"
@@ -19,7 +58,7 @@
     - { ID: "[2024.11] 이동천", name: "이동천" }
     - { ID: "[2024.03] 오병국", name: "오병국" }
 
-- title:
+- title:  # 10
     ko: "하이퍼관계형 지식 그래프 상의 하이퍼관계형 사실에 대한 링크 예측 방법 및 장치"
     en: "Method and Apparatus for Link Prediction of Hyper-Relational Facts on Hyper-Relational Knowledge Graphs"
   scope: "domestic"
@@ -31,7 +70,7 @@
     - { ID: "[2024.07] 지상준", name: "지상준" }
     - { ID: "[2024.03] 오병국", name: "오병국" }
 
-- title:
+- title:  # 9
     ko: "동적 스팬 인식 정보 추출 방법 및 장치"
     en: "Dynamic Span-Aware Information Extraction Method and Apparatus"
   scope: "domestic"
@@ -43,7 +82,7 @@
     - { ID: "[2024.07] 백혜윤", name: "백혜윤" }
     - { ID: "[2024.03] 오병국", name: "오병국" }
 
-- title:
+- title:  # 8
     ko: "멀티모달 데이터 증류 방법, 트리플 기반 뉴스 정제 및 추천 방법"
     en: "Multimodal Data Distillation Method, and Triple-based News Refinement and Recommendation Method"
   scope: "domestic"
@@ -54,6 +93,8 @@
   authors:
     - { ID: "[2024.06] 서지명", name: "서지명" }
     - { ID: "[2024.03] 오병국", name: "오병국" }
+
+##############################################################################################
 
 - title:
     ko: "전자 장치 및 전자 장치의 제어 방법"
