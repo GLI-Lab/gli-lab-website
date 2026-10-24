@@ -7,6 +7,30 @@
 ########################################################################################
 # 2026
 ########################################################################################
+- date: "2026-09-16"
+  type: Publication
+  content: |
+    Three patents have been filed 💡
+    - <patent>텍스트 풍부도 및 일관성에 기반한 아이템 식별자 생성 방법 및 장치</>
+    <profile=[2025.01] 구해윤>구해윤</>, <profile=[2024.12] 최진호>최진호</>, <profile=[2024.03] 오병국>오병국</>
+    - <patent>인과적 기여도에 기초하여 지식그래프의 부분그래프를 검색하는 방법 및 장치</>
+    <profile=[2024.12] 최진호>최진호</>, <profile=[2024.07] 백혜윤>백혜윤</>, <profile=[2024.03] 오병국>오병국</>
+    - <patent>언어 모델을 이용한 문서 내 개체 쌍의 관계 결정 방법 및 장치</>
+    <profile=[2024.07] 백혜윤>백혜윤</>, <profile=[2025.01] 구해윤>구해윤</>, <profile=[2024.03] 오병국>오병국</>
+
+- date: "2026-09-01"
+  type: Funding
+  content: |
+    <profile=[2025.01] 구해윤>Hae-Yoon Koo (구해윤)</> has been supported by 한국연구재단, as part of <b>석사과정생연구장려금지원 사업</b> 👏
+    - <project>멀티모달 Agentic RAG를 위한 해석 가능한 계층적 인덱싱</> (2026-09-01 ~ 2027-08-31, 연구책임자: <profile=[2025.01] 구해윤>구해윤 석사과정</>)
+
+- date: "2026-08-21"
+  type: Funding
+  selected: true
+  content: |
+    Our team has been supported by 한국연구재단 · 실감미디어혁신융합대학사업단, as part of <b>실감미디어 혁신융합대학 지원사업(교원연구)</b> under <b>첨단분야 혁신융합대학사업(실감미디어)</b> 👏
+    - <project>해석 가능한 계층적 인덱싱 기반 멀티모달 서브그래프 검색</> (2026-08-21 ~ 2026-12-21)
+
 - date: "2026-08-21"
   type: Publication
   selected: true
@@ -37,7 +61,7 @@
   selected: true
   content: |
     Our team has been supported by 정보통신기획평가원, as part of <b>AI최고급신진연구자지원</b>, in a consortium with Jeju National University (lead), joined by NC AI, AIVIS, and Metsakuur Company 👏
-    - <project>AI스타펠로우십지원(제주대학교, 학제연계형) — 조립형 AI 생애주기 원천기술 개발</>
+    - <project>AI스타펠로우십지원(제주대학교, 학제연계형) — 조립형 AI 생애주기 원천기술 개발</> (2026-07-01 ~ 2031-12-31)
 
 - date: "2026-07-30"
   type: Member
@@ -68,7 +92,7 @@
   selected: true
   content: |
     Our team has been supported by LG전자 생산기술원 👏
-    - <project>제조 도메인 지식그래프 기반 멀티턴 질의응답 기술 개발</>
+    - <project>제조 도메인 지식그래프 기반 멀티턴 질의응답 기술 개발</> (2026-05-01 ~ 2026-12-02)
     
 - date: "2026-05-01"
   type: Member
@@ -91,7 +115,7 @@
   selected: true
   content: |
     Our team has been supported by 중소벤처기업진흥공단 · 경남테크노파크, as part of <b>AI솔루션 개발·실증 지원(가치사슬형-제조설비) 사업</b> under <b>지역 주도형 AI 대전환 사업</b> 👏
-    - <project>우주항공 제조설비의 멀티모달 이상탐지와 실시간 생성형 AI 보고체계 기반의 AX전환 실증</>
+    - <project>우주항공 제조설비의 멀티모달 이상탐지와 실시간 생성형 AI 보고체계 기반의 AX전환 실증</> (2026-01-01 ~ 2026-11-30)
 
 - date: "2026-01-14"
   type: Publication
@@ -138,7 +162,7 @@
   selected: true
   content: |
     Our team has been supported by 국방과학연구소 · LIG넥스원, under <b>사이버 전장관리체계 핵심기술을 활용한 미래 지능형 함정 통합 사이버방호체계 기술 시범</b> 👏
-    - <project>그래프기반 위협추적 분석</>
+    - <project>그래프기반 위협추적 분석</> (2025-10-01 ~ 2027-05-31)
 
 - date: "2025-11-07"
   type: Publication
@@ -181,7 +205,7 @@
   selected: true
   content: |
     Our team has been supported by 국방과학연구소 · 한화시스템, under <b>위치기반 다자간 실시간 전장정보 공유 및 임무조정 기술</b> 👏
-    - <project>추천시스템 모델 설계 자문 및 사례연구</>
+    - <project>추천시스템 모델 설계 자문 및 사례연구</> (2025-09-01 ~ 2027-08-31)
 
 - date: "2025-08-27"
   type: Member
@@ -195,7 +219,7 @@
   type: Funding
   content: |
     Our team has been supported by 건국대학교, as part of <b>그룹연구인력양성 사업</b> 👏
-    - <project>실전 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구</>
+    - <project>실전 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구</> (2025-08-01 ~ 2026-07-31)
 
 - date: "2025-08-04"
   type: Publication
@@ -218,7 +242,7 @@
   selected: true
   content: |
     Our team has been supported by 한국연구재단 · 실감미디어혁신융합대학사업단, as part of <b>실감미디어 혁신융합대학 지원사업(교원연구)</b> under <b>첨단분야 혁신융합대학사업(실감미디어)</b> 👏
-    - <project>LLM 기반 추천을 위한 그래프 기반 컨텍스트 추출 에이전트</>
+    - <project>LLM 기반 추천을 위한 그래프 기반 컨텍스트 추출 에이전트</> (2025-05-01 ~ 2025-11-20)
 
 - date: "2025-05-16"
   type: General
@@ -292,7 +316,7 @@
   selected: true
   content: |
     Our team has been supported by 한국연구재단, as part of <b>중견연구(유형1) 사업</b> 👏
-    - <project>멀티모달 생성모델의 신뢰성 및 제어가능성 향상을 위한 그래프 구조 기반의 상호작용</>
+    - <project>멀티모달 생성모델의 신뢰성 및 제어가능성 향상을 위한 그래프 구조 기반의 상호작용</> (2024-09-01 ~ 2028-08-31)
 
 - date: "2024-07-01"
   type: Member
@@ -306,7 +330,7 @@
   type: Funding
   content: |
     Our team has been supported by 건국대학교, as part of <b>KU학술연구비(신임교원) 사업</b> 👏
-    - <project>논리적 패턴을 반영할 수 있는 지식그래프 표현학습</>
+    - <project>논리적 패턴을 반영할 수 있는 지식그래프 표현학습</> (2024-04-01 ~ 2025-03-31)
 
 - date: "2024-03-15"
   type: Member

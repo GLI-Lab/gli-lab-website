@@ -5,6 +5,7 @@
 # 공동연구자/공동연구원: Co-Investigator (Co-I)
 # (공동연구기관의) 연구책임자: Co-Principal Investigator (Co-PI)
 # 참여연구자/참여연구원: Participating Researcher
+# role에 "연구책임자(학생)"처럼 괄호를 붙이면 뱃지 디자인은 기본 역할과 같고, 표시 텍스트는 그대로다.
 
 # managers: 각 실무책임자에 since(시작)/until(끝)을 적음 (YYYY-MM)
 #   - until 없음  -> 현재 실무책임자 (since ~ Current, 과제 종료 시 종료월로 자동 표시)
@@ -21,6 +22,31 @@
 ########################################################################################
 # 2026
 ########################################################################################
+- title: 멀티모달 Agentic RAG를 위한 해석 가능한 계층적 인덱싱
+  type: 개인연구
+  role: 연구책임자(학생)
+  parent: { funder: null, program: null }
+  main: { funder: 한국연구재단, program: 석사과정생연구장려금지원 }
+  start_date: 2026-09
+  end_date: 2027-08
+  image: { url: /images/projects/nrf.png, width: 220px }
+  managers:
+    - { ID: "[2025.01] 구해윤", name: Hae-Yoon Koo (구해윤), since: 2026-09 }
+  participants: []
+
+- title: 해석 가능한 계층적 인덱싱 기반 멀티모달 서브그래프 검색
+  type: 개인연구
+  role: 연구책임자
+  parent: { funder: 한국연구재단, program: 첨단분야 혁신융합대학사업(실감미디어) }
+  main: { funder: 실감미디어혁신융합대학사업단, program: 실감미디어 혁신융합대학 지원사업(교원연구) }
+  start_date: 2026-08  # 2026-08-21
+  end_date: 2026-12  # 2026-12-21
+  image: { url: /images/projects/coss.png, width: 175px }
+  managers:
+    - { ID: "[2025.12] 최지현", name: Jihyun Choi (최지현), since: 2026-08, until: 2026-12 }
+    - { ID: "[2025.07] 사예원", name: Yewon Sa (사예원), since: 2026-08, until: 2026-12 }
+  participants: []
+
 - title: AI스타펠로우십지원(제주대학교, 학제연계형) — 조립형 AI 생애주기 원천기술 개발
   type: 집단연구
   role: 참여연구자
@@ -38,7 +64,7 @@
   parent: { funder: null, program: null }
   main: { funder: LG전자 생산기술원, program: null }
   start_date: 2026-05
-  end_date: 2026-12
+  end_date: 2026-12  # 2026-12-02
   image: { url: /images/projects/lg.png, width: 200px }
   managers:
     - { ID: "[2024.12] 최진호", name: Jinho Choi (최진호), since: 2026-05 }
@@ -111,7 +137,8 @@
   end_date: 2027-08
   image: { url: /images/projects/hanwha.png, width: 210px }
   managers:
-    - { ID: "[2024.06] 서지명", name: Jimyeung Seo (서지명), since: 2025-09 }
+    - { ID: "[2025.12] 홍다연", name: Dayeon Hong (홍다연), since: 2026-12 }
+    - { ID: "[2024.06] 서지명", name: Jimyeung Seo (서지명), since: 2025-09, until: 2026-11 }
   participants: []
 
 - title: 실전 공학 문제 해결을 위한 에이전틱 AI 핵심 기술 교육연구
@@ -130,12 +157,12 @@
   role: 연구책임자
   parent: { funder: 한국연구재단, program: 첨단분야 혁신융합대학사업(실감미디어) }
   main: { funder: 실감미디어혁신융합대학사업단, program: 실감미디어 혁신융합대학 지원사업(교원연구) }
-  start_date: 2025-05
-  end_date: 2025-11
+  start_date: 2025-05  # 2025-05-01
+  end_date: 2025-11  # 2025-11-20
   image: { url: /images/projects/coss.png, width: 175px }
   managers:
-    - { ID: "[2024.07] 정우석", name: Wooseok Jeong (정우석), since: 2025-05 }
-    - { ID: "[2024.10] 김영진", name: Young-Jin Kim (김영진), since: 2025-05 }
+    - { ID: "[2024.07] 정우석", name: Wooseok Jeong (정우석), since: 2025-05, until: 2025-11 }
+    - { ID: "[2024.10] 김영진", name: Young-Jin Kim (김영진), since: 2025-05, until: 2025-11 }
   participants: []
 
 ########################################################################################

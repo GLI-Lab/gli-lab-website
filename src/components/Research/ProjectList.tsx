@@ -7,6 +7,12 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import { ProjectData, ProjectMember } from "@/data/loaders/types";
 import { getProfileHref, titleToId } from "@/lib/utils";
 
+/** "연구책임자(학생)"처럼 괄호가 붙어도 기본 역할과 같은 뱃지를 쓴다 */
+function roleBadgeKey(role: string): string {
+  const match = role.match(/^(연구책임자|공동연구자|참여연구자)(?:\([^)]*\))?$/);
+  return match ? match[1] : role;
+}
+
 /** 참여 인원을 프로필 링크와 함께 렌더링 (board/study 페이지의 사람 이름 스타일 참고)
  *  - 현재 멤버(/people/members)와 과거 멤버(alumni, /people/alumni) 모두 링크 가능 */
 function renderMember(
@@ -178,8 +184,9 @@ function ProjectCard({
   const participantRoster = mergeParticipants(project.managers, project.participants);
   const hasParticipants = participantRoster.length > 0;
   const hasPeople = project.managers.length > 0 || hasParticipants;
+  const roleKey = roleBadgeKey(project.role);
   const hasRole =
-    project.role === "연구책임자" || project.role === "공동연구자" || project.role === "참여연구자";
+    roleKey === "연구책임자" || roleKey === "공동연구자" || roleKey === "참여연구자";
   const [isExpanded, setIsExpanded] = useState(false);
   const toggleExpanded = () => setIsExpanded((prev) => !prev);
 
@@ -246,7 +253,7 @@ function ProjectCard({
               <div className="flex">
                 <span
                   className={
-                    project.role === "연구책임자"
+                    roleKey === "연구책임자"
                       ? "inline-block bg-brand-primary/10 text-brand-primary text-[13.5px] md:text-[15.5px] px-2 py-0.5 md:py-0.25 rounded-md shrink-0"
                       : "inline-block bg-gray-100 text-gray-600 text-[13.5px] md:text-[15.5px] px-2 py-0.5 md:py-0.25 rounded-md shrink-0"
                   }
