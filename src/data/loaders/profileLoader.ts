@@ -18,16 +18,17 @@ async function loadProfilesYAML(isAlumni: boolean = false): Promise<ProfileYAML[
   }
 }
 
-// CV 파일명에서 버전 정보 추출 (예: "v251114" -> "2025-11-14")
+// CV 파일명에서 버전 정보 추출
+// 예: "[2024.06] 서지명 (251114).pdf" 또는 구형식 "(v251114)" → "2025-11-14"
 function extractCVVersion(filename: string): string | undefined {
-  const versionMatch = filename.match(/\(v(\d{6})\)/);
+  const versionMatch = filename.match(/\((?:v)?(\d{6})\)/);
   if (!versionMatch) return undefined;
-  
+
   const versionStr = versionMatch[1];
   const year = `20${versionStr.slice(0, 2)}`;
   const month = versionStr.slice(2, 4);
   const day = versionStr.slice(4, 6);
-  
+
   return `${year}-${month}-${day}`;
 }
 
