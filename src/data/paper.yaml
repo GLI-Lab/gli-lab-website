@@ -124,7 +124,7 @@
     - { name: "Donghyun Kim", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-- title: "Execution-Conditioned Reasoning and Hindsight-Guided Distillation for Temporal Knowledge Graph Question Answering"
+- title: "Execution-Grounded Hindsight Self-Distillation for Temporal Knowledge Graph Question Answering"
   filter: {"type": "", "scope": ""}
   status: "Under Review"
   year: 2026
