@@ -107,7 +107,7 @@
 # Ongoing Work (Under Review)
 ########################################################################################
 
-- title: "Learning to Use Semantics via a Mixture of Experts for Knowledge Graph Foundation Models"
+- title: "Query-Conditioned Semantic Rewiring for Knowledge Graph Foundation Models"
   filter: {"type": "", "scope": ""}
   status: "Under Review"
   year: 2026
