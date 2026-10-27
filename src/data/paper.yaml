@@ -119,7 +119,7 @@
   authors:
     - { ID: "[2025.07] 이동현", name: "Donghyun Lee", position: first }
     - { ID: "[2025.07] 박상현", name: "Sang-Hyun Park", position: co }
-    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: co }
+    - { ID: "[2024.11] 이동천", name: "Dongcheon Lee", position: co }
     - { ID: "[2025.07] 김세영", name: "Seyeong Kim", position: co }
     - { name: "Donghyun Kim", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
@@ -134,7 +134,7 @@
     Code: null
   notes: {"normal": "", "important": ""}
   authors:
-    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: first }
+    - { ID: "[2024.11] 이동천", name: "Dongcheon Lee", position: first }
     - { ID: "[2025.07] 김세영", name: "Seyeong Kim", position: co }
     - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: co }
     - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: co }
@@ -154,7 +154,7 @@
     - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: first }
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: co }
     - { ID: "[2025.01] 구해윤", name: "Hae-Yoon Koo", position: co }
-    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: co }
+    - { ID: "[2024.11] 이동천", name: "Dongcheon Lee", position: co }
     - { ID: "[2025.07] 이재진", name: "JaeJin Lee", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
@@ -172,7 +172,7 @@
     - { ID: "[2025.07] 이동현", name: "Donghyun Lee", position: co }
     - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: co }
     - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: co }
-    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: co }
+    - { ID: "[2024.11] 이동천", name: "Dongcheon Lee", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
 - title: "An Empirical Analysis of Stability and Sensitivity in Node-level Graph Anomaly Detection"
@@ -204,7 +204,7 @@
   authors:
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: first }
     - { ID: "[2025.12] 홍다연", name: "Dayeon Hong", position: co }
-    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: co }
+    - { ID: "[2024.11] 이동천", name: "Dongcheon Lee", position: co }
     - { ID: "[2025.04] 구본유", name: "Bonyou Koo", position: co }
     - { name: "Donghyun Kim", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
@@ -417,7 +417,7 @@
     News: https://www.konkuk.ac.kr/bbs/konkuk/259/1167092/artclView.do
   notes: {"normal": "Research Track (Acceptance Rate: 20.1% = 676/3,370)", "important": ""}  # refer: mail
   authors:
-    - { ID: "[2024.11] 이동천", name: "Dong-Cheon Lee", position: first }
+    - { ID: "[2024.11] 이동천", name: "Dongcheon Lee", position: first }
     - { ID: "[2024.07] 박지연", name: "Ji-Yeon Park", position: co }
     - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: co }
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: co }
