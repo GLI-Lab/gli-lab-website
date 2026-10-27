@@ -256,7 +256,7 @@
   links: 
     Link: null
     Code: https://github.com/ChoiPi2/CaseFlow
-  notes: {"normal": "Full Research Paper (Acceptance Rate: 27.0% = 597/2,216)", "important": ""}  # refer mail
+  notes: {"normal": "Full Research Paper (Acceptance Rate: 27.0% = 597/2,216; Oral: 15.2% = 336/2,216)", "important": "Oral Presentation"}  # refer mail
   authors:
     - { ID: "[2024.12] 최진호", name: "Jinho Choi", position: first }
     - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: co }
