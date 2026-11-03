@@ -131,7 +131,7 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
               className="w-full transition-colors hover:bg-brand-primary/10"
             >
             <div
-              className={`max-w-screen-xl mx-auto px-4 flex items-start gap-3 py-3${
+              className={`max-w-screen-xl mx-auto px-4 flex items-start gap-3 py-2${
                 index > 0 ? " border-t border-brand-primary/25" : ""
               }`}
             >
