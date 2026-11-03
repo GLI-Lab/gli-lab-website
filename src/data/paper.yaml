@@ -192,15 +192,20 @@
     - { name: "Sun-Young Im", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
+########################################################################################
+# Accepted
+########################################################################################
+
 - title: "Continuation-Conditioned Relational Routing for Early Fake News Detection"
   filter: {"type": "conference", "scope": "international"}
-  status: "Under Review"
-  year: 2026
-  venue: { name: "", acronym: "" }
+  status: "Accepted"
+  year: 2027
+  venue: { name: "ACM International Conference on Web Search and Data Mining", acronym: "WSDM" }
   links: 
-    Link: null
-    Code: null
-  notes: {"normal": "", "important": ""}
+    Link: 
+    Code: 
+    News: 
+  notes: {"normal": "Full Paper at Main Track (Acceptance Rate: Main 15.8% = 277/1,756, Findings 12.6% = 222/1,756)", "important": ""}
   authors:
     - { ID: "[2024.06] 서지명", name: "Jimyeung Seo", position: first }
     - { ID: "[2025.12] 홍다연", name: "Dayeon Hong", position: co }
@@ -209,10 +214,6 @@
     - { name: "Donghyun Kim", position: co }
     - { ID: "[2024.03] 오병국", name: "Byungkook Oh", position: co, isCorresponding: true }
 
-
-########################################################################################
-# Accepted
-########################################################################################
 - title: "Internalizing Negation-Gated Logical Rules into LLMs for Document-Level Relation Extraction"
   filter: {"type": "conference", "scope": "international"}
   status: "Accepted"
