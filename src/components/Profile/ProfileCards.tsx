@@ -573,7 +573,8 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
             {/* Detailed Profile (left side) - Card View에서만 표시 */}
             {panelCard && isCardView && (
                 <div className={`hidden 1.5md:block sticky self-start top-16 pt-4 min-w-0 1.5md:flex-1 1.5md:basis-0 ${cardColumns === 2 ? '1.5xl:flex-none 1.5xl:w-[350px]' : '1.5xl:flex-1 1.5xl:basis-0'}`}>
-                    <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pr-8 -mr-8 pb-20">
+                    {/* pl/ml: 1저자 하이라이트(-mx-2)가 overflow-y-auto의 가로 잘림에 걸리지 않도록 왼쪽 여백을 확보한다. */}
+                    <div className="max-h-[calc(100vh-4rem)] overflow-y-auto pl-3 -ml-3 pr-8 -mr-8 pb-20">
                         <ProfileCardDetail key={panelCard.id} {...panelCard} studies={panelProfileStudies} papers={panelProfilePapers} patents={panelProfilePatents} projects={projects} seminars={panelProfileSeminars} isAlumniPage={isAlumniPage}/>
                     </div>
                 </div>

@@ -112,7 +112,7 @@ npm run build
 ```bash
 # prebuild에서 두 스크립트 모두 실행됨
 npm run prebuild
-# 실행 순서: generate-og-images.js → optimize-gallery.js
+# 실행 순서: normalize-public-filenames.js → optimize-images.js → generate-og-images.js → generate-public-file-index.js
 ```
 
 #### ⚡ 수동 실행 (빌드 시간 단축)
