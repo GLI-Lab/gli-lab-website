@@ -7,6 +7,14 @@
 ########################################################################################
 # 2026
 ########################################################################################
+- date: "2026-11-03"
+  type: Publication
+  selected: true
+  content: |
+    One full paper has been accepted to the Main Track of <b>WSDM 2027</b> ✏️
+    - <paper>Continuation-Conditioned Relational Routing for Early Fake News Detection</> <note>(GLI Lab-led)</>
+    Jimyeung Seo, Dayeon Hong, Dongcheon Lee, Bonyou Koo, Donghyun Kim, Byungkook Oh
+
 - date: "2026-09-16"
   type: Publication
   content: |
