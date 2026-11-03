@@ -13,7 +13,8 @@
 
 ## `public-file-index.json`
 
-- 생성: `node scripts/generate-public-file-index.js` (`npm run prebuild`에 포함)
+- 생성: `node scripts/generate-public-file-index.js` (`npm run prebuild`의 마지막 단계)
+- 그 전에 한글 파일명을 NFC로 바꾸고, 프로필 JPG/PNG를 WebP로 변환한다. 인덱스는 그 결과 파일명만 기록한다
 - 형태: **flat** — `{ "폴더": ["파일명", ...] }`
 - 현재 포함 (한 폴더 안 파일만 나열하면 되는 것들)
   - `pdf/seminar` — 세미나 슬라이드 (`seminarLoader`)

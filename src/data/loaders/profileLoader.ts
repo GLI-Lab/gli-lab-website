@@ -88,9 +88,15 @@ async function buildProfilesPhotosDict(rawData: ProfileYAML[]): Promise<Map<stri
       }
     }
     
-    // 각 ID의 사진들을 정렬 (문자열 정렬로 충분, 1~9만 있으므로)
+    // 파일명의 1~9 순서로 정렬한다. macOS NFD 파일명도 완성형으로 맞춘 뒤 비교한다.
     for (const [profileId, photoUrls] of photosDict.entries()) {
-      photoUrls.sort();
+      photoUrls.sort((a, b) => {
+        const left = a.normalize('NFC');
+        const right = b.normalize('NFC');
+        if (left < right) return -1;
+        if (left > right) return 1;
+        return 0;
+      });
     }
     
     return photosDict;

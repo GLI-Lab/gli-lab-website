@@ -28,6 +28,15 @@ function splitPapersByScope(papers: PaperData[]) {
     };
 }
 
+/** 단독 1저자와 공동 1저자 모두 position이 first다. */
+function isProfileFirstAuthor(paper: PaperData, profileYamlId: string) {
+    return (
+        paper.authors?.some(
+            (author) => author.ID === profileYamlId && author.position === 'first',
+        ) ?? false
+    );
+}
+
 function ProfilePaperItem({
     paper,
     index,
@@ -37,13 +46,25 @@ function ProfilePaperItem({
     index: number;
     profileYamlId: string;
 }) {
+    const isFirstAuthorPaper = isProfileFirstAuthor(paper, profileYamlId);
+
     return (
-        <div className="mb-3 md:mb-4 leading-snug">
+        <div
+            className={
+                isFirstAuthorPaper
+                    ? 'mb-2 md:mb-3 -mx-2 rounded-md bg-brand-primary/10 px-2 py-1.5 leading-snug'
+                    : 'mb-3 md:mb-4 leading-snug'
+            }
+        >
             <div className="grid grid-cols-[auto,1fr] items-start">
                 <div className="flex items-start">
                     <ProfileDetailListMarker index={index} showNumbering={SHOW_ITEM_NUMBERING} />
                     <div className="flex-1">
-                        <div className="text-[15.5px] md:text-[16.5px] font-medium mb-1">
+                        <div
+                            className={`text-[15.5px] md:text-[16.5px] mb-1 ${
+                                isFirstAuthorPaper ? 'font-semibold' : 'font-medium'
+                            }`}
+                        >
                             <Link
                                 href={`/publications/papers#${encodeURIComponent(getPaperTitleId(paper.title))}`}
                                 className="hover:text-interactive-hover hover:underline underline-offset-4"

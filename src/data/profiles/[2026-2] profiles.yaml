@@ -93,7 +93,7 @@
 # MS Students
 ###############################################
 - id: "[2024.06] 서지명"
-  role: {type: ms, title: M.S. Student (5학기)}
+  role: {type: ms, title: M.S. Student (4학기)}
   name: {en: Jimyeung Seo, ko: 서지명}
   education: {bs: "Computer Science & Engineering, Konkuk University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
   academic: {year: 1, semester: 1}
@@ -107,7 +107,7 @@
   reflection: 
 
 - id: "[2025.01] 구해윤"
-  role: {type: ms, title: M.S. Student (4학기)}
+  role: {type: ms, title: M.S. Student (3학기)}
   name: {en: Hae-Yoon Koo, ko: 구해윤}
   education: {bs: "Computer Science & Engineering, Dong-A University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
   interests: [Graph ML/DL, Sequential Recommender Systems, LLM-Based Recommender Systems]
