@@ -3,15 +3,19 @@
 
 /**
  * public/ 아래 바이너리(PDF, 프로필 이미지)의 파일명만 인덱스로 저장한다.
+ * 프로필 사진은 내용 해시(SHA-256 앞 8자)도 같이 기록한다. 로더는 이 해시를
+ * URL 쿼리로 붙여, 같은 파일명으로 갈아끼운 사진이 1년 캐시를 피하게 한다.
  * Next.js 서버리스 함수가 public/pdf 등을 readdir 하면 Vercel 트레이싱에
  * PDF 원본이 포함되어 250MB 제한을 넘긴다. 로더는 이 JSON만 읽는다.
  */
 
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.join(__dirname, '..');
 const DIRS = ['pdf/seminar', 'pdf/cv', 'images/profiles'];
+const PROFILE_IMAGE_DIR = 'images/profiles';
 
 function listFiles(absDir) {
   try {
@@ -24,10 +28,21 @@ function listFiles(absDir) {
   }
 }
 
+function hashFile(absPath) {
+  const data = fs.readFileSync(absPath);
+  return crypto.createHash('sha256').update(data).digest('hex').slice(0, 8);
+}
+
 const index = {};
 for (const dir of DIRS) {
   index[dir] = listFiles(path.join(ROOT, 'public', dir));
 }
+
+const profileHashes = {};
+for (const filename of index[PROFILE_IMAGE_DIR]) {
+  profileHashes[filename] = hashFile(path.join(ROOT, 'public', PROFILE_IMAGE_DIR, filename));
+}
+index.hashes = { [PROFILE_IMAGE_DIR]: profileHashes };
 
 const outDir = path.join(ROOT, 'src', 'data', 'generated');
 fs.mkdirSync(outDir, { recursive: true });
@@ -37,3 +52,4 @@ console.log(`Wrote ${path.relative(ROOT, outPath)}`);
 for (const dir of DIRS) {
   console.log(`  ${dir}: ${index[dir].length} files`);
 }
+console.log(`  ${PROFILE_IMAGE_DIR} hashes: ${Object.keys(profileHashes).length}`);
