@@ -9,13 +9,14 @@
 
 - 서버 코드가 `public/pdf` 등을 `readdir`하면, Next.js/Vercel 트레이싱이 PDF·이미지 원본까지 함수 번들에 넣을 수 있음
 - → 서버리스 용량 제한(약 250MB)을 넘기기 쉬움
-- 인덱스는 **파일명(경로) 목록만** 담음. 원본은 `public/`에 두고 정적 URL로만 제공
+- 인덱스는 **파일명 목록**과, 프로필 사진의 **내용 해시**를 담음. 원본은 `public/`에 두고 정적 URL로만 제공
 
 ## `public-file-index.json`
 
 - 생성: `node scripts/generate-public-file-index.js` (`npm run prebuild`의 마지막 단계)
-- 그 전에 한글 파일명을 NFC로 바꾸고, 프로필 JPG/PNG를 WebP로 변환한다. 인덱스는 그 결과 파일명만 기록한다
-- 형태: **flat** — `{ "폴더": ["파일명", ...] }`
+- 그 전에 한글 파일명을 NFC로 바꾸고, 프로필 JPG/PNG를 WebP로 변환한다. 인덱스는 그 결과 파일명을 기록한다
+- 형태: `{ "폴더": ["파일명", ...], "hashes": { "images/profiles": { "파일명": "sha256 앞 8자" } } }`
+- `hashes`는 프로필 사진 바이트가 바뀔 때만 달라진다. `profileLoader`가 `?v=`로 붙여 같은 파일명의 사진 교체가 캐시를 통과하게 한다
 - 현재 포함 (한 폴더 안 파일만 나열하면 되는 것들)
   - `pdf/seminar` — 세미나 슬라이드 (`seminarLoader`)
   - `pdf/cv` — 프로필 CV (`profileLoader`)

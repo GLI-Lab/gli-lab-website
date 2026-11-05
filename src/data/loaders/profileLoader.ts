@@ -3,7 +3,15 @@ import path from 'path';
 import fs from 'fs/promises';
 import { ProfileYAML, ProfileData } from './types';
 import { generateProfileSlug } from '@/lib/profileSlug';
-import { listPublicFiles } from './publicFileIndex';
+import { getPublicFileHash, listPublicFiles } from './publicFileIndex';
+
+const PROFILE_IMAGE_DIR = 'images/profiles';
+
+function profilePhotoUrl(filename: string): string {
+  const url = `/${PROFILE_IMAGE_DIR}/${filename}`;
+  const version = getPublicFileHash(PROFILE_IMAGE_DIR, filename);
+  return version ? `${url}?v=${version}` : url;
+}
 
 // YAML 파일을 읽어서 프로필 데이터 반환
 async function loadProfilesYAML(isAlumni: boolean = false): Promise<ProfileYAML[]> {
@@ -70,7 +78,7 @@ async function buildProfilesCVDict(rawData: ProfileYAML[]): Promise<Map<string, 
 async function buildProfilesPhotosDict(rawData: ProfileYAML[]): Promise<Map<string, string[]>> {
   try {
     const profileIds = profileIdsFromYAML(rawData);
-    const files = listPublicFiles('images/profiles');
+    const files = listPublicFiles(PROFILE_IMAGE_DIR);
     
     const photosDict = new Map<string, string[]>();
     
@@ -81,10 +89,10 @@ async function buildProfilesPhotosDict(rawData: ProfileYAML[]): Promise<Map<stri
       );
       
       if (matchingFiles.length > 0) {
-        photosDict.set(profileId, matchingFiles.map(file => `/images/profiles/${file}`));
+        photosDict.set(profileId, matchingFiles.map((file) => profilePhotoUrl(file)));
       } else {
         // 매칭되는 파일이 없으면 기본 이미지 사용
-        photosDict.set(profileId, ["/images/profiles/ku_basic_1_down.webp"]);
+        photosDict.set(profileId, [profilePhotoUrl('ku_basic_1_down.webp')]);
       }
     }
     
