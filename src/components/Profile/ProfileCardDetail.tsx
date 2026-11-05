@@ -1,7 +1,7 @@
 "use client"
 
 import Image from 'next/image';
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
 import { Separator } from "@/components/ui/separator"
@@ -18,6 +18,19 @@ import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText
 import { isActiveCaptain, ProfileCaptainBadge } from './ProfileCaptainBadge';
 import { hasCaptain, ProfileCaptainText } from './ProfileCaptainText';
 import { ProfileQuoteText } from './ProfileQuoteText';
+
+/** 상세 사진의 같은 위치를 이 횟수만큼 클릭하면 바꿀 사진. 키는 YAML id. */
+const EASTER_EGG_PHOTO: Record<string, string> = {
+    '[2024.03] 오병국': '/images/etc/0.webp',
+    '[2024.07] 백혜윤': '/images/etc/1.webp',
+    '[2024.11] 이동천': '/images/etc/2.webp',
+};
+const EASTER_EGG_CLICKS = 5;
+const EASTER_EGG_SAME_SPOT_PX = 28;
+const EASTER_EGG_TOUCH_SAME_SPOT_PX = 56;
+const EASTER_EGG_TAP_MOVE_PX = 8;
+const EASTER_EGG_TOUCH_TAP_MOVE_PX = 36;
+const EASTER_EGG_CLICK_GAP_MS = 350;
 
 function WrappedContactEntries({
     items,
@@ -50,6 +63,63 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, duration: 30}, [Fade()]);
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [copied, setCopied] = useState(false);
+    const easterEggSrc = EASTER_EGG_PHOTO[yamlId];
+    const [showEasterEgg, setShowEasterEgg] = useState(false);
+    const eggPointerRef = useRef<{ x: number; y: number } | null>(null);
+    const eggClicksRef = useRef<{ x: number; y: number; count: number; at: number } | null>(null);
+
+    const registerEggTap = (startX: number, startY: number, endX: number, endY: number, isTouch: boolean) => {
+        const moveLimit = isTouch ? EASTER_EGG_TOUCH_TAP_MOVE_PX : EASTER_EGG_TAP_MOVE_PX;
+        if (Math.hypot(endX - startX, endY - startY) > moveLimit) return;
+
+        const now = Date.now();
+        const spotLimit = isTouch ? EASTER_EGG_TOUCH_SAME_SPOT_PX : EASTER_EGG_SAME_SPOT_PX;
+        const prev = eggClicksRef.current;
+        const inTime = prev !== null && now - prev.at <= EASTER_EGG_CLICK_GAP_MS;
+        const sameSpot = inTime
+            && Math.hypot(startX - prev.x, startY - prev.y) <= spotLimit;
+        const count = sameSpot ? prev.count + 1 : 1;
+        if (count >= EASTER_EGG_CLICKS) {
+            eggClicksRef.current = null;
+            setShowEasterEgg((visible) => !visible);
+            return;
+        }
+        eggClicksRef.current = {
+            x: sameSpot ? prev.x : startX,
+            y: sameSpot ? prev.y : startY,
+            count,
+            at: now,
+        };
+    };
+
+    const handleEggPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+        if (!easterEggSrc) return;
+        const isTouch = event.pointerType === 'touch';
+        if (!isTouch && event.button !== 0) return;
+
+        const start = { x: event.clientX, y: event.clientY };
+        eggPointerRef.current = start;
+        const pointerId = event.pointerId;
+
+        const cleanup = () => {
+            window.removeEventListener('pointerup', onUp);
+            window.removeEventListener('pointercancel', onCancel);
+        };
+        const onUp = (endEvent: PointerEvent) => {
+            if (endEvent.pointerId !== pointerId) return;
+            cleanup();
+            if (eggPointerRef.current !== start) return;
+            eggPointerRef.current = null;
+            registerEggTap(start.x, start.y, endEvent.clientX, endEvent.clientY, isTouch);
+        };
+        const onCancel = (endEvent: PointerEvent) => {
+            if (endEvent.pointerId !== pointerId) return;
+            cleanup();
+            if (eggPointerRef.current === start) eggPointerRef.current = null;
+        };
+        window.addEventListener('pointerup', onUp);
+        window.addEventListener('pointercancel', onCancel);
+    };
 
     const onSelect = useCallback(() => {
         if (!emblaApi) return;
@@ -62,13 +132,27 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
         onSelect(); // 초기 선택된 슬라이드 설정
     }, [emblaApi, onSelect]);
 
+    const slides = showEasterEgg && easterEggSrc ? [...photo, easterEggSrc] : photo;
     const photoUrlsKey = photo.join('|');
+    const slidesKey = slides.join('|');
 
     useEffect(() => {
         if (!emblaApi) return;
         setSelectedIndex(0);
         emblaApi.scrollTo(0);
     }, [photoUrlsKey, emblaApi]);
+
+    useEffect(() => {
+        if (!emblaApi) return;
+        emblaApi.reInit();
+        if (showEasterEgg && easterEggSrc) {
+            emblaApi.scrollTo(photo.length);
+            return;
+        }
+        if (emblaApi.selectedScrollSnap() > photo.length - 1) {
+            emblaApi.scrollTo(0);
+        }
+    }, [emblaApi, slidesKey, showEasterEgg, easterEggSrc, photo.length]);
 
     const renderEducation = (
         label: string,
@@ -101,10 +185,13 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
     return (
         <div className={`bg-white flex flex-col w-full ${isModal ? 'items-center' : 'items-start'}`}>
             <div className="embla w-[280px] 1.5md:w-[320px] shrink-0">
-                <div className="relative">
+                <div
+                    className="relative touch-manipulation"
+                    onPointerDown={easterEggSrc ? handleEggPointerDown : undefined}
+                >
                     <div className="overflow-hidden" ref={emblaRef}>
                         <div className="flex w-[280px] h-[330px] 1.5md:w-[320px] 1.5md:h-[400px]">
-                            {photo.map((src, index) => (
+                            {slides.map((src, index) => (
                                 <div className="flex-shrink-0 flex-grow-0 basis-full relative" key={src}>
                                     <Image
                                         fill
@@ -123,7 +210,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                 
                 {/* 이미지 인디케이터 */}
                 <div className="flex justify-center pt-2">
-                    {photo.map((_, index) => (
+                    {slides.map((_, index) => (
                         <button
                             key={index}
                             className={`w-2.5 h-2.5 rounded-full mx-1 cursor-pointer

@@ -209,7 +209,8 @@ async function optimizeProfileImages() {
   // 프로필 이미지 폴더들
   const profileFolders = [
     { path: 'public/images/profiles', name: 'Members' },
-    { path: 'public/images/profiles/alumni', name: 'Alumni' }
+    { path: 'public/images/profiles/alumni', name: 'Alumni' },
+    { path: 'public/images/etc', name: 'Etc' }
   ];
   
   let totalProcessed = 0;
