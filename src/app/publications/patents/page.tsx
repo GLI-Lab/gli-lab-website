@@ -2,7 +2,7 @@ import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
 import PatentList from "@/components/Publication/PatentList";
-import { getPatents, getMemberIds, getAlumniIds, getProfileSlugByYamlId } from "@/data/loaders";
+import { getPatents, getProfileLinks } from "@/data/loaders";
 
 const TITLE = `Patents`
 const PATHNAME = '/publications/patents'
@@ -16,12 +16,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Page() {
-    const patents = await getPatents();
-    const [memberIds, alumniIds, profileSlugByYamlId] = await Promise.all([
-        getMemberIds(),
-        getAlumniIds(),
-        getProfileSlugByYamlId(),
-    ]);
+    const [patents, profileLinks] = await Promise.all([getPatents(), getProfileLinks()]);
     
     return (
         <>
@@ -32,9 +27,7 @@ export default async function Page() {
                 <PatentList 
                     className="w-full text-left"
                     patents={patents} 
-                    memberIds={memberIds}
-                    alumniIds={alumniIds}
-                    profileSlugByYamlId={profileSlugByYamlId}
+                    profileLinks={profileLinks}
                 />
             </div>
             <div className="h-40"></div>

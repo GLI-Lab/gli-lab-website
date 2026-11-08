@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, type ReactNode } from "react";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { PaperData, type PaperTitle } from '@/data/loaders/types';
+import { PaperData, type PaperTitle, type ProfileLinks } from '@/data/loaders/types';
 import { getPaperTitleId, getProfileHref, isLocalizedPaperTitle, titleToId } from '@/lib/utils';
 
 function renderPaperTitle(title: PaperTitle, copyButton?: ReactNode, prefix?: ReactNode) {
@@ -35,12 +35,11 @@ function renderPaperTitle(title: PaperTitle, copyButton?: ReactNode, prefix?: Re
 interface PaperListProps {
   className?: string
   papers: PaperData[];
-  memberIds?: string[];
-  alumniIds?: string[];
-  profileSlugByYamlId?: Record<string, string>;
+  /** 사람 ID → 프로필 href 사전 (서버의 getProfileLinks() 결과) */
+  profileLinks?: ProfileLinks;
 }
 
-export default function PaperList({ className = '', papers, memberIds = [], alumniIds = [], profileSlugByYamlId = {} }: PaperListProps) {
+export default function PaperList({ className = '', papers, profileLinks = {} }: PaperListProps) {
   const [showInProgress, setShowInProgress] = useState(false);
   const [showUnderReview, setShowUnderReview] = useState(true);
   const [isInProgressExpanded, setIsInProgressExpanded] = useState(false);
@@ -225,7 +224,7 @@ export default function PaperList({ className = '', papers, memberIds = [], alum
     return publication.authors.map((author, i) => {
       const isFirstAuthor = author.position === 'first';
       const hasId = !!author.ID;
-      const href = author.ID ? getProfileHref(author.ID, memberIds, alumniIds, profileSlugByYamlId) : null;
+      const href = author.ID ? getProfileHref(author.ID, profileLinks) : null;
       const hasValidId = !!href;
       
       const authorName = (

@@ -91,6 +91,26 @@ export interface ProfileData {
   reflection?: string;
 }
 
+/**
+ * 사람 ID(YAML id) → 프로필 상세 페이지 href 사전.
+ * 서버에서 `getProfileLinks()`가 members·alumni 프로필을 읽어 한 번 만들고,
+ * 논문·특허·프로젝트·뉴스·세미나·스터디 컴포넌트는 이 사전만 받아서 `links[ID]`로 바로 꺼내 쓴다.
+ *
+ * 키는 `src/data/profiles/[YYYY-S] profiles*.yaml`의 `id`이고, 다른 YAML들은 이 값을 `ID`로 참조한다.
+ *   paper.yaml   : authors: [{ ID: "[2024.03] 오병국", ... }]
+ *   seminar.yaml : Presenter: { ID: "[2024.06] 서지명", ... }
+ *   news.yaml    : "<profile=[2024.03] 오병국>오병국</>"
+ *
+ * 값은 `/`로 끝나는 완성된 주소(next.config의 trailingSlash: true에 맞춤).
+ * 같은 사람이 members와 alumni 양쪽에 있으면(학부연구생 alumni가 현재 멤버인 경우) members 경로가 된다.
+ *
+ * 예: {
+ *   "[2024.03] 오병국": "/people/members/2024-03-byungkook-oh/",
+ *   "[2024.07] 지상준": "/people/alumni/2024-07-sangjun-ji/",
+ * }
+ */
+export type ProfileLinks = Record<string, string>;
+
 export interface ProfileItemProps extends ProfileData {
   onClick?: () => void;
   isSelected?: boolean;

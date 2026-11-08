@@ -1,6 +1,6 @@
 import Link from 'next/link';
-import { getProfiles, getAlumniProfiles } from '@/data/loaders';
-import { StudyData } from '@/data/loaders/types';
+import { getProfileLinks } from '@/data/loaders';
+import { StudyData, type ProfileLinks } from '@/data/loaders/types';
 import { StudyHighlightWrapper } from './StudyHighlight';
 import { getProfileHref } from '@/lib/utils';
 
@@ -9,7 +9,8 @@ export interface StudyListProps {
   className?: string
   count?: number | null
   studyItems?: StudyData[]
-  profiles?: any[]
+  /** 사람 ID → 프로필 href 사전 (서버의 getProfileLinks() 결과). 생략하면 컴포넌트가 직접 불러온다 */
+  profileLinks?: ProfileLinks
 }
 
 // check if a study is ongoing (no end date or end date is in the future)
@@ -52,23 +53,20 @@ function parseDescription(description: string): React.ReactNode {
 }
 
 // parse profile format and render with member link
-function renderProfileWithLink(participant: string, profiles: any[], alumniProfiles: any[]): React.ReactNode {
+// participant 예: "<profile=[2024.03] 오병국>오병국</>" → ID로 profileLinks에서 href를 찾아 링크로 렌더링
+function renderProfileWithLink(participant: string, profileLinks: ProfileLinks): React.ReactNode {
   const profileMatch = participant.match(/^<profile=(.+?)>(.+?)<\/>$/);
   
   if (profileMatch) {
     const [, profileId, displayName] = profileMatch;
-    // 현재 멤버와 alumni 모두에서 프로필 찾기
-    const profile = profiles.find(p => p.yamlId === profileId || p.id === profileId) || alumniProfiles.find(p => p.yamlId === profileId || p.id === profileId);
+    const href = getProfileHref(profileId, profileLinks);
     
-    if (profile) {
-      const href = getProfileHref(profileId, profiles, alumniProfiles);
-      if (!href) return <span>{participant}</span>;
-
+    if (href) {
       return (
         <Link 
           href={href}
           className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
-          title={`View ${profile.name_ko} (${profile.name_en})`}
+          title={`View ${displayName}`}
         >
           <span className=" transition-colors [&:hover>svg]:text-brand-primary">
             {displayName}
@@ -94,17 +92,8 @@ function renderProfileWithLink(participant: string, profiles: any[], alumniProfi
   return <span>{participant}</span>;
 }
 
-export async function StudyList({ className = '', count = null, studyItems, profiles }: StudyListProps) {
-  const allProfiles = profiles || await getProfiles();
-  
-  // alumni 데이터 로드 시 에러 처리
-  let alumniProfiles: any[] = [];
-  try {
-    alumniProfiles = await getAlumniProfiles();
-  } catch (error) {
-    console.error('Error loading alumni profiles:', error);
-    alumniProfiles = [];
-  }
+export async function StudyList({ className = '', count = null, studyItems, profileLinks }: StudyListProps) {
+  const links = profileLinks ?? await getProfileLinks();
   
   const studies = studyItems ? (count ? studyItems.slice(0, count) : studyItems) : [];
 
@@ -171,7 +160,7 @@ export async function StudyList({ className = '', count = null, studyItems, prof
                       <div key={idx} className="flex items-center">
                         {/* <span className="w-1.5 h-1.5 bg-gray-400 rounded-full mr-2 flex-shrink-0"></span> */}
                         <span className="mr-2 flex-shrink-0"> - </span>
-                        {renderProfileWithLink(participant, allProfiles || [], alumniProfiles)}
+                        {renderProfileWithLink(participant, links)}
                       </div>
                     ))}
                   </div>

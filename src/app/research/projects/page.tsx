@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { getMetadata } from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
-import { getProjects, getMemberIds, getAlumniIds, getProfileSlugByYamlId } from "@/data/loaders";
+import { getProjects, getProfileLinks } from "@/data/loaders";
 import ProjectList from "@/components/Research/ProjectList";
 
 const TITLE = "Projects";
@@ -17,12 +17,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Page() {
-  const projects = await getProjects();
-  const [memberIds, alumniIds, profileSlugByYamlId] = await Promise.all([
-    getMemberIds(),
-    getAlumniIds(),
-    getProfileSlugByYamlId(),
-  ]);
+  const [projects, profileLinks] = await Promise.all([getProjects(), getProfileLinks()]);
 
   return (
     <>
@@ -33,9 +28,7 @@ export default async function Page() {
       <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
         <ProjectList
           projects={projects}
-          memberIds={memberIds}
-          alumniIds={alumniIds}
-          profileSlugByYamlId={profileSlugByYamlId}
+          profileLinks={profileLinks}
           className="w-full"
         />
       </div>

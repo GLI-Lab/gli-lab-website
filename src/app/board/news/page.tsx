@@ -2,7 +2,7 @@ import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
 import { NewsList } from "@/components/Board/NewsList";
-import { getNews, getMemberIds, getAlumniIds, getProfileSlugByYamlId } from "@/data/loaders";
+import { getNews, getProfileLinks } from "@/data/loaders";
 
 const TITLE = 'News'
 const PATHNAME = '/board/news'
@@ -16,12 +16,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Page() {
-    const newsItems = await getNews();
-    const [memberIds, alumniIds, profileSlugByYamlId] = await Promise.all([
-        getMemberIds(),
-        getAlumniIds(),
-        getProfileSlugByYamlId(),
-    ]);
+    const [newsItems, profileLinks] = await Promise.all([getNews(), getProfileLinks()]);
 
     return (
         <>
@@ -33,9 +28,7 @@ export default async function Page() {
                     className="w-full text-left"
                     count={100}
                     newsItems={newsItems}
-                    memberIds={memberIds}
-                    alumniIds={alumniIds}
-                    profileSlugByYamlId={profileSlugByYamlId}
+                    profileLinks={profileLinks}
                     showFilters={true}
                 />
             </div>
