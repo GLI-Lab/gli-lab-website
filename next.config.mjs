@@ -5,13 +5,22 @@ const nextConfig = {
     trailingSlash: true,
     reactStrictMode: true,
     
-    // 이미지 최적화 설정
+    // Next 16: 로컬 이미지에 쿼리스트링이 있으면 localPatterns에 경로를 적어야 한다.
+    // 프로필 사진은 내용 해시 `?v=`로 캐시를 깨므로 search는 넣지 않는다 (아무 쿼리나 허용).
     images: {
         formats: ['image/webp', 'image/avif'],
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
         imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
         minimumCacheTTL: process.env.NODE_ENV === 'development' ? 0 : 31536000, // 개발모드에서는 캐시 비활성화
+        localPatterns: [
+            { pathname: '/images/**' },
+        ],
     },
+    // next dev는 기본적으로 localhost에서만 "코드 저장 → 브라우저 자동 새로고침"을 허용한다.
+    // http://127.0.0.1:3002 나 http://203.252.149.219:3002 로 열면 페이지는 보이지만 자동 새로고침이 막힌다.
+    // 호스트만 적으면 된다 (http://, 포트는 쓰지 않음). 127.0.0.1 이면 :3000, :3002 모두 자동 새로고침이 된다.
+    // next start / 배포에는 영향 없음.
+    allowedDevOrigins: ['127.0.0.1', '203.252.149.219'],
     
     // 정적 파일 캐시 설정
     async headers() {
