@@ -1,0 +1,12 @@
+date: "2026-10-24 ~ 2026-10-29"
+title: "EMNLP'26 최우수학술대회 발표 (헝가리, 부다페스트)"
+description: |
+  우리 연구실은 EMNLP 2026(Conference on Empirical Methods in Natural Language Processing)에 참석하여
+  최신 자연어처리·대규모 언어모델(LLM)·뉴로심볼릭 추론 분야의 연구 동향을 파악하고,
+  논리 규칙을 LLM에 내재화하여 문서 수준 관계 추출에 적용하는 연구 성과 1편을 발표하였습니다.
+
+  - "Internalizing Negation-Gated Logical Rules into LLMs for Document-Level Relation Extraction"
+    저자: Hye-Yoon Baek, Sangjun Ji, Jimyeung Seo, Hae-Yoon Koo, Xiongnan Jin, Byungkook Oh
+
+  https://gli.konkuk.ac.kr/publications/papers/#internalizing-negation-gated-logical-rules-into-llms-for-document-level-relation-extraction
+  \n
