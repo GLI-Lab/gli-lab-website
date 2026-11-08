@@ -1,2 +1,5 @@
+# pnpm 12 설정. Vercel이 pnpm 9로 설치하면 packages 없는 이 파일을 워크스페이스로 보고 실패한다.
+packages:
+  - '.'
 allowBuilds:
   sharp: true

@@ -2,6 +2,7 @@
   "name": "gli-lab",
   "version": "1.0.0",
   "private": true,
+  "packageManager": "pnpm@12.18.0",
   "scripts": {
     "dev": "next dev",
     "prebuild": "node scripts/normalize-public-filenames.js && node scripts/optimize-images.js && node scripts/generate-og-images.js && node scripts/generate-public-file-index.js",
