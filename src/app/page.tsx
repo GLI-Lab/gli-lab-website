@@ -195,23 +195,9 @@ export default async function Page() {
                         Latest Seminar
                     </p>
                     <SeminarList
-                        className="w-full block md:hidden"
+                        className="w-full"
                         layout="card"
-                        count={3}
-                        seminarItems={seminars}
-                        profileLinks={profileLinks}
-                    />
-                    <SeminarList
-                        className="w-full hidden md:block lg:hidden"
-                        layout="card"
-                        count={4}
-                        seminarItems={seminars}
-                        profileLinks={profileLinks}
-                    />
-                    <SeminarList
-                        className="w-full hidden lg:block"
-                        layout="card"
-                        count={6}
+                        visibleByBreakpoint={{ base: 3, md: 4, lg: 6 }}
                         seminarItems={seminars}
                         profileLinks={profileLinks}
                     />

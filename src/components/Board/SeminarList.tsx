@@ -14,6 +14,15 @@ export interface SeminarListProps {
   className?: string;
   layout?: SeminarListLayout;
   count?: number | null;
+  /**
+   * 카드 그리드에서 화면 너비별로 앞에서부터 몇 개를 보일지.
+   * HTML은 최댓값만큼만 넣고, 나머지는 CSS로 숨긴다 (홈 Latest Seminar: 3 / 4 / 6).
+   */
+  visibleByBreakpoint?: {
+    base: number;
+    md: number;
+    lg: number;
+  };
   seminarItems?: SeminarData[];
   /** 사람 ID → 프로필 href 사전 (서버의 getProfileLinks() 결과). 발표자 이름을 프로필 링크로 만들 때 쓴다 */
   profileLinks?: ProfileLinks;
@@ -69,6 +78,17 @@ function getSeminarTitleBadge(item: SeminarData): SeminarTitleBadge {
   return 'none';
 }
 
+function breakpointVisibilityClass(
+  index: number,
+  visible?: { base: number; md: number; lg: number }
+): string {
+  if (!visible) return '';
+  if (index >= visible.lg) return 'hidden';
+  if (index >= visible.md) return 'max-lg:hidden';
+  if (index >= visible.base) return 'max-md:hidden';
+  return '';
+}
+
 /** 발표자 이름. 프로필이 있으면(`profileLinks`에 ID가 있으면) 프로필 페이지 링크로, 없으면 일반 텍스트로 */
 function renderPresenter(
   presenter: { ID: string; name: string },
@@ -98,6 +118,7 @@ export function SeminarList({
   className = '',
   layout = 'list',
   count = null,
+  visibleByBreakpoint,
   seminarItems = [],
   profileLinks = {},
 }: SeminarListProps) {
@@ -147,11 +168,15 @@ export function SeminarList({
 
   /** list일 때만 md 이상에서 가로형; card일 때는 항상 세로형 */
   const listMd = layout === 'list';
+  const visibleLimit = visibleByBreakpoint
+    ? Math.max(visibleByBreakpoint.base, visibleByBreakpoint.md, visibleByBreakpoint.lg)
+    : count;
   const items = seminarItems.length
-    ? count
-      ? seminarItems.slice(0, count)
+    ? visibleLimit
+      ? seminarItems.slice(0, visibleLimit)
       : seminarItems
     : [];
+  let itemIndex = 0;
 
   /** season 순서 유지하며 그룹화 (첫 그룹이 가장 최신) */
   const groups: { season: string; items: SeminarData[] }[] = [];
@@ -175,6 +200,7 @@ export function SeminarList({
             {group.items.map((item, idx) => {
               const seminarId = getSeminarHashId(item.title ?? '');
               const isHighlighted = highlightedSeminarId === seminarId;
+              const visibilityClass = breakpointVisibilityClass(itemIndex++, visibleByBreakpoint);
               return (
               <div
                 key={`${item.date}-${item.title}-${idx}`}
@@ -183,7 +209,7 @@ export function SeminarList({
                   isHighlighted
                     ? 'border-brand-primary bg-brand-primary/10 shadow-lg animate-pulse'
                     : 'border-gray-200'
-                }`}
+                } ${visibilityClass}`}
               >
                 <span
                   className={`text-[14px] md:text-[16px] font-medium text-gray-600 leading-snug tabular-nums shrink-0 text-center block ${listMd ? 'mb-0 md:w-20 md:text-right' : 'mb-0'}`}
