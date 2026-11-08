@@ -397,7 +397,8 @@
     Link: https://dl.acm.org/doi/10.1145/3770855.3818000
     Code: https://github.com/Approxy02/GLoRE
     Poster: /pdf/poster/[2026][KDD] GLoRE.pdf
-    News: https://www.konkuk.ac.kr/bbs/konkuk/259/1175786/artclView.do
+    News1: https://www.konkuk.ac.kr/bbs/konkuk/259/1175786/artclView.do
+    News2: https://lifenlearning.chosun.com/pan/site/data/html_dir/2026/06/22/2026062201678.html
   notes: {"normal": "Research Track (Acceptance Rate: 18.5%)", "important": ""}
   authors:
     - { ID: "[2024.07] 지상준", name: "Sangjun Ji", position: first }
