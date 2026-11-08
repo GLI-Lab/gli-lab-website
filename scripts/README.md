@@ -62,7 +62,7 @@ $ node scripts/optimize-images.js
 
 **목적:** 프로필 공유용 Open Graph 이미지(1200×630 WebP)를 `public/images/profiles-og/`에 미리 만든다.
 
-최신 `profiles.yaml` / `profiles-alumni.yaml`을 읽고, 사진·이름·역할을 합성한다. 결과는 git에 커밋한다. 서버의 한글 폰트에 의존하지 않도록 빌드 산출물이 아니라 저장소에 둔다.
+최신 `profiles.yaml` / `profiles-alumni.yaml`을 읽고, 사진·이름·역할을 합성한다. 최신 학기 파일은 `src/data/loaders/profileYamlFile.js`를 쓰며, 사이트 로더(`profileLoader.ts`)와 같다. 결과는 git에 커밋한다. 서버의 한글 폰트에 의존하지 않도록 빌드 산출물이 아니라 저장소에 둔다.
 
 - 기본: 파일이 있으면 스킵 (새 프로필만 생성)
 - `--force`: 전부 다시 생성. 기존 사진을 리사이즈했거나 이름/역할을 바꿨을 때

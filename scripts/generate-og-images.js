@@ -2,55 +2,8 @@ const fs = require('fs').promises;
 const path = require('path');
 const yaml = require('js-yaml');
 const sharp = require('sharp');
+const { findLatestProfileYamlPath } = require('../src/data/loaders/profileYamlFile');
 
-// 프로필 파일을 찾는 함수
-async function findProfileFile(suffix) {
-  const dataDir = path.join(process.cwd(), 'src', 'data', 'profiles');
-  
-  try {
-    const files = await fs.readdir(dataDir);
-    
-    // 지정된 suffix로 끝나는 파일들 찾기
-    const matchingFiles = files.filter(file => file.endsWith(suffix));
-    
-    if (matchingFiles.length === 0) {
-      throw new Error(`Profile file with suffix '${suffix}' not found`);
-    }
-    
-    // [년도-학기] 형식의 파일명에서 최신 것 찾기
-    const profileFile = findLatestFile(matchingFiles);
-    
-    return path.join(dataDir, profileFile);
-  } catch (error) {
-    console.error(`Error finding profile file: ${error.message}`);
-    throw error;
-  }
-}
-
-// [년도-학기] 형식의 파일명에서 최신 파일을 찾는 함수
-function findLatestFile(files) {
-  const fileWithYearSemester = files.map(file => {
-    // [년도-학기] 패턴 매칭
-    const match = file.match(/^\[(\d{4})-(\d+)\]/);
-    if (match) {
-      const year = parseInt(match[1]);
-      const semester = parseInt(match[2]);
-      return { file, year, semester };
-    }
-    // 패턴이 없는 경우 기본값으로 처리 (가장 나중에 선택되도록)
-    return { file, year: 0, semester: 0 };
-  });
-  
-  // 년도 내림차순, 학기 내림차순으로 정렬
-  fileWithYearSemester.sort((a, b) => {
-    if (a.year !== b.year) {
-      return b.year - a.year;
-    }
-    return b.semester - a.semester;
-  });
-  
-  return fileWithYearSemester[0].file;
-}
 // 파일명에서 프로필 ID 추출 (예: "[2024.03] 오병국1.webp" -> "[2024.03] 오병국")
 function extractProfileIdFromFilename(filename) {
   // 파일 확장자 제거
@@ -63,7 +16,7 @@ function extractProfileIdFromFilename(filename) {
 // 프로필 ID로 YAML에서 프로필 정보 찾기
 async function findProfileById(profileId, isAlumni = false) {
   try {
-    const filePath = await findProfileFile(isAlumni ? 'profiles-alumni.yaml' : 'profiles.yaml');
+    const filePath = await findLatestProfileYamlPath(isAlumni ? 'profiles-alumni.yaml' : 'profiles.yaml');
     const yamlText = await fs.readFile(filePath, 'utf8');
     const rawData = yaml.load(yamlText);
     return rawData.find(profile => profile.id === profileId) || null;
