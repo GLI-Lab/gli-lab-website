@@ -7,6 +7,7 @@ import { getProfilesUncached, getAlumniProfilesUncached } from './profileLoader'
 import { getProjectsUncached } from './projectLoader';
 import { getSeminarsUncached, type GetSeminarsOptions } from './seminarLoader';
 import { getStudiesUncached } from './studyLoader';
+import type { ProfileLinks } from './types';
 
 const REVALIDATE_SECONDS = 3600;
 const isDev = process.env.NODE_ENV === 'development';
@@ -54,23 +55,36 @@ export async function getSeminars(options?: GetSeminarsOptions) {
 
 export type { GetSeminarsOptions };
 
-/** YAML id 목록 (뉴스 마크업 링크용) */
-export async function getMemberIds(): Promise<string[]> {
-  const profiles = await getProfiles();
-  return profiles.map((profile) => profile.yamlId).filter(Boolean);
-}
-
-export async function getAlumniIds(): Promise<string[]> {
-  const profiles = await getAlumniProfiles();
-  return profiles.map((profile) => profile.yamlId).filter(Boolean);
-}
-
-/** YAML id → URL slug (뉴스·출판물 등 링크용) */
-export async function getProfileSlugByYamlId(): Promise<Record<string, string>> {
+/**
+ * 사람 ID(YAML id) → 프로필 상세 페이지 href 사전(`ProfileLinks`)을 만든다.
+ *
+ * 논문·특허·프로젝트·뉴스·세미나·스터디 페이지는 사람을 YAML `ID`로만 참조하므로,
+ * 그 ID를 클릭 가능한 주소로 바꾸는 규칙을 여기 한 곳에서 처리하고 결과만 컴포넌트에 넘긴다.
+ * 컴포넌트는 `getProfileHref(id, links)`(= `links[id]`)로 꺼내 쓰기만 한다.
+ *
+ * 규칙
+ *   - 경로: members면 `/people/members/`, alumni면 `/people/alumni/`
+ *   - slug: `ProfileData.id` (예: "2024-03-byungkook-oh", profileLoader가 yamlId + 영문 이름으로 생성)
+ *   - 끝에 `/` (next.config의 trailingSlash: true에 맞춤)
+ *   - 같은 사람이 양쪽에 있으면 members 우선. alumni를 먼저 넣고 members로 덮어써서 구현.
+ *     (학부연구생 alumni가 현재 멤버로 계속 있는 경우가 실제로 있음)
+ *
+ * 입력(프로필 로더 결과)과 출력 예
+ *   members: [{ yamlId: "[2024.03] 오병국", id: "2024-03-byungkook-oh", ... }]
+ *   alumni:  [{ yamlId: "[2024.07] 지상준", id: "2024-07-sangjun-ji", ... }]
+ *   → { "[2024.03] 오병국": "/people/members/2024-03-byungkook-oh/",
+ *       "[2024.07] 지상준": "/people/alumni/2024-07-sangjun-ji/" }
+ *
+ * 프로필 로더(`getProfiles`, `getAlumniProfiles`)가 이미 unstable_cache로 캐시되므로 별도 캐시는 두지 않는다.
+ */
+export async function getProfileLinks(): Promise<ProfileLinks> {
   const [members, alumni] = await Promise.all([getProfiles(), getAlumniProfiles()]);
-  const map: Record<string, string> = {};
-  for (const profile of [...members, ...alumni]) {
-    map[profile.yamlId] = profile.id;
+  const links: ProfileLinks = {};
+  for (const profile of alumni) {
+    if (profile.yamlId) links[profile.yamlId] = `/people/alumni/${profile.id}/`;
   }
-  return map;
+  for (const profile of members) {
+    if (profile.yamlId) links[profile.yamlId] = `/people/members/${profile.id}/`;
+  }
+  return links;
 }

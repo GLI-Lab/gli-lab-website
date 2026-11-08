@@ -4,7 +4,7 @@ import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import SectionHeader from '@/components/ui/SectionHeader';
-import { SeminarData } from '@/data/loaders/types';
+import { SeminarData, type ProfileLinks } from '@/data/loaders/types';
 import { getProfileHref, getSeminarHashId } from '@/lib/utils';
 import { renderSeminarDescription, renderSeminarTitle, type SeminarTitleBadge } from '@/lib/seminarTitle';
 
@@ -15,8 +15,8 @@ export interface SeminarListProps {
   layout?: SeminarListLayout;
   count?: number | null;
   seminarItems?: SeminarData[];
-  profiles?: { id: string; yamlId?: string; name_ko?: string; name_en?: string }[];
-  alumniProfiles?: { id: string; yamlId?: string; name_ko?: string; name_en?: string }[];
+  /** 사람 ID → 프로필 href 사전 (서버의 getProfileLinks() 결과). 발표자 이름을 프로필 링크로 만들 때 쓴다 */
+  profileLinks?: ProfileLinks;
 }
 
 function getSeminarDateKey(dateValue: string): string | null {
@@ -69,20 +69,18 @@ function getSeminarTitleBadge(item: SeminarData): SeminarTitleBadge {
   return 'none';
 }
 
+/** 발표자 이름. 프로필이 있으면(`profileLinks`에 ID가 있으면) 프로필 페이지 링크로, 없으면 일반 텍스트로 */
 function renderPresenter(
   presenter: { ID: string; name: string },
-  profiles: { id: string; yamlId?: string; name_ko?: string; name_en?: string }[] = [],
-  alumniProfiles: { id: string; yamlId?: string; name_ko?: string; name_en?: string }[] = []
+  profileLinks: ProfileLinks = {}
 ): ReactNode {
-  const profile = profiles.find((p) => p.yamlId === presenter.ID || p.id === presenter.ID) ?? alumniProfiles.find((p) => p.yamlId === presenter.ID || p.id === presenter.ID);
-  if (profile) {
-    const href = getProfileHref(presenter.ID, profiles, alumniProfiles);
-    if (!href) return <span className="text-gray-700">{presenter.name}</span>;
+  const href = getProfileHref(presenter.ID, profileLinks);
+  if (href) {
     return (
       <Link
         href={href}
         className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary transition-colors"
-        title={profile.name_ko ?? profile.name_en}
+        title={presenter.name}
       >
         <span className="inline-flex items-center gap-0.5">
           {presenter.name}
@@ -101,8 +99,7 @@ export function SeminarList({
   layout = 'list',
   count = null,
   seminarItems = [],
-  profiles = [],
-  alumniProfiles = [],
+  profileLinks = {},
 }: SeminarListProps) {
   const [highlightedSeminarId, setHighlightedSeminarId] = useState<string | null>(null);
 
@@ -216,7 +213,7 @@ export function SeminarList({
                         className={`flex flex-wrap items-center gap-x-2 gap-y-1 text-gray-600 shrink-0 pt-2 border-t border-gray-200 w-full ${listMd ? 'md:pt-0 md:border-t-0 md:w-auto md:justify-end' : 'md:pt-4 justify-center'} ${listMd ? (hasSlide ? 'justify-center' : 'justify-end') : ''}`}
                       >
                         {item.Presenter && (
-                          <span className="text-[15px] md:text-[16.5px] text-gray-600 leading-normal">{renderPresenter(item.Presenter, profiles, alumniProfiles)}</span>
+                          <span className="text-[15px] md:text-[16.5px] text-gray-600 leading-normal">{renderPresenter(item.Presenter, profileLinks)}</span>
                         )}
                         {item.Presenter && hasSlide && (
                           <span className="text-gray-600 select-none">·</span>

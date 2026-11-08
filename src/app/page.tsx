@@ -6,31 +6,17 @@ import { FaCheck } from "react-icons/fa";
 import { NewsList } from "@/components/Board/NewsList";
 import { SeminarList } from "@/components/Board/SeminarList";
 import { GalleryGrid, getGalleryItems } from "@/components/Gallery";
-import {
-    getNews,
-    getMemberIds,
-    getAlumniIds,
-    getProfiles,
-    getAlumniProfiles,
-    getSeminars,
-} from "@/data/loaders";
+import { getNews, getProfileLinks, getSeminars } from "@/data/loaders";
 import NewsPopup from "@/components/NewsPopup";
 import { getNewsMarkupAlerts } from "@/lib/newsPaper";
 
 export default async function Page() {
-    const [newsItems, memberIds, alumniIds, seminars, profiles, alumniProfiles, galleryItems] = await Promise.all([
+    const [newsItems, profileLinks, seminars, galleryItems] = await Promise.all([
         getNews(),
-        getMemberIds(),
-        getAlumniIds(),
+        getProfileLinks(),
         getSeminars({ count: 6 }),
-        getProfiles(),
-        getAlumniProfiles().catch(() => []),
         getGalleryItems({ count: 3 }),
     ]);
-
-    const profileSlugByYamlId = Object.fromEntries(
-        [...profiles, ...alumniProfiles].map((p) => [p.yamlId, p.id])
-    );
 
     const paperNewsAlerts = getNewsMarkupAlerts(newsItems, {
         // kinds: ["paper", "project"],
@@ -213,24 +199,21 @@ export default async function Page() {
                         layout="card"
                         count={3}
                         seminarItems={seminars}
-                        profiles={profiles}
-                        alumniProfiles={alumniProfiles}
+                        profileLinks={profileLinks}
                     />
                     <SeminarList
                         className="w-full hidden md:block lg:hidden"
                         layout="card"
                         count={4}
                         seminarItems={seminars}
-                        profiles={profiles}
-                        alumniProfiles={alumniProfiles}
+                        profileLinks={profileLinks}
                     />
                     <SeminarList
                         className="w-full hidden lg:block"
                         layout="card"
                         count={6}
                         seminarItems={seminars}
-                        profiles={profiles}
-                        alumniProfiles={alumniProfiles}
+                        profileLinks={profileLinks}
                     />
                     <Link href="/board/seminar"
                         className="px-6 py-2 mt-4 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">
@@ -273,16 +256,13 @@ export default async function Page() {
                         className="w-full text-home text-left"
                         count={30}
                         newsItems={newsItems}
-                        memberIds={memberIds}
-                        alumniIds={alumniIds}
+                        profileLinks={profileLinks}
                     /> */}
                     <NewsList 
                         className="w-full text-left"
                         count={20}
                         newsItems={newsItems}
-                        memberIds={memberIds}
-                        alumniIds={alumniIds}
-                        profileSlugByYamlId={profileSlugByYamlId}
+                        profileLinks={profileLinks}
                     />
                     <Link href='/board/news'
                         className="px-6 py-2 mt-12 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">

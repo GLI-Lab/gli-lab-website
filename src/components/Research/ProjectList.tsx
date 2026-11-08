@@ -4,7 +4,7 @@ import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { ProjectData, ProjectMember } from "@/data/loaders/types";
+import { ProjectData, ProjectMember, type ProfileLinks } from "@/data/loaders/types";
 import { getProfileHref, titleToId } from "@/lib/utils";
 
 /** "연구책임자(학생)"처럼 괄호가 붙어도 기본 역할과 같은 뱃지를 쓴다 */
@@ -17,12 +17,10 @@ function roleBadgeKey(role: string): string {
  *  - 현재 멤버(/people/members)와 과거 멤버(alumni, /people/alumni) 모두 링크 가능 */
 function renderMember(
   member: ProjectMember,
-  memberIds: string[],
-  alumniIds: string[],
-  profileSlugByYamlId: Record<string, string>,
+  profileLinks: ProfileLinks,
   key: React.Key
 ) {
-  const href = member.ID ? getProfileHref(member.ID, memberIds, alumniIds, profileSlugByYamlId) : null;
+  const href = member.ID ? getProfileHref(member.ID, profileLinks) : null;
   const hasValidId = !!href;
   const hasId = !!member.ID;
 
@@ -63,14 +61,12 @@ function renderMember(
 
 function renderMemberList(
   members: ProjectMember[],
-  memberIds: string[],
-  alumniIds: string[],
-  profileSlugByYamlId: Record<string, string>,
+  profileLinks: ProfileLinks,
   keyPrefix: string | number = ""
 ) {
   return members.map((member, i) => (
     <React.Fragment key={`${keyPrefix}-${i}`}>
-      {renderMember(member, memberIds, alumniIds, profileSlugByYamlId, `${keyPrefix}-${i}`)}
+      {renderMember(member, profileLinks, `${keyPrefix}-${i}`)}
       {i < members.length - 1 && ", "}
     </React.Fragment>
   ));
@@ -81,9 +77,7 @@ const PARTICIPANTS_PER_ROW = 4;
 /** 참여자 명단: 한 줄에 최대 4명, 초과 시 다음 줄 */
 function renderParticipantList(
   members: ProjectMember[],
-  memberIds: string[],
-  alumniIds: string[],
-  profileSlugByYamlId: Record<string, string>
+  profileLinks: ProfileLinks
 ) {
   const rows: ProjectMember[][] = [];
   for (let i = 0; i < members.length; i += PARTICIPANTS_PER_ROW) {
@@ -93,7 +87,7 @@ function renderParticipantList(
     <span className="flex flex-col gap-0.5">
       {rows.map((row, rowIndex) => (
         <span key={rowIndex}>
-          {renderMemberList(row, memberIds, alumniIds, profileSlugByYamlId, `participant-${rowIndex}`)}
+          {renderMemberList(row, profileLinks, `participant-${rowIndex}`)}
         </span>
       ))}
     </span>
@@ -161,17 +155,14 @@ function ProjectCard({
   index,
   isOngoing,
   isHighlighted = false,
-  memberIds = [],
-  alumniIds = [],
-  profileSlugByYamlId = {},
+  profileLinks = {},
 }: {
   project: ProjectData;
   index: number;
   isOngoing: boolean;
   isHighlighted?: boolean;
-  memberIds?: string[];
-  alumniIds?: string[];
-  profileSlugByYamlId?: Record<string, string>;
+  /** 사람 ID → 프로필 href 사전 (서버의 getProfileLinks() 결과) */
+  profileLinks?: ProfileLinks;
 }) {
   const dateRange = formatDateRange(project.start_date, project.end_date);
   const hasImage = Boolean(project.image?.url?.trim());
@@ -325,7 +316,7 @@ function ProjectCard({
                 <span className="flex flex-col gap-0.5 text-gray-600">
                   {currentManagers.map((manager, i) => (
                     <span key={i}>
-                      {renderMember(manager, memberIds, alumniIds, profileSlugByYamlId, `current-${i}`)}
+                      {renderMember(manager, profileLinks, `current-${i}`)}
                       {manager.since && (
                         <span className="ml-1.5 text-gray-400 text-[0.9em]">
                           · {formatMonth(manager.since)} ~ {isOngoing ? "Current" : formatMonth(project.end_date)}
@@ -342,7 +333,7 @@ function ProjectCard({
                 <span className="flex flex-col gap-0.5 text-gray-500">
                   {pastManagers.map((manager, i) => (
                     <span key={i}>
-                      {renderMember(manager, memberIds, alumniIds, profileSlugByYamlId, `past-${i}`)}
+                      {renderMember(manager, profileLinks, `past-${i}`)}
                       <span className="ml-1.5 text-gray-400 text-[0.9em]">
                         · {manager.since ? `${formatMonth(manager.since)} ~ ` : "~ "}{formatMonth(manager.until)}
                       </span>
@@ -355,7 +346,7 @@ function ProjectCard({
               <div className="flex flex-col sm:flex-row sm:items-baseline gap-0.5 sm:gap-2">
                 <span className="font-semibold text-gray-700 shrink-0 min-w-[120px]">참여자</span>
                 <span className="text-gray-600">
-                  {renderParticipantList(participantRoster, memberIds, alumniIds, profileSlugByYamlId)}
+                  {renderParticipantList(participantRoster, profileLinks)}
                 </span>
               </div>
             )}
@@ -368,13 +359,12 @@ function ProjectCard({
 
 interface ProjectListProps {
   projects: ProjectData[];
-  memberIds?: string[];
-  alumniIds?: string[];
-  profileSlugByYamlId?: Record<string, string>;
+  /** 사람 ID → 프로필 href 사전 (서버의 getProfileLinks() 결과) */
+  profileLinks?: ProfileLinks;
   className?: string;
 }
 
-export default function ProjectList({ projects, memberIds = [], alumniIds = [], profileSlugByYamlId = {}, className = "" }: ProjectListProps) {
+export default function ProjectList({ projects, profileLinks = {}, className = "" }: ProjectListProps) {
   const [showTalentDevelopment, setShowTalentDevelopment] = useState(true);
   const [highlightedProjectId, setHighlightedProjectId] = useState<string | null>(null);
 
@@ -455,9 +445,7 @@ export default function ProjectList({ projects, memberIds = [], alumniIds = [], 
           index={index}
           isOngoing={isOngoingProject}
           isHighlighted={isHighlighted}
-          memberIds={memberIds}
-          alumniIds={alumniIds}
-          profileSlugByYamlId={profileSlugByYamlId}
+          profileLinks={profileLinks}
         />
       </li>
     );

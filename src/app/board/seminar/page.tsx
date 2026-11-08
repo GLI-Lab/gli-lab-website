@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { getMetadata } from "@/lib/GetMetadata";
 import { SubCover } from "@/components/Covers";
 import { SeminarList } from "@/components/Board/SeminarList";
-import { getSeminars, getProfiles, getAlumniProfiles } from "@/data/loaders";
+import { getSeminars, getProfileLinks } from "@/data/loaders";
 
 const TITLE = "Seminar";
 const PATHNAME = "/board/seminar";
@@ -15,11 +15,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Page() {
-    const [seminars, profiles, alumniProfiles] = await Promise.all([
-        getSeminars(),
-        getProfiles(),
-        getAlumniProfiles().catch(() => []),
-    ]);
+    const [seminars, profileLinks] = await Promise.all([getSeminars(), getProfileLinks()]);
     const totalSeminars = seminars.length;
 
     return (
@@ -35,7 +31,7 @@ export default async function Page() {
                     </p>
                 </div>
 
-                <SeminarList layout="card" seminarItems={seminars} profiles={profiles} alumniProfiles={alumniProfiles} />
+                <SeminarList layout="card" seminarItems={seminars} profileLinks={profileLinks} />
             </div>
 
             <div className="h-40"></div>

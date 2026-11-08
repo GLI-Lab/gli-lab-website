@@ -3,18 +3,17 @@
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { PatentData } from '@/data/loaders/types';
+import { PatentData, type ProfileLinks } from '@/data/loaders/types';
 import { getProfileHref, titleToId } from '@/lib/utils';
 
 interface PatentListProps {
   className?: string
   patents: PatentData[];
-  memberIds?: string[];
-  alumniIds?: string[];
-  profileSlugByYamlId?: Record<string, string>;
+  /** 사람 ID → 프로필 href 사전 (서버의 getProfileLinks() 결과) */
+  profileLinks?: ProfileLinks;
 }
 
-export default function PatentList({ className = '', patents, memberIds = [], alumniIds = [], profileSlugByYamlId = {} }: PatentListProps) {
+export default function PatentList({ className = '', patents, profileLinks = {} }: PatentListProps) {
   const [filterType, setFilterType] = useState<'all' | 'filed' | 'registered'>('all');
   const [filterScope, setFilterScope] = useState<'all' | 'international' | 'domestic'>('all');
   const [triggerAnimation, setTriggerAnimation] = useState(0);
@@ -50,7 +49,7 @@ export default function PatentList({ className = '', patents, memberIds = [], al
   const renderAuthors = (patent: PatentData) => {
     return patent.authors.map((author, i) => {
       const hasId = !!author.ID;
-      const href = author.ID ? getProfileHref(author.ID, memberIds, alumniIds, profileSlugByYamlId) : null;
+      const href = author.ID ? getProfileHref(author.ID, profileLinks) : null;
       const hasValidId = !!href;
       
       const authorName = (
