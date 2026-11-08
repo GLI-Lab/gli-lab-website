@@ -27,7 +27,7 @@ normalize-public-filenames.js
 $ pnpm prebuild
 # 또는 하나만
 $ node scripts/optimize-images.js
-$ node scripts/generate-og-images.js          # 없는 OG만 생성
+$ node scripts/generate-og-images.js          # 사진 해시가 바뀐 OG만 생성
 $ node scripts/generate-og-images.js --force  # 전부 다시 생성
 ```
 
@@ -64,8 +64,8 @@ $ node scripts/optimize-images.js
 
 최신 `profiles.yaml` / `profiles-alumni.yaml`을 읽고, 사진·이름·역할을 합성한다. 최신 학기 파일은 `src/data/loaders/profileYamlFile.js`를 쓰며, 사이트 로더(`profileLoader.ts`)와 같다. 결과는 git에 커밋한다. 서버의 한글 폰트에 의존하지 않도록 빌드 산출물이 아니라 저장소에 둔다.
 
-- 기본: 파일이 있으면 스킵 (새 프로필만 생성)
-- `--force`: 전부 다시 생성. 기존 사진을 리사이즈했거나 이름/역할을 바꿨을 때
+- 기본: `public-file-index.json`의 프로필 사진 해시와 지금 `*1` 파일을 비교한다. 이 스크립트가 인덱스보다 **먼저** 돌므로 JSON은 직전 배포의 해시이고, 같은 이름으로 사진을 갈아끼우면 달라져 OG를 다시 만든다.
+- `--force`: 해시와 관계없이 전부 다시 생성. 이름·역할만 바꿨거나 OG 레이아웃을 바꿨을 때
 
 ```bash
 $ node scripts/generate-og-images.js
@@ -83,6 +83,5 @@ $ node scripts/generate-og-images.js --force
 ## 7) 사진 추가·삭제 후
 
 1. 파일을 `public/images/profiles/` 또는 `public/images/gallery/<폴더>/`에 넣거나 지운다.
-2. `pnpm prebuild` (또는 위 스크립트를 순서대로).
-3. 프로필 사진을 바꿨으면 OG가 스킵될 수 있으니 `node scripts/generate-og-images.js --force`를 한 번 더 돌린다.
-4. 생성된 WebP·OG·인덱스 JSON을 커밋한다.
+2. `pnpm prebuild` (또는 위 스크립트를 순서대로). 같은 이름 사진 교체도 OG가 다시 만들어진다.
+3. 생성된 WebP·OG·`public-file-index.json`을 커밋한다.

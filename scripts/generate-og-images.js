@@ -3,6 +3,33 @@ const path = require('path');
 const yaml = require('js-yaml');
 const sharp = require('sharp');
 const { findLatestProfileYamlPath } = require('../src/data/loaders/profileYamlFile');
+const { hashFile } = require('./lib/fileHash');
+
+const PROFILE_IMAGE_DIR = 'images/profiles';
+
+function cleanRoleTitle(roleTitle) {
+  return (roleTitle || '').replace(/\s*\([^)]*\)\s*/g, '').trim();
+}
+
+/** 직전 prebuild가 남긴 프로필 사진 해시. 이 스크립트가 인덱스보다 먼저 돌므로 “이전 사진”이다. */
+function loadPreviousProfilePhotoHashes() {
+  try {
+    const index = require('../src/data/generated/public-file-index.json');
+    return index.hashes?.[PROFILE_IMAGE_DIR] || {};
+  } catch {
+    return {};
+  }
+}
+
+function currentPhotoHash(photoUrl) {
+  if (!photoUrl) return '';
+  const photoAbs = path.join(process.cwd(), 'public', photoUrl.replace(/^\//, ''));
+  try {
+    return hashFile(photoAbs);
+  } catch {
+    return '';
+  }
+}
 
 // 파일명에서 프로필 ID 추출 (예: "[2024.03] 오병국1.webp" -> "[2024.03] 오병국")
 function extractProfileIdFromFilename(filename) {
@@ -157,10 +184,10 @@ async function generateOGImageWebP({ photoUrl, nameEn, nameKo, roleTitle }) {
     
     if (roleTitle) {
       // 괄호와 그 안의 학기 정보 제거 (예: "M.S. Student (2학기)" -> "M.S. Student")
-      const cleanRoleTitle = roleTitle.replace(/\s*\([^)]*\)\s*/g, '').trim();
+      const role = cleanRoleTitle(roleTitle);
       textSvg += `
       <text x="560" y="${roleTitleY}" font-family="Arial, sans-serif" font-size="38" font-weight="400" fill="#475569" text-anchor="start">
-        ${cleanRoleTitle}
+        ${role}
       </text>`;
     }
     
@@ -212,6 +239,7 @@ async function generateStaticImages(forceRegenerate = false) {
     
     // 모든 프로필 이미지 생성 (일반 프로필과 alumni 모두 포함)
     const profiles = await getProfilesFromFiles();
+    const previousHashes = loadPreviousProfilePhotoHashes();
     console.log(`📝 Checking ${profiles.length} profile images...`);
     
     let generatedCount = 0;
@@ -221,20 +249,27 @@ async function generateStaticImages(forceRegenerate = false) {
       if (profile.id) {
         const filename = `${profile.id}.webp`;
         const filepath = path.join(outputDir, filename);
-        
-        // 파일이 이미 존재하는지 확인 (강제 재생성 모드가 아닌 경우)
-        if (!forceRegenerate) {
-          try {
-            await fs.access(filepath);
-            console.log(`  ⏭️  Skipped (exists): ${filename}`);
-            skippedCount++;
-            continue;
-          } catch {
-            // 파일이 없으면 생성
-          }
+        const photoPath = profile.photo?.[0];
+        const photoFilename = photoPath ? path.basename(photoPath) : '';
+        const previousHash = previousHashes[photoFilename];
+        const photoChanged = previousHash != null && previousHash !== currentPhotoHash(photoPath);
+
+        let ogExists = false;
+        try {
+          await fs.access(filepath);
+          ogExists = true;
+        } catch {
+          ogExists = false;
+        }
+
+        // 인덱스의 이전 해시와 지금 *1 사진이 같고 OG가 있으면 스킵.
+        // 인덱스에 아직 없으면(첫 도입·새 파일) 기존 OG가 있을 때만 스킵.
+        if (!forceRegenerate && ogExists && !photoChanged) {
+          console.log(`  ⏭️  Skipped (unchanged): ${filename}`);
+          skippedCount++;
+          continue;
         }
         
-        const photoPath = profile.photo?.[0]; // 로컬 경로 사용
         const webpBuffer = await generateOGImageWebP({
           photoUrl: photoPath,
           nameEn: profile.name_en,
@@ -243,7 +278,7 @@ async function generateStaticImages(forceRegenerate = false) {
         });
         
         await fs.writeFile(filepath, webpBuffer);
-        console.log(`  ✅ Generated: ${filename}`);
+        console.log(`  ✅ ${ogExists ? 'Updated' : 'Generated'}: ${filename}`);
         generatedCount++;
       }
     }
