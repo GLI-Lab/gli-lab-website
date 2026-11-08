@@ -1,9 +1,9 @@
 import yaml from 'js-yaml';
-import path from 'path';
 import fs from 'fs/promises';
 import { ProfileYAML, ProfileData } from './types';
 import { generateProfileSlug } from '@/lib/profileSlug';
 import { getPublicFileHash, listPublicFiles } from './publicFileIndex';
+import { findLatestProfileYamlPath } from './profileYamlFile';
 
 const PROFILE_IMAGE_DIR = 'images/profiles';
 
@@ -16,7 +16,7 @@ function profilePhotoUrl(filename: string): string {
 // YAML 파일을 읽어서 프로필 데이터 반환
 async function loadProfilesYAML(isAlumni: boolean = false): Promise<ProfileYAML[]> {
   try {
-    const filePath = await findProfileFile(isAlumni ? 'profiles-alumni.yaml' : 'profiles.yaml');
+    const filePath = await findLatestProfileYamlPath(isAlumni ? 'profiles-alumni.yaml' : 'profiles.yaml');
     const yamlText = await fs.readFile(filePath, 'utf8');
     const rawData = yaml.load(yamlText) as ProfileYAML[];
     return rawData;
@@ -204,49 +204,6 @@ function transformProfile(yamlProfile: ProfileYAML, photosDict: Map<string, stri
     quote: typeof yamlProfile.quote === 'string' ? yamlProfile.quote.trim() || undefined : undefined,
     reflection: typeof yamlProfile.reflection === 'string' ? yamlProfile.reflection.trim() || undefined : undefined,
   };
-}
-
-// 프로필 파일을 찾는 함수
-async function findProfileFile(suffix: string): Promise<string> {
-  const dataDir = path.join(process.cwd(), 'src', 'data', 'profiles');
-  const files = await fs.readdir(dataDir);
-  
-  // 지정된 suffix로 끝나는 파일들 찾기
-  const matchingFiles = files.filter(file => file.endsWith(suffix));
-  
-  if (matchingFiles.length === 0) {
-    throw new Error(`No profile file found with suffix: ${suffix}`);
-  }
-  
-  // [년도-학기] 형식의 파일명에서 최신 것 찾기
-  const profileFile = findLatestFile(matchingFiles);
-  
-  return path.join(dataDir, profileFile);
-}
-
-// [년도-학기] 형식의 파일명에서 최신 파일을 찾는 함수
-function findLatestFile(files: string[]): string {
-  const fileWithYearSemester = files.map(file => {
-    // [년도-학기] 패턴 매칭
-    const match = file.match(/^\[(\d{4})-(\d+)\]/);
-    if (match) {
-      const year = parseInt(match[1]);
-      const semester = parseInt(match[2]);
-      return { file, year, semester };
-    }
-    // 패턴이 없는 경우 기본값으로 처리 (가장 나중에 선택되도록)
-    return { file, year: 0, semester: 0 };
-  });
-  
-  // 년도 내림차순, 학기 내림차순으로 정렬
-  fileWithYearSemester.sort((a, b) => {
-    if (a.year !== b.year) {
-      return b.year - a.year;
-    }
-    return b.semester - a.semester;
-  });
-  
-  return fileWithYearSemester[0].file;
 }
 
 // 현재 프로필 데이터를 가져오는 함수
