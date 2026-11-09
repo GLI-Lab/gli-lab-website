@@ -259,6 +259,10 @@ const config = {
                     '0%': { transform: 'translateY(-10px)', opacity: '0' },
                     '100%': { transform: 'translateY(0)', opacity: '1' },
                 },
+                bannerToastOut: {
+                    '0%, 78%': { opacity: '1' },
+                    '100%': { opacity: '0' },
+                },
             },
             animation: {
                 'cinematic-1': 'cinematic1 40s infinite cubic-bezier(0.25, 0.46, 0.45, 0.94)',
@@ -269,6 +273,7 @@ const config = {
                 'flip-down': 'flipDown 1s ease-out forwards',
                 'drop-in': 'dropIn 0.5s ease-out forwards',
                 'drop-in-25': 'dropIn 0.25s ease-out forwards',
+                'banner-toast-out': 'bannerToastOut 2.3s ease-out forwards',
             },
         },
     },

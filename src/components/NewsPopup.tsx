@@ -14,7 +14,37 @@ import type { NewsPopupAlert } from "@/lib/newsPaper";
 
 const NEWS_POPUP_ROOT_ID = "news-popup-root";
 const BANNER_HEIGHT_CSS_VAR = "--news-banner-height";
+const DISMISS_STORAGE_KEY = "gli-lab:news-banner-dismissed";
+const DISMISS_DURATION_MS = 30 * 60 * 1000;
 const BOLD_PATTERN = /<b>([^<]+)<\/b>/g;
+
+type DismissedMap = Record<string, number>;
+
+function readDismissed(): DismissedMap {
+  try {
+    const raw = localStorage.getItem(DISMISS_STORAGE_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw) as DismissedMap;
+    const now = Date.now();
+    const next: DismissedMap = {};
+    for (const [id, expiresAt] of Object.entries(parsed)) {
+      if (typeof expiresAt === "number" && expiresAt > now) {
+        next[id] = expiresAt;
+      }
+    }
+    return next;
+  } catch {
+    return {};
+  }
+}
+
+function writeDismissed(map: DismissedMap) {
+  try {
+    localStorage.setItem(DISMISS_STORAGE_KEY, JSON.stringify(map));
+  } catch {
+    // private mode / quota
+  }
+}
 
 function renderHeadlineWithBold(text: string, keyPrefix: string): ReactNode {
   const nodes: ReactNode[] = [];
@@ -59,13 +89,30 @@ interface NewsPopupProps {
 
 export default function NewsPopup({ alerts }: NewsPopupProps) {
   const bannerRef = useRef<HTMLDivElement>(null);
+  const fallbackTimers = useRef<Map<string, number>>(new Map());
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
   const [bannerHeight, setBannerHeight] = useState(0);
-  const [visibleAlerts, setVisibleAlerts] = useState(alerts);
+  const [visibleAlerts, setVisibleAlerts] = useState<NewsPopupAlert[]>([]);
+  const [exitingIds, setExitingIds] = useState<string[]>([]);
 
   useEffect(() => {
-    setVisibleAlerts(alerts);
-  }, [alerts]);
+    return () => {
+      for (const timer of fallbackTimers.current.values()) {
+        window.clearTimeout(timer);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const dismissed = readDismissed();
+    const now = Date.now();
+    setVisibleAlerts(
+      alerts.filter((alert) => {
+        if (exitingIds.includes(alert.id)) return true;
+        return (dismissed[alert.id] ?? 0) <= now;
+      }),
+    );
+  }, [alerts, exitingIds]);
 
   useEffect(() => {
     const nav = document.body.querySelector("nav");
@@ -89,7 +136,11 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
 
   useLayoutEffect(() => {
     const el = bannerRef.current;
-    if (!el) return;
+    if (!el) {
+      setBannerHeight(0);
+      document.documentElement.style.removeProperty(BANNER_HEIGHT_CSS_VAR);
+      return;
+    }
 
     const update = () => {
       const next = el.offsetHeight;
@@ -109,13 +160,28 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
     const observer = new ResizeObserver(update);
     observer.observe(el);
     return () => observer.disconnect();
-  }, [portalRoot, visibleAlerts]);
+  }, [portalRoot, visibleAlerts, exitingIds]);
 
-  const dismiss = (id: string) => {
+  const finishExit = (id: string) => {
+    const timer = fallbackTimers.current.get(id);
+    if (timer !== undefined) {
+      window.clearTimeout(timer);
+      fallbackTimers.current.delete(id);
+    }
     setVisibleAlerts((prev) => prev.filter((alert) => alert.id !== id));
+    setExitingIds((current) => current.filter((exitingId) => exitingId !== id));
   };
 
-  if (visibleAlerts.length === 0) return null;
+  const dismiss = (id: string) => {
+    if (fallbackTimers.current.has(id)) return;
+    const next = { ...readDismissed(), [id]: Date.now() + DISMISS_DURATION_MS };
+    writeDismissed(next);
+    setExitingIds((current) =>
+      current.includes(id) ? current : [...current, id],
+    );
+    const timer = window.setTimeout(() => finishExit(id), 2500);
+    fallbackTimers.current.set(id, timer);
+  };
 
   const fixedBanner = (
     <div
@@ -128,8 +194,31 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
       {visibleAlerts.map((alert, index) => (
             <div
               key={alert.id}
-              className="w-full transition-colors hover:bg-brand-primary/10"
+              className={`w-full ${
+                exitingIds.includes(alert.id)
+                  ? "animate-banner-toast-out"
+                  : "transition-colors hover:bg-brand-primary/10"
+              }`}
+              onAnimationEnd={
+                exitingIds.includes(alert.id)
+                  ? (event) => {
+                      if (event.target !== event.currentTarget) return;
+                      finishExit(alert.id);
+                    }
+                  : undefined
+              }
             >
+            {exitingIds.includes(alert.id) ? (
+            <p
+              role="status"
+              aria-live="polite"
+              className={`max-w-screen-xl mx-auto px-4 py-2 text-sm md:text-base text-gray-700 text-center leading-snug${
+                index > 0 ? " border-t border-brand-primary/25" : ""
+              }`}
+            >
+              This banner will be hidden for 30 minutes.
+            </p>
+            ) : (
             <div
               className={`max-w-screen-xl mx-auto px-4 flex items-start gap-3 py-2${
                 index > 0 ? " border-t border-brand-primary/25" : ""
@@ -179,16 +268,19 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
                 type="button"
                 onClick={() => dismiss(alert.id)}
                 className="p-1 rounded-md mt-0.5 text-gray-600 hover:text-gray-900 hover:bg-white/60 transition-colors"
-                aria-label="Dismiss"
+                aria-label="Hide for 30 minutes"
               >
                 <IoClose size={22} />
               </button>
             </div>
             </div>
+            )}
           </div>
         ))}
     </div>
   );
+
+  if (visibleAlerts.length === 0) return null;
 
   return (
     <>
@@ -199,7 +291,9 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
           style={{ height: bannerHeight }}
         />
       )}
-      {portalRoot ? createPortal(fixedBanner, portalRoot) : null}
+      {portalRoot && visibleAlerts.length > 0
+        ? createPortal(fixedBanner, portalRoot)
+        : null}
     </>
   );
 }
