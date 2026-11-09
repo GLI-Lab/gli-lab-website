@@ -52,7 +52,17 @@ const nextConfig = {
             },
             {
                 source: '/research',
-                destination: '/research/topic',
+                destination: '/research/topics',
+                permanent: true,
+            },
+            {
+                source: '/research/topic',
+                destination: '/research/topics',
+                permanent: true,
+            },
+            {
+                source: '/publications',
+                destination: '/publications/papers',
                 permanent: true,
             },
             {
