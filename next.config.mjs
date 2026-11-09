@@ -70,6 +70,11 @@ const nextConfig = {
                 destination: '/board/gallery',
                 permanent: true,
             },
+            {
+                source: '/contact',
+                destination: '/contact/information',
+                permanent: true,
+            },
         ];
     },
     // 브라우저 주소 표시줄의 URL이 변경되지 않음

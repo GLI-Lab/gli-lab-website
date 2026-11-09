@@ -80,15 +80,6 @@ export default function Header() {
     const [activeMenu, setActiveMenu] = useState<number | null>(null);
     const isScrolled = useHeaderScrolled();
     const headerHeight = useHeaderHeight();
-    const [isTouchDevice, setIsTouchDevice] = useState(false);
-
-    // Detect touch device
-    useEffect(() => {
-        const checkTouchDevice = () => {
-            setIsTouchDevice('ontouchstart' in window || navigator.maxTouchPoints > 0);
-        };
-        checkTouchDevice();
-    }, []);
 
     // Close submenu when clicking outside
     useEffect(() => {
@@ -158,7 +149,7 @@ export default function Header() {
         },
         {
             title: "Contact",
-            path: "/contact",
+            path: "/contact/information",
             subMenus: [
                 {title: "✨ Hiring (Q&A) ✨", path: "/contact/hiring"},
                 {title: "Email & Location", path: "/contact/information"},
@@ -233,38 +224,27 @@ export default function Header() {
                     <div className="hidden md:block flex-1">
                         <ul className="justify-end items-center md:flex md:space-x-4 1.5md:space-x-8 lg:space-x-10 xl:space-x-12">
                             {menus.map((item, idx) => (
-                                <li key={idx} className="relative "           // 서브메뉴 리스트 선택할 수 있게
-                                    onMouseEnter={() => !isTouchDevice && setActiveMenu(idx)}   // 호버 시 서브메뉴 활성화 (터치 디바이스 제외)
-                                    onMouseLeave={() => !isTouchDevice && setActiveMenu(null)}  // 호버 해제 시 서브메뉴 비활성화 (터치 디바이스 제외)
+                                <li key={idx} className="relative "
+                                    onMouseEnter={() => setActiveMenu(idx)}
+                                    onMouseLeave={() => setActiveMenu(null)}
                                 >
-
-                                    {/* 메인 메뉴 */}
-                                    {item.subMenus ? (
-                                        <div 
-                                            className={`flex tracking-tight items-center transition-colors duration-200 pb-5 mt-5 cursor-pointer ${
-                                                activeMenu === idx ? "text-green-900" : ""}
-                                                ${isScrolled ? "text-[16.5px]" : "text-[16.5px] 1.5md:text-[17px] lg:text-[18px]"} `}
-                                            onClick={(e) => {
-                                                e.preventDefault();
-                                                setActiveMenu(activeMenu === idx ? null : idx);
-                                            }}
-                                        >
-                                            {item.title}
+                                    <Link
+                                        href={item.path}
+                                        {...(isExternalUrl(item.path) && {target: "_blank", rel: "noopener noreferrer"})}
+                                        className={`flex tracking-tight items-center transition-colors duration-200 pb-5 mt-5 ${
+                                            activeMenu === idx ? "text-green-900" : ""}
+                                            ${isScrolled ? "text-[16.5px]" : "text-[16.5px] 1.5md:text-[17px] lg:text-[18px]"} `}
+                                        onClick={() => setActiveMenu(null)}
+                                    >
+                                        {item.title}
+                                        {item.subMenus && (
                                             <IoChevronDown
                                                 size={16}
                                                 className={`ml-0.5 mt-0.5 transition duration-200 ${
                                                     activeMenu === idx ? "rotate-180" : "rotate-0"}`}
                                             />
-                                        </div>
-                                    ) : (
-                                        <Link href={item.path}
-                                              {...(isExternalUrl(item.path) && {target: "_blank", rel: "noopener noreferrer"})}
-                                              className={`flex tracking-tight items-center transition-colors duration-200 pb-5 mt-5 ${
-                                                  activeMenu === idx ? "text-green-900" : ""}
-                                                  ${isScrolled ? "text-[16.5px]" : "text-[16.5px] 1.5md:text-[17px] lg:text-[18px]"} `}>
-                                            {item.title}
-                                        </Link>
-                                    )}
+                                        )}
+                                    </Link>
 
                                     {/* 서브 메뉴 리스트 */}
                                     {activeMenu === idx && item.subMenus && (
