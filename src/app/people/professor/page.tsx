@@ -13,7 +13,7 @@ export default function Page() {
     return (
         // bg-[#f7f7f7]
         <div className="max-w-[1600px] mx-auto">
-            <SubCover title="Student" pathname="/people/professor" />
+            <SubCover title="Student" pathname="/people/professor" pattern="diagonal-lines" colorVariant="sage" />
 
             {/*<div className="mt-8 text-left">*/}
             {/*  <h2 className="ml-4 text-xl font-semibold">Professor</h2>*/}
