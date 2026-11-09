@@ -32,7 +32,6 @@ export default async function Page() {
                     showFilters={true}
                 />
             </div>
-            <div className="h-40"></div>
         </>
     )
 }

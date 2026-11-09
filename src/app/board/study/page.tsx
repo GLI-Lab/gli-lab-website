@@ -33,7 +33,6 @@ export default async function Page() {
                 <StudyList studyItems={studies} profileLinks={profileLinks}/>
             </div>
 
-            <div className="h-[10vh]"></div>
         </>
     )
 }

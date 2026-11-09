@@ -34,7 +34,6 @@ export default async function Page() {
                 <SeminarList layout="card" seminarItems={seminars} profileLinks={profileLinks} />
             </div>
 
-            <div className="h-40"></div>
         </>
     );
 }

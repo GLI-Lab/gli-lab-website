@@ -29,7 +29,7 @@ export default function RootLayout({children,}:
                 <SpeedInsights/>
                 <Header/>
                 <ScrollToTop />
-                <main className="flex-grow pb-10">
+                <main className="flex-grow pb-40">
                     {children}
                 </main>
                 <Footer/>

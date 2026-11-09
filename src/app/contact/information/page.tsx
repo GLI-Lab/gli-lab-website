@@ -144,7 +144,6 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="h-40" />
     </>
   );
 }

@@ -29,7 +29,6 @@ export default async function GalleryLayout({
 
       {children}
 
-      <div className="h-[10vh]" />
     </>
   );
 }

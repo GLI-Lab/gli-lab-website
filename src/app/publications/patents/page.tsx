@@ -30,7 +30,6 @@ export default async function Page() {
                     profileLinks={profileLinks}
                 />
             </div>
-            <div className="h-40"></div>
         </>
     )
 }
