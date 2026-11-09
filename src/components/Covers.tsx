@@ -83,8 +83,8 @@ export function SubCover({
   href,
   pathname,
   backgroundImage = '/images/cover/main4-3-dark.webp',
-  pattern,
-  colorVariant = 'neutral',
+  pattern = 'diagonal-lines',
+  colorVariant = 'sage',
   showBreadcrumb = true
 }: CoverProps) {    
   const currentPathname = usePathname();
