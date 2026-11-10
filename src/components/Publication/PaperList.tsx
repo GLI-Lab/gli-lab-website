@@ -523,13 +523,15 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
                     <li 
                       key={index} 
                       id={paperId}
-                      className="leading-normal"
+                      className="relative leading-normal"
                     >
-                      <div className={`transition-colors duration-300 ${
-                        isHighlighted 
-                          ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
-                          : ''
-                      }`}>
+                      {isHighlighted && (
+                        <span
+                          aria-hidden
+                          className="pointer-events-none absolute -top-1.5 -bottom-1.5 -right-1 -left-6 rounded-xl bg-brand-primary/10  animate-highlight-pulse md:-right-2 md:-left-8"
+                        />
+                      )}
+                      <div className={isHighlighted ? "animate-highlight-pulse" : undefined}>
                         <div className="text-[16px] md:text-[18px] font-medium text-gray-800 mb-1">
                           {renderPaperTitle(
                             publication.title,
@@ -576,13 +578,15 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
                     <li 
                       key={index} 
                       id={paperId}
-                      className="leading-normal"
+                      className="relative leading-normal"
                     >
-                      <div className={`transition-colors duration-300 ${
-                        isHighlighted 
-                          ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
-                          : ''
-                      }`}>
+                      {isHighlighted && (
+                        <span
+                          aria-hidden
+                          className="pointer-events-none absolute -top-1.5 -bottom-1.5 -right-1 -left-6 rounded-xl bg-brand-primary/10 animate-highlight-pulse md:-right-2 md:-left-8"
+                        />
+                      )}
+                      <div className={isHighlighted ? "animate-highlight-pulse" : undefined}>
                         <div className="text-[16px] md:text-[18px] font-medium text-gray-800 mb-1">
                           {renderPaperTitle(publication.title, renderCopyButton(paperId))}
                         </div>
@@ -610,13 +614,15 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
                 <li 
                   key={index} 
                   id={paperId}
-                  className="leading-normal"
+                  className="relative leading-normal"
                 >
-                  <div className={`transition-colors duration-300 ${
-                    isHighlighted 
-                      ? 'bg-brand-primary/10 shadow-lg animate-pulse' 
-                      : ''
-                  }`}>
+                  {isHighlighted && (
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute -top-1.5 -bottom-1.5 -right-1 -left-6 rounded-xl bg-brand-primary/10 animate-highlight-pulse md:-right-2 md:-left-8"
+                    />
+                  )}
+                  <div className={isHighlighted ? "animate-highlight-pulse" : undefined}>
                     <div className="text-[16px] md:text-[18px] font-medium text-gray-800 mb-1">
                       {renderPaperTitle(publication.title, renderCopyButton(paperId))}
                     </div>
