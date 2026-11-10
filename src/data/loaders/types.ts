@@ -92,24 +92,39 @@ export interface ProfileData {
 }
 
 /**
- * 사람 ID(YAML id) → 프로필 상세 페이지 href 사전.
+ * 사람 링크 하나. 클릭 주소와, 호버 카드에 보여줄 짧은 프로필.
+ * `href`는 `/`로 끝난다(next.config의 trailingSlash: true).
+ */
+export interface ProfileLinkTarget {
+  href: string;
+  nameEn: string;
+  nameKo: string;
+  /** role.title. 예: "Ph.D. Student (3학기)" */
+  title: string;
+  photo: string;
+  /** 소속, 입학, 참여 기간 중 카드에 넣을 한 줄. 없으면 빈 문자열 */
+  summary: string;
+}
+
+/**
+ * 사람 ID(YAML id) → 프로필 링크 사전.
  * 서버에서 `getProfileLinks()`가 members·alumni 프로필을 읽어 한 번 만들고,
- * 논문·특허·프로젝트·뉴스·세미나·스터디 컴포넌트는 이 사전만 받아서 `links[ID]`로 바로 꺼내 쓴다.
+ * 논문·특허·프로젝트·뉴스·세미나·스터디 컴포넌트는 이 사전만 받아서 링크와 호버 카드를 만든다.
+ * 주소만 필요하면 `getProfileHref(id, links)`로 `links[id].href`를 꺼낸다.
  *
  * 키는 `src/data/profiles/[YYYY-S] profiles*.yaml`의 `id`이고, 다른 YAML들은 이 값을 `ID`로 참조한다.
  *   paper.yaml   : authors: [{ ID: "[2024.03] 오병국", ... }]
  *   seminar.yaml : Presenter: { ID: "[2024.06] 서지명", ... }
  *   news.yaml    : "<profile=[2024.03] 오병국>오병국</>"
  *
- * 값은 `/`로 끝나는 완성된 주소(next.config의 trailingSlash: true에 맞춤).
  * 같은 사람이 members와 alumni 양쪽에 있으면(학부연구생 alumni가 현재 멤버인 경우) members 경로가 된다.
  *
  * 예: {
- *   "[2024.03] 오병국": "/people/members/2024-03-byungkook-oh/",
- *   "[2024.07] 지상준": "/people/alumni/2024-07-sangjun-ji/",
+ *   "[2024.03] 오병국": { href: "/people/members/2024-03-byungkook-oh/", nameEn: "Byungkook Oh", ... },
+ *   "[2024.07] 지상준": { href: "/people/alumni/2024-07-sangjun-ji/", nameEn: "Sangjun Ji", ... },
  * }
  */
-export type ProfileLinks = Record<string, string>;
+export type ProfileLinks = Record<string, ProfileLinkTarget>;
 
 export interface ProfileItemProps extends ProfileData {
   onClick?: () => void;
@@ -124,6 +139,8 @@ export interface ProfileDetailProps extends ProfileData {
   projects?: ProjectData[];
   seminars?: SeminarData[];
   isAlumniPage?: boolean;
+  /** 논문·특허 저자 이름에 붙이는 사람 링크. 없으면 이름은 텍스트로 남긴다 */
+  profileLinks?: ProfileLinks;
 }
 
 // =====================================================

@@ -14,7 +14,7 @@ import { ProfileQuoteText } from './ProfileQuoteText';
 import { getSeminarsForProfile } from '@/data/loaders/utils';
 
 export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
-    const {id, yamlId, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, captain, cv, cvVersion, quote, reflection, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false } = props;
+    const {id, yamlId, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, captain, cv, cvVersion, quote, reflection, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false, profileLinks } = props;
 
     const renderEducation = (
         label: string,
@@ -227,8 +227,8 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                 </div>
                 <Separator className="my-3"/>
 
-                <ProfileDetailPaper papers={filteredPapers} profileYamlId={yamlId} />
-                <ProfileDetailPatent patents={filteredPatents} profileYamlId={yamlId} />
+                <ProfileDetailPaper papers={filteredPapers} profileYamlId={yamlId} profileLinks={profileLinks} />
+                <ProfileDetailPatent patents={filteredPatents} profileYamlId={yamlId} profileLinks={profileLinks} />
                 <ProfileDetailProject projects={projects} profileId={yamlId} />
                 <ProfileDetailSeminar seminars={filteredSeminars} profileYamlId={yamlId} />
                 <ProfileDetailStudy studies={filteredStudies} profileYamlId={yamlId} />

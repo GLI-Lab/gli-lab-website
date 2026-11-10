@@ -1,15 +1,15 @@
 import Link from 'next/link';
 import { getProfileLinks } from '@/data/loaders';
 import { StudyData, type ProfileLinks } from '@/data/loaders/types';
+import { ProfileHoverLink } from '@/components/Profile/ProfileHoverLink';
 import { StudyHighlightWrapper } from './StudyHighlight';
-import { getProfileHref } from '@/lib/utils';
 
 
 export interface StudyListProps {
   className?: string
   count?: number | null
   studyItems?: StudyData[]
-  /** 사람 ID → 프로필 href 사전 (서버의 getProfileLinks() 결과). 생략하면 컴포넌트가 직접 불러온다 */
+  /** 사람 ID → 프로필 링크 사전 (서버의 getProfileLinks() 결과). 생략하면 컴포넌트가 직접 불러온다 */
   profileLinks?: ProfileLinks
 }
 
@@ -59,14 +59,13 @@ function renderProfileWithLink(participant: string, profileLinks: ProfileLinks):
   
   if (profileMatch) {
     const [, profileId, displayName] = profileMatch;
-    const href = getProfileHref(profileId, profileLinks);
+    const profile = profileLinks[profileId];
     
-    if (href) {
+    if (profile) {
       return (
-        <Link 
-          href={href}
+        <ProfileHoverLink
+          profile={profile}
           className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
-          title={`View ${displayName}`}
         >
           <span className=" transition-colors [&:hover>svg]:text-brand-primary">
             {displayName}
@@ -74,7 +73,7 @@ function renderProfileWithLink(participant: string, profileLinks: ProfileLinks):
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
           </span>
-        </Link>
+        </ProfileHoverLink>
       );
     } else {
       console.warn(`⚠️ Profile not found for ID: "${profileId}"`);

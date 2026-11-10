@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { type PatentData } from '@/data/loaders/types';
+import { type PatentData, type ProfileLinks } from '@/data/loaders/types';
+import { ProfileAuthorName } from './ProfileHoverLink';
 import { titleToId } from '@/lib/utils';
 import { ProfileDetailExpandToggle } from './ProfileDetailExpandToggle';
 import { ProfileDetailListMarker } from './ProfileDetailListMarker';
@@ -15,6 +16,7 @@ const PATENT_EXPAND_STEP = 5;
 interface ProfileDetailPatentProps {
     patents: PatentData[];
     profileYamlId: string;
+    profileLinks?: ProfileLinks;
 }
 
 function formatPatentDate(dateStr: string | null): string {
@@ -26,7 +28,7 @@ function formatPatentDate(dateStr: string | null): string {
     return `${year}년 ${month}월 ${day}일`;
 }
 
-export function ProfileDetailPatent({ patents, profileYamlId }: ProfileDetailPatentProps) {
+export function ProfileDetailPatent({ patents, profileYamlId, profileLinks }: ProfileDetailPatentProps) {
     const [displayedCount, setDisplayedCount] = useState(PATENT_PREVIEW_LIMIT);
 
     useEffect(() => {
@@ -73,15 +75,16 @@ export function ProfileDetailPatent({ patents, profileYamlId }: ProfileDetailPat
                                             <div className="text-[13px] md:text-[14px] text-text-secondary">
                                                 {patent.authors?.map((author, idx) => (
                                                     <span key={idx}>
-                                                        <span
+                                                        <ProfileAuthorName
+                                                            authorId={author.ID}
+                                                            name={author.name}
+                                                            profileLinks={profileLinks}
                                                             className={
                                                                 author.ID === profileYamlId
                                                                     ? 'font-semibold text-black italic'
                                                                     : 'italic'
                                                             }
-                                                        >
-                                                            {author.name}
-                                                        </span>
+                                                        />
                                                         {idx < patent.authors.length - 1 ? ', ' : ''}
                                                     </span>
                                                 ))}

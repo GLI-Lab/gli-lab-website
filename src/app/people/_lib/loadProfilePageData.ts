@@ -2,6 +2,7 @@ import {
   getAlumniProfiles,
   getPapers,
   getPatents,
+  getProfileLinks,
   getProfiles,
   getProjects,
   getSeminars,
@@ -9,14 +10,15 @@ import {
 } from '@/data/loaders';
 
 export async function loadProfilePageData(isAlumni: boolean) {
-  const [profiles, studies, papers, patents, projects, seminars] = await Promise.all([
+  const [profiles, studies, papers, patents, projects, seminars, profileLinks] = await Promise.all([
     isAlumni ? getAlumniProfiles() : getProfiles(),
     getStudies(),
     getPapers(),
     getPatents(),
     getProjects(),
     getSeminars(),
+    getProfileLinks(),
   ]);
 
-  return { profiles, studies, papers, patents, projects, seminars };
+  return { profiles, studies, papers, patents, projects, seminars, profileLinks };
 }

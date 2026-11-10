@@ -99,12 +99,13 @@ export function getSeminarHashId(title: string): string {
  *
  * @param id    YAML id. 예: "[2024.03] 오병국"
  * @param links `getProfileLinks()` 결과. 클라이언트 컴포넌트는 prop으로 받는다.
- *              예: { "[2024.03] 오병국": "/people/members/2024-03-byungkook-oh/",
- *                    "[2024.07] 지상준": "/people/alumni/2024-07-sangjun-ji/" }
+ *              주소는 `links[id].href`.
+ *              예: { "[2024.03] 오병국": { href: "/people/members/2024-03-byungkook-oh/", ... },
+ *                    "[2024.07] 지상준": { href: "/people/alumni/2024-07-sangjun-ji/", ... } }
  * @returns "[2024.03] 오병국"   → "/people/members/2024-03-byungkook-oh/"
  *          "[2024.07] 지상준"   → "/people/alumni/2024-07-sangjun-ji/"
  *          "[2020.01] 없는사람" → null  (links가 undefined여도 null)
  */
 export function getProfileHref(id: string, links?: ProfileLinks): string | null {
-  return links?.[id] ?? null;
+  return links?.[id]?.href ?? null;
 }

@@ -56,7 +56,7 @@ function WrappedContactEntries({
 }
 
 export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolean }> = (props) => {
-    const {id, yamlId, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, captain, cv, cvVersion, quote, reflection, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false, isModal = false } = props;
+    const {id, yamlId, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, captain, cv, cvVersion, quote, reflection, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false, isModal = false, profileLinks } = props;
     const section = isAlumniPage ? 'alumni' : 'members';
     const searchParams = useSearchParams();
     const cardColumns = parseProfileColsParam(searchParams.get('cols') ?? undefined);
@@ -452,8 +452,8 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                 </div>
                 <Separator className="my-3"/>
 
-                <ProfileDetailPaper papers={papers} profileYamlId={yamlId || ''} />
-                <ProfileDetailPatent patents={patents} profileYamlId={yamlId || ''} />
+                <ProfileDetailPaper papers={papers} profileYamlId={yamlId || ''} profileLinks={profileLinks} />
+                <ProfileDetailPatent patents={patents} profileYamlId={yamlId || ''} profileLinks={profileLinks} />
                 <ProfileDetailProject projects={projects} profileId={yamlId || ''} />
                 <ProfileDetailSeminar seminars={seminars} profileYamlId={yamlId || ''} />
                 <ProfileDetailStudy studies={studies} profileYamlId={yamlId || ''} />

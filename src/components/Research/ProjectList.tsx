@@ -2,10 +2,10 @@
 
 import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { ProfileHoverLink } from "@/components/Profile/ProfileHoverLink";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { ProjectData, ProjectMember, type ProfileLinks } from "@/data/loaders/types";
-import { getProfileHref, titleToId } from "@/lib/utils";
+import { titleToId } from "@/lib/utils";
 
 /** "연구책임자(학생)"처럼 괄호가 붙어도 기본 역할과 같은 뱃지를 쓴다 */
 function roleBadgeKey(role: string): string {
@@ -20,17 +20,16 @@ function renderMember(
   profileLinks: ProfileLinks,
   key: React.Key
 ) {
-  const href = member.ID ? getProfileHref(member.ID, profileLinks) : null;
-  const hasValidId = !!href;
+  const profile = member.ID ? profileLinks[member.ID] : undefined;
+  const hasValidId = !!profile;
   const hasId = !!member.ID;
 
-  if (hasValidId) {
+  if (hasValidId && profile) {
     return (
-      <Link
+      <ProfileHoverLink
         key={key}
-        href={href}
+        profile={profile}
         className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
-        title={`View ${member.name}`}
       >
         <span className="transition-colors [&:hover>svg]:text-brand-primary">
           {member.name}
@@ -44,7 +43,7 @@ function renderMember(
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
         </span>
-      </Link>
+      </ProfileHoverLink>
     );
   }
 

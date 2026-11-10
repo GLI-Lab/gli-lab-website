@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { ProfileItemProps } from '@/data/loaders/types';
+import { ProfileItemProps, type ProfileLinks } from '@/data/loaders/types';
 import { ProfileListDetail } from './ProfileListDetail';
 import { type StudyData, type PaperData, type PatentData, type ProjectData, type SeminarData } from '@/data/loaders/types';
 import useEmblaCarousel from "embla-carousel-react"
@@ -17,6 +17,7 @@ interface ProfileListItemProps extends ProfileItemProps {
     patents?: PatentData[];
     projects?: ProjectData[];
     seminars?: SeminarData[];
+    profileLinks?: ProfileLinks;
 }
 
 export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {

@@ -2,14 +2,15 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { ProfileHoverLink } from '@/components/Profile/ProfileHoverLink';
 import { NewsData, type ProfileLinks } from '@/data/loaders/types';
-import { getProfileHref, titleToId } from '@/lib/utils';
+import { titleToId } from '@/lib/utils';
 
 export interface NewsListProps {
   className?: string
   count?: number | null
   newsItems?: NewsData[]
-  /** 사람 ID → 프로필 href 사전 (서버의 getProfileLinks() 결과). 본문의 <profile=ID> 마크업을 링크로 바꿀 때 쓴다 */
+  /** 사람 ID → 프로필 링크 사전 (서버의 getProfileLinks() 결과). 본문의 <profile=ID> 마크업을 링크로 바꿀 때 쓴다 */
   profileLinks?: ProfileLinks
   filterType?: 'Member' | 'Publication' | 'Funding' | 'General' | 'All'
   showFilters?: boolean
@@ -186,22 +187,21 @@ function renderContentWithMarkup(content: string, profileLinks: ProfileLinks, ne
     if (type === 'profile') {
       const [fullMatch, profileId, displayName] = match;
       
-      const href = getProfileHref(profileId, profileLinks);
+      const profile = profileLinks[profileId];
 
-      if (href) {
+      if (profile) {
         
         elements.push(
-          <Link 
+          <ProfileHoverLink
             key={`${newsIndex}-${lineIndex}-profile-${profileId}`}
-            href={href}
+            profile={profile}
             className="group hover:text-brand-primary underline-offset-4 hover:underline hover:decoration-1.5"
-            title={`View ${displayName}`}
           >
             {displayName}
             <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
-          </Link>
+          </ProfileHoverLink>
         );
       } else {
         // 프로필이 없으면 경고를 띄우고 강조 표시

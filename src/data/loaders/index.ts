@@ -7,7 +7,7 @@ import { getProfilesUncached, getAlumniProfilesUncached } from './profileLoader'
 import { getProjectsUncached } from './projectLoader';
 import { getSeminarsUncached, type GetSeminarsOptions } from './seminarLoader';
 import { getStudiesUncached } from './studyLoader';
-import type { ProfileLinks } from './types';
+import type { ProfileData, ProfileLinkTarget, ProfileLinks } from './types';
 
 const REVALIDATE_SECONDS = 3600;
 const isDev = process.env.NODE_ENV === 'development';
@@ -56,11 +56,12 @@ export async function getSeminars(options?: GetSeminarsOptions) {
 export type { GetSeminarsOptions };
 
 /**
- * 사람 ID(YAML id) → 프로필 상세 페이지 href 사전(`ProfileLinks`)을 만든다.
+ * 사람 ID(YAML id) → 프로필 링크 사전(`ProfileLinks`)을 만든다.
  *
  * 논문·특허·프로젝트·뉴스·세미나·스터디 페이지는 사람을 YAML `ID`로만 참조하므로,
  * 그 ID를 클릭 가능한 주소로 바꾸는 규칙을 여기 한 곳에서 처리하고 결과만 컴포넌트에 넘긴다.
- * 컴포넌트는 `getProfileHref(id, links)`(= `links[id]`)로 꺼내 쓰기만 한다.
+ * 컴포넌트는 `getProfileHref(id, links)`(= `links[id].href`)로 주소를 꺼내고,
+ * 호버 카드는 `links[id]`의 이름·사진·요약을 쓴다.
  *
  * 규칙
  *   - 경로: members면 `/people/members/`, alumni면 `/people/alumni/`
@@ -72,19 +73,53 @@ export type { GetSeminarsOptions };
  * 입력(프로필 로더 결과)과 출력 예
  *   members: [{ yamlId: "[2024.03] 오병국", id: "2024-03-byungkook-oh", ... }]
  *   alumni:  [{ yamlId: "[2024.07] 지상준", id: "2024-07-sangjun-ji", ... }]
- *   → { "[2024.03] 오병국": "/people/members/2024-03-byungkook-oh/",
- *       "[2024.07] 지상준": "/people/alumni/2024-07-sangjun-ji/" }
+ *   → { "[2024.03] 오병국": { href: "/people/members/2024-03-byungkook-oh/", ... },
+ *       "[2024.07] 지상준": { href: "/people/alumni/2024-07-sangjun-ji/", ... } }
  *
  * 프로필 로더(`getProfiles`, `getAlumniProfiles`)가 이미 unstable_cache로 캐시되므로 별도 캐시는 두지 않는다.
  */
+const PROFILE_PLACEHOLDER_PHOTO = '/images/profiles/ku_basic_1_down.webp';
+
+function formatJoined(profile: ProfileData): string {
+  const start = profile.joined_start?.trim() ?? '';
+  const end = profile.joined_end?.trim() ?? '';
+  if (start && end) return `${start} - ${end}`;
+  if (start) return `${start} -`;
+  return end;
+}
+
+/** 호버 카드의 마지막 줄. 프로필 카드에 보이는 항목 중 하나만 고른다. */
+function formatProfileSummary(profile: ProfileData, isAlumni: boolean): string {
+  const affiliation = profile.affiliation?.current?.trim();
+  if (affiliation) return affiliation;
+
+  const joined = formatJoined(profile);
+  const shortStay = profile.type === 'intern' || profile.type === 'pms' || profile.type === 'pphd';
+  if ((isAlumni || shortStay) && joined) return `Joined ${joined}`;
+  if (!isAlumni && profile.admission?.trim()) return `Admission ${profile.admission.trim()}`;
+  if (joined) return `Joined ${joined}`;
+  return '';
+}
+
+function toProfileLinkTarget(profile: ProfileData, href: string, isAlumni: boolean): ProfileLinkTarget {
+  return {
+    href,
+    nameEn: profile.name_en,
+    nameKo: profile.name_ko,
+    title: profile.title,
+    photo: profile.photo?.[0] || PROFILE_PLACEHOLDER_PHOTO,
+    summary: formatProfileSummary(profile, isAlumni),
+  };
+}
+
 export async function getProfileLinks(): Promise<ProfileLinks> {
   const [members, alumni] = await Promise.all([getProfiles(), getAlumniProfiles()]);
   const links: ProfileLinks = {};
   for (const profile of alumni) {
-    if (profile.yamlId) links[profile.yamlId] = `/people/alumni/${profile.id}/`;
+    if (profile.yamlId) links[profile.yamlId] = toProfileLinkTarget(profile, `/people/alumni/${profile.id}/`, true);
   }
   for (const profile of members) {
-    if (profile.yamlId) links[profile.yamlId] = `/people/members/${profile.id}/`;
+    if (profile.yamlId) links[profile.yamlId] = toProfileLinkTarget(profile, `/people/members/${profile.id}/`, false);
   }
   return links;
 }

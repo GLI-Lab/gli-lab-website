@@ -2,9 +2,10 @@
 
 import { useState, useMemo, useEffect, type ReactNode } from "react";
 import Link from "next/link";
+import { ProfileHoverLink } from "@/components/Profile/ProfileHoverLink";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PaperData, type PaperTitle, type ProfileLinks } from '@/data/loaders/types';
-import { getPaperTitleId, getProfileHref, isLocalizedPaperTitle, titleToId } from '@/lib/utils';
+import { getPaperTitleId, isLocalizedPaperTitle, titleToId } from '@/lib/utils';
 
 function renderPaperTitle(title: PaperTitle, copyButton?: ReactNode, prefix?: ReactNode) {
   if (isLocalizedPaperTitle(title)) {
@@ -224,7 +225,8 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
     return publication.authors.map((author, i) => {
       const isFirstAuthor = author.position === 'first';
       const hasId = !!author.ID;
-      const href = author.ID ? getProfileHref(author.ID, profileLinks) : null;
+      const profile = author.ID ? profileLinks[author.ID] : undefined;
+      const href = profile?.href ?? null;
       const hasValidId = !!href;
       
       const authorName = (
@@ -235,13 +237,13 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
       
       return (
         <span key={i}>
-          {hasValidId ? (
-            <Link 
-              href={href}
+          {hasValidId && profile ? (
+            <ProfileHoverLink
+              profile={profile}
               className="hover:text-brand-primary transition-colors"
             >
               {authorName}
-            </Link>
+            </ProfileHoverLink>
           ) : hasId ? (
             <span 
               className="text-red-500"
@@ -489,7 +491,7 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
             <div>
               <span className="decoration-gray-500 underline underline-offset-[3px]">Name</span>
               : GLI Lab (
-              <span>Click for detailed profile</span>
+              <span>Hover to preview, click for profile</span>
               )
             </div>
           </div>

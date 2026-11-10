@@ -2,14 +2,15 @@
 
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { ProfileHoverLink } from "@/components/Profile/ProfileHoverLink";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PatentData, type ProfileLinks } from '@/data/loaders/types';
-import { getProfileHref, titleToId } from '@/lib/utils';
+import { titleToId } from '@/lib/utils';
 
 interface PatentListProps {
   className?: string
   patents: PatentData[];
-  /** 사람 ID → 프로필 href 사전 (서버의 getProfileLinks() 결과) */
+  /** 사람 ID → 프로필 링크 사전 (서버의 getProfileLinks() 결과) */
   profileLinks?: ProfileLinks;
 }
 
@@ -49,7 +50,8 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
   const renderAuthors = (patent: PatentData) => {
     return patent.authors.map((author, i) => {
       const hasId = !!author.ID;
-      const href = author.ID ? getProfileHref(author.ID, profileLinks) : null;
+      const profile = author.ID ? profileLinks[author.ID] : undefined;
+      const href = profile?.href ?? null;
       const hasValidId = !!href;
       
       const authorName = (
@@ -60,13 +62,13 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
       
       return (
         <span key={i}>
-          {hasValidId ? (
-            <Link 
-              href={href}
+          {hasValidId && profile ? (
+            <ProfileHoverLink
+              profile={profile}
               className="hover:text-brand-primary transition-colors"
             >
               {authorName}
-            </Link>
+            </ProfileHoverLink>
           ) : hasId ? (
             <span 
               className="text-red-500"
@@ -391,7 +393,7 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
             <div>
               <span className="decoration-gray-500 underline underline-offset-[3px]">Name</span>
               : GLI Lab (
-              <span>Click for detailed profile</span>
+              <span>Hover to preview, click for profile</span>
               )
             </div>
           </div>

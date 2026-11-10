@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { type PaperData } from '@/data/loaders/types';
+import { type PaperData, type ProfileLinks } from '@/data/loaders/types';
+import { ProfileAuthorName } from './ProfileHoverLink';
 import { getPaperTitleId, getPaperTitleKey, isLocalizedPaperTitle } from '@/lib/utils';
 import { ProfileDetailExpandToggle } from './ProfileDetailExpandToggle';
 import { ProfileDetailListMarker } from './ProfileDetailListMarker';
@@ -15,6 +16,7 @@ const PAPER_EXPAND_STEP = 10;
 interface ProfileDetailPaperProps {
     papers: PaperData[];
     profileYamlId: string;
+    profileLinks?: ProfileLinks;
 }
 
 function splitPapersByScope(papers: PaperData[]) {
@@ -41,10 +43,12 @@ function ProfilePaperItem({
     paper,
     index,
     profileYamlId,
+    profileLinks,
 }: {
     paper: PaperData;
     index: number;
     profileYamlId: string;
+    profileLinks?: ProfileLinks;
 }) {
     const isFirstAuthorPaper = isProfileFirstAuthor(paper, profileYamlId);
 
@@ -117,7 +121,12 @@ function ProfilePaperItem({
                                                     : 'italic'
                                             }
                                         >
-                                            {author.name.replace(/\([^)]*\)/g, '').trim()}
+                                            <ProfileAuthorName
+                                                authorId={author.ID}
+                                                name={author.name.replace(/\([^)]*\)/g, '').trim()}
+                                                profileLinks={profileLinks}
+                                                className=""
+                                            />
                                             {isCorresponding && '*'}
                                             {isFirstAuthor && hasMultipleFirstAuthors && <sup> ‡</sup>}
                                         </span>
@@ -150,10 +159,12 @@ function ProfilePaperScopeSection({
     title,
     papers,
     profileYamlId,
+    profileLinks,
 }: {
     title: string;
     papers: PaperData[];
     profileYamlId: string;
+    profileLinks?: ProfileLinks;
 }) {
     const [displayedCount, setDisplayedCount] = useState(PAPER_PREVIEW_LIMIT);
 
@@ -177,6 +188,7 @@ function ProfilePaperScopeSection({
                         paper={paper}
                         index={index}
                         profileYamlId={profileYamlId}
+                        profileLinks={profileLinks}
                     />
                 ))}
                 {(showMore || showLess) && (
@@ -196,7 +208,7 @@ function ProfilePaperScopeSection({
     );
 }
 
-export function ProfileDetailPaper({ papers, profileYamlId }: ProfileDetailPaperProps) {
+export function ProfileDetailPaper({ papers, profileYamlId, profileLinks }: ProfileDetailPaperProps) {
     if (papers.length === 0) return null;
 
     const { international, domestic } = splitPapersByScope(papers);
@@ -208,6 +220,7 @@ export function ProfileDetailPaper({ papers, profileYamlId }: ProfileDetailPaper
                     title="Papers (International)"
                     papers={international}
                     profileYamlId={profileYamlId}
+                    profileLinks={profileLinks}
                 />
             )}
             {domestic.length > 0 && (
@@ -215,6 +228,7 @@ export function ProfileDetailPaper({ papers, profileYamlId }: ProfileDetailPaper
                     title="Papers (Domestic)"
                     papers={domestic}
                     profileYamlId={profileYamlId}
+                    profileLinks={profileLinks}
                 />
             )}
             <div className="my-2" />

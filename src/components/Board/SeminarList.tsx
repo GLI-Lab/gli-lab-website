@@ -2,10 +2,10 @@
 
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
-import Link from 'next/link';
+import { ProfileHoverLink } from '@/components/Profile/ProfileHoverLink';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { SeminarData, type ProfileLinks } from '@/data/loaders/types';
-import { getProfileHref, getSeminarHashId } from '@/lib/utils';
+import { getSeminarHashId } from '@/lib/utils';
 import { renderSeminarDescription, renderSeminarTitle, type SeminarTitleBadge } from '@/lib/seminarTitle';
 
 export type SeminarListLayout = 'card' | 'list';
@@ -24,7 +24,7 @@ export interface SeminarListProps {
     lg: number;
   };
   seminarItems?: SeminarData[];
-  /** 사람 ID → 프로필 href 사전 (서버의 getProfileLinks() 결과). 발표자 이름을 프로필 링크로 만들 때 쓴다 */
+  /** 사람 ID → 프로필 링크 사전 (서버의 getProfileLinks() 결과). 발표자 이름을 프로필 링크로 만들 때 쓴다 */
   profileLinks?: ProfileLinks;
 }
 
@@ -94,13 +94,12 @@ function renderPresenter(
   presenter: { ID: string; name: string },
   profileLinks: ProfileLinks = {}
 ): ReactNode {
-  const href = getProfileHref(presenter.ID, profileLinks);
-  if (href) {
+  const profile = profileLinks[presenter.ID];
+  if (profile) {
     return (
-      <Link
-        href={href}
+      <ProfileHoverLink
+        profile={profile}
         className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary transition-colors"
-        title={presenter.name}
       >
         <span className="inline-flex items-center gap-0.5">
           {presenter.name}
@@ -108,7 +107,7 @@ function renderPresenter(
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
           </svg>
         </span>
-      </Link>
+      </ProfileHoverLink>
     );
   }
   return <span className="text-gray-700">{presenter.name}</span>;
