@@ -69,7 +69,7 @@ export default function Page() {
             <li className="flex space-x-2">
               <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0" />
               <span>
-                <span className="font-semibold pr-2">교수#1: </span>
+                <span className="font-semibold pr-2">University: </span>
                 <a href="mailto:bkoh@konkuk.ac.kr" className={LINK_CLASS}>
                   bkoh@konkuk.ac.kr
                   <LinkIcon />
@@ -79,7 +79,7 @@ export default function Page() {
             <li className="flex space-x-2">
               <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0" />
               <span>
-                <span className="font-semibold pr-2">교수#2: </span>
+                <span className="font-semibold pr-2">Personal: </span>
                 <a href="mailto:bkoh509@gmail.com" className={LINK_CLASS}>
                   bkoh509@gmail.com
                   <LinkIcon />
@@ -96,7 +96,7 @@ export default function Page() {
             <li className="flex space-x-2">
               <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0" />
               <span>
-                <span className="font-semibold pr-2">주소:</span>
+                <span className="font-semibold pr-2">Address:</span>
                 <a
                   href={CAMPUS_MAP_URL}
                   target="_blank"
@@ -111,7 +111,7 @@ export default function Page() {
             <li className="flex space-x-2">
               <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0" />
               <span>
-                <span className="font-semibold pr-2">교수 연구실:</span>
+                <span className="font-semibold pr-2">Professor Lab:</span>
                 <a
                   href={PROFESSOR_OFFICE_MAP_URL}
                   target="_blank"
@@ -126,7 +126,7 @@ export default function Page() {
             <li className="flex space-x-2">
               <FaCheck className="text-green-800 mt-0.5 text-[18px] md:text-[20px] flex-shrink-0" />
               <span>
-                <span className="font-semibold pr-2">학생 연구실:</span>
+                <span className="font-semibold pr-2">Student Lab:</span>
                 <a
                   href={STUDENT_LAB_MAP_URL}
                   target="_blank"

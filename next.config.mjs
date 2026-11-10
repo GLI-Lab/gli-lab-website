@@ -67,7 +67,7 @@ const nextConfig = {
             },
             {
                 source: '/board',
-                destination: '/board/gallery',
+                destination: '/board/news',
                 permanent: true,
             },
             {
