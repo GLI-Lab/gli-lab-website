@@ -126,30 +126,30 @@ export function ProfileHoverLink({ profile, className, children }: ProfileHoverL
             id={tipId}
             role="tooltip"
             style={{ top: pos.top, left: pos.left }}
-            className={`pointer-events-none fixed z-[120] w-max max-w-[min(320px,calc(100vw-16px))] ${
+            className={`pointer-events-none fixed z-[120] w-max max-w-[min(370px,calc(100vw-16px))] ${
               pos.ready ? "visible" : "invisible"
             }`}
           >
-            <div className="flex items-center gap-2.5 rounded-lg border border-gray-200 bg-white p-2 pr-3 shadow-lg">
-              <div className="relative h-[84px] w-[68px] shrink-0 overflow-hidden rounded-md bg-gray-100">
+            <div className="flex items-center gap-2.5 rounded-lg border border-gray-200 bg-white px-2 py-1.5 shadow-lg">
+              <div className="relative h-[108px] w-[88px] shrink-0 overflow-hidden rounded-md bg-gray-100">
                 <Image
                   src={profile.photo}
                   alt=""
                   fill
-                  sizes="68px"
+                  sizes="176px"
                   className="object-cover"
                 />
               </div>
-              <div className="min-w-0 py-0.5">
-                <p className="text-[15px] font-medium leading-tight text-gray-900">{profile.nameEn}</p>
+              <div className="min-w-0">
+                <p className="text-[16.5px] font-medium leading-snug text-gray-900">{profile.nameEn}</p>
                 {profile.nameKo ? (
-                  <p className="mt-0.5 text-[13px] leading-tight text-gray-600">{profile.nameKo}</p>
+                  <p className="text-[14.5px] leading-snug text-gray-600">{profile.nameKo}</p>
                 ) : null}
                 {profile.title ? (
-                  <p className="mt-1 text-[12.5px] font-medium leading-snug text-gray-800">{profile.title}</p>
+                  <p className="mt-0.5 text-[14px] font-medium leading-snug text-gray-800">{profile.title}</p>
                 ) : null}
                 {profile.summary ? (
-                  <p className="mt-0.5 line-clamp-2 text-[12.5px] leading-snug text-gray-500">{profile.summary}</p>
+                  <p className="mt-0.5 line-clamp-2 text-[13.5px] leading-snug text-gray-500">{profile.summary}</p>
                 ) : null}
               </div>
             </div>
