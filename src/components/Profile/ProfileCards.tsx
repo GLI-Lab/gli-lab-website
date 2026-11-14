@@ -205,6 +205,20 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
         }
     }, [urlDetailOpen]);
 
+    // detailPending은 URL이 detail=1로 따라잡기 전까지만 모달을 열어 두는 임시 상태다.
+    // router가 스크롤 완료(scrollend·600ms)보다 먼저 끝나면 위 effect가 지나간 뒤에 true가 되어 그대로 남고,
+    // 그러면 모달 안의 사람 링크나 뒤로가기로 URL이 바뀌어도 모달과 선택이 따라가지 않는다.
+    useEffect(() => {
+        if (urlDetailOpen && detailPending) setDetailPending(false);
+    }, [urlDetailOpen, detailPending]);
+
+    // router가 새 URL을 확정하면 클릭 직후의 임시 상태(대기 중인 스크롤 콜백·detailPending·pendingProfile)를 끝낸다.
+    // 카드 클릭의 이동이 다른 이동(모달 안의 사람 링크 등)에 밀려 취소되어도 이전 클릭 상태가 남지 않게 한다.
+    const routerUrlKey = `${pathname}?${searchParams.toString()}`;
+    useEffect(() => {
+        cancelPendingOpen();
+    }, [routerUrlKey, cancelPendingOpen]);
+
     const closeDetailModal = useCallback(() => {
         cancelPendingOpen();
         setDetailSuppressed(true);
