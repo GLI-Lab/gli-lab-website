@@ -1,10 +1,11 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { type PaperData, type ProfileLinks } from '@/data/loaders/types';
+import { PublicationHoverLink } from '@/components/Publication/PublicationHoverLink';
+import { paperToPreview } from '@/lib/publicationPreview';
 import { ProfileAuthorName } from './ProfileHoverLink';
-import { getPaperTitleId, getPaperTitleKey, isLocalizedPaperTitle } from '@/lib/utils';
+import { getPaperTitleKey, isLocalizedPaperTitle } from '@/lib/utils';
 import { ProfileDetailExpandToggle } from './ProfileDetailExpandToggle';
 import { ProfileDetailListMarker } from './ProfileDetailListMarker';
 import { ProfileDetailSectionLink } from './ProfileDetailSectionLink';
@@ -69,10 +70,9 @@ function ProfilePaperItem({
                                 isFirstAuthorPaper ? 'font-semibold' : 'font-medium'
                             }`}
                         >
-                            <Link
-                                href={`/publications/papers#${encodeURIComponent(getPaperTitleId(paper.title))}`}
+                            <PublicationHoverLink
+                                preview={paperToPreview(paper)}
                                 className="hover:text-interactive-hover hover:underline underline-offset-4"
-                                title="View publication details"
                             >
                                 {isLocalizedPaperTitle(paper.title) ? (
                                     <>
@@ -85,7 +85,7 @@ function ProfilePaperItem({
                                 ) : (
                                     paper.title
                                 )}
-                            </Link>
+                            </PublicationHoverLink>
                             {paper.status && (
                                 <span>
                                     ,{' '}

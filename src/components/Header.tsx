@@ -185,7 +185,7 @@ export default function Header() {
                     <div className={`flex items-center justify-between w-full ${isScrolled ? "py-0.5 sm:py-1" : "py-1 sm:py-2"}`}>
                         <Link href="/" className="items-center flex min-w-[250px]">
                             <div className={` ${isScrolled ? "h-[40px] w-[40px] sm:h-[50px] sm:w-[50px]" : "h-[50px] w-[50px] sm:h-[60px] sm:w-[60px] lg:h-[70px] lg:w-[70px]"}`}>
-                                <Image src={`${isScrolled ? "/images/logo/GLI_logo_black.png" : "/images/logo/GLI_logo_green.png"}`} alt="logo" width="96" height="96"/>
+                                <Image src={`${isScrolled ? "/images/logo/GLI_logo_black.png" : "/images/logo/GLI_logo_green.png"}`} alt="logo" width="96" height="96" quality={100}/>
                             </div>
                             <div className={`-space-y-2 ml-3 tracking-tighter ${isScrolled ? "text-[18px] sm:text-[20px]" : "text-[20px] sm:text-[21px] lg:text-[23.5px]"}`}>
                                 <p>Graph & Language</p>

@@ -6,17 +6,21 @@ import { FaCheck } from "react-icons/fa";
 import { NewsList } from "@/components/Board/NewsList";
 import { SeminarList } from "@/components/Board/SeminarList";
 import { GalleryGrid, getGalleryItems } from "@/components/Gallery";
-import { getNews, getProfileLinks, getSeminars } from "@/data/loaders";
+import { getNews, getPapers, getPatents, getProfileLinks, getSeminars } from "@/data/loaders";
+import { buildPublicationPreviews } from "@/lib/publicationPreview";
 import NewsPopup from "@/components/NewsPopup";
 import { getNewsMarkupAlerts } from "@/lib/newsPaper";
 
 export default async function Page() {
-    const [newsItems, profileLinks, seminars, galleryItems] = await Promise.all([
+    const [newsItems, profileLinks, seminars, galleryItems, papers, patents] = await Promise.all([
         getNews(),
         getProfileLinks(),
         getSeminars({ count: 6 }),
         getGalleryItems({ count: 3 }),
+        getPapers(),
+        getPatents(),
     ]);
+    const publicationPreviews = buildPublicationPreviews(papers, patents);
 
     const paperNewsAlerts = getNewsMarkupAlerts(newsItems, {
         // kinds: ["paper", "project"],
@@ -26,7 +30,7 @@ export default async function Page() {
 
     return (
         <>
-            <NewsPopup alerts={paperNewsAlerts} />
+            <NewsPopup alerts={paperNewsAlerts} publicationPreviews={publicationPreviews} />
             <div className="max-w-screen-2xl mx-auto">
                 <MainCover/>
             </div>
@@ -249,6 +253,7 @@ export default async function Page() {
                         count={20}
                         newsItems={newsItems}
                         profileLinks={profileLinks}
+                        publicationPreviews={publicationPreviews}
                     />
                     <Link href='/board/news'
                         className="px-6 py-2 mt-12 bg-green-800 hover:bg-[#f4f4f4] border-2 border-green-800 hover:text-green-800 text-white font-semibold rounded-lg shadow-lg transition duration-300">

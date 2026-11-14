@@ -8,9 +8,11 @@ const nextConfig = {
     // Next 16: 로컬 이미지에 쿼리스트링이 있으면 localPatterns에 경로를 적어야 한다.
     // 프로필 사진은 내용 해시 `?v=`로 캐시를 깨므로 search는 넣지 않는다 (아무 쿼리나 허용).
     images: {
-        formats: ['image/webp', 'image/avif'],
+        formats: ['image/webp'],
+        // 스크립트가 이미 WebP q82로 만들었으므로, 화면에서 다시 저장할 때는 100으로 더 깎지 않는다.
+        qualities: [100],
         deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-        imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+        imageSizes: [16, 32, 48, 64, 96, 128, 176, 230, 256, 280, 300, 384],
         minimumCacheTTL: process.env.NODE_ENV === 'development' ? 0 : 31536000, // 개발모드에서는 캐시 비활성화
         localPatterns: [
             { pathname: '/images/**' },

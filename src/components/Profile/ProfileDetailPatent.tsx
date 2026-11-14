@@ -1,10 +1,10 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { type PatentData, type ProfileLinks } from '@/data/loaders/types';
+import { PublicationHoverLink } from '@/components/Publication/PublicationHoverLink';
+import { patentToPreview } from '@/lib/publicationPreview';
 import { ProfileAuthorName } from './ProfileHoverLink';
-import { titleToId } from '@/lib/utils';
 import { ProfileDetailExpandToggle } from './ProfileDetailExpandToggle';
 import { ProfileDetailListMarker } from './ProfileDetailListMarker';
 import { ProfileDetailSectionLink } from './ProfileDetailSectionLink';
@@ -60,17 +60,16 @@ export function ProfileDetailPatent({ patents, profileYamlId, profileLinks }: Pr
                                         <ProfileDetailListMarker index={index} showNumbering={SHOW_ITEM_NUMBERING} />
                                         <div className="flex-1">
                                             <div className="text-[15.5px] md:text-[16.5px] font-medium mb-1">
-                                                <Link
-                                                    href={`/publications/patents#${encodeURIComponent(titleToId(patent.title.ko))}`}
+                                                <PublicationHoverLink
+                                                    preview={patentToPreview(patent)}
                                                     className="hover:text-interactive-hover hover:underline underline-offset-4"
-                                                    title="View patent details"
                                                 >
                                                     {patent.title.ko}
                                                     <br />
                                                     <span className="text-[14px] md:text-[15px] text-gray-600">
                                                         {patent.title.en}
                                                     </span>
-                                                </Link>
+                                                </PublicationHoverLink>
                                             </div>
                                             <div className="text-[13px] md:text-[14px] text-text-secondary">
                                                 {patent.authors?.map((author, idx) => (

@@ -17,7 +17,7 @@ export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
                        ${isSelected ? 'bg-white border-interactive-primary shadow-lg 1.5md:bg-brand-primary/90 1.5md:text-white' : 'bg-white hover:border-interactive-primary hover:shadow-lg'}`}
         >
             <div className="w-[115px] h-[135px] sm:w-[140px] sm:h-[160px] lg:w-[150px] lg:h-[170px] relative flex-shrink-0">
-                <Image src={photo[0]} sizes="(max-width: 640px) 230px, (max-width: 1024px) 280px, 300px" alt="Profile" fill className="object-cover rounded-md"/>
+                <Image src={photo[0]} sizes="(max-width: 640px) 230px, (max-width: 1024px) 280px, 300px" quality={100} alt="Profile" fill className="object-cover rounded-md"/>
                 {isActiveCaptain(captain) && captain && <ProfileCaptainBadge captain={captain} size="card" />}
             </div>
             <div className="flex-1 py-3 pr-1 flex flex-col justify-between">

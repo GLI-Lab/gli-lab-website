@@ -137,6 +137,7 @@ function FooterLogos({ logoClassName }: { logoClassName: string }) {
                     alt="Graph & Language Intelligence Lab"
                     width={1919}
                     height={804}
+                    quality={100}
                     draggable={false}
                     className={`${logoClassName} rounded-sm`}
                 />
@@ -155,6 +156,7 @@ function FooterLogos({ logoClassName }: { logoClassName: string }) {
                     alt="Konkuk University"
                     width={942}
                     height={338}
+                    quality={100}
                     draggable={false}
                     className={`${logoClassName} rounded-sm`}
                 />
@@ -228,6 +230,7 @@ export default function Footer() {
                                         alt="Graph & Language Intelligence Lab"
                                         width={1919}
                                         height={804}
+                                        quality={100}
                                         draggable={false}
                                         className="h-12 md:h-16 w-auto rounded-sm select-none"
                                     />
@@ -246,6 +249,7 @@ export default function Footer() {
                                         alt="Konkuk University"
                                         width={942}
                                         height={338}
+                                        quality={100}
                                         draggable={false}
                                         className="h-12 md:h-16 w-auto rounded-sm select-none"
                                     />

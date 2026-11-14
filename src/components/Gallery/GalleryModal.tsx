@@ -367,6 +367,7 @@ export function GalleryModal({
                     src={image}
                     alt={`${item.title} thumbnail ${index + 1}`}
                     fill
+                    quality={100}
                     className="object-cover"
                     sizes="80px"
                     draggable={false}

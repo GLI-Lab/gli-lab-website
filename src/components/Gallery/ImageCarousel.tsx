@@ -170,6 +170,7 @@ export const ImageCarousel: React.FC<ImageCarouselProps> = ({
                 src={imageSrc}
                 alt={`${title} ${index + 1}`}
                 fill
+                quality={100}
                 className={imageClassName}
                 sizes={sizes}
                 draggable={false}

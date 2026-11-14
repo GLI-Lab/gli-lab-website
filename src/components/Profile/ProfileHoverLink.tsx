@@ -1,14 +1,8 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
-import { useCallback, useEffect, useId, useLayoutEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
+import { getImageProps } from "next/image";
+import { HoverCardLink } from "@/components/HoverCardLink";
 import type { ProfileLinkTarget, ProfileLinks } from "@/data/loaders/types";
-
-const SHOW_DELAY_MS = 280;
-const GAP_PX = 8;
-const VIEWPORT_MARGIN_PX = 8;
 
 interface ProfileHoverLinkProps {
   profile: ProfileLinkTarget;
@@ -16,164 +10,59 @@ interface ProfileHoverLinkProps {
   children: React.ReactNode;
 }
 
-function canHoverPointer() {
-  return window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+const PHOTO_WIDTH = 88;
+const PHOTO_HEIGHT = 108;
+
+/**
+ * 카드 사진은 항상 칸 폭의 2배(176px) 파일 하나만 쓴다.
+ * 후보를 여러 개 주면(srcset) 크롬은 같은 사진의 더 큰 버전이 이미 받아져 있을 때 그것을 골라 쓴다.
+ * 멤버 카드나 상세 사진이 떠 있는 페이지, 화면을 확대했다 되돌린 뒤가 그렇다.
+ * 300~1920px 파일이 88px 칸에 눌리면 가장자리가 거칠고 날카롭게 보인다.
+ * width만 넘기면 next/image 후보는 1배, 2배 두 개이고 src가 그중 2배다.
+ */
+function hoverPhotoSrc(photo: string): string {
+  return getImageProps({ src: photo, alt: "", width: PHOTO_WIDTH, height: PHOTO_HEIGHT }).props.src;
+}
+
+function ProfileCard({ profile }: { profile: ProfileLinkTarget }) {
+  return (
+    <div className="flex items-center gap-2.5 rounded-lg border border-gray-200 bg-white px-2 py-1.5 shadow-lg">
+      <div className="h-[108px] w-[88px] shrink-0 overflow-hidden rounded-md bg-gray-100">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={hoverPhotoSrc(profile.photo)}
+          alt=""
+          width={PHOTO_WIDTH}
+          height={PHOTO_HEIGHT}
+          decoding="async"
+          className="h-full w-full object-cover"
+        />
+      </div>
+      <div className="min-w-0">
+        <p className="text-[16.5px] font-medium leading-snug text-gray-900">{profile.nameEn}</p>
+        {profile.nameKo ? (
+          <p className="text-[14.5px] leading-snug text-gray-600">{profile.nameKo}</p>
+        ) : null}
+        {profile.title ? (
+          <p className="mt-0.5 text-[14px] font-medium leading-snug text-gray-800">{profile.title}</p>
+        ) : null}
+        {profile.summary ? (
+          <p className="mt-0.5 line-clamp-2 text-[13.5px] leading-snug text-gray-500">{profile.summary}</p>
+        ) : null}
+      </div>
+    </div>
+  );
 }
 
 /**
  * 사람 프로필 링크.
  * 클릭하면 기존과 같이 프로필 페이지로 이동하고, 포인터를 올리면 얼굴과 짧은 소개가 뜬다.
- * 호버가 없는 터치 기기에서는 툴팁 없이 클릭만 동작한다.
  */
 export function ProfileHoverLink({ profile, className, children }: ProfileHoverLinkProps) {
-  const tipId = useId();
-  const anchorRef = useRef<HTMLAnchorElement>(null);
-  const tipRef = useRef<HTMLDivElement>(null);
-  const showTimerRef = useRef<number | null>(null);
-  const [open, setOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const [pos, setPos] = useState({ top: 0, left: 0, ready: false });
-
-  useEffect(() => {
-    setMounted(true);
-    return () => {
-      if (showTimerRef.current !== null) window.clearTimeout(showTimerRef.current);
-    };
-  }, []);
-
-  const place = useCallback(() => {
-    const anchor = anchorRef.current;
-    const tip = tipRef.current;
-    if (!anchor || !tip) return;
-
-    const rect = anchor.getBoundingClientRect();
-    const offscreen =
-      rect.bottom < 0 ||
-      rect.top > window.innerHeight ||
-      rect.right < 0 ||
-      rect.left > window.innerWidth;
-    if (offscreen) {
-      setOpen(false);
-      return;
-    }
-
-    const tipRect = tip.getBoundingClientRect();
-    const spaceBelow = window.innerHeight - VIEWPORT_MARGIN_PX - rect.bottom - GAP_PX;
-    const top =
-      tipRect.height > spaceBelow && rect.top - GAP_PX - tipRect.height >= VIEWPORT_MARGIN_PX
-        ? rect.top - GAP_PX - tipRect.height
-        : rect.bottom + GAP_PX;
-    const maxLeft = window.innerWidth - VIEWPORT_MARGIN_PX - tipRect.width;
-    const left = Math.max(VIEWPORT_MARGIN_PX, Math.min(rect.left, maxLeft));
-
-    setPos((prev) =>
-      prev.ready && prev.top === top && prev.left === left ? prev : { top, left, ready: true },
-    );
-  }, []);
-
-  useLayoutEffect(() => {
-    if (!open) return;
-    place();
-  }, [open, place]);
-
-  useEffect(() => {
-    if (!open) return;
-    const onMove = () => place();
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("scroll", onMove, true);
-    window.addEventListener("resize", onMove);
-    window.addEventListener("keydown", onKey);
-    return () => {
-      window.removeEventListener("scroll", onMove, true);
-      window.removeEventListener("resize", onMove);
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [open, place]);
-
-  const clearShowTimer = () => {
-    if (showTimerRef.current !== null) {
-      window.clearTimeout(showTimerRef.current);
-      showTimerRef.current = null;
-    }
-  };
-
-  const show = (immediate: boolean) => {
-    if (!canHoverPointer()) return;
-    clearShowTimer();
-    if (immediate) {
-      setPos((prev) => ({ ...prev, ready: false }));
-      setOpen(true);
-      return;
-    }
-    showTimerRef.current = window.setTimeout(() => {
-      setPos((prev) => ({ ...prev, ready: false }));
-      setOpen(true);
-    }, SHOW_DELAY_MS);
-  };
-
-  const hide = () => {
-    clearShowTimer();
-    setOpen(false);
-  };
-
-  const tooltip =
-    open && mounted
-      ? createPortal(
-          <div
-            ref={tipRef}
-            id={tipId}
-            role="tooltip"
-            style={{ top: pos.top, left: pos.left }}
-            className={`pointer-events-none fixed z-[120] w-max max-w-[min(370px,calc(100vw-16px))] ${
-              pos.ready ? "visible" : "invisible"
-            }`}
-          >
-            <div className="flex items-center gap-2.5 rounded-lg border border-gray-200 bg-white px-2 py-1.5 shadow-lg">
-              <div className="relative h-[108px] w-[88px] shrink-0 overflow-hidden rounded-md bg-gray-100">
-                <Image
-                  src={profile.photo}
-                  alt=""
-                  fill
-                  sizes="176px"
-                  className="object-cover"
-                />
-              </div>
-              <div className="min-w-0">
-                <p className="text-[16.5px] font-medium leading-snug text-gray-900">{profile.nameEn}</p>
-                {profile.nameKo ? (
-                  <p className="text-[14.5px] leading-snug text-gray-600">{profile.nameKo}</p>
-                ) : null}
-                {profile.title ? (
-                  <p className="mt-0.5 text-[14px] font-medium leading-snug text-gray-800">{profile.title}</p>
-                ) : null}
-                {profile.summary ? (
-                  <p className="mt-0.5 line-clamp-2 text-[13.5px] leading-snug text-gray-500">{profile.summary}</p>
-                ) : null}
-              </div>
-            </div>
-          </div>,
-          document.body,
-        )
-      : null;
-
   return (
-    <>
-      <Link
-        ref={anchorRef}
-        href={profile.href}
-        className={className}
-        aria-describedby={open ? tipId : undefined}
-        onMouseEnter={() => show(false)}
-        onMouseLeave={hide}
-        onFocus={() => show(true)}
-        onBlur={hide}
-      >
-        {children}
-      </Link>
-      {tooltip}
-    </>
+    <HoverCardLink href={profile.href} className={className} card={<ProfileCard profile={profile} />}>
+      {children}
+    </HoverCardLink>
   );
 }
 

@@ -196,6 +196,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                                     <Image
                                         fill
                                         sizes="(max-width: 880px) 560px, 640px"
+                                        quality={100}
                                         className="object-cover rounded-lg"
                                         src={src}
                                         alt={`Profile ${index}`}

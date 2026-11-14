@@ -95,6 +95,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                                             <Image 
                                                 fill 
                                                 sizes="(max-width: 880px) 280px, 280px"
+                                                quality={100}
                                                 className="object-cover rounded-md" 
                                                 src={src} 
                                                 alt={`Profile ${index}`}

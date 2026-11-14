@@ -10,7 +10,10 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { IoAlertCircleOutline, IoClose } from "react-icons/io5";
+import { PublicationHoverLink } from "@/components/Publication/PublicationHoverLink";
 import type { NewsPopupAlert } from "@/lib/newsPaper";
+import type { PublicationPreviews } from "@/lib/publicationPreview";
+import { titleToId } from "@/lib/utils";
 
 const NEWS_POPUP_ROOT_ID = "news-popup-root";
 const BANNER_HEIGHT_CSS_VAR = "--news-banner-height";
@@ -85,9 +88,10 @@ function renderHeadlineWithBold(text: string, keyPrefix: string): ReactNode {
 
 interface NewsPopupProps {
   alerts: NewsPopupAlert[];
+  publicationPreviews?: PublicationPreviews;
 }
 
-export default function NewsPopup({ alerts }: NewsPopupProps) {
+export default function NewsPopup({ alerts, publicationPreviews }: NewsPopupProps) {
   const bannerRef = useRef<HTMLDivElement>(null);
   const fallbackTimers = useRef<Map<string, number>>(new Map());
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
@@ -246,12 +250,24 @@ export default function NewsPopup({ alerts }: NewsPopupProps) {
                         |
                       </span>
                     )} */}
-                    <Link
-                      href={item.href}
-                      className="text-sm md:text-base text-gray-600 hover:text-brand-primary underline-offset-2 hover:underline leading-snug line-clamp-1"
-                    >
-                      {item.title}
-                    </Link>
+                    {(() => {
+                      const id = titleToId(item.title);
+                      const preview = item.kind === "paper"
+                        ? publicationPreviews?.papers[id]
+                        : item.kind === "patent"
+                          ? publicationPreviews?.patents[id]
+                          : undefined;
+                      const className = "text-sm md:text-base text-gray-600 hover:text-brand-primary underline-offset-2 hover:underline leading-snug line-clamp-1";
+                      return preview ? (
+                        <PublicationHoverLink preview={preview} className={className}>
+                          {item.title}
+                        </PublicationHoverLink>
+                      ) : (
+                        <Link href={item.href} className={className}>
+                          {item.title}
+                        </Link>
+                      );
+                    })()}
                   </span>
                 ))}
               </div>

@@ -1,0 +1,61 @@
+"use client";
+
+import { HoverCardLink } from "@/components/HoverCardLink";
+import type { PublicationPreview } from "@/lib/publicationPreview";
+
+const STATUS_CLASS: Record<string, string> = {
+  "In Progress": "bg-blue-500/10 text-blue-600",
+  "Under Review": "bg-yellow-500/10 text-yellow-700",
+};
+
+function PublicationCard({ preview }: { preview: PublicationPreview }) {
+  return (
+    <div className="rounded-lg border border-gray-200 bg-white px-2.5 py-2 shadow-lg">
+      <p className="text-[15px] font-medium leading-snug text-gray-900 line-clamp-3">{preview.title}</p>
+      {preview.subtitle ? (
+        <p className="mt-0.5 text-[13px] leading-snug text-gray-500 line-clamp-2">{preview.subtitle}</p>
+      ) : null}
+      {preview.authors ? (
+        <p className="mt-1 text-[13px] leading-snug text-gray-600 line-clamp-2">{preview.authors}</p>
+      ) : null}
+      {preview.status || preview.meta ? (
+        <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
+          {preview.status ? (
+            <span
+              className={`inline-block rounded-full px-2 text-[12px] leading-5 ${
+                STATUS_CLASS[preview.status] ?? "bg-brand-primary/10 text-brand-primary"
+              }`}
+            >
+              {preview.status}
+            </span>
+          ) : null}
+          {preview.meta ? (
+            <span className="text-[13px] leading-snug text-gray-500">{preview.meta}</span>
+          ) : null}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
+/** 논문·특허 제목 링크. 클릭하면 해당 목록으로 이동하고, 호버하면 짧은 서지 정보가 뜬다. */
+export function PublicationHoverLink({
+  preview,
+  className,
+  children,
+}: {
+  preview: PublicationPreview;
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <HoverCardLink
+      href={preview.href}
+      className={className}
+      panelClassName="w-max max-w-[min(420px,calc(100vw-16px))]"
+      card={<PublicationCard preview={preview} />}
+    >
+      {children}
+    </HoverCardLink>
+  );
+}

@@ -216,6 +216,7 @@ function ProjectCard({
               alt={project.main.funder || project.parent.funder || "Project logo"}
               width={imageWidth ?? 200}
               height={120}
+              quality={100}
               sizes={imageWidth != null ? `${imageWidth}px` : "200px"}
               className="max-h-[120px] w-auto object-contain select-none"
               draggable={false}
