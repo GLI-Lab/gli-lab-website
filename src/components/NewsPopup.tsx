@@ -219,7 +219,7 @@ export default function NewsPopup({ alerts, publicationPreviews, projectPreviews
             <p
               role="status"
               aria-live="polite"
-              className={`max-w-screen-xl mx-auto px-4 py-2 text-sm md:text-base text-gray-700 text-center leading-snug${
+              className={`max-w-screen-xl mx-auto px-4 py-1.5 md:py-2 text-[13px] md:text-[15px] text-gray-700 text-center leading-snug md:leading-[22px]${
                 index > 0 ? " border-t border-brand-primary/25" : ""
               }`}
             >
@@ -227,7 +227,7 @@ export default function NewsPopup({ alerts, publicationPreviews, projectPreviews
             </p>
             ) : (
             <div
-              className={`max-w-screen-xl mx-auto px-4 flex items-start gap-3 py-2${
+              className={`max-w-screen-xl mx-auto px-4 flex items-start gap-3 py-1.5 md:py-2${
                 index > 0 ? " border-t border-brand-primary/25" : ""
               }`}
             >
@@ -238,7 +238,7 @@ export default function NewsPopup({ alerts, publicationPreviews, projectPreviews
               />
               <div className="min-w-0 flex-1 space-y-0.5">
               {alert.headline && (
-                <p className="text-sm md:text-base font-medium text-gray-900 leading-snug">
+                <p className="text-[13px] md:text-[15px] font-medium text-gray-900 leading-snug md:leading-[22px]">
                   {renderHeadlineWithBold(alert.headline, alert.id)}
                 </p>
               )}
@@ -261,7 +261,7 @@ export default function NewsPopup({ alerts, publicationPreviews, projectPreviews
                           ? publicationPreviews?.patents[id]
                           : undefined;
                       const projectPreview = item.kind === "project" ? projectPreviews?.[id] : undefined;
-                      const className = "text-sm md:text-base text-gray-600 hover:text-brand-primary underline-offset-2 hover:underline leading-snug line-clamp-1";
+                      const className = "text-[13px] md:text-[15px] text-gray-600 hover:text-brand-primary underline-offset-2 hover:underline leading-snug md:leading-[22px] line-clamp-1";
                       if (projectPreview) {
                         return (
                           <ProjectHoverLink preview={projectPreview} className={className}>
@@ -287,7 +287,7 @@ export default function NewsPopup({ alerts, publicationPreviews, projectPreviews
             <div className="flex items-center gap-0.5 shrink-0 self-center">
               <Link
                 href="/board/news"
-                className="hidden md:inline text-sm md:text-base text-gray-600 hover:text-brand-primary whitespace-nowrap transition-colors md:px-1"
+                className="hidden md:inline text-[13px] md:text-[15px] text-gray-600 hover:text-brand-primary whitespace-nowrap transition-colors md:px-1"
               >
                 All news →
               </Link>

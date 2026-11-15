@@ -52,6 +52,11 @@ export function getNewsTypeCounts(newsItems: NewsData[]): Record<string, number>
   return counts;
 }
 
+/** 연구실이 주도한 논문 줄. news.yaml에서 논문 뒤에 <note>(GLI Lab-led)</>를 붙인 줄이다. */
+const LAB_LED_NOTE = /<note>\s*\(GLI Lab-led\)\s*<\/>/;
+/** 주도 논문 묶음(제목 줄과 저자 줄)의 연한 배경. 좌우로 같은 폭(8px)만큼 내밀어, 글자 위치는 다른 줄과 같고 양쪽 여백이 대칭이다. */
+const LAB_LED_GROUP_CLASS = "-mx-2 px-2 py-1 rounded-md bg-brand-primary/[0.07]";
+
 // 사용 가능한 뉴스 타입들
 export const NEWS_TYPES = ['All', 'Member', 'Publication', 'Funding', 'General'] as const;
 export type NewsType = typeof NEWS_TYPES[number];
@@ -675,6 +680,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                       const elements: React.ReactNode[] = [];
                       let currentBulletGroup: React.ReactNode[] = [];
                       let isInBulletGroup = false;
+                      let isLabLedGroup = false;
                       
                       descriptionLines.forEach((line, lineIdx) => {
                         const trimmedLine = line.trim();
@@ -686,7 +692,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                           if (isInBulletGroup && currentBulletGroup.length > 0) {
                             // 이전 bullet group 완성
                             elements.push(
-                              <div key={`bullet-group-${lineIdx}`} className="ml-0">
+                              <div key={`bullet-group-${lineIdx}`} className={isLabLedGroup ? LAB_LED_GROUP_CLASS : "ml-0"}>
                                 {currentBulletGroup}
                               </div>
                             );
@@ -694,6 +700,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                           // 새로운 bullet group 시작
                           currentBulletGroup = [];
                           isInBulletGroup = true;
+                          isLabLedGroup = LAB_LED_NOTE.test(content);
                           
                           currentBulletGroup.push(
                             <div key={lineIdx} className="flex items-start gap-2 not-italic font-medium">
@@ -725,7 +732,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                       // 마지막 bullet group 처리
                       if (isInBulletGroup && currentBulletGroup.length > 0) {
                         elements.push(
-                          <div key="bullet-group-final" className="ml-0">
+                          <div key="bullet-group-final" className={isLabLedGroup ? LAB_LED_GROUP_CLASS : "ml-0"}>
                             {currentBulletGroup}
                           </div>
                         );
