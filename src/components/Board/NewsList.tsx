@@ -210,12 +210,9 @@ function renderContentWithMarkup(
           <ProfileHoverLink
             key={`${newsIndex}-${lineIndex}-profile-${profileId}`}
             profile={profile}
-            className="group hover:text-brand-primary underline-offset-4 hover:underline hover:decoration-1.5"
+            className="underline decoration-dotted decoration-gray-400 underline-offset-4 hover:text-brand-primary hover:decoration-solid hover:decoration-brand-primary transition-colors"
           >
             {displayName}
-            <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-            </svg>
           </ProfileHoverLink>
         );
       } else {
