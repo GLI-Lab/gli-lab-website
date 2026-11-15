@@ -98,7 +98,7 @@
   status: 
     period: {admission: null, graduation: "2026.02"}
     joined: {start: "2024.12", end: "2026.02"}
-    affiliation: {current: 건국대학교 석사과정 (GLI Lab), verified: "2026.02"}
+    affiliation: {current: 건국대 석사과정 (GLI Lab), verified: "2026.02"}
   quote: 
   reflection: 학부 연구 과정에서 교수님의 지도와 지원을 통해 연구의 즐거움과 가치를 배울 수 있었습니다. 이 경험을 바탕으로 더 깊이 있는 연구를 이어가고자 같은 연구실에서 석사 과정까지 진학하게 되었으며, 연구의 매력과 즐거움을 느끼며 앞으로도 연구자로서 성장해 나가고자 합니다.
     
@@ -185,7 +185,7 @@
   status: 
     period: {admission: null, graduation: "2025.02"}
     joined: {start: "2024.06", end: "2025.02"}
-    affiliation: {current: 건국대학교 석사과정 (GLI Lab), verified: "2025.02"}
+    affiliation: {current: 건국대 석사과정 (GLI Lab), verified: "2025.02"}
 
 - id: "[2024.07] 백혜윤"
   role: {type: intern, title: Undergraduate Student}
@@ -195,4 +195,4 @@
   status: 
     period: {admission: null, graduation: "2025.02"}
     joined: {start: "2024.07", end: "2025.02"}
-    affiliation: {current: 건국대학교 석사과정 (GLI Lab), verified: "2025.02"}
+    affiliation: {current: 건국대 석사과정 (GLI Lab), verified: "2025.02"}
