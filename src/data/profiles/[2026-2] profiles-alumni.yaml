@@ -36,7 +36,22 @@
 
 ###############################################
 # Interns
-###############################################    
+###############################################
+
+- id: "[2026.06] 권준희"
+  role: {type: intern, title: Undergraduate Student}
+  name: {en: Junhui Kwon, ko: 권준희}
+  education: {bs: ["Computer Science & Engineering, Konkuk University"], ms: null, phd: null}
+  interests: [Graph ML/DL, ATT&CK Graph, LLM-based APT Detection]
+  contacts: {emails: ["juni9565@konkuk.ac.kr"], homepage: null, github: ["galgalrobot"], linkedin: null}
+  status: 
+    period: {admission: null, graduation: null}
+    joined: {start: "2026.06", end: "2026.11"}
+    affiliation: {current: null, verified: null}
+  quote: 인내심을 갖고 꾸준히 쌓아가자
+  reflection: 스터디에서 논문을 붙들고 고민하고, 멘토링 프로젝트에서 문제를 하나씩 풀어가던 시간이 가장 기억에 남습니다. 다정하게 지도해주신 교수님과 친절하게 도와주신 선배님들 덕분에 연구실 생활이 즐거웠습니다. 이 경험을 밑거름 삼아 꾸준히 성장하겠습니다.
+
+
 - id: "[2024.07] 지상준"
   role: {type: intern, title: Undergraduate Student}
   name: {en: Sangjun Ji, ko: 지상준}

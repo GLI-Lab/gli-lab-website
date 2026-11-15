@@ -310,16 +310,3 @@
     affiliation: {current: null, verified: null}
   quote: 오늘 걷지 않으면 내일은 뛰어야 한다
   reflection: 
-
-- id: "[2026.06] 권준희"
-  role: {type: intern, title: Undergraduate Student (3학년 2학기)}
-  name: {en: Junhui Kwon, ko: 권준희}
-  education: {bs: ["Computer Science & Engineering, Konkuk University"], ms: null, phd: null}
-  interests: [Graph ML/DL, ATT&CK Graph, LLM-based APT Detection]
-  contacts: {emails: ["juni9565@konkuk.ac.kr"], homepage: null, github: ["galgalrobot"], linkedin: null}
-  status: 
-    period: {admission: null, graduation: null}
-    joined: {start: "2026.06", end: "Current"}
-    affiliation: {current: null, verified: null}
-  quote: 인내심을 갖고 꾸준히 쌓아가자
-  reflection: 
