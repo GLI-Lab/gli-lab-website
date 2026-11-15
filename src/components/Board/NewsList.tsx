@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ProfileHoverLink } from '@/components/Profile/ProfileHoverLink';
 import { PublicationHoverLink } from '@/components/Publication/PublicationHoverLink';
 import { NewsData, type ProfileLinks } from '@/data/loaders/types';
-import type { PublicationPreviews } from '@/lib/publicationPreview';
+import type { PublicationPreviews } from '@/components/Publication/publicationPreview';
 import { titleToId } from '@/lib/utils';
 
 export interface NewsListProps {

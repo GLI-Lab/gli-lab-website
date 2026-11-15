@@ -1,7 +1,7 @@
 "use client";
 
 import { HoverCardLink } from "@/components/HoverCardLink";
-import type { PublicationPreview } from "@/lib/publicationPreview";
+import type { PublicationPreview } from "@/components/Publication/publicationPreview";
 
 const STATUS_CLASS: Record<string, string> = {
   "In Progress": "bg-blue-500/10 text-blue-600",
@@ -9,16 +9,27 @@ const STATUS_CLASS: Record<string, string> = {
 };
 
 function PublicationCard({ preview }: { preview: PublicationPreview }) {
+  const venue = preview.venue;
+
   return (
     <div className="rounded-lg border border-gray-200 bg-white px-2.5 py-2 shadow-lg">
       <p className="text-[15px] font-medium leading-snug text-gray-900 line-clamp-3">{preview.title}</p>
       {preview.subtitle ? (
         <p className="mt-0.5 text-[13px] leading-snug text-gray-500 line-clamp-2">{preview.subtitle}</p>
       ) : null}
-      {preview.authors ? (
-        <p className="mt-1 text-[13px] leading-snug text-gray-600 line-clamp-2">{preview.authors}</p>
+      {preview.authors.length > 0 ? (
+        <p className="mt-1 text-[13px] italic leading-snug text-gray-600 line-clamp-2">
+          {preview.authors.map((author, i) => (
+            <span key={i}>
+              {author.name}
+              {author.isCorresponding && "*"}
+              {author.isEqualFirst && <sup className="pl-[1px]">‡</sup>}
+              {i < preview.authors.length - 1 && ", "}
+            </span>
+          ))}
+        </p>
       ) : null}
-      {preview.status || preview.meta ? (
+      {preview.status || venue || preview.meta ? (
         <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
           {preview.status ? (
             <span
@@ -29,8 +40,20 @@ function PublicationCard({ preview }: { preview: PublicationPreview }) {
               {preview.status}
             </span>
           ) : null}
-          {preview.meta ? (
-            <span className="text-[13px] leading-snug text-gray-500">{preview.meta}</span>
+          {venue ? (
+            <span className="text-[13px] leading-snug text-gray-500">
+              {venue.name}
+              {venue.acronym ? (
+                <>
+                  {" "}
+                  (<span className="font-semibold">{venue.acronym}</span>)
+                </>
+              ) : null}
+              , {venue.year}
+              {venue.paperType ? ` — ${venue.paperType}` : ""}
+            </span>
+          ) : preview.meta ? (
+            <span className="whitespace-pre-line text-[13px] leading-snug text-gray-500">{preview.meta}</span>
           ) : null}
         </div>
       ) : null}

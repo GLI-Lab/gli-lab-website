@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { type PatentData, type ProfileLinks } from '@/data/loaders/types';
 import { PublicationHoverLink } from '@/components/Publication/PublicationHoverLink';
-import { patentToPreview } from '@/lib/publicationPreview';
+import { patentToPreview } from '@/components/Publication/publicationPreview';
 import { ProfileAuthorName } from './ProfileHoverLink';
 import { ProfileDetailExpandToggle } from './ProfileDetailExpandToggle';
 import { ProfileDetailListMarker } from './ProfileDetailListMarker';

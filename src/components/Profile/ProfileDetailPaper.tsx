@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { type PaperData, type ProfileLinks } from '@/data/loaders/types';
 import { PublicationHoverLink } from '@/components/Publication/PublicationHoverLink';
-import { paperToPreview } from '@/lib/publicationPreview';
+import { paperToPreview } from '@/components/Publication/publicationPreview';
 import { ProfileAuthorName } from './ProfileHoverLink';
 import { getPaperTitleKey, isLocalizedPaperTitle } from '@/lib/utils';
 import { ProfileDetailExpandToggle } from './ProfileDetailExpandToggle';

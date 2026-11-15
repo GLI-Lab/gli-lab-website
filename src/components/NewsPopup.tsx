@@ -12,7 +12,7 @@ import { createPortal } from "react-dom";
 import { IoAlertCircleOutline, IoClose } from "react-icons/io5";
 import { PublicationHoverLink } from "@/components/Publication/PublicationHoverLink";
 import type { NewsPopupAlert } from "@/lib/newsPaper";
-import type { PublicationPreviews } from "@/lib/publicationPreview";
+import type { PublicationPreviews } from "@/components/Publication/publicationPreview";
 import { titleToId } from "@/lib/utils";
 
 const NEWS_POPUP_ROOT_ID = "news-popup-root";

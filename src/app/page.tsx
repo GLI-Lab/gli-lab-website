@@ -7,7 +7,7 @@ import { NewsList } from "@/components/Board/NewsList";
 import { SeminarList } from "@/components/Board/SeminarList";
 import { GalleryGrid, getGalleryItems } from "@/components/Gallery";
 import { getNews, getPapers, getPatents, getProfileLinks, getSeminars } from "@/data/loaders";
-import { buildPublicationPreviews } from "@/lib/publicationPreview";
+import { buildPublicationPreviews } from "@/components/Publication/publicationPreview";
 import NewsPopup from "@/components/NewsPopup";
 import { getNewsMarkupAlerts } from "@/lib/newsPaper";
 

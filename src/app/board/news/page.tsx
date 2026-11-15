@@ -3,7 +3,7 @@ import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
 import { NewsList } from "@/components/Board/NewsList";
 import { getNews, getPapers, getPatents, getProfileLinks } from "@/data/loaders";
-import { buildPublicationPreviews } from "@/lib/publicationPreview";
+import { buildPublicationPreviews } from "@/components/Publication/publicationPreview";
 
 const TITLE = 'News'
 const PATHNAME = '/board/news'
