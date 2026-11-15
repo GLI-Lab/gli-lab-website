@@ -84,7 +84,7 @@ export function ProfileAuthorName({
   return (
     <ProfileHoverLink
       profile={profile}
-      className={`${className} decoration-gray-500 underline underline-offset-[3px] hover:text-brand-primary hover:decoration-brand-primary transition-colors`}
+      className={`${className} underline decoration-dotted decoration-gray-400 underline-offset-4 hover:text-brand-primary hover:decoration-solid hover:decoration-brand-primary transition-colors`}
     >
       {name}
     </ProfileHoverLink>

@@ -55,7 +55,7 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
       const hasValidId = !!href;
       
       const authorName = (
-        <span className={hasValidId ? 'decoration-gray-500 hover:decoration-brand-primary underline underline-offset-[3px]' : ''}>
+        <span className={hasValidId ? 'underline decoration-dotted decoration-gray-400 underline-offset-4 hover:decoration-solid hover:decoration-brand-primary' : ''}>
           {author.name}
         </span>
       );
@@ -391,10 +391,8 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
           {/* Legend */}
           <div className="flex flex-col md:items-end gap-1 text-gray-600">
             <div>
-              <span className="decoration-gray-500 underline underline-offset-[3px]">Name</span>
-              : GLI Lab (
-              <span>Hover to preview, click for profile</span>
-              )
+              <span className="underline decoration-dotted decoration-gray-400 underline-offset-4">Name</span>
+              : GLI Lab (hover/click for profile)
             </div>
           </div>
         </div>
