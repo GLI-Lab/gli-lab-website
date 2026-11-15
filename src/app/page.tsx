@@ -95,12 +95,12 @@ export default async function Page() {
             <div className="max-w-screen-2xl mx-auto bg-gray-100">
                 <div className="max-w-screen-xl mx-auto flex flex-col items-center justify-center text-center space-y-8
                                 py-8 md:py-16 px-3 md:px-5">
-                    <p className="font-bold tracking-tighter text-[28px] md:text-[36px]">
+                    <h2 className="font-bold tracking-tighter text-[28px] md:text-[36px]">
                         Explore Our Research Topics
-                    </p>
+                    </h2>
 
-                    <p className="text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
-                        본 연구실은 궁극적으로 Graph Intelligence와 Language Intelligence를 융합하여 얻은 Graph-Language Intelligence를 Graph-Centric AI, Language-Centric AI, Recommender Systems, Anomaly Detection 등에 적용하는 것을 목적으로 하고 있으며, 다음과 같은 최신 기술들을 연구개발하고 있습니다.
+                    <p className="break-keep text-pretty text-[16px] md:text-[18px] font-normal text-gray-800 leading-relaxed tracking-normal">
+                        본 연구실은 궁극적으로 Graph Intelligence와 Language Intelligence를 융합하고(Graph-Language Fusion), 이를 Graph-Centric AI, Language-Centric AI, Recommender Systems, Anomaly Detection 등에 적용하는 것을 목적으로 하고 있으며, 다음과 같은 최신 기술들을 연구개발하고 있습니다.
                     </p>
 
                     <div className="flex flex-col md:flex-row gap-4 md:gap-6 items-center justify-center !mt-6">
@@ -128,7 +128,7 @@ export default async function Page() {
                         </a>
                     </div>
 
-                    <ul className="list-none list-inside space-y-6 md:space-y-10 text-left text-[16px] md:text-[18px] font-normal text-gray-800 leading-[1.8] tracking-normal">
+                    <ul className="break-keep list-none list-inside space-y-5 md:space-y-6 text-left text-[16px] md:text-[18px] font-normal text-gray-800 leading-[1.8] tracking-normal">
                         <li className="space-y-2 leading-snug">
                             <div className="space-y-1">
                                 <div className="flex space-x-2">
@@ -137,7 +137,7 @@ export default async function Page() {
                                 </div>
                             </div>
                             <div className="ml-6 text-gray-600 text-[14px] sm:text-[15px] md:text-[16px] lg:text-[17px] xl:text-[18px]">
-                                → 그래프와 LLM을 결합해 외부 지식을 활용한 응답 생성, GraphRAG·에이전트 등 신뢰 가능하고 도메인 적응형 AI 추구
+                                → 그래프와 LLM을 결합해 외부 지식을 활용하고, GraphRAG·에이전트 등 신뢰 가능하고 도메인에 적응하는 AI를 추구
                             </div>
                         </li>
                         <li className="space-y-2 leading-snug">

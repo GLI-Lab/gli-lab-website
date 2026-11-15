@@ -637,7 +637,8 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
         </div>
       )}
 
-      <div className="grid grid-cols-[auto,1fr] gap-x-[0.5em] md:gap-x-[0.6em] gap-y-[0.4em] md:gap-y-[0.25em]">
+      {/* 휴대폰(sm 미만)에서는 날짜를 제목 위 줄에 두어 본문이 폭을 다 쓰게 한다. sm부터는 날짜가 왼쪽 열이다. */}
+      <div className="grid grid-cols-1 sm:grid-cols-[auto,1fr] gap-x-[0.5em] md:gap-x-[0.6em] gap-y-[0.4em] md:gap-y-[0.45em]">
         {latestNews.map((news, idx) => {
           const date = new Date(news.date);
           const year = date.getFullYear();
@@ -650,7 +651,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
 
           return (
             <div key={`${news.date}-${idx}`} className="contents leading-snug">
-              <div className="flex justify-center items-start -mt-0.5">
+              <div className="flex justify-start sm:justify-center items-start mt-1.5 sm:-mt-0.5">
                 <div className="relative">
                   <span className="text-[0.8em] font-semibold bg-gray-100 px-[0.6em] py-[0.3em] rounded">
                     {formattedDate}
@@ -664,7 +665,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                   )}
                 </div>
               </div>
-              <div className={`${idx < latestNews.length - 1 ? 'border-b border-gray-200 pt-0.5 pb-2' : ''}`}>
+              <div className={`${idx < latestNews.length - 1 ? 'border-b border-gray-200 pt-0.5 pb-2 sm:pb-2.5' : ''}`}>
                 <div className="text-[0.95em] sm:text-[1em]">
                   {renderContentWithMarkup(title, profileLinks, publicationPreviews, projectPreviews, idx, 0)}
                 </div>
