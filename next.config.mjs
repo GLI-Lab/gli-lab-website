@@ -8,6 +8,9 @@ const nextConfig = {
     // Next 16: 로컬 이미지에 쿼리스트링이 있으면 localPatterns에 경로를 적어야 한다.
     // 프로필 사진은 내용 해시 `?v=`로 캐시를 깨므로 search는 넣지 않는다 (아무 쿼리나 허용).
     images: {
+        // 임시: Vercel 무료 이미지 변환 한도(월 5,000건)를 넘어 변환 요청이 402로 실패한다.
+        // 변환을 끄고 public의 파일을 그대로 내보낸다. 폭별 파일을 빌드 때 미리 만드는 구조로 바꾸면 지운다.
+        unoptimized: true,
         formats: ['image/webp'],
         // 스크립트가 이미 WebP q82로 만들었으므로, 화면에서 다시 저장할 때는 100으로 더 깎지 않는다.
         qualities: [100],
