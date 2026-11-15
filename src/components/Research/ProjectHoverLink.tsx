@@ -8,8 +8,8 @@ function SubItemIcon() {
   return (
     <svg
       className="mt-[2px] shrink-0"
-      width="13"
-      height="13"
+      width="14"
+      height="14"
       viewBox="0 0 12 12"
       fill="none"
       stroke="currentColor"
@@ -28,12 +28,12 @@ function ProjectCard({ preview }: { preview: ProjectPreview }) {
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white px-2.5 py-2 shadow-lg">
-      <p className="text-[15px] font-medium leading-snug text-gray-900 line-clamp-3">{preview.title}</p>
+      <p className="text-[16px] font-medium leading-snug text-gray-900 line-clamp-3">{preview.title}</p>
       {preview.main ? (
-        <p className="mt-1 text-[13px] leading-snug text-gray-600 line-clamp-2">{preview.main}</p>
+        <p className="mt-1 text-[14px] leading-snug text-gray-600 line-clamp-2">{preview.main}</p>
       ) : null}
       {preview.parent ? (
-        <p className="mt-0.5 flex items-start gap-1 text-[13px] leading-snug text-gray-500">
+        <p className="mt-0.5 flex items-start gap-1 text-[14px] leading-snug text-gray-500">
           <SubItemIcon />
           <span className="min-w-0 line-clamp-2">{preview.parent}</span>
         </p>
@@ -42,7 +42,7 @@ function ProjectCard({ preview }: { preview: ProjectPreview }) {
         <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
           {preview.role ? (
             <span
-              className={`inline-block rounded-full px-2 text-[12px] leading-5 ${
+              className={`inline-block rounded-full px-2 text-[13px] leading-5 ${
                 preview.isLead ? "bg-brand-primary/10 text-brand-primary" : "bg-gray-100 text-gray-600"
               }`}
             >
@@ -50,7 +50,7 @@ function ProjectCard({ preview }: { preview: ProjectPreview }) {
             </span>
           ) : null}
           {typeAndPeriod ? (
-            <span className="text-[13px] leading-snug text-gray-500">{typeAndPeriod}</span>
+            <span className="text-[14px] leading-snug text-gray-500">{typeAndPeriod}</span>
           ) : null}
         </div>
       ) : null}
@@ -72,7 +72,7 @@ export function ProjectHoverLink({
     <HoverCardLink
       href={preview.href}
       className={className}
-      panelClassName="w-max max-w-[min(450px,calc(100vw-16px))]"
+      panelClassName="w-max max-w-[min(480px,calc(100vw-16px))]"
       card={<ProjectCard preview={preview} />}
     >
       {children}

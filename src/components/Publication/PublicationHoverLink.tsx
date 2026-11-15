@@ -13,12 +13,12 @@ function PublicationCard({ preview }: { preview: PublicationPreview }) {
 
   return (
     <div className="rounded-lg border border-gray-200 bg-white px-2.5 py-2 shadow-lg">
-      <p className="text-[15px] font-medium leading-snug text-gray-900 line-clamp-3">{preview.title}</p>
+      <p className="text-[16px] font-medium leading-snug text-gray-900 line-clamp-3">{preview.title}</p>
       {preview.subtitle ? (
-        <p className="mt-0.5 text-[13px] leading-snug text-gray-500 line-clamp-2">{preview.subtitle}</p>
+        <p className="mt-0.5 text-[14px] leading-snug text-gray-500 line-clamp-2">{preview.subtitle}</p>
       ) : null}
       {preview.authors.length > 0 ? (
-        <p className="mt-1 text-[13px] italic leading-snug text-gray-600 line-clamp-2">
+        <p className="mt-1 text-[14px] italic leading-snug text-gray-600 line-clamp-2">
           {preview.authors.map((author, i) => (
             <span key={i}>
               {author.name}
@@ -33,7 +33,7 @@ function PublicationCard({ preview }: { preview: PublicationPreview }) {
         <div className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5">
           {preview.status ? (
             <span
-              className={`inline-block rounded-full px-2 text-[12px] leading-5 ${
+              className={`inline-block rounded-full px-2 text-[13px] leading-5 ${
                 STATUS_CLASS[preview.status] ?? "bg-brand-primary/10 text-brand-primary"
               }`}
             >
@@ -41,7 +41,7 @@ function PublicationCard({ preview }: { preview: PublicationPreview }) {
             </span>
           ) : null}
           {venue ? (
-            <span className="text-[13px] leading-snug text-gray-500">
+            <span className="text-[14px] leading-snug text-gray-500">
               {venue.name}
               {venue.acronym ? (
                 <>
@@ -53,7 +53,7 @@ function PublicationCard({ preview }: { preview: PublicationPreview }) {
               {venue.paperType ? ` — ${venue.paperType}` : ""}
             </span>
           ) : preview.meta ? (
-            <span className="whitespace-pre-line text-[13px] leading-snug text-gray-500">{preview.meta}</span>
+            <span className="whitespace-pre-line text-[14px] leading-snug text-gray-500">{preview.meta}</span>
           ) : null}
         </div>
       ) : null}
@@ -75,7 +75,7 @@ export function PublicationHoverLink({
     <HoverCardLink
       href={preview.href}
       className={className}
-      panelClassName="w-max max-w-[min(450px,calc(100vw-16px))]"
+      panelClassName="w-max max-w-[min(480px,calc(100vw-16px))]"
       card={<PublicationCard preview={preview} />}
     >
       {children}

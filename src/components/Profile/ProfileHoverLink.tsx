@@ -10,15 +10,20 @@ interface ProfileHoverLinkProps {
   children: React.ReactNode;
 }
 
-const PHOTO_WIDTH = 88;
-const PHOTO_HEIGHT = 108;
+const PHOTO_WIDTH = 96;
+const PHOTO_HEIGHT = 118;
+
+/** 가장 긴 직함("Integrated M.S./Ph.D. Student (4학기)")이 한 줄에 들어가는 폭. 공용 기본값 370px에서는 두 줄이 된다. */
+const PANEL_CLASS = "w-max max-w-[min(400px,calc(100vw-16px))]";
 
 /**
- * 카드 사진은 항상 칸 폭의 2배(176px) 파일 하나만 쓴다.
+ * 카드 사진은 항상 칸 폭의 2배(192px) 파일 하나만 쓴다.
  * 후보를 여러 개 주면(srcset) 크롬은 같은 사진의 더 큰 버전이 이미 받아져 있을 때 그것을 골라 쓴다.
  * 멤버 카드나 상세 사진이 떠 있는 페이지, 화면을 확대했다 되돌린 뒤가 그렇다.
- * 300~1920px 파일이 88px 칸에 눌리면 가장자리가 거칠고 날카롭게 보인다.
+ * 300~1920px 파일이 96px 칸에 눌리면 가장자리가 거칠고 날카롭게 보인다.
  * width만 넘기면 next/image 후보는 1배, 2배 두 개이고 src가 그중 2배다.
+ * 2배 후보는 next.config.mjs의 images.imageSizes에서 192 이상인 가장 작은 값이다. 목록에 192가 없으면 230이 된다.
+ * images.unoptimized가 켜져 있는 동안에는 후보 계산 없이 public 파일이 그대로 쓰인다.
  */
 function hoverPhotoSrc(photo: string): string {
   return getImageProps({ src: photo, alt: "", width: PHOTO_WIDTH, height: PHOTO_HEIGHT }).props.src;
@@ -27,7 +32,7 @@ function hoverPhotoSrc(photo: string): string {
 function ProfileCard({ profile }: { profile: ProfileLinkTarget }) {
   return (
     <div className="flex items-center gap-2.5 rounded-lg border border-gray-200 bg-white px-2 py-1.5 shadow-lg">
-      <div className="h-[108px] w-[88px] shrink-0 overflow-hidden rounded-md bg-gray-100">
+      <div className="h-[118px] w-[96px] shrink-0 overflow-hidden rounded-md bg-gray-100">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={hoverPhotoSrc(profile.photo)}
@@ -39,15 +44,15 @@ function ProfileCard({ profile }: { profile: ProfileLinkTarget }) {
         />
       </div>
       <div className="min-w-0">
-        <p className="text-[16.5px] font-medium leading-snug text-gray-900">{profile.nameEn}</p>
+        <p className="text-[17.5px] font-medium leading-snug text-gray-900">{profile.nameEn}</p>
         {profile.nameKo ? (
-          <p className="text-[14.5px] leading-snug text-gray-600">{profile.nameKo}</p>
+          <p className="text-[15.5px] leading-snug text-gray-600">{profile.nameKo}</p>
         ) : null}
         {profile.title ? (
-          <p className="mt-0.5 text-[14px] font-medium leading-snug text-gray-800">{profile.title}</p>
+          <p className="mt-0.5 text-[15px] font-medium leading-snug text-gray-800">{profile.title}</p>
         ) : null}
         {profile.summary ? (
-          <p className="mt-0.5 line-clamp-2 text-[13.5px] leading-snug text-gray-500">{profile.summary}</p>
+          <p className="mt-0.5 line-clamp-2 text-[14.5px] leading-snug text-gray-500">{profile.summary}</p>
         ) : null}
       </div>
     </div>
@@ -60,7 +65,12 @@ function ProfileCard({ profile }: { profile: ProfileLinkTarget }) {
  */
 export function ProfileHoverLink({ profile, className, children }: ProfileHoverLinkProps) {
   return (
-    <HoverCardLink href={profile.href} className={className} card={<ProfileCard profile={profile} />}>
+    <HoverCardLink
+      href={profile.href}
+      className={className}
+      card={<ProfileCard profile={profile} />}
+      panelClassName={PANEL_CLASS}
+    >
       {children}
     </HoverCardLink>
   );

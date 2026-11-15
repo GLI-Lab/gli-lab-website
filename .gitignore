@@ -36,3 +36,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# 임시 이미지 비교 페이지 (로컬 확인용)
+/public/_compare/
