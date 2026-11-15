@@ -14,7 +14,7 @@ export function ProfileDetailSectionLink({ href, children, title }: ProfileDetai
         <span className="text-text-accent font-medium">
             <Link
                 href={href}
-                className="group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-1.5"
+                className="group hover:text-brand-primary hover:underline underline-offset-4"
                 title={title}
             >
                 {children}

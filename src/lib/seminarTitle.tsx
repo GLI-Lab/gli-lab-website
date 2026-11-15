@@ -41,7 +41,7 @@ function renderTitleToken(token: TitleToken, key: string | number): ReactNode {
   if (token.type === 'underline-phrase') {
     const parts = token.text.split(/\\+/).map((part) => part.trim()).filter(Boolean);
     return (
-      <span key={key} className="underline underline-offset-4 decoration-1.5">
+      <span key={key} className="underline underline-offset-4">
         {parts.map((part, index) => (
           <Fragment key={`${key}-part-${index}`}>
             {index > 0 && <br />}

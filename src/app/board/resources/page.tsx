@@ -8,7 +8,7 @@ const TITLE = "Resources";
 const PATHNAME = "/board/resources";
 
 const LINK_CLASS =
-  "group underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary";
+  "group underline-offset-4 hover:underline hover:text-brand-primary";
 
 type ResourceItem = {
   title: string;

@@ -39,7 +39,7 @@ function parseDescription(description: string): React.ReactNode {
     const highlightMatch = part.match(/^<h>(.*?)<\/h>$/);
     if (highlightMatch) {
       return (
-        <span key={index} className="underline-offset-4 underline decoration-1.5 font-medium">
+        <span key={index} className="underline-offset-4 underline font-medium">
           {highlightMatch[1]}
         </span>
       );
@@ -65,7 +65,7 @@ function renderProfileWithLink(participant: string, profileLinks: ProfileLinks):
       return (
         <ProfileHoverLink
           profile={profile}
-          className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
+          className="underline-offset-4 hover:underline hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
         >
           <span className=" transition-colors [&:hover>svg]:text-brand-primary">
             {displayName}

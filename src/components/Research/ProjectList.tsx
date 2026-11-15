@@ -24,7 +24,7 @@ function renderMember(
       <ProfileHoverLink
         key={key}
         profile={profile}
-        className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
+        className="underline-offset-4 hover:underline hover:text-brand-primary hover:decoration-brand-primary hover:font-medium transition-all duration-200"
       >
         <span className="transition-colors [&:hover>svg]:text-brand-primary">
           {member.name}

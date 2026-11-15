@@ -234,7 +234,7 @@ function renderContentWithMarkup(
       const [fullMatch, paperTitle] = match;
       const paperId = titleToId(paperTitle);
       const paperPreview = publicationPreviews.papers[paperId];
-      const paperClassName = "group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-1.5";
+      const paperClassName = "group hover:text-brand-primary hover:underline underline-offset-4";
       const paperIcon = (
         <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -282,7 +282,7 @@ function renderContentWithMarkup(
       const [fullMatch, patentTitle] = match;
       const patentId = titleToId(patentTitle);
       const patentPreview = publicationPreviews.patents[patentId];
-      const patentClassName = "group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-1.5";
+      const patentClassName = "group hover:text-brand-primary hover:underline underline-offset-4";
       const patentIcon = (
         <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -320,7 +320,7 @@ function renderContentWithMarkup(
       // 프로젝트 제목을 링크로 변환 (paper와 동일한 스타일)
       // URL 해시에 한글이 포함될 수 있으므로 encodeURIComponent 사용
       const projectPreview = projectPreviews[projectId];
-      const projectClassName = "group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-1.5";
+      const projectClassName = "group hover:text-brand-primary hover:underline underline-offset-4";
       const projectIcon = (
         <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
@@ -361,8 +361,7 @@ function renderContentWithMarkup(
           href={linkUrl.trim()}
           target="_blank"
           rel="noopener noreferrer"
-          className="group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-1.5"
-          title={linkUrl.trim()}
+          className="group hover:text-brand-primary hover:underline underline-offset-4"
         >
           {renderTextWithBold(linkText, `${newsIndex}-${lineIndex}-link-${index}`)}
           <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">

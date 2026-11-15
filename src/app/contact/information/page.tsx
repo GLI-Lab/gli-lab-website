@@ -9,7 +9,7 @@ const TITLE = "Email & Location";
 const PATHNAME = "/contact/information";
 
 const LINK_CLASS =
-  "group underline-offset-4 hover:underline hover:decoration-1.5";
+  "group underline-offset-4 hover:underline";
 
 function LinkIcon() {
   return (

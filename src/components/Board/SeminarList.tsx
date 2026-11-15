@@ -99,7 +99,7 @@ function renderPresenter(
     return (
       <ProfileHoverLink
         profile={profile}
-        className="underline-offset-4 hover:underline hover:decoration-1.5 hover:text-brand-primary hover:decoration-brand-primary transition-colors"
+        className="underline-offset-4 hover:underline hover:text-brand-primary hover:decoration-brand-primary transition-colors"
       >
         <span className="inline-flex items-center gap-0.5">
           {presenter.name}
