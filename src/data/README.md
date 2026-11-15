@@ -44,8 +44,8 @@
 
 | 경로 | 로더 | Revalidate |
 | --- | --- | --- |
-| `/` | `getNews`, `getSeminars`, `getProfileLinks`, `getGalleryItems` | 1h |
-| `/board/news` | `getNews`, `getProfileLinks` | 1h |
+| `/` | `getNews`, `getSeminars`, `getProfileLinks`, `getGalleryItems`, `getPapers`, `getPatents`, `getProjects` | 1h |
+| `/board/news` | `getNews`, `getProfileLinks`, `getPapers`, `getPatents`, `getProjects` | 1h |
 | `/board/seminar` | `getSeminars`, `getProfileLinks` | 1h |
 | `/board/study` | `getStudies`, `getProfileLinks` | 1h |
 | `/publications/papers` | `getPapers`, `getProfileLinks` | 1h |

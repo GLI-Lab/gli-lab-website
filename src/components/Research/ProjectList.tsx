@@ -6,12 +6,7 @@ import { ProfileHoverLink } from "@/components/Profile/ProfileHoverLink";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { ProjectData, ProjectMember, type ProfileLinks } from "@/data/loaders/types";
 import { titleToId } from "@/lib/utils";
-
-/** "연구책임자(학생)"처럼 괄호가 붙어도 기본 역할과 같은 뱃지를 쓴다 */
-function roleBadgeKey(role: string): string {
-  const match = role.match(/^(연구책임자|공동연구자|참여연구자)(?:\([^)]*\))?$/);
-  return match ? match[1] : role;
-}
+import { formatDateRange, roleBadgeKey } from "./projectPreview";
 
 /** 참여 인원을 프로필 링크와 함께 렌더링 (board/study 페이지의 사람 이름 스타일 참고)
  *  - 현재 멤버(/people/members)와 과거 멤버(alumni, /people/alumni) 모두 링크 가능 */
@@ -109,12 +104,6 @@ function mergeParticipants(
   return result;
 }
 
-
-function formatDateRange(start: string, end: string): string {
-  const s = start?.replace(/-/g, ".") ?? "";
-  const e = end?.replace(/-/g, ".") ?? "";
-  return s && e ? `${s} ~ ${e}` : s || e;
-}
 
 /** YYYY-MM -> YYYY.MM */
 function formatMonth(d?: string | null): string {

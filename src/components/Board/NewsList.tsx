@@ -4,8 +4,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ProfileHoverLink } from '@/components/Profile/ProfileHoverLink';
 import { PublicationHoverLink } from '@/components/Publication/PublicationHoverLink';
+import { ProjectHoverLink } from '@/components/Research/ProjectHoverLink';
 import { NewsData, type ProfileLinks } from '@/data/loaders/types';
 import type { PublicationPreviews } from '@/components/Publication/publicationPreview';
+import type { ProjectPreviews } from '@/components/Research/projectPreview';
 import { titleToId } from '@/lib/utils';
 
 export interface NewsListProps {
@@ -16,6 +18,8 @@ export interface NewsListProps {
   profileLinks?: ProfileLinks
   /** 뉴스 본문의 논문·특허 제목 호버 카드. 키는 titleToId 결과 */
   publicationPreviews?: PublicationPreviews
+  /** 뉴스 본문의 프로젝트 제목 호버 카드. 키는 titleToId 결과 */
+  projectPreviews?: ProjectPreviews
   filterType?: 'Member' | 'Publication' | 'Funding' | 'General' | 'All'
   showFilters?: boolean
 }
@@ -82,6 +86,7 @@ function renderContentWithMarkup(
   content: string,
   profileLinks: ProfileLinks,
   publicationPreviews: PublicationPreviews,
+  projectPreviews: ProjectPreviews,
   newsIndex: number,
   lineIndex: number,
 ): React.ReactNode {
@@ -317,18 +322,35 @@ function renderContentWithMarkup(
 
       // 프로젝트 제목을 링크로 변환 (paper와 동일한 스타일)
       // URL 해시에 한글이 포함될 수 있으므로 encodeURIComponent 사용
+      const projectPreview = projectPreviews[projectId];
+      const projectClassName = "group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-1.5";
+      const projectIcon = (
+        <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+        </svg>
+      );
+
       elements.push(
-        <Link 
-          key={`${newsIndex}-${lineIndex}-project-${index}`}
-          href={`/research/projects#${encodeURIComponent(projectId)}`}
-          className="group hover:text-brand-primary hover:underline underline-offset-4 hover:decoration-1.5"
-          title="View project details"
-        >
-          {projectTitle}
-          <svg className="w-[0.66em] h-[0.66em] ml-0.5 inline opacity-60 group-hover:opacity-100" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-          </svg>
-        </Link>
+        projectPreview ? (
+          <ProjectHoverLink
+            key={`${newsIndex}-${lineIndex}-project-${index}`}
+            preview={projectPreview}
+            className={projectClassName}
+          >
+            {projectTitle}
+            {projectIcon}
+          </ProjectHoverLink>
+        ) : (
+          <Link
+            key={`${newsIndex}-${lineIndex}-project-${index}`}
+            href={`/research/projects#${encodeURIComponent(projectId)}`}
+            className={projectClassName}
+            title="View project details"
+          >
+            {projectTitle}
+            {projectIcon}
+          </Link>
+        )
       );
       
       lastIndex = index + fullMatch.length;
@@ -391,8 +413,9 @@ function renderContentWithMarkup(
 }
 
 const EMPTY_PREVIEWS: PublicationPreviews = { papers: {}, patents: {} };
+const EMPTY_PROJECT_PREVIEWS: ProjectPreviews = {};
 
-export function NewsList({ className = '', count = null, newsItems = [], profileLinks = {}, publicationPreviews = EMPTY_PREVIEWS, filterType = 'All', showFilters = false }: NewsListProps) {
+export function NewsList({ className = '', count = null, newsItems = [], profileLinks = {}, publicationPreviews = EMPTY_PREVIEWS, projectPreviews = EMPTY_PROJECT_PREVIEWS, filterType = 'All', showFilters = false }: NewsListProps) {
   const [selectedTypes, setSelectedTypes] = useState<Set<NewsType>>(new Set(['All']));
   const [selectedYears, setSelectedYears] = useState<Set<number>>(new Set());
   const [selectedYearPeriod, setSelectedYearPeriod] = useState<string>('');
@@ -647,7 +670,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
               </div>
               <div className={`${idx < latestNews.length - 1 ? 'border-b border-gray-200 pt-0.5 pb-2' : ''}`}>
                 <div className="text-[0.95em] sm:text-[1em]">
-                  {renderContentWithMarkup(title, profileLinks, publicationPreviews, idx, 0)}
+                  {renderContentWithMarkup(title, profileLinks, publicationPreviews, projectPreviews, idx, 0)}
                 </div>
                 {descriptionLines.length > 0 && (
                   <div className="text-[0.9em] italic text-gray-600 mt-1 space-y-1.5">
@@ -679,7 +702,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                             <div key={lineIdx} className="flex items-start gap-2 not-italic font-medium">
                               -
                               <div className="flex-1">
-                                {renderContentWithMarkup(content, profileLinks, publicationPreviews, idx, lineIdx + 1)}
+                                {renderContentWithMarkup(content, profileLinks, publicationPreviews, projectPreviews, idx, lineIdx + 1)}
                               </div>
                             </div>
                           );
@@ -688,14 +711,14 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                             // bullet group 내의 일반 텍스트 (같은 indentation)
                             currentBulletGroup.push(
                               <div key={lineIdx} className="ml-4 text-[0.95em]">
-                                {renderContentWithMarkup(content, profileLinks, publicationPreviews, idx, lineIdx + 1)}
+                                {renderContentWithMarkup(content, profileLinks, publicationPreviews, projectPreviews, idx, lineIdx + 1)}
                               </div>
                             );
                           } else {
                             // bullet group 밖의 일반 텍스트
                             elements.push(
                               <div key={lineIdx}>
-                                {renderContentWithMarkup(content, profileLinks, publicationPreviews, idx, lineIdx + 1)}
+                                {renderContentWithMarkup(content, profileLinks, publicationPreviews, projectPreviews, idx, lineIdx + 1)}
                               </div>
                             );
                           }

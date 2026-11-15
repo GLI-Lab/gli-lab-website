@@ -75,7 +75,7 @@ export function PublicationHoverLink({
     <HoverCardLink
       href={preview.href}
       className={className}
-      panelClassName="w-max max-w-[min(420px,calc(100vw-16px))]"
+      panelClassName="w-max max-w-[min(450px,calc(100vw-16px))]"
       card={<PublicationCard preview={preview} />}
     >
       {children}

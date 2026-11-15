@@ -2,8 +2,9 @@ import {Metadata} from "next";
 import {getMetadata} from "@/lib/GetMetadata";
 import {SubCover} from "@/components/Covers";
 import { NewsList } from "@/components/Board/NewsList";
-import { getNews, getPapers, getPatents, getProfileLinks } from "@/data/loaders";
+import { getNews, getPapers, getPatents, getProfileLinks, getProjects } from "@/data/loaders";
 import { buildPublicationPreviews } from "@/components/Publication/publicationPreview";
+import { buildProjectPreviews } from "@/components/Research/projectPreview";
 
 const TITLE = 'News'
 const PATHNAME = '/board/news'
@@ -17,13 +18,15 @@ export const generateMetadata = async (): Promise<Metadata> => {
 };
 
 export default async function Page() {
-    const [newsItems, profileLinks, papers, patents] = await Promise.all([
+    const [newsItems, profileLinks, papers, patents, projects] = await Promise.all([
         getNews(),
         getProfileLinks(),
         getPapers(),
         getPatents(),
+        getProjects(),
     ]);
     const publicationPreviews = buildPublicationPreviews(papers, patents);
+    const projectPreviews = buildProjectPreviews(projects);
 
     return (
         <>
@@ -37,6 +40,7 @@ export default async function Page() {
                     newsItems={newsItems}
                     profileLinks={profileLinks}
                     publicationPreviews={publicationPreviews}
+                    projectPreviews={projectPreviews}
                     showFilters={true}
                 />
             </div>

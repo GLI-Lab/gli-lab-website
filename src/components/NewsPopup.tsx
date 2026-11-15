@@ -11,8 +11,10 @@ import {
 import { createPortal } from "react-dom";
 import { IoAlertCircleOutline, IoClose } from "react-icons/io5";
 import { PublicationHoverLink } from "@/components/Publication/PublicationHoverLink";
+import { ProjectHoverLink } from "@/components/Research/ProjectHoverLink";
 import type { NewsPopupAlert } from "@/lib/newsPaper";
 import type { PublicationPreviews } from "@/components/Publication/publicationPreview";
+import type { ProjectPreviews } from "@/components/Research/projectPreview";
 import { titleToId } from "@/lib/utils";
 
 const NEWS_POPUP_ROOT_ID = "news-popup-root";
@@ -89,9 +91,10 @@ function renderHeadlineWithBold(text: string, keyPrefix: string): ReactNode {
 interface NewsPopupProps {
   alerts: NewsPopupAlert[];
   publicationPreviews?: PublicationPreviews;
+  projectPreviews?: ProjectPreviews;
 }
 
-export default function NewsPopup({ alerts, publicationPreviews }: NewsPopupProps) {
+export default function NewsPopup({ alerts, publicationPreviews, projectPreviews }: NewsPopupProps) {
   const bannerRef = useRef<HTMLDivElement>(null);
   const fallbackTimers = useRef<Map<string, number>>(new Map());
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
@@ -257,7 +260,15 @@ export default function NewsPopup({ alerts, publicationPreviews }: NewsPopupProp
                         : item.kind === "patent"
                           ? publicationPreviews?.patents[id]
                           : undefined;
+                      const projectPreview = item.kind === "project" ? projectPreviews?.[id] : undefined;
                       const className = "text-sm md:text-base text-gray-600 hover:text-brand-primary underline-offset-2 hover:underline leading-snug line-clamp-1";
+                      if (projectPreview) {
+                        return (
+                          <ProjectHoverLink preview={projectPreview} className={className}>
+                            {item.title}
+                          </ProjectHoverLink>
+                        );
+                      }
                       return preview ? (
                         <PublicationHoverLink preview={preview} className={className}>
                           {item.title}

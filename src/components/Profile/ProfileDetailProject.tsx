@@ -1,9 +1,9 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import { type ProjectData } from '@/data/loaders/types';
-import { titleToId } from '@/lib/utils';
+import { ProjectHoverLink } from '@/components/Research/ProjectHoverLink';
+import { projectToPreview } from '@/components/Research/projectPreview';
 import { ProfileDetailExpandToggle } from './ProfileDetailExpandToggle';
 import { ProfileDetailListMarker } from './ProfileDetailListMarker';
 import { ProfileDetailSectionLink } from './ProfileDetailSectionLink';
@@ -60,13 +60,12 @@ export function ProfileDetailProject({ projects = [], profileId }: ProfileDetail
                                         <ProfileDetailListMarker index={index} showNumbering={SHOW_ITEM_NUMBERING} />
                                         <div className="flex-1">
                                             <div className="text-[15.5px] md:text-[16.5px] font-medium mb-1">
-                                                <Link
-                                                    href={`/research/projects#${encodeURIComponent(titleToId(project.title))}`}
+                                                <ProjectHoverLink
+                                                    preview={projectToPreview(project)}
                                                     className="hover:text-interactive-hover hover:underline underline-offset-4"
-                                                    title="View project details"
                                                 >
                                                     {project.title}
-                                                </Link>
+                                                </ProjectHoverLink>
                                                 {manager && (
                                                     <span>
                                                         {' '}
