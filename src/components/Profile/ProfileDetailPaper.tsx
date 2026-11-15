@@ -78,7 +78,7 @@ function ProfilePaperItem({
                                     <>
                                         {paper.title.ko}
                                         <br />
-                                        <span className="text-[14px] md:text-[15px] text-gray-600">
+                                        <span className="text-[14px] md:text-[15px] font-normal text-gray-600">
                                             {paper.title.en}
                                         </span>
                                     </>

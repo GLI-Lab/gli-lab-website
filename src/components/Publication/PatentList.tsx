@@ -429,7 +429,7 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
                         {patent.title.ko}
                         {renderCopyButton(patentId)}
                       </div>
-                      <div className="text-[14.5px] md:text-[16.5px] leading-tight">
+                      <div className="text-[14.5px] md:text-[16.5px] font-normal leading-tight">
                         {patent.title.en}
                       </div>
                     </div>
