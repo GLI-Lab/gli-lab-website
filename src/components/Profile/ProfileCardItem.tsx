@@ -10,6 +10,10 @@ export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
     const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, captain, isAlumniPage } = props;
     // console.log('----ProfileCardItem rendered:', name_ko);
 
+    // 졸업생 카드에 소속이 있으면 정보가 세 줄(Affiliation, Joined, E-mail)이 된다.
+    // 휴대폰 폭에서는 세 줄이 사진 높이를 5px 넘어 카드가 길어지므로, E-mail 아래 여백을 그만큼 줄인다.
+    const hasAffiliationRow = Boolean(isAlumniPage) && hasAffiliation(affiliation);
+
     return (
         <div
             onClick={onClick}
@@ -20,7 +24,7 @@ export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
                 <Image src={photo[0]} sizes="(max-width: 640px) 230px, (max-width: 1024px) 280px, 300px" quality={100} alt="Profile" fill className="object-cover rounded-md"/>
                 {isActiveCaptain(captain) && captain && <ProfileCaptainBadge captain={captain} size="card" />}
             </div>
-            <div className="flex-1 py-3 pr-1 flex flex-col justify-between">
+            <div className={`flex-1 pt-3 ${hasAffiliationRow ? 'pb-[7px] sm:pb-3' : 'pb-3'} pr-1 flex flex-col justify-between`}>
                 <div className="flex flex-row justify-between">
                     <div>
                         <div className={`text-xl sm:text-2xl tracking-tight sm:tracking-normal font-medium ${isSelected ? 'text-interactive-primary 1.5md:text-white' : 'group-hover:text-interactive-primary'}`}>{name_en}</div>
