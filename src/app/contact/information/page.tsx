@@ -40,6 +40,8 @@ const STUDENT_LAB_MAP_URL =
 export const generateMetadata = async (): Promise<Metadata> => {
   return getMetadata({
     title: TITLE,
+    description:
+      "Email and location of the Graph & Language Intelligence Lab at Konkuk University",
     asPath: PATHNAME,
   });
 };

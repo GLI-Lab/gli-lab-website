@@ -12,6 +12,8 @@ const APPLY_MAILTO = `mailto:bkoh@konkuk.ac.kr?subject=${encodeURIComponent("GLI
 export const generateMetadata = async (): Promise<Metadata> => {
   return getMetadata({
     title: TITLE,
+    description:
+      "Openings for graduate students (MS/PhD) and undergraduate research interns at the Graph & Language Intelligence Lab, Konkuk University",
     asPath: PATHNAME,
   });
 };

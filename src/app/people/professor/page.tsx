@@ -6,6 +6,7 @@ import { SubCover } from "@/components/Covers";
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
         title: `Professor`,
+        description: "Professor of the Graph & Language Intelligence Lab at Konkuk University",
         asPath: '/people/professor',
     });
 };

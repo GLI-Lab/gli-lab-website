@@ -20,6 +20,7 @@ interface MetaConfig {
  */
 interface GenerateMetadataProps {
   title?: string;        // 페이지별 제목 (기본 제목과 조합됨)
+  appendSiteTitle?: boolean;  // 제목 뒤에 " | GLI Lab"을 붙일지 (기본 true). 프로필·앨범처럼 특정 개체의 URL은 false로 둔다
   description?: string;  // 페이지별 설명 (기본 설명 대신 사용)
   asPath: string;        // 페이지 경로 (필수). og:url과 canonical에 들어간다. 빠뜨리면 홈('/')으로 표기되므로 필수로 둔다
   ogImage?: string;      // 페이지별 OpenGraph 이미지
@@ -89,13 +90,15 @@ export const META: MetaConfig = {
 export const getMetadata = (metadataProps: GenerateMetadataProps): Metadata => {
   const {
     title,
+    appendSiteTitle = true,
     description,
     asPath,
     ogImage
   } = metadataProps;
 
   // 제목 생성: 페이지 제목이 있으면 "페이지제목 | 사이트제목" 형태로 조합
-  const TITLE = title ? `${title} | ${META.title}` : META.title;
+  // appendSiteTitle이 false면 페이지 제목만 쓴다 (특정 사람·앨범 등 개체 하나를 가리키는 URL).
+  const TITLE = !title ? META.title : appendSiteTitle ? `${title} | ${META.title}` : title;
   // 설명: 페이지별 설명이 있으면 사용, 없으면 기본 설명 사용
   const DESCRIPTION = description || META.description;
   // URL: 페이지 경로 (끝 슬래시는 next.config의 trailingSlash 설정에 따라 Next.js가 붙인다)

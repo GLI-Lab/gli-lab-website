@@ -14,15 +14,14 @@ import { loadProfilePageData } from '@/app/people/_lib/loadProfilePageData';
 const SECTION_CONFIG = {
   members: {
     title: 'Members',
-    description: 'Explore the members of GLI Lab',
-    profileLabel: 'Member', // 개별 프로필 설명에 붙는 구분
+    description:
+      'Faculty, graduate students, and undergraduate interns of the Graph & Language Intelligence Lab at Konkuk University',
     isAlumni: false,
     getProfiles: getProfiles,
   },
   alumni: {
     title: 'Alumni',
-    description: 'Explore the alumni of GLI Lab',
-    profileLabel: 'Alumni',
+    description: 'Alumni of the Graph & Language Intelligence Lab at Konkuk University',
     isAlumni: true,
     getProfiles: getAlumniProfiles,
   },
@@ -30,14 +29,6 @@ const SECTION_CONFIG = {
 
 function resolveSlugParam(slug: string[] | undefined): string | undefined {
   return slug?.[0];
-}
-
-/**
- * role.title에서 괄호 표기(학기 등)를 뗀 과정 이름. 예: "M.S. Student (2학기)" → "M.S. Student"
- * OG 이미지(scripts/generate-og-images.js의 cleanRoleTitle)와 같은 표기를 쓴다.
- */
-function getProgramName(roleTitle: string): string {
-  return roleTitle.replace(/\s*\([^)]*\)\s*/g, '').trim();
 }
 
 export async function generatePeopleStaticParams(section: ProfileSection) {
@@ -62,12 +53,16 @@ export async function generatePeopleMetadata(
   if (slugInUrl) {
     const selected = findProfileById(profiles, slugInUrl);
     if (selected) {
-      // 설명: "과정 | 구분". 예: "M.S. Student | Member"
-      // 연구실 이름은 제목("이름 | GLI Lab")에 이미 있으므로 넣지 않는다.
-      const program = getProgramName(selected.title);
+      // 제목: 이름만 쓴다 (" | GLI Lab"을 붙이지 않는다).
+      // 설명: "과정(학기 정보 포함) | 시기". 재학생은 합류 시기, 졸업생은 재적 기간을 쓴다.
+      // 예: "M.S. Student (4학기) | Joined 2024.06", "Undergraduate Student | 2024.06 - 2026.04"
+      const period = config.isAlumni
+        ? [selected.joined_start, selected.joined_end].filter(Boolean).join(' - ')
+        : selected.joined_start && `Joined ${selected.joined_start}`;
       return getMetadata({
         title: `${selected.name_en} (${selected.name_ko})`,
-        description: [program, config.profileLabel].filter(Boolean).join(' | '),
+        appendSiteTitle: false,
+        description: [selected.title, period].filter(Boolean).join(' | '),
         asPath: buildProfileAsPath(section, selected.id, view === 'list' ? 'list' : undefined),
         ogImage: getProfileOgImagePath(selected.yamlId),
       });

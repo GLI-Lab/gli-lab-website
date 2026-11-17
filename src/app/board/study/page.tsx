@@ -10,6 +10,7 @@ const PATHNAME = '/board/study'
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
         title: TITLE,
+        description: "Paper reading and study groups from the Graph & Language Intelligence Lab at Konkuk University",
         asPath: PATHNAME,
     });
 };
