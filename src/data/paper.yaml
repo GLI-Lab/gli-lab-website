@@ -257,6 +257,7 @@
   links: 
     Link: https://doi.org/10.1145/3799682.3841152
     Code: https://github.com/ChoiPi2/CaseFlow
+    Slide: /pdf/slide/[2026][CIKM][CaseFlow].pdf
   notes: {"normal": "Full Research Paper (Acceptance Rate: 27.0% = 597/2,216; Oral: 15.2% = 336/2,216)", "important": "Oral Presentation"}  # refer mail
   authors:
     - { ID: "[2024.12] 최진호", name: "Jinho Choi", position: first }
@@ -416,6 +417,7 @@
   links: 
     Link: https://doi.org/10.1145/3774904.3792529
     Code: https://github.com/leedongcheon/TARD
+    Slide: /pdf/slide/[2026][WWW][TARD].pdf
     News: https://www.konkuk.ac.kr/bbs/konkuk/259/1167092/artclView.do
   notes: {"normal": "Research Track (Acceptance Rate: 20.1% = 676/3,370)", "important": ""}  # refer: mail
   authors:
@@ -469,7 +471,7 @@
   links:
     Link: https://doi.org/10.1145/3746252.3761243
     Code: https://github.com/hyeyoon100/RePooL
-    Slide: /pdf/slide/RePooL.pdf
+    Slide: /pdf/slide/[2025][CIKM][RePooL].pdf
   notes: {"normal": "Full Research Paper (Acceptance Rate: 27.2% = 443/1,627)", "important": ""}  # refer: mail
   authors:
     - { ID: "[2024.07] 백혜윤", name: "Hye-Yoon Baek", position: first }
