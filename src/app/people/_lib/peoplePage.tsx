@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { getMetadata } from '@/lib/GetMetadata';
+import { countPageView } from '@/lib/viewCounter';
 import {
   buildProfileAsPath,
   buildProfileListPath,
@@ -96,8 +97,13 @@ export async function renderPeoplePage({ section, params, searchParams }: People
   const slugInUrl = resolveSlugParam(slugSegments);
   const { profiles } = await loadProfilePageData(config.isAlumni);
 
-  if (slugInUrl && !findProfileById(profiles, slugInUrl)) {
-    redirect(listFallbackPath);
+  if (slugInUrl) {
+    const profile = findProfileById(profiles, slugInUrl);
+    if (!profile) {
+      redirect(listFallbackPath);
+    }
+    // 프로필 주소에 대한 요청 1건을 조회 1회로 센다. 카드형·목록형(?view=list) 모두 같은 주소라 여기서 함께 잡힌다.
+    await countPageView(section, profile.id);
   }
 
   // ProfileCards는 layout에 고정 — slug·metadata만 page에서 처리

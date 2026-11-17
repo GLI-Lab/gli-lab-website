@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { getMetadata } from '@/lib/GetMetadata';
+import { countPageView } from '@/lib/viewCounter';
 import { getGalleryItems } from '@/components/Gallery';
 import {
   buildGalleryAsPath,
@@ -92,9 +93,12 @@ export async function renderGalleryPage({ params }: GalleryPageProps) {
 
   if (slugInUrl) {
     const galleryItems = await getGalleryItems();
-    if (!findGalleryItemBySlug(galleryItems, slugInUrl)) {
+    const item = findGalleryItemBySlug(galleryItems, slugInUrl);
+    if (!item) {
       redirect(`${GALLERY_BASE_PATH}/`);
     }
+    // 앨범 주소에 대한 요청 1건을 조회 1회로 센다. slug는 날짜를 고치면 바뀌므로 폴더명(id)으로 기록한다.
+    await countPageView('gallery', item.id);
   }
 
   return null;
