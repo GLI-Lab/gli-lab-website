@@ -1,4 +1,4 @@
-import type { PaperTitle, ProfileLinks } from '@/data/loaders/types';
+import type { PaperData, PaperTitle, ProfileLinks } from '@/data/loaders/types';
 
 /**
  * 제목 문자열을 URL 해시(`#...`)용 id로 바꾼다.
@@ -64,6 +64,29 @@ export function getPaperTitleId(title: PaperTitle): string {
  */
 export function getPaperTitleKey(title: PaperTitle): string {
   return isLocalizedPaperTitle(title) ? `${title.ko}\n${title.en}` : title;
+}
+
+/**
+ * 연구실이 주도한 논문(GLI Lab-led)인지 판별한다. 논문 목록에서 연한 배경으로 강조할 때 쓴다.
+ * 뉴스(`news.yaml`)는 `<note>(GLI Lab-led)</>`를 직접 적어 표시하지만, 논문은 저자 정보로 판별한다.
+ *
+ * 조건 (하나라도 만족)
+ *   - 맨 앞 저자가 연구실 구성원이다 (`ID`가 있음). 교수 본인이 1저자인 논문도 여기에 든다
+ *   - 1저자 중에 연구실 구성원이 있고, 교신저자도 연구실 구성원이다
+ *
+ *   맨 앞 서지명[ID], 교신 오병국[ID]                 → true  (연구실 학생이 쓰고 연구실 교수가 교신)
+ *   맨 앞 오병국[ID], 교신 Kyong-Ho Lee               → true  (교수 본인이 1저자)
+ *   맨 앞 외부, 공동 1저자 연구실 학생[ID], 교신 오병국[ID] → true
+ *   맨 앞 Hyeongjun Yang, 교신 Kyong-Ho Lee           → false (외부 주도 공동연구)
+ *   맨 앞 Wonseok Son, 공동 1저자 구해윤[ID], 교신 Sejin Chun → false (맨 앞 저자와 교신이 모두 외부)
+ */
+export function isLabLedPaper(paper: PaperData): boolean {
+  const leadAuthor = paper.authors[0];
+  if (leadAuthor?.position === 'first' && leadAuthor.ID) return true;
+
+  const hasLabFirstAuthor = paper.authors.some((author) => author.position === 'first' && !!author.ID);
+  const hasLabCorrespondingAuthor = paper.authors.some((author) => author.isCorresponding && !!author.ID);
+  return hasLabFirstAuthor && hasLabCorrespondingAuthor;
 }
 
 /**

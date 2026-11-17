@@ -5,13 +5,13 @@ import Link from "next/link";
 import { ProfileHoverLink } from "@/components/Profile/ProfileHoverLink";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PaperData, type PaperTitle, type ProfileLinks } from '@/data/loaders/types';
-import { getPaperTitleId, isLocalizedPaperTitle, titleToId } from '@/lib/utils';
+import { getPaperTitleId, isLabLedPaper, isLocalizedPaperTitle, titleToId } from '@/lib/utils';
 
 function renderPaperTitle(title: PaperTitle, copyButton?: ReactNode, prefix?: ReactNode) {
   if (isLocalizedPaperTitle(title)) {
     return (
       <>
-        <div className="leading-snug">
+        <div className="leading-tight md:leading-snug">
           {prefix}
           {title.ko}
           {copyButton}
@@ -341,7 +341,7 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
       {/* Controls + Paper Count + Legend */}
       <div className="mb-8 md:mb-14 space-y-3 text-sm md:text-base font-normal">
         {/* Controls */}
-        <div className="bg-white border border-gray-200 rounded-lg px-4 py-2 md:px-6 md:py-4 shadow-sm flex items-center justify-between gap-x-6 gap-y-2 md:gap-y-3 flex-wrap font-medium">
+        <div className="bg-white border border-gray-200 rounded-lg px-4 py-1.5 md:px-6 md:py-2.5 shadow-sm flex items-center justify-between gap-x-6 gap-y-2 md:gap-y-3 flex-wrap font-medium text-[13px] md:text-[15px]">
           {/* Filter Buttons  */}
           <div className="flex gap-x-4 md:gap-x-8 gap-y-2 flex-wrap">
             {/* (1) Type Filter */}
@@ -350,7 +350,7 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
               <div className="flex bg-gray-100 rounded-lg p-1">
                 <button
                   onClick={() => handleFilterTypeChange('all')}
-                  className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                  className={`px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                     filterType === 'all'
                       ? 'bg-brand-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -360,7 +360,7 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
                 </button>
                 <button
                   onClick={() => handleFilterTypeChange('journal')}
-                  className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                  className={`px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                     filterType === 'journal'
                       ? 'bg-brand-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -370,7 +370,7 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
                 </button>
                 <button
                   onClick={() => handleFilterTypeChange('conference')}
-                  className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                  className={`px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                     filterType === 'conference'
                       ? 'bg-brand-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -387,7 +387,7 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
               <div className="flex bg-gray-100 rounded-lg p-1">
                 <button
                   onClick={() => handleFilterScopeChange('all')}
-                  className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                  className={`px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                     filterScope === 'all'
                       ? 'bg-brand-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -397,7 +397,7 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
                 </button>
                 <button
                   onClick={() => handleFilterScopeChange('international')}
-                  className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                  className={`px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                     filterScope === 'international'
                       ? 'bg-brand-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -407,7 +407,7 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
                 </button>
                 <button
                   onClick={() => handleFilterScopeChange('domestic')}
-                  className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                  className={`px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                     filterScope === 'domestic'
                       ? 'bg-brand-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -485,12 +485,18 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
           {/* Legend */}
           <div className="flex flex-col md:items-end gap-1 text-gray-600">
             <div className="flex items-center gap-4 md:gap-6 gap-y-1 flex-wrap">
+              <span>
+                <span aria-hidden className="inline-block h-[1.3em] w-[3.4em] rounded-md bg-brand-primary/[0.07] align-text-bottom" />
+                : GLI Lab-led
+              </span>
+              <span>
+                <span className="underline decoration-dotted decoration-gray-400 underline-offset-4">Name</span>
+                : GLI Lab (hover/click for profile)
+              </span>
+            </div>
+            <div className="flex items-center gap-4 md:gap-6 gap-y-1 flex-wrap">
               <span>‡ Equal Contribution</span>
               <span>* Corresponding Author</span>
-            </div>
-            <div>
-              <span className="underline decoration-dotted decoration-gray-400 underline-offset-4">Name</span>
-              : GLI Lab (hover/click for profile)
             </div>
           </div>
         </div>
@@ -532,7 +538,7 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
                         />
                       )}
                       <div className={isHighlighted ? "animate-highlight-pulse" : undefined}>
-                        <div className="text-[16px] md:text-[18px] font-medium text-gray-800 mb-1">
+                        <div className="text-[16px] md:text-[18px] font-medium text-gray-800 leading-tight md:leading-normal mb-1">
                           {renderPaperTitle(
                             publication.title,
                             renderCopyButton(paperId),
@@ -587,7 +593,7 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
                         />
                       )}
                       <div className={isHighlighted ? "animate-highlight-pulse" : undefined}>
-                        <div className="text-[16px] md:text-[18px] font-medium text-gray-800 mb-1">
+                        <div className="text-[16px] md:text-[18px] font-medium text-gray-800 leading-tight md:leading-normal mb-1">
                           {renderPaperTitle(publication.title, renderCopyButton(paperId))}
                         </div>
                         <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">
@@ -616,14 +622,21 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
                   id={paperId}
                   className="relative leading-normal"
                 >
+                  {/* 연구실 주도 논문은 뉴스 목록과 같은 연한 배경으로 강조한다. 불릿까지 덮도록 li 밖으로 내민다. */}
+                  {isLabLedPaper(publication) && (
+                    <span
+                      aria-hidden
+                      className="pointer-events-none absolute -top-1.5 -bottom-1.5 -right-1 -left-6 rounded-md bg-brand-primary/[0.07] md:-right-2 md:-left-8"
+                    />
+                  )}
                   {isHighlighted && (
                     <span
                       aria-hidden
                       className="pointer-events-none absolute -top-1.5 -bottom-1.5 -right-1 -left-6 rounded-xl bg-brand-primary/10 animate-highlight-pulse md:-right-2 md:-left-8"
                     />
                   )}
-                  <div className={isHighlighted ? "animate-highlight-pulse" : undefined}>
-                    <div className="text-[16px] md:text-[18px] font-medium text-gray-800 mb-1">
+                  <div className={`relative ${isHighlighted ? "animate-highlight-pulse" : ""}`}>
+                    <div className="text-[16px] md:text-[18px] font-medium text-gray-800 leading-tight md:leading-normal mb-1">
                       {renderPaperTitle(publication.title, renderCopyButton(paperId))}
                     </div>
                     <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-snug mb-1">

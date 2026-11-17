@@ -540,7 +540,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
         // Controls + News Count
         <div className="mb-8 md:mb-14 space-y-3 text-sm md:text-base font-normal">
           {/* Controls */}
-          <div className="bg-white border border-gray-200 rounded-lg px-4 py-2 md:px-6 md:py-4 shadow-sm flex items-center gap-x-10 gap-y-2 md:gap-y-3 flex-wrap font-medium">
+          <div className="bg-white border border-gray-200 rounded-lg px-4 py-1.5 md:px-6 md:py-2.5 shadow-sm flex items-center gap-x-10 gap-y-2 md:gap-y-3 flex-wrap font-medium text-[13px] md:text-[15px]">
             {/* (1) Type Filter */}
             <div className="flex items-center gap-x-1 gap-y-1 pl-0 flex-wrap">
               <span className="text-gray-700 min-w-[50px] md:min-w-[0px] md:pr-2 flex-shrink-0">Categories:</span>
@@ -549,7 +549,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                   <button
                     key={type}
                     onClick={() => handleFilterTypeChange(type)}
-                    className={`px-2 md:px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                    className={`px-2 md:px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                       selectedTypes.has(type)
                         ? 'bg-brand-primary text-white shadow-sm'
                         : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -576,7 +576,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                   <button
                     type="button"
                     onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="px-2 md:px-3 py-1 md:py-1.5 rounded-md
+                    className="px-2 md:px-3 py-0.5 md:py-1 rounded-md
                               transition-all duration-200
                               bg-white border border-transparent
                               hover:bg-gray-50
@@ -619,7 +619,7 @@ export function NewsList({ className = '', count = null, newsItems = [], profile
                   <button
                     type="button"
                     onClick={() => handleYearPeriodChange('')}
-                    className="ml-1 px-2 md:px-3 py-1 md:py-1.5 rounded-md
+                    className="ml-1 px-2 md:px-3 py-0.5 md:py-1 rounded-md
                               text-gray-600 hover:text-gray-900 hover:bg-gray-200 transition-all duration-200"
                     title="Clear recent filter"
                     aria-label="Clear recent filter"

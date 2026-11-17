@@ -300,7 +300,7 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
       {/* Controls + Patent Count + Legend */}
       <div className="mb-8 md:mb-14 space-y-3 text-sm md:text-base font-normal">
         {/* Controls */}
-        <div className="bg-white border border-gray-200 rounded-lg px-4 py-2 md:px-6 md:py-4 shadow-sm flex items-center justify-between gap-x-6 gap-y-2 md:gap-y-3 flex-wrap font-medium">
+        <div className="bg-white border border-gray-200 rounded-lg px-4 py-1.5 md:px-6 md:py-2.5 shadow-sm flex items-center justify-between gap-x-6 gap-y-2 md:gap-y-3 flex-wrap font-medium text-[13px] md:text-[15px]">
           {/* Filter Buttons  */}
           <div className="flex gap-x-4 md:gap-x-8 gap-y-2 flex-wrap">
             {/* (1) Type Filter */}
@@ -309,7 +309,7 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
               <div className="flex bg-gray-100 rounded-lg p-1">
                 <button
                   onClick={() => handleFilterTypeChange('all')}
-                  className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                  className={`px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                     filterType === 'all'
                       ? 'bg-brand-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -319,7 +319,7 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
                 </button>
                 <button
                   onClick={() => handleFilterTypeChange('filed')}
-                  className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                  className={`px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                     filterType === 'filed'
                       ? 'bg-brand-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -329,7 +329,7 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
                 </button>
                 <button
                   onClick={() => handleFilterTypeChange('registered')}
-                  className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                  className={`px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                     filterType === 'registered'
                       ? 'bg-brand-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -346,7 +346,7 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
               <div className="flex bg-gray-100 rounded-lg p-1">
                 <button
                   onClick={() => handleFilterScopeChange('all')}
-                  className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                  className={`px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                     filterScope === 'all'
                       ? 'bg-brand-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -356,7 +356,7 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
                 </button>
                 <button
                   onClick={() => handleFilterScopeChange('international')}
-                  className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                  className={`px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                     filterScope === 'international'
                       ? 'bg-brand-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -366,7 +366,7 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
                 </button>
                 <button
                   onClick={() => handleFilterScopeChange('domestic')}
-                  className={`px-3 py-1 md:py-1.5 rounded-md transition-all duration-200 ${
+                  className={`px-3 py-0.5 md:py-1 rounded-md transition-all duration-200 ${
                     filterScope === 'domestic'
                       ? 'bg-brand-primary text-white shadow-sm'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-200'
@@ -425,7 +425,7 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
                   )}
                   <div className={isHighlighted ? "animate-highlight-pulse" : undefined}>
                     <div className="text-[16px] md:text-[18px] font-medium text-gray-800 mb-1">
-                      <div className="leading-snug">
+                      <div className="leading-tight md:leading-snug">
                         {patent.title.ko}
                         {renderCopyButton(patentId)}
                       </div>
