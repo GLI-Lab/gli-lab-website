@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { GalleryItem } from './types';
 import { Separator } from '../ui/separator';
 import { ImageCarousel } from './ImageCarousel';
-import { isNewItem, formatDateForDisplay } from './helpers';
+import { isNewItem, formatDateForDisplay, splitTextByUrls } from './helpers';
 import { useDragToDismiss } from '@/hooks/useDragToDismiss';
 
 interface GalleryModalProps {
@@ -340,7 +340,22 @@ export function GalleryModal({
                   Description
                 </h3>
                 <div className="text-[14.5px] md:text-[16.5px] text-gray-600 leading-normal whitespace-pre-wrap">
-                  {item.description}
+                  {/* 설명 안의 주소(http://, https://)는 링크로 그린다. 모달이 닫히지 않도록 새 탭에서 연다. */}
+                  {splitTextByUrls(item.description).map((part, index) =>
+                    part.type === 'url' ? (
+                      <a
+                        key={index}
+                        href={part.value}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="break-all underline decoration-dotted decoration-gray-400 underline-offset-4 hover:text-brand-primary hover:decoration-solid hover:decoration-brand-primary transition-colors"
+                      >
+                        {part.value}
+                      </a>
+                    ) : (
+                      part.value
+                    )
+                  )}
                 </div>
               </div>
             )}
