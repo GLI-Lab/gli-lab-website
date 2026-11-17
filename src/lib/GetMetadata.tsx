@@ -103,10 +103,15 @@ export const getMetadata = (metadataProps?: GenerateMetadataProps): Metadata => 
   // 이미지: 페이지별 이미지가 있으면 사용, 없으면 기본 이미지
   const OG_IMAGE = ogImage || META.ogImage;
   
-  // 이미지 크기 결정 (WebP는 1200x630, 기본 로고는 2000x1050)
-  const isCustomOGImage = OG_IMAGE.includes('/images/profiles-og/');
-  const imageWidth = isCustomOGImage ? 1200 : 2000;
-  const imageHeight = isCustomOGImage ? 630 : 1050;
+  // 이미지 크기: 미리 만들어 둔 이미지만 크기를 안다 (기본 로고 2000x1050, 프로필 OG 1200x630).
+  // 그 밖의 이미지(갤러리 사진 등)는 사진마다 크기가 달라 width/height를 생략한다.
+  // 생략하면 공유하는 쪽(카카오톡, 슬랙 등)이 이미지를 받아 직접 크기를 읽는다.
+  let imageSize: { width?: number; height?: number } = {};
+  if (OG_IMAGE === META.ogImage) {
+    imageSize = { width: 2000, height: 1050 };
+  } else if (OG_IMAGE.includes('/images/profiles-og/')) {
+    imageSize = { width: 1200, height: 630 };
+  }
 
   // Next.js Metadata 객체 생성
   const metadata: Metadata = {
@@ -139,8 +144,7 @@ export const getMetadata = (metadataProps?: GenerateMetadataProps): Metadata => 
       images: [
         {
           url: OG_IMAGE,
-          width: imageWidth,
-          height: imageHeight,
+          ...imageSize,
           alt: TITLE,
         },
       ],

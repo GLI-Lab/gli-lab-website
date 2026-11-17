@@ -36,6 +36,8 @@ export async function generateGalleryMetadata(
         title: `${selected.title}`,
         description: `Explore the photos of GLI Lab`,
         asPath: buildGalleryAsPath(selected.slug),
+        // 공유 미리보기 이미지: 이 앨범의 첫 번째 사진
+        ogImage: selected.thumbnail,
       });
     }
   }
@@ -45,6 +47,8 @@ export async function generateGalleryMetadata(
     description:
       'Explore the photos of GLI Lab',
     asPath: buildGalleryAsPath(),
+    // 목록 페이지: 가장 최근 앨범의 첫 번째 사진 (앨범이 없으면 기본 로고)
+    ogImage: items[0]?.thumbnail,
   });
 }
 
