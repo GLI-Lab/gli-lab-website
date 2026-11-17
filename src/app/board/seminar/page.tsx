@@ -10,7 +10,8 @@ const PATHNAME = "/board/seminar";
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
         title: TITLE,
-        description: "Seminars and presentations from GLI Lab - Graph Learning and Intelligence Laboratory at Konkuk University",
+        description: "Seminars and presentations from GLI Lab - Graph & Language Intelligence Lab at Konkuk University",
+        asPath: PATHNAME,
     });
 };
 

@@ -12,7 +12,7 @@ const PATHNAME = '/board/news'
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
         title: TITLE,
-        description: "Latest news and updates from GLI Lab - Graph Learning and Intelligence Laboratory at Konkuk University",
+        description: "Latest news and updates from GLI Lab - Graph & Language Intelligence Lab at Konkuk University",
         asPath: '/board/news'
     });
 };

@@ -21,7 +21,7 @@ interface MetaConfig {
 interface GenerateMetadataProps {
   title?: string;        // 페이지별 제목 (기본 제목과 조합됨)
   description?: string;  // 페이지별 설명 (기본 설명 대신 사용)
-  asPath?: string;       // 페이지 경로 (정식 URL 지정, SEO 중복 방지용)
+  asPath: string;        // 페이지 경로 (필수). og:url과 canonical에 들어간다. 빠뜨리면 홈('/')으로 표기되므로 필수로 둔다
   ogImage?: string;      // 페이지별 OpenGraph 이미지
 }
 
@@ -75,8 +75,8 @@ export const META: MetaConfig = {
  * @returns Next.js Metadata 객체
  * 
  * @example
- * // 기본 메타데이터
- * export const metadata = getMetadata();
+ * // 기본 메타데이터 (홈)
+ * export const metadata = getMetadata({ asPath: '/' });
  * 
  * @example
  * // 커스텀 메타데이터
@@ -86,20 +86,20 @@ export const META: MetaConfig = {
  *   asPath: '/research'
  * });
  */
-export const getMetadata = (metadataProps?: GenerateMetadataProps): Metadata => {
-  const { 
-    title, 
-    description, 
-    asPath, 
+export const getMetadata = (metadataProps: GenerateMetadataProps): Metadata => {
+  const {
+    title,
+    description,
+    asPath,
     ogImage
-  } = metadataProps || {};
+  } = metadataProps;
 
   // 제목 생성: 페이지 제목이 있으면 "페이지제목 | 사이트제목" 형태로 조합
   const TITLE = title ? `${title} | ${META.title}` : META.title;
   // 설명: 페이지별 설명이 있으면 사용, 없으면 기본 설명 사용
   const DESCRIPTION = description || META.description;
-  // URL: 페이지 경로가 있으면 사용, 없으면 루트 경로
-  const PAGE_URL = asPath || '/';
+  // URL: 페이지 경로 (끝 슬래시는 next.config의 trailingSlash 설정에 따라 Next.js가 붙인다)
+  const PAGE_URL = asPath;
   // 이미지: 페이지별 이미지가 있으면 사용, 없으면 기본 이미지
   const OG_IMAGE = ogImage || META.ogImage;
   

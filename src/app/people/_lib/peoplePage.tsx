@@ -15,12 +15,14 @@ const SECTION_CONFIG = {
   members: {
     title: 'Members',
     description: 'Explore the members of GLI Lab',
+    profileLabel: 'Member', // 개별 프로필 설명에 붙는 구분
     isAlumni: false,
     getProfiles: getProfiles,
   },
   alumni: {
     title: 'Alumni',
     description: 'Explore the alumni of GLI Lab',
+    profileLabel: 'Alumni',
     isAlumni: true,
     getProfiles: getAlumniProfiles,
   },
@@ -28,6 +30,14 @@ const SECTION_CONFIG = {
 
 function resolveSlugParam(slug: string[] | undefined): string | undefined {
   return slug?.[0];
+}
+
+/**
+ * role.title에서 괄호 표기(학기 등)를 뗀 과정 이름. 예: "M.S. Student (2학기)" → "M.S. Student"
+ * OG 이미지(scripts/generate-og-images.js의 cleanRoleTitle)와 같은 표기를 쓴다.
+ */
+function getProgramName(roleTitle: string): string {
+  return roleTitle.replace(/\s*\([^)]*\)\s*/g, '').trim();
 }
 
 export async function generatePeopleStaticParams(section: ProfileSection) {
@@ -52,9 +62,12 @@ export async function generatePeopleMetadata(
   if (slugInUrl) {
     const selected = findProfileById(profiles, slugInUrl);
     if (selected) {
+      // 설명: "과정 | 구분". 예: "M.S. Student | Member"
+      // 연구실 이름은 제목("이름 | GLI Lab")에 이미 있으므로 넣지 않는다.
+      const program = getProgramName(selected.title);
       return getMetadata({
         title: `${selected.name_en} (${selected.name_ko})`,
-        description: `Explore the ${section === 'members' ? 'member' : 'alumni'} of GLI Lab`,
+        description: [program, config.profileLabel].filter(Boolean).join(' | '),
         asPath: buildProfileAsPath(section, selected.id, view === 'list' ? 'list' : undefined),
         ogImage: getProfileOgImagePath(selected.yamlId),
       });

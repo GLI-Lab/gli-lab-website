@@ -11,7 +11,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   return getMetadata({
     title: TITLE,
     description:
-      "Ongoing and completed projects from GLI Lab - Graph Learning and Intelligence Laboratory at Konkuk University",
+      "Ongoing and completed projects from GLI Lab - Graph & Language Intelligence Lab at Konkuk University",
     asPath: "/research/projects",
   });
 };

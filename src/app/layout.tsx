@@ -4,7 +4,7 @@ import {Metadata} from "next";
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
         title: `Home`,
-        // asPath: `/home/${username}`
+        asPath: '/',
     });
 };
 

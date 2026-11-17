@@ -40,6 +40,7 @@ const STUDENT_LAB_MAP_URL =
 export const generateMetadata = async (): Promise<Metadata> => {
   return getMetadata({
     title: TITLE,
+    asPath: PATHNAME,
   });
 };
 

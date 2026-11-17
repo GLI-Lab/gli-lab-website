@@ -9,6 +9,7 @@ const TITLE = "404";
 export const generateMetadata = async (): Promise<Metadata> => {
   return getMetadata({
     title: TITLE,
+    asPath: '/',
   });
 };
 

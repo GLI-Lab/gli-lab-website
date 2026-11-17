@@ -12,6 +12,7 @@ const APPLY_MAILTO = `mailto:bkoh@konkuk.ac.kr?subject=${encodeURIComponent("GLI
 export const generateMetadata = async (): Promise<Metadata> => {
   return getMetadata({
     title: TITLE,
+    asPath: PATHNAME,
   });
 };
 

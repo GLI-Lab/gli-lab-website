@@ -10,6 +10,7 @@ const PATHNAME = '/board/study'
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
         title: TITLE,
+        asPath: PATHNAME,
     });
 };
 

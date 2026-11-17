@@ -10,7 +10,7 @@ const PATHNAME = '/publications/patents'
 export const generateMetadata = async (): Promise<Metadata> => {
     return getMetadata({
         title: TITLE,
-        description: "Patents from GLI Lab - Graph Learning and Intelligence Laboratory at Konkuk University",
+        description: "Patents from GLI Lab - Graph & Language Intelligence Lab at Konkuk University",
         asPath: '/publications/patents'
     });
 };
