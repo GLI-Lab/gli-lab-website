@@ -1,9 +1,10 @@
 import type { PaperData, PaperTitle, ProfileLinks } from '@/data/loaders/types';
 
 /**
- * 제목 문자열을 URL 해시(`#...`)용 id로 바꾼다.
+ * 제목 문자열을 URL용 id로 바꾼다.
  * 논문·특허·프로젝트 목록에서 각 항목의 DOM id로 쓰고, 뉴스 본문의 `<paper>제목</>` 같은 마크업이나
- * 프로필 상세의 링크에서 `/publications/papers#<id>` 형태로 해당 항목으로 점프할 때 쓴다.
+ * 프로필 상세의 링크에서 해당 항목으로 점프할 때 쓴다.
+ * 논문·특허는 주소의 slug(`/publications/papers/<id>/`), 프로젝트는 해시(`/research/projects#<id>`)로 들어간다.
  *
  * 처리 순서: 소문자화 → 영문·숫자·공백·한글·하이픈 외 제거 → 공백을 `-`로 → 연속 `-` 하나로 → 앞뒤 `-` 제거
  *
@@ -39,9 +40,9 @@ export function isLocalizedPaperTitle(title: PaperTitle): title is { ko: string;
 }
 
 /**
- * 논문 제목(`PaperTitle`)으로 URL 해시용 id를 만든다. 한/영 객체면 한글 제목 기준.
+ * 논문 제목(`PaperTitle`)으로 URL용 id를 만든다. 한/영 객체면 한글 제목 기준.
  * `titleToId`를 논문 제목 타입에 맞게 감싼 것으로, 논문 목록의 DOM id와
- * 프로필 상세의 `/publications/papers#<id>` 링크가 같은 id를 쓰도록 보장한다.
+ * 논문 주소(`/publications/papers/<id>/`)의 slug가 같은 id를 쓰도록 보장한다.
  *
  * @param title 예: "Temporal Knowledge Graph Forecasting"
  *              예: { ko: "그래프 패턴 머신 기반 ...", en: "Graph Pattern Machine-based ..." }

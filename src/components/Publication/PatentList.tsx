@@ -2,10 +2,12 @@
 
 import { useState, useMemo, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ProfileHoverLink } from "@/components/Profile/ProfileHoverLink";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PatentData, type ProfileLinks } from '@/data/loaders/types';
 import { titleToId } from '@/lib/utils';
+import { buildPublicationPath, getPublicationIdFromPathname, PATENTS_BASE_PATH } from '@/lib/publicationSlug';
 
 interface PatentListProps {
   className?: string
@@ -15,6 +17,7 @@ interface PatentListProps {
 }
 
 export default function PatentList({ className = '', patents, profileLinks = {} }: PatentListProps) {
+  const pathname = usePathname();
   const [filterType, setFilterType] = useState<'all' | 'filed' | 'registered'>('all');
   const [filterScope, setFilterScope] = useState<'all' | 'international' | 'domestic'>('all');
   const [triggerAnimation, setTriggerAnimation] = useState(0);
@@ -138,15 +141,14 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
     return grouped;
   }, [filteredPatents]);
 
-  // URL 해시를 확인하여 하이라이트 처리
+  // 주소의 slug(/publications/patents/<id>/)를 확인하여 해당 특허로 스크롤·하이라이트 처리
   useEffect(() => {
     let highlightTimer: NodeJS.Timeout | null = null;
 
-    const checkHash = () => {
-      const hash = window.location.hash;
-      if (hash) {
-        // # 제거하고 디코딩 (한글이 포함될 수 있음)
-        const targetId = titleToId(decodeURIComponent(hash.substring(1)));
+    const highlightTarget = () => {
+      // 대상 특허의 id. 목록 주소(/publications/patents/)면 null이라 아무것도 하지 않는다.
+      const targetId = getPublicationIdFromPathname(pathname, PATENTS_BASE_PATH);
+      if (targetId) {
         
         // 해당 특허가 필터링된 목록에 있는지 확인
         const targetPatent = filteredPatents.find(p => titleToId(p.title.ko) === targetId);
@@ -182,20 +184,13 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
       }
     };
 
-    // 초기 로드 시 확인
-    checkHash();
-
-    // 해시 변경 감지
-    const handleHashChange = () => {
-      checkHash();
-    };
-    window.addEventListener('hashchange', handleHashChange);
+    // 처음 들어왔을 때와 주소·필터가 바뀔 때마다 확인 (값이 바뀌면 이 effect가 다시 실행된다)
+    highlightTarget();
 
     return () => {
-      window.removeEventListener('hashchange', handleHashChange);
       if (highlightTimer) clearTimeout(highlightTimer);
     };
-  }, [filteredPatents]);
+  }, [filteredPatents, pathname]);
 
   // Calculate counts
   const visiblePatentsCount = filteredPatents.length;
@@ -231,7 +226,8 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
       <button
         onClick={(e) => {
           e.stopPropagation();
-          const currentUrl = `${window.location.origin}${window.location.pathname}${window.location.search}#${encodeURIComponent(patentId)}`;
+          // 특허마다 자기 주소를 복사한다. 이 주소로 공유해야 카드에 특허 제목이 나온다 (#id는 서버에 전달되지 않음).
+          const currentUrl = `${window.location.origin}${buildPublicationPath(PATENTS_BASE_PATH, patentId)}`;
 
           // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
           const selectionlessCopy = () => {

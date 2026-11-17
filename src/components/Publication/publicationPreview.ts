@@ -1,5 +1,6 @@
 import type { AuthorData, PaperData, PatentData } from '@/data/loaders/types';
 import { getPaperTitleId, isLocalizedPaperTitle, titleToId } from '@/lib/utils';
+import { buildPublicationPath, PAPERS_BASE_PATH, PATENTS_BASE_PATH } from '@/lib/publicationSlug';
 
 export interface PublicationPreviewAuthor {
   name: string;
@@ -80,7 +81,7 @@ export function paperToPreview(paper: PaperData): PublicationPreview {
   const title = paper.title;
 
   return {
-    href: `/publications/papers#${encodeURIComponent(getPaperTitleId(title))}`,
+    href: buildPublicationPath(PAPERS_BASE_PATH, getPaperTitleId(title)),
     title: isLocalizedPaperTitle(title) ? title.ko : title,
     subtitle: isLocalizedPaperTitle(title) ? title.en : undefined,
     authors: toPaperPreviewAuthors(paper.authors ?? []),
@@ -102,7 +103,7 @@ export function patentToPreview(patent: PatentData): PublicationPreview {
   }
 
   return {
-    href: `/publications/patents#${encodeURIComponent(titleToId(patent.title.ko))}`,
+    href: buildPublicationPath(PATENTS_BASE_PATH, titleToId(patent.title.ko)),
     title: patent.title.ko,
     subtitle: patent.title.en,
     authors: (patent.authors ?? []).filter((author) => author.name).map((author) => ({ name: author.name })),

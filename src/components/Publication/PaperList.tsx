@@ -2,10 +2,12 @@
 
 import { useState, useMemo, useEffect, type ReactNode } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ProfileHoverLink } from "@/components/Profile/ProfileHoverLink";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { PaperData, type PaperTitle, type ProfileLinks } from '@/data/loaders/types';
-import { getPaperTitleId, isLabLedPaper, isLocalizedPaperTitle, titleToId } from '@/lib/utils';
+import { getPaperTitleId, isLabLedPaper, isLocalizedPaperTitle } from '@/lib/utils';
+import { buildPublicationPath, getPublicationIdFromPathname, PAPERS_BASE_PATH } from '@/lib/publicationSlug';
 
 function renderPaperTitle(title: PaperTitle, copyButton?: ReactNode, prefix?: ReactNode) {
   if (isLocalizedPaperTitle(title)) {
@@ -41,6 +43,7 @@ interface PaperListProps {
 }
 
 export default function PaperList({ className = '', papers, profileLinks = {} }: PaperListProps) {
+  const pathname = usePathname();
   const [showInProgress, setShowInProgress] = useState(false);
   const [showUnderReview, setShowUnderReview] = useState(true);
   const [isInProgressExpanded, setIsInProgressExpanded] = useState(false);
@@ -109,17 +112,16 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
     });
   }, [totalPublications, filterType, filterScope]);
 
-  // URL 해시를 확인하여 하이라이트 처리
+  // 주소의 slug(/publications/papers/<id>/)를 확인하여 해당 논문으로 스크롤·하이라이트 처리
   useEffect(() => {
     let highlightTimer: NodeJS.Timeout | null = null;
 
-    const checkHash = () => {
-      const hash = window.location.hash;
-      if (hash) {
-        // # 제거하고 디코딩 (한글이 포함될 수 있음)
-        const targetId = titleToId(decodeURIComponent(hash.substring(1)));
+    const highlightTarget = () => {
+      // 대상 논문의 id. 목록 주소(/publications/papers/)면 null이라 아무것도 하지 않는다.
+      const targetId = getPublicationIdFromPathname(pathname, PAPERS_BASE_PATH);
+      if (targetId) {
         
-        // 해시 대상 논문을 전체 목록에서 찾고, 필요하면 해당 섹션을 먼저 노출한다.
+        // 대상 논문을 전체 목록에서 찾고, 필요하면 해당 섹션을 먼저 노출한다.
         const targetPaper = papers.find((p) => getPaperTitleId(p.title) === targetId);
         if (targetPaper) {
           if (targetPaper.status === 'In Progress') {
@@ -170,20 +172,13 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
       }
     };
 
-    // 초기 로드 시 확인
-    checkHash();
-
-    // 해시 변경 감지
-    const handleHashChange = () => {
-      checkHash();
-    };
-    window.addEventListener('hashchange', handleHashChange);
+    // 처음 들어왔을 때와 주소가 바뀔 때마다 확인 (pathname이 바뀌면 이 effect가 다시 실행된다)
+    highlightTarget();
 
     return () => {
-      window.removeEventListener('hashchange', handleHashChange);
       if (highlightTimer) clearTimeout(highlightTimer);
     };
-  }, [papers]);
+  }, [papers, pathname]);
 
   // Group publications by year (only Accepted papers)
   const publicationsByYear = filteredPublications
@@ -271,7 +266,8 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
       <button
         onClick={(e) => {
           e.stopPropagation();
-          const currentUrl = `${window.location.origin}${window.location.pathname}#${encodeURIComponent(paperId)}`;
+          // 논문마다 자기 주소를 복사한다. 이 주소로 공유해야 카드에 논문 제목이 나온다 (#id는 서버에 전달되지 않음).
+          const currentUrl = `${window.location.origin}${buildPublicationPath(PAPERS_BASE_PATH, paperId)}`;
 
           // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
           const selectionlessCopy = () => {

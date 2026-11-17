@@ -9,6 +9,7 @@ import { NewsData, type ProfileLinks } from '@/data/loaders/types';
 import type { PublicationPreviews } from '@/components/Publication/publicationPreview';
 import type { ProjectPreviews } from '@/components/Research/projectPreview';
 import { titleToId } from '@/lib/utils';
+import { buildPublicationPath, PAPERS_BASE_PATH, PATENTS_BASE_PATH } from '@/lib/publicationSlug';
 
 export interface NewsListProps {
   className?: string
@@ -259,7 +260,7 @@ function renderContentWithMarkup(
         ) : (
           <Link
             key={`${newsIndex}-${lineIndex}-paper-${index}`}
-            href={`/publications/papers#${encodeURIComponent(paperId)}`}
+            href={buildPublicationPath(PAPERS_BASE_PATH, paperId)}
             className={paperClassName}
             title="View publication details"
           >
@@ -307,7 +308,7 @@ function renderContentWithMarkup(
         ) : (
           <Link
             key={`${newsIndex}-${lineIndex}-patent-${index}`}
-            href={`/publications/patents#${encodeURIComponent(patentId)}`}
+            href={buildPublicationPath(PATENTS_BASE_PATH, patentId)}
             className={patentClassName}
             title="View patent details"
           >

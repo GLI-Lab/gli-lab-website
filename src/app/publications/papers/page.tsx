@@ -1,35 +1,4 @@
-import {Metadata} from "next";
-import {getMetadata} from "@/lib/GetMetadata";
-import { SubCover } from "@/components/Covers";
-import PaperList from "@/components/Publication/PaperList";
-import { getPapers, getProfileLinks } from "@/data/loaders";
-
-const TITLE = `Papers`
-const PATHNAME = '/publications/papers'
-
-export const generateMetadata = async (): Promise<Metadata> => {
-    return getMetadata({
-        title: TITLE,
-        description: "Conference and journal papers from the Graph & Language Intelligence Lab at Konkuk University",
-        asPath: '/publications/papers'
-    });
-};
-
-export default async function Page() {
-    const [papers, profileLinks] = await Promise.all([getPapers(), getProfileLinks()]);
-
-    return (
-        <>
-            <div className="max-w-screen-2xl mx-auto">
-                <SubCover title={TITLE} pathname={PATHNAME} pattern="diagonal-lines" colorVariant="sage" showBreadcrumb={false}/>
-            </div>
-            <div className="max-w-screen-xl mx-auto px-3 md:px-5 py-8 md:py-12">
-                <PaperList
-                    className="w-full text-left"
-                    papers={papers}
-                    profileLinks={profileLinks}
-                />
-            </div>
-        </>
-    )
+// 목록 주소(/publications/papers/). 목록과 메타데이터는 layout.tsx에 있다.
+export default function Page() {
+    return null;
 }

@@ -28,12 +28,12 @@
 | --- | --- |
 | 내보내는 것 | `PaperList` (default) |
 | 받는 값 | `papers` (`getPapers()` 결과), `profileLinks` (`getProfileLinks()` 결과) |
-| 쓰는 곳 | `src/app/publications/papers/page.tsx` |
+| 쓰는 곳 | `src/app/publications/papers/layout.tsx` |
 
 - 게재가 확정된 논문은 연도별로 묶어 보여 주고, In Progress와 Under Review는 따로 켜고 끄는 구역으로 보여 준다.
 - 종류(journal, conference)와 범위(international, domestic)로 거를 수 있다.
-- 주소에 `#논문제목`이 붙어 들어오면 그 논문으로 스크롤하고 잠깐 강조한다. 다른 페이지의 논문 링크가 이 방식으로 들어온다.
-- 논문마다 링크 복사 버튼이 있다.
+- 개별 논문 주소(`/publications/papers/<slug>/`)로 들어오면 그 논문으로 스크롤하고 잠깐 강조한다. 다른 페이지의 논문 링크가 이 주소로 들어온다. 주소 구조와 그렇게 정한 이유는 `src/app/README.md`의 6)에 있다.
+- 논문마다 링크 복사 버튼이 있다. 그 논문의 개별 주소를 복사한다.
 - 저자 이름은 프로필이 있으면 `ProfileHoverLink`로 연결한다. 교신저자는 `*`, 공동 1저자는 윗첨자 `‡`로 표시한다.
 - 연구실이 주도한 게재 확정 논문은 뉴스 목록과 같은 연한 배경으로 강조한다. 판별은 `isLabLedPaper` (`src/lib/utils.ts`)가 저자 정보로 한다: 맨 앞 저자가 연구실 구성원(교수 본인 포함)이거나, 1저자 중에 연구실 구성원이 있고 교신저자도 연구실 구성원인 논문이다.
 
@@ -43,11 +43,11 @@
 | --- | --- |
 | 내보내는 것 | `PatentList` (default) |
 | 받는 값 | `patents` (`getPatents()` 결과), `profileLinks` (`getProfileLinks()` 결과) |
-| 쓰는 곳 | `src/app/publications/patents/page.tsx` |
+| 쓰는 곳 | `src/app/publications/patents/layout.tsx` |
 
 - 특허를 연도별로 묶어 보여 준다.
 - 상태(출원, 등록)와 범위(international, domestic)로 거를 수 있다.
-- `#특허제목` 주소로 들어왔을 때의 스크롤·강조와 링크 복사 버튼은 `PaperList`와 같다.
+- 개별 특허 주소(`/publications/patents/<slug>/`)로 들어왔을 때의 스크롤·강조와 링크 복사 버튼은 `PaperList`와 같다.
 
 ## 4) PublicationHoverLink.tsx
 
@@ -57,7 +57,7 @@
 | 받는 값 | `preview` (`publicationPreview.ts`가 만든 값), `className`, `children` (링크 글자) |
 | 쓰는 곳 | 뉴스 목록(`Board/NewsList.tsx`), 뉴스 팝업(`NewsPopup.tsx`), 프로필 상세(`Profile/ProfileDetailPaper.tsx`, `Profile/ProfileDetailPatent.tsx`) |
 
-- 클릭하면 논문·특허 목록의 해당 항목으로 이동한다.
+- 클릭하면 그 논문·특허의 개별 주소로 이동한다. 목록이 열리고 해당 항목으로 스크롤된다.
 - 카드를 띄우고 위치를 잡는 동작은 공용 컴포넌트 `src/components/HoverCardLink.tsx`가 맡는다. 이 파일은 카드 안의 내용만 그린다.
 - 호버가 없는 터치 기기에서는 카드 없이 링크로만 동작한다.
 
@@ -124,5 +124,5 @@
 ## 6) 데이터 흐름
 
 1. 서버 페이지가 `getPapers()`, `getPatents()`로 데이터를 읽는다 (`src/data/loaders`).
-2. 목록 페이지는 그 데이터를 `PaperList`, `PatentList`에 그대로 넘긴다.
+2. 목록 페이지(`layout.tsx`)는 그 데이터를 `PaperList`, `PatentList`에 그대로 넘긴다.
 3. 호버 카드가 필요한 페이지는 `publicationPreview.ts`로 카드 값을 만들어 `PublicationHoverLink`에 넘긴다.

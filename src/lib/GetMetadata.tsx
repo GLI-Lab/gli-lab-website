@@ -23,6 +23,7 @@ interface GenerateMetadataProps {
   appendSiteTitle?: boolean;  // 제목 뒤에 " | GLI Lab"을 붙일지 (기본 true). 프로필·앨범처럼 특정 개체의 URL은 false로 둔다
   description?: string;  // 페이지별 설명 (기본 설명 대신 사용)
   asPath: string;        // 페이지 경로 (필수). og:url과 canonical에 들어간다. 빠뜨리면 홈('/')으로 표기되므로 필수로 둔다
+  canonicalPath?: string;  // 검색엔진용 대표 주소(canonical). 생략하면 asPath와 같다. 본문이 목록과 같은 개별 항목 주소(논문·특허)에서 목록 주소를 지정한다
   ogImage?: string;      // 페이지별 OpenGraph 이미지
 }
 
@@ -93,6 +94,7 @@ export const getMetadata = (metadataProps: GenerateMetadataProps): Metadata => {
     appendSiteTitle = true,
     description,
     asPath,
+    canonicalPath,
     ogImage
   } = metadataProps;
 
@@ -123,7 +125,7 @@ export const getMetadata = (metadataProps: GenerateMetadataProps): Metadata => {
     
     // SEO를 위한 canonical URL 설정
     alternates: {
-      canonical: PAGE_URL,
+      canonical: canonicalPath ?? PAGE_URL,
     },
     
     // 기본 메타 태그들

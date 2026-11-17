@@ -1,5 +1,6 @@
 import { NewsData } from '@/data/loaders/types';
 import { titleToId } from '@/lib/utils';
+import { buildPublicationPath, PAPERS_BASE_PATH, PATENTS_BASE_PATH } from '@/lib/publicationSlug';
 
 export type NewsMarkupKind = 'paper' | 'patent' | 'project';
 
@@ -16,8 +17,9 @@ const TAG_PATTERNS: Record<NewsMarkupKind, RegExp> = {
 };
 
 const TAG_HREF_BUILDERS: Record<NewsMarkupKind, (id: string) => string> = {
-  paper: (id) => `/publications/papers#${encodeURIComponent(id)}`,
-  patent: (id) => `/publications/patents#${encodeURIComponent(id)}`,
+  // 논문·특허는 항목마다 자기 주소가 있다 (/publications/papers/<id>/). 프로젝트는 목록의 #id로 이동한다.
+  paper: (id) => buildPublicationPath(PAPERS_BASE_PATH, id),
+  patent: (id) => buildPublicationPath(PATENTS_BASE_PATH, id),
   project: (id) => `/research/projects#${encodeURIComponent(id)}`,
 };
 

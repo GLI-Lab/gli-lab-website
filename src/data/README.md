@@ -79,8 +79,10 @@
 | `/people/members` | `getProfiles`                     | 사용. 1시간 동안 YAML 재파싱 안 함 |
 | `/people/alumni`  | `getAlumniProfiles`               | 사용. 1시간 동안 YAML 재파싱 안 함 |
 | `/board/gallery`  | `getGalleryItems` (`readdirSync`) | 없음. 요청마다 폴더를 읽음         |
+| `/publications/papers/<slug>` | `getPapers` | 사용. 1시간 동안 YAML 재파싱 안 함 |
+| `/publications/patents/<slug>` | `getPatents` | 사용. 1시간 동안 YAML 재파싱 안 함 |
 
-요청 단위로 캐시가 의미 있는 곳은 멤버·alumni뿐이다. 갤러리 주석 `즉각 업데이트 가능`은 폴더만 넣으면 바로 보인다는 가정이었고, 실제로는 재배포해야 한다.
+요청 단위로 캐시가 의미 있는 곳은 멤버·alumni와 개별 논문·특허 주소다. 개별 논문·특허 주소를 동적으로 둔 이유는 `src/app/README.md`의 6-4)에 있다. 갤러리 주석 `즉각 업데이트 가능`은 폴더만 넣으면 바로 보인다는 가정이었고, 실제로는 재배포해야 한다.
 
 `?view=list` 같은 쿼리는 콘텐츠가 아니라 UI 상태다. 클라이언트(`ProfileCards`, `GalleryGrid`)가 `useSearchParams`로 읽는다.
 
