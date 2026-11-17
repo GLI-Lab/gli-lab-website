@@ -658,7 +658,7 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
                               href={url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="px-3 py-0.25 text-xs md:text-sm text-gray-600 bg-white border border-gray-600 hover:bg-gray-50 transition-colors"
+                              className="px-3 py-0.25 text-xs md:text-sm text-gray-600 bg-white border border-gray-500 hover:bg-interactive-primary hover:border-interactive-primary hover:text-white transition-colors"
                             >
                               {key}
                             </a>

@@ -255,7 +255,7 @@
   year: 2026
   venue: { name: "ACM International Conference on Information and Knowledge Management", acronym: "CIKM" }
   links: 
-    Link: null
+    Link: https://doi.org/10.1145/3799682.3841152
     Code: https://github.com/ChoiPi2/CaseFlow
   notes: {"normal": "Full Research Paper (Acceptance Rate: 27.0% = 597/2,216; Oral: 15.2% = 336/2,216)", "important": "Oral Presentation"}  # refer mail
   authors:
@@ -272,7 +272,7 @@
   year: 2026
   venue: { name: "ACM International Conference on Information and Knowledge Management", acronym: "CIKM" }
   links: 
-    Link: null
+    Link: https://doi.org/10.1145/3799682.3839994
     Code: null
   notes: {"normal": "Short Research Paper (Acceptance Rate: 30.9% = 236/764)", "important": ""}  # refer: mail
   authors:

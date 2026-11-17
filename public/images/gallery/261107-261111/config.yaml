@@ -1,0 +1,18 @@
+date: "2026-11-07 ~ 2026-11-11"
+title: "CIKM'26 최우수학술대회 발표 (로마, 이탈리아)"
+description: |
+  우리 연구실은 CIKM 2026(ACM International Conference on Information and Knowledge Management)에 참석하여
+  최신 정보검색·데이터마이닝·지식관리 분야의 연구 동향을 파악하고,
+  인과성 기반 그래프 검색과 분류체계 기반 직무 추천에 관한 연구 성과 2편을 발표하였습니다.
+  Full Research Paper 1편은 구두 발표(Oral Presentation)로, 다른 1편은 Short Research Paper로 발표하였습니다.
+
+  - "Causality-Guided Spurious Evidence Pruning with GFlowNet for Faithful Graph Retrieval"
+    저자: Jinho Choi, Hye-Yoon Baek, Sang-Hyun Park, Sangjune Kim, Hyeongjun Yang, Byungkook Oh*
+
+  https://gli.konkuk.ac.kr/publications/papers/#causality-guided-spurious-evidence-pruning-with-gflownet-for-faithful-graph-retrieval
+
+  - "Taxonomy-Guided Contrastive Learning with Competency-Calibrated Graphs for Job Recommendation"
+    저자: Wonseok Son‡, Haeyoon Koo‡, Jeonghyeon Park, Jungkyu Han, Byungkook Oh, Sejin Chun*
+
+  https://gli.konkuk.ac.kr/publications/papers/#taxonomy-guided-contrastive-learning-with-competency-calibrated-graphs-for-job-recommendation
+  \n
