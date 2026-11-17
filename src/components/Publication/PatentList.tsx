@@ -8,6 +8,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import { PatentData, type ProfileLinks } from '@/data/loaders/types';
 import { titleToId } from '@/lib/utils';
 import { buildPublicationPath, getPublicationIdFromPathname, PATENTS_BASE_PATH } from '@/lib/publicationSlug';
+import { copyLinkWithToast } from '@/lib/copyLink';
 
 interface PatentListProps {
   className?: string
@@ -229,43 +230,8 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
           // 특허마다 자기 주소를 복사한다. 이 주소로 공유해야 카드에 특허 제목이 나온다 (#id는 서버에 전달되지 않음).
           const currentUrl = `${window.location.origin}${buildPublicationPath(PATENTS_BASE_PATH, patentId)}`;
 
-          // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
-          const selectionlessCopy = () => {
-            try {
-              const listener = (event: ClipboardEvent) => {
-                event.preventDefault();
-                event.clipboardData?.setData('text/plain', currentUrl);
-              };
-              document.addEventListener('copy', listener);
-              document.execCommand('copy');
-              document.removeEventListener('copy', listener);
-            } catch {
-              // 마지막 수단: 아무 동작 안 함 (iOS에서 입력 포커스 회피)
-            }
-          };
-
-          if (navigator.clipboard?.writeText) {
-            navigator.clipboard.writeText(currentUrl).catch(selectionlessCopy);
-          } else {
-            selectionlessCopy();
-          }
-
-          // 버튼 옆 토스트 (고정 위치, 버튼 오른쪽에 표시)
-          const buttonRect = e.currentTarget.getBoundingClientRect();
-          const toast = document.createElement('div');
-          toast.textContent = 'Link copied!';
-          toast.className = 'fixed bg-gray-600 text-white px-3 py-1.5 rounded-md shadow-md text-[15px] font-medium z-[1000] pointer-events-none';
-          toast.style.left = `${buttonRect.right + 10}px`;
-          toast.style.top = `${buttonRect.top + buttonRect.height / 2}px`;
-          toast.style.transform = 'translateY(-50%)';
-          document.body.appendChild(toast);
-
-          // 1초 후 토스트 제거
-          setTimeout(() => {
-            if (toast.parentNode) {
-              toast.parentNode.removeChild(toast);
-            }
-          }, 1000);
+          // 주소를 복사하고 버튼 옆에 "Link copied!"를 띄운다 (화면 밖으로 나가지 않는 자리를 고름)
+          copyLinkWithToast(currentUrl, e.currentTarget);
 
           // 아이콘을 1초 동안 체크표시로 변경
           setCopiedPatentId(patentId);

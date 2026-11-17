@@ -7,6 +7,8 @@ import { GalleryItem } from './types';
 import { Separator } from '../ui/separator';
 import { ImageCarousel } from './ImageCarousel';
 import { isNewItem, formatDateForDisplay, splitTextByUrls } from './helpers';
+import { buildGalleryPath } from './gallerySlug';
+import { copyLinkWithToast } from '@/lib/copyLink';
 import { useDragToDismiss } from '@/hooks/useDragToDismiss';
 
 interface GalleryModalProps {
@@ -30,6 +32,8 @@ export function GalleryModal({
   const [isAtBottom, setIsAtBottom] = useState(true);
   const [imageDisplayMode, setImageDisplayMode] = useState<'contain' | 'cover'>('cover');
   const [isZoomEnabled, setIsZoomEnabled] = useState(true);
+  // 링크 복사 직후 1초 동안 아이콘을 체크표시로 바꾼다
+  const [linkCopied, setLinkCopied] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
   const sheetRef = useRef<HTMLDivElement>(null);
@@ -312,9 +316,9 @@ export function GalleryModal({
 
           {/* 정보 섹션 */}
           <div className="p-4 sm:p-6">
-            {/* 타이틀 */}
-            <div className="mb-1">
-              <div className="text-lg md:text-xl font-semibold text-gray-800">
+            {/* 타이틀: 왼쪽에 제목, 오른쪽 끝에 링크 복사 버튼 */}
+            <div className="mb-1 flex items-start justify-between gap-3">
+              <div className="min-w-0 text-lg md:text-xl font-semibold text-gray-800">
                 {item.title}
                 {isNewItem(item.date) && (
                   <span className="ml-1 text-xs font-bold text-red-500 inline-flex">
@@ -324,6 +328,33 @@ export function GalleryModal({
                   </span>
                 )}
               </div>
+              {/* URL 복사 링크 아이콘. 제목이 여러 줄이어도 첫 줄 오른쪽에 있다. */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  // 이 주소로 들어오면 같은 앨범의 모달이 열린다 (?detail=1)
+                  const currentUrl = `${window.location.origin}${buildGalleryPath(item.slug, { detail: true })}`;
+                  // 버튼이 오른쪽 끝에 있으므로 토스트는 왼쪽에 띄운다
+                  copyLinkWithToast(currentUrl, e.currentTarget, { placement: 'left' });
+
+                  // 아이콘을 1초 동안 체크표시로 변경
+                  setLinkCopied(true);
+                  setTimeout(() => setLinkCopied(false), 1000);
+                }}
+                className={`mt-1 h-5 w-5 flex-shrink-0 transition-colors duration-200 ${linkCopied ? 'text-brand-primary' : 'text-gray-400 hover:text-interactive-primary'}`}
+                title="Copy album link"
+                aria-label="Copy album link"
+              >
+                {linkCopied ? (
+                  <svg className="w-full h-full origin-center scale-125" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                  </svg>
+                ) : (
+                  <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                  </svg>
+                )}
+              </button>
             </div>
             
             {item.date && (

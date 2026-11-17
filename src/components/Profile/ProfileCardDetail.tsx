@@ -18,6 +18,7 @@ import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText
 import { isActiveCaptain, ProfileCaptainBadge } from './ProfileCaptainBadge';
 import { hasCaptain, ProfileCaptainText } from './ProfileCaptainText';
 import { ProfileQuoteText } from './ProfileQuoteText';
+import { copyLinkWithToast } from '@/lib/copyLink';
 
 /** 상세 사진의 같은 위치를 이 횟수만큼 클릭하면 바꿀 사진. 키는 YAML id. */
 const EASTER_EGG_PHOTO: Record<string, string> = {
@@ -231,45 +232,8 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                                 e.stopPropagation();
                                 const currentUrl = `${window.location.origin}${buildProfileSharePath(section, id, cardColumns === 1 ? 1 : undefined)}`;
 
-                                // 클립보드 복사 시도 (지원되지 않는 경우 selectionless fallback)
-                                const selectionlessCopy = () => {
-                                    try {
-                                        const listener = (event: any) => {
-                                            event.preventDefault();
-                                            if (event.clipboardData) {
-                                                event.clipboardData.setData('text/plain', currentUrl);
-                                            }
-                                        };
-                                        document.addEventListener('copy', listener);
-                                        document.execCommand('copy');
-                                        document.removeEventListener('copy', listener);
-                                    } catch (err) {
-                                        // 마지막 수단: 아무 동작 안 함 (iOS에서 입력 포커스 회피)
-                                    }
-                                };
-
-                                if (navigator.clipboard && navigator.clipboard.writeText) {
-                                    navigator.clipboard.writeText(currentUrl).catch(selectionlessCopy);
-                                } else {
-                                    selectionlessCopy();
-                                }
-
-                                // 버튼 옆 토스트 (고정 위치, 버튼 오른쪽에 표시)
-                                const buttonRect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-                                const toast = document.createElement('div');
-                                toast.textContent = 'Link copied!';
-                                toast.className = 'fixed bg-gray-600 text-white px-3 py-1.5 rounded-md shadow-md text-[15px] font-medium z-[1000] pointer-events-none';
-                                toast.style.left = `${buttonRect.right + 10}px`;
-                                toast.style.top = `${buttonRect.top + buttonRect.height / 2}px`;
-                                toast.style.transform = 'translateY(-50%)';
-                                document.body.appendChild(toast);
-
-                                // 1초 후 토스트 제거
-                                setTimeout(() => {
-                                    if (toast.parentNode) {
-                                        toast.parentNode.removeChild(toast);
-                                    }
-                                }, 1000);
+                                // 주소를 복사하고 버튼 옆에 "Link copied!"를 띄운다 (화면 밖으로 나가지 않는 자리를 고름)
+                                copyLinkWithToast(currentUrl, e.currentTarget);
 
                                 // 아이콘을 1초 동안 체크표시로 변경
                                 setCopied(true);
