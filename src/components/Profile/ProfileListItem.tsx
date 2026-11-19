@@ -11,6 +11,7 @@ import { buildProfileSharePath } from '@/lib/profileSlug';
 import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText';
 import { isActiveCaptain, ProfileCaptainBadge } from './ProfileCaptainBadge';
 import { copyLinkWithToast } from '@/lib/copyLink';
+import { ViewCount } from '@/components/ViewCount';
 
 interface ProfileListItemProps extends ProfileItemProps {
     studies?: StudyData[];
@@ -154,6 +155,8 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                                 </svg>
                             )}
                         </button>
+                        {/* 조회수: 이름 줄의 오른쪽 끝 (카드형 상세와 같은 자리). pr-3: 아래 "See more" 버튼의 안쪽 여백과 오른쪽 끝을 맞춘다 */}
+                        <ViewCount id={id} className="ml-auto pr-3" />
                     </div>
                     
                     {/* Faculty Information */}

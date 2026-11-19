@@ -2,7 +2,8 @@ import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 
 import { getMetadata } from '@/lib/GetMetadata';
-import { countPageView } from '@/lib/viewCounter';
+import { countPageView } from '@/lib/viewStore';
+import { ViewCountUpdate } from '@/components/ViewCount';
 import {
   buildProfileAsPath,
   buildProfileListPath,
@@ -103,7 +104,9 @@ export async function renderPeoplePage({ section, params, searchParams }: People
       redirect(listFallbackPath);
     }
     // 프로필 주소에 대한 요청 1건을 조회 1회로 센다. 카드형·목록형(?view=list) 모두 같은 주소라 여기서 함께 잡힌다.
-    await countPageView(section, profile.id);
+    // members/alumni를 나누지 않고 'profile' 하나로 센다 — 졸업해 목록이 바뀌어도 조회수가 이어진다.
+    // 새 조회수는 기다리지 않고 Promise째로 넘긴다. 도착하면 프로필의 숫자가 바뀐다.
+    return <ViewCountUpdate id={profile.id} count={countPageView('profile', profile.id)} />;
   }
 
   // ProfileCards는 layout에 고정 — slug·metadata만 page에서 처리

@@ -10,6 +10,7 @@ import { isNewItem, formatDateForDisplay, splitTextByUrls } from './helpers';
 import { buildGalleryPath } from './gallerySlug';
 import { copyLinkWithToast } from '@/lib/copyLink';
 import { useDragToDismiss } from '@/hooks/useDragToDismiss';
+import { ViewCount } from '@/components/ViewCount';
 
 interface GalleryModalProps {
   item: GalleryItem;
@@ -357,11 +358,15 @@ export function GalleryModal({
               </button>
             </div>
             
-            {item.date && (
-                <p className="text-[14px] md:text-[16px] text-gray-600">
+            {/* 날짜 줄: 왼쪽에 날짜, 오른쪽 끝에 조회수 */}
+            <div className="flex items-center justify-between gap-3 text-[14px] md:text-[16px]">
+              {item.date && (
+                <p className="text-gray-600">
                   {formatDateForDisplay(item.date)}
                 </p>
-            )}
+              )}
+              <ViewCount id={item.id} className="ml-auto" />
+            </div>
 
             <Separator className="my-3"/>
 

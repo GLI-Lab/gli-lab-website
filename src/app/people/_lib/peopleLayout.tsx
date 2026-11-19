@@ -2,6 +2,8 @@ import { Suspense } from 'react';
 
 import { SubCover } from '@/components/Covers';
 import { ProfileCards } from '@/components/Profile';
+import { ViewCountsProvider } from '@/components/ViewCount';
+import { getViewCounts } from '@/lib/viewStore';
 import { getAlumniProfiles, getProfiles } from '@/data/loaders';
 import type { ProfileSection } from '@/lib/profileSlug';
 
@@ -54,19 +56,23 @@ export async function renderPeopleLayout(section: ProfileSection, children: Reac
         colorVariant="sage"
         showBreadcrumb={false}
       />
-      <Suspense fallback={<ProfileCardsFallback />}>
-        <ProfileCards
-          profiles={profiles}
-          studies={studies}
-          papers={papers}
-          patents={patents}
-          projects={projects}
-          seminars={seminars}
-          isAlumniPage={config.isAlumni}
-          profileLinks={profileLinks}
-        />
-      </Suspense>
-      {children}
+      {/* 조회수는 기다리지 않고 Promise째로 넘긴다. 프로필 상세가 이 값을 읽어 숫자를 표시한다.
+          children(page)도 안에 둔다 — 프로필을 열 때마다 page가 새 조회수를 알려 준다. */}
+      <ViewCountsProvider counts={getViewCounts('profile')}>
+        <Suspense fallback={<ProfileCardsFallback />}>
+          <ProfileCards
+            profiles={profiles}
+            studies={studies}
+            papers={papers}
+            patents={patents}
+            projects={projects}
+            seminars={seminars}
+            isAlumniPage={config.isAlumni}
+            profileLinks={profileLinks}
+          />
+        </Suspense>
+        {children}
+      </ViewCountsProvider>
     </div>
   );
 }

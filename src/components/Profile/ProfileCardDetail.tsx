@@ -19,6 +19,7 @@ import { isActiveCaptain, ProfileCaptainBadge } from './ProfileCaptainBadge';
 import { hasCaptain, ProfileCaptainText } from './ProfileCaptainText';
 import { ProfileQuoteText } from './ProfileQuoteText';
 import { copyLinkWithToast } from '@/lib/copyLink';
+import { ViewCount } from '@/components/ViewCount';
 
 /** 상세 사진의 같은 위치를 이 횟수만큼 클릭하면 바꿀 사진. 키는 YAML id. */
 const EASTER_EGG_PHOTO: Record<string, string> = {
@@ -252,6 +253,8 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                                 </svg>
                             )}
                         </button>
+                        {/* 조회수: 영문 이름 줄의 오른쪽 끝 */}
+                        <ViewCount id={id} className="ml-auto" />
                     </div>
                     <h1 className="text-[20px] md:text-[22px]">{name_ko}</h1>
                 </div>
