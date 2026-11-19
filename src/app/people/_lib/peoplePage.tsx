@@ -7,6 +7,7 @@ import { ViewCountUpdate } from '@/components/ViewCount';
 import {
   buildProfileAsPath,
   buildProfileListPath,
+  DEFAULT_MEMBER_PROFILE_YAML_ID,
   findProfileById,
   getProfileOgImagePath,
   type ProfileSection,
@@ -107,6 +108,22 @@ export async function renderPeoplePage({ section, params, searchParams }: People
     // members/alumni를 나누지 않고 'profile' 하나로 센다 — 졸업해 목록이 바뀌어도 조회수가 이어진다.
     // 새 조회수는 기다리지 않고 Promise째로 넘긴다. 도착하면 프로필의 숫자가 바뀐다.
     return <ViewCountUpdate id={profile.id} count={countPageView('profile', profile.id)} />;
+  }
+
+  // 멤버 목록에 사람 없이 들어온 경우. 넓은 화면의 카드형에서는 교수 프로필이 옆 패널에 바로 뜨므로 교수 프로필의 조회로 센다.
+  // 프로필이 뜨지 않는 경우는 뺀다: 목록형(?view=list)은 여기서 거르고, 폰은 countPageView가 User-Agent로 거른다.
+  // 서버는 화면 폭을 알 수 없어 폰 여부로 대신하므로, 태블릿 세로 화면이나 좁게 줄인 PC 창은 프로필이 뜨지 않아도 세어진다.
+  // 같은 방문자가 이어서 교수 카드를 눌러도 24시간 안에는 한 번만 센다 (같은 id라 중복 방지가 함께 적용된다).
+  if (section === 'members' && viewParam !== 'list') {
+    const defaultProfile = profiles.find((profile) => profile.yamlId === DEFAULT_MEMBER_PROFILE_YAML_ID);
+    if (defaultProfile) {
+      return (
+        <ViewCountUpdate
+          id={defaultProfile.id}
+          count={countPageView('profile', defaultProfile.id, { skipPhones: true })}
+        />
+      );
+    }
   }
 
   // ProfileCards는 layout에 고정 — slug·metadata만 page에서 처리

@@ -14,6 +14,8 @@ import { Redis } from '@upstash/redis';
  *   - 검색엔진·공유 카드 크롤러는 세지 않는다 (User-Agent로 거른다).
  *   - <Link> 미리 가져오기도 세지 않는다. 요청마다 렌더링되는 페이지는 Next.js가 미리 가져올 때 page를 그리지 않아서
  *     여기까지 오지 않는다 (`loading.tsx`를 추가하면 달라질 수 있다).
+ *   - 예외: 멤버 목록 주소(/people/members/)에 사람 없이 들어온 요청은 교수 프로필의 조회로 센다. 넓은 화면의 카드형에서는
+ *     이때 교수 프로필이 옆 패널에 바로 뜨기 때문이다. 뜨지 않는 목록형과 폰은 뺀다 (people/_lib/peoplePage.tsx).
  *
  * 저장 형태
  *   - `<prefix>:<kind>`                      해시. 필드 = 항목 id, 값 = 조회수
@@ -64,6 +66,13 @@ const BOT_USER_AGENT = new RegExp(
   ].join('|'),
   'i'
 );
+
+/**
+ * 폰 브라우저의 User-Agent. 아이폰, 안드로이드 폰, 폰 앱의 내장 브라우저는 모두 "Mobile"을 넣어 보낸다.
+ * 태블릿은 대부분 넣지 않는다 (아이패드 Safari는 기본으로 PC와 같은 User-Agent를 보낸다).
+ * 서버는 화면 폭을 알 수 없으므로, "넓은 화면에서만 보이는 것"을 셀 때 폰을 빼는 용도로 쓴다.
+ */
+const PHONE_USER_AGENT = /Mobi/i;
 
 /**
  * 중복 방문 확인과 +1을 한 번의 요청으로 처리하는 Lua 스크립트.
@@ -140,9 +149,14 @@ export async function getViewCounts(kind: ViewKind): Promise<ViewCounts | null> 
  * page에서 await 없이 불러 Promise째로 `ViewCountUpdate`에 넘긴다. 그러면 페이지는 Redis를 기다리지 않고,
  * 새 조회수가 도착하는 대로 화면의 숫자만 바뀐다.
  *
- * @returns 이번 요청으로 조회수가 올랐으면 새 조회수. 세지 않았으면(중복 방문, 봇, 미설정, 실패) null
+ * @param options.skipPhones 폰 브라우저의 요청은 세지 않는다. 넓은 화면에서만 그 항목이 보이는 주소에 쓴다.
+ * @returns 이번 요청으로 조회수가 올랐으면 새 조회수. 세지 않았으면(중복 방문, 봇, 폰 제외, 미설정, 실패) null
  */
-export async function countPageView(kind: ViewKind, id: string): Promise<number | null> {
+export async function countPageView(
+  kind: ViewKind,
+  id: string,
+  options: { skipPhones?: boolean } = {}
+): Promise<number | null> {
   try {
     const redis = getRedis();
     if (!redis) return null;
@@ -150,6 +164,7 @@ export async function countPageView(kind: ViewKind, id: string): Promise<number 
     const requestHeaders = await headers();
     const userAgent = requestHeaders.get('user-agent') ?? '';
     if (!userAgent || BOT_USER_AGENT.test(userAgent)) return null;
+    if (options.skipPhones && PHONE_USER_AGENT.test(userAgent)) return null;
 
     // Vercel이 실제 접속 IP로 채우는 헤더. 로컬 개발에서는 없을 수 있다.
     const ip =
