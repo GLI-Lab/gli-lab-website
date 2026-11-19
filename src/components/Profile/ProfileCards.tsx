@@ -176,8 +176,9 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
 
     const scrollToProfile = useCallback((profileId: string) => {
         lastScrolledIdRef.current = profileId;
-        profileRefs.current[profileId]?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, []);
+        // 목록형에서는 그 사람의 상세가 펼쳐져 있어 블록이 길다. 가운데로 맞추면 행 머리가 화면 위로 밀려나므로 위쪽에 맞춘다.
+        profileRefs.current[profileId]?.scrollIntoView({ behavior: 'smooth', block: isCardView ? 'center' : 'start' });
+    }, [isCardView]);
 
     const scrollToProfileThen = useCallback((profileId: string, generation: number, onDone: () => void) => {
         lastScrolledIdRef.current = profileId;
@@ -344,6 +345,20 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
             cols: isCardView && cardColumns === 1 ? 1 : undefined,
         });
 
+        if (!isCardView) {
+            // 목록형: 행(또는 See more)을 눌러 상세를 펼칠 때 불린다. 펼치기와 스크롤은 ProfileListItem이 직접 하고,
+            // 여기서는 선택과 주소만 바꾼다. (아래 '외부 URL 진입 시 스크롤'이 한 번 더 움직이지 않게 표시해 둔다.)
+            lastScrolledIdRef.current = profile.id;
+            // 이미 이 사람 주소면(접었다가 다시 펼친 경우) 다시 요청하지 않는다. 새로 받을 내용 없이 조회수 기록만 한 번 더 돈다.
+            if (activeSlug === profile.id && pendingProfile == null) {
+                setPendingProfile(null);
+                return;
+            }
+            window.history.replaceState(null, '', url);
+            router.replace(url, { scroll: false });
+            return;
+        }
+
         window.history.replaceState(null, '', url);
         router.replace(url, { scroll: false });
 
@@ -351,7 +366,7 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
             if (isMobileCardModal) setDetailPending(true);
             if (isDesktopCardPanel) setPanelCard(profile);
         });
-    }, [router, profileSection, isCardView, cardColumns, scrollToProfileThen]);
+    }, [router, profileSection, isCardView, cardColumns, scrollToProfileThen, activeSlug, pendingProfile]);
 
     // pathname(activeSlug)가 클릭 대상과 일치하면 pending 해제
     useEffect(() => {
@@ -726,10 +741,13 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
                                 // List View
                                 <div className="pb-5 md:pb-10">
                                     {categoryProfiles.map((profile, index) => (
+                                        // scroll-mt-24: 주소로 바로 들어와 이 사람으로 스크롤할 때 둘 위쪽 여백.
+                                        // 페이지 맨 위에서 출발하면 스크롤 도중 상단 메뉴가 줄어들어(넓은 화면 25px) 그만큼 더 올라간 자리에 멈추므로,
+                                        // 그래도 메뉴에 가리지 않게 넉넉히 둔다.
                                         <div
                                             key={index}
                                             ref={el => { profileRefs.current[profile.id] = el; }}
-                                            className="scroll-mt-20"
+                                            className="scroll-mt-24"
                                         >
                                             <ProfileListItem
                                                 onClick={() => handleProfileClick(profile)}
@@ -744,7 +762,7 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
                                                 {...profile}
                                             />
                                             {/* Clean Divider - except for last item */}
-                                            <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-5 md:my-10"></div>
+                                            <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent my-5 md:my-7"></div>
                                             {/* {index < categoryProfiles.length - 1 && (
                                                 <div className="w-full h-px bg-gradient-to-r from-transparent via-gray-200 to-transparent my-8"></div>
                                             )} */}
