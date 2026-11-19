@@ -65,11 +65,7 @@ function ProfilePaperItem({
                 <div className="flex items-start">
                     <ProfileDetailListMarker index={index} showNumbering={SHOW_ITEM_NUMBERING} />
                     <div className="flex-1">
-                        <div
-                            className={`text-[15.5px] md:text-[16.5px] mb-1 ${
-                                isFirstAuthorPaper ? 'font-semibold' : 'font-medium'
-                            }`}
-                        >
+                        <div className="text-[15.5px] md:text-[16.5px] mb-1 font-medium">
                             <PublicationHoverLink
                                 preview={paperToPreview(paper)}
                                 className="hover:text-interactive-hover hover:underline underline-offset-4"

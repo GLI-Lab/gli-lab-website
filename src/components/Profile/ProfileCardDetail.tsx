@@ -267,7 +267,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                     />
                 </div>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 mb-1`}>
-                    <span className={`text-brand-primary highlight text-[18px] md:text-[19px] whitespace-nowrap`}>{title}</span>
+                    <span className={`font-medium text-[17px] md:text-[18px] whitespace-nowrap`}>{title}</span>
                 </div>
                 <div className="my-4"></div>
 

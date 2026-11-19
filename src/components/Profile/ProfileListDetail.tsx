@@ -85,7 +85,6 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                         quote={quote}
                         reflection={reflection}
                         isAlumniPage={isAlumniPage}
-                        align="left"
                         className=""
                     />
                 </div>
