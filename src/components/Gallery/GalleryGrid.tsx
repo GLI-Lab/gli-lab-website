@@ -286,9 +286,10 @@ function GalleryGridSynced({
     params.delete('detail');
     const query = params.toString();
     const nextUrl = query ? `${pathname}?${query}` : pathname;
+    // 주소창에서 detail만 뺀다. 같은 앨범 주소라 서버에서 새로 받을 내용이 없으므로 router.replace는 부르지 않는다.
+    // (부르면 앨범 주소 요청이 한 번 더 가서 조회수 기록이 다시 돈다.) replaceState만으로도 useSearchParams에 반영된다.
     window.history.replaceState(null, '', nextUrl);
-    router.replace(nextUrl, { scroll: false });
-  }, [router, pathname, searchParams, cancelPendingOpen]);
+  }, [pathname, searchParams, cancelPendingOpen]);
 
   const handleCardClick = useCallback(
     (item: GalleryItemType) => {

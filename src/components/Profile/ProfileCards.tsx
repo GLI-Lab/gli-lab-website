@@ -120,6 +120,23 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
         searchParams.get('cols') === '1' ? 1 : 2
     );
 
+    /**
+     * 주소를 url로 바꾼다.
+     * 경로(프로필)는 그대로이고 ?view·?cols 같은 화면 상태만 달라지면 주소창만 바꾸고 서버에는 요청하지 않는다.
+     * 같은 프로필 주소를 다시 요청하면 새로 받을 내용은 없는데 조회수 기록만 한 번 더 돌기 때문이다.
+     * (replaceState만으로도 useSearchParams에 반영된다.)
+     * 경로가 바뀌거나, 카드 클릭의 이동이 아직 끝나지 않았으면(그 이동을 대체해야 하므로) router로 이동한다.
+     */
+    const replaceUrl = useCallback((url: string) => {
+        const withoutTrailingSlash = (path: string) => path.replace(/\/$/, '');
+        const isSamePath = withoutTrailingSlash(url.split('?')[0]) === withoutTrailingSlash(pathname);
+        if (isSamePath && pendingProfile == null) {
+            window.history.replaceState(null, '', url);
+        } else {
+            router.replace(url, { scroll: false });
+        }
+    }, [router, pathname, pendingProfile]);
+
     const handleColumnsChange = useCallback((cols: 1 | 2) => {
         setCardColumns(cols);
         const params = new URLSearchParams(searchParams.toString());
@@ -130,8 +147,8 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
         }
         const query = params.toString();
         const nextUrl = query ? `${pathname}?${query}` : pathname;
-        router.replace(nextUrl, { scroll: false });
-    }, [router, pathname, searchParams]);
+        replaceUrl(nextUrl);
+    }, [replaceUrl, pathname, searchParams]);
     
     // members 페이지에서는 default 프로필을 useMemo로 캐싱 (profiles가 변경될 때만 재계산)
     // alumni 페이지에서는 null로, 특정 프로필이 선택되지 않은 상태
@@ -227,9 +244,10 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
         params.delete('detail');
         const query = params.toString();
         const nextUrl = query ? `${pathname}?${query}` : pathname;
+        // 주소창에서 detail만 뺀다. 같은 프로필 주소라 서버에서 새로 받을 내용이 없으므로 router.replace는 부르지 않는다.
+        // (부르면 프로필 주소 요청이 한 번 더 가서 조회수 기록이 다시 돈다.) replaceState만으로도 useSearchParams에 반영된다.
         window.history.replaceState(null, '', nextUrl);
-        router.replace(nextUrl, { scroll: false });
-    }, [router, pathname, searchParams, cancelPendingOpen]);
+    }, [pathname, searchParams, cancelPendingOpen]);
 
     // 아래로 스와이프하면 시트가 따라오고, 이동 거리 또는 튕긴 속도가 충분하면 닫힘
     const { requestClose: requestDetailClose } = useDragToDismiss({
@@ -281,7 +299,7 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
             if (!newView) params.set('view', 'list');
             if (newView && cardColumns === 1) params.set('cols', '1');
             const query = params.toString();
-            router.replace(query ? `${profileBasePath}/?${query}` : `${profileBasePath}/`, { scroll: false });
+            replaceUrl(query ? `${profileBasePath}/?${query}` : `${profileBasePath}/`);
             return;
         }
 
@@ -296,7 +314,7 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
                 view: newView ? undefined : 'list',
                 cols: newView && cardColumns === 1 ? 1 : undefined,
             });
-            router.replace(url, { scroll: false });
+            replaceUrl(url);
             return;
         }
 
@@ -304,8 +322,8 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
         if (!newView) params.set('view', 'list');
         if (newView && cardColumns === 1) params.set('cols', '1');
         const query = params.toString();
-        router.replace(query ? `${profileBasePath}/?${query}` : `${profileBasePath}/`, { scroll: false });
-    }, [router, profileBasePath, defaultProfile, isAlumniPage, cardColumns, selectedCard, activeSlug, cancelPendingOpen]);
+        replaceUrl(query ? `${profileBasePath}/?${query}` : `${profileBasePath}/`);
+    }, [replaceUrl, profileBasePath, defaultProfile, isAlumniPage, cardColumns, selectedCard, activeSlug, cancelPendingOpen]);
 
     const handleProfileClick = useCallback((profile: ProfileData) => {
         const generation = ++modalOpenGenerationRef.current;
