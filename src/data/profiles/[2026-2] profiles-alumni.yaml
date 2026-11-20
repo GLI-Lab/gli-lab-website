@@ -90,18 +90,6 @@
   quote: 
   reflection: 연구실에서 배운 소중한 경험과 교수님의 지도 덕분에 학업적으로 크게 성장할 수 있었습니다. 이 단단한 밑거름이 있었기에 연구실 너머 더 많은 일에 도전하고 실제로 큰 성취들을 이뤄낼 수 있었습니다. 귀중한 시작점을 만들어주셔서 진심으로 감사드립니다.
 
-- id: "[2024.12] 최진호"
-  role: {type: intern, title: Undergraduate Student}
-  name: {en: Jinho Choi, ko: 최진호}
-  education: {bs: "Industrial Engineering, Konkuk University", ms: null, phd: null}
-  contacts: {emails: ["jhc12931293@gmail.com", "jinho159@konkuk.ac.kr"], homepage: null, github: ["ChoiPi2"], linkedin: ["jinho-choi-ab4916335"], scholar: ["HZX5Eg0AAAAJ"]}
-  status: 
-    period: {admission: null, graduation: "2026.02"}
-    joined: {start: "2024.12", end: "2026.02"}
-    affiliation: {current: 건국대 석사과정 (GLI Lab), verified: "2026.02"}
-  quote: 
-  reflection: 학부 연구 과정에서 교수님의 지도와 지원을 통해 연구의 즐거움과 가치를 배울 수 있었습니다. 이 경험을 바탕으로 더 깊이 있는 연구를 이어가고자 같은 연구실에서 석사 과정까지 진학하게 되었으며, 연구의 매력과 즐거움을 느끼며 앞으로도 연구자로서 성장해 나가고자 합니다.
-    
 - id: "[2025.03] 조은영"
   role: {type: intern, title: Undergraduate Student}
   name: {en: Eun-Yeong Jo, ko: 조은영}
@@ -175,24 +163,3 @@
     period: {admission: null, graduation: null}
     joined: {start: "2025.01", end: "2025.04"}
     affiliation: {current: null, verified: null}
-
-- id: "[2024.06] 서지명"
-  role: {type: intern, title: Undergraduate Student}
-  name: {en: Jimyeung Seo, ko: 서지명}
-  education: {bs: "Computer Science & Engineering, Konkuk University", ms: null, phd: null}
-  academic: {year: 1, semester: 1}
-  contacts: {emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"], homepage: null, github: ["seojmm"], linkedin: ["jimyeungseo"]}
-  status: 
-    period: {admission: null, graduation: "2025.02"}
-    joined: {start: "2024.06", end: "2025.02"}
-    affiliation: {current: 건국대 석사과정 (GLI Lab), verified: "2025.02"}
-
-- id: "[2024.07] 백혜윤"
-  role: {type: intern, title: Undergraduate Student}
-  name: {en: Hye-Yoon Baek, ko: 백혜윤}
-  education: {bs: ["English Language & Literature, Konkuk University", "Smart ICT Convergence, Konkuk University"], ms: "Computer Science & Engineering, Konkuk University", phd: null}
-  contacts: {emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"], homepage: null, github: ["hyeyoon100"], linkedin: ["hye-yoon-baek1205"]}
-  status: 
-    period: {admission: null, graduation: "2025.02"}
-    joined: {start: "2024.07", end: "2025.02"}
-    affiliation: {current: 건국대 석사과정 (GLI Lab), verified: "2025.02"}

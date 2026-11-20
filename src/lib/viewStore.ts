@@ -40,9 +40,21 @@ export type ViewCounts = Record<string, number>;
  * 개발 서버에서는 (1) 운영과 다른 키에 쌓고 (2) 중복 방지를 끈다 — 같은 항목을 여러 번 열며 숫자가 오르는지
  * 바로 볼 수 있다. 이때는 요청마다 오르므로 새로고침이나 코드 저장으로 페이지가 다시 그려질 때도 오른다.
  */
-const IS_DEV_SERVER = process.env.NODE_ENV === 'development';
+export const IS_DEV_SERVER = process.env.NODE_ENV === 'development';
 
-const KEY_PREFIX = IS_DEV_SERVER ? 'views-dev' : 'views';
+/**
+ * 저장 키의 앞머리. 운영 숫자와 개발용 숫자를 같은 Redis 안에 앞머리만 달리해 따로 둔다.
+ * 관리자 화면(`viewAdmin.ts`)은 둘 중 하나를 골라 보고 고칠 수 있다.
+ */
+export const KEY_PREFIXES = { production: 'views', development: 'views-dev' } as const;
+
+/** 조회수 데이터의 종류: 운영(배포된 사이트가 쌓는 숫자) 또는 개발용(로컬 개발 서버가 쌓는 숫자) */
+export type ViewDataset = keyof typeof KEY_PREFIXES;
+
+/** 이 서버가 기록하고 사이트 화면에 보여 주는 쪽 */
+export const CURRENT_DATASET: ViewDataset = IS_DEV_SERVER ? 'development' : 'production';
+
+const KEY_PREFIX = KEY_PREFIXES[CURRENT_DATASET];
 const DEDUP_ENABLED = !IS_DEV_SERVER;
 const DEDUP_WINDOW_SECONDS = 60 * 60 * 24;
 
@@ -88,7 +100,8 @@ return nil`;
 
 let client: Redis | undefined;
 
-function getRedis(): Redis | null {
+/** Upstash 클라이언트. 환경변수가 없거나 잘못됐으면 null. 관리자용 쓰기 함수(`viewAdmin.ts`)도 이것을 쓴다. */
+export function getRedis(): Redis | null {
   if (client) return client;
   const url = process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.UPSTASH_REDIS_REST_TOKEN;
