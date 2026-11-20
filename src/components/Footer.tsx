@@ -31,6 +31,7 @@ const FOOTER_MENUS: FooterMenu[] = [
             { title: "Professor", path: "https://bkoh509.github.io" },
             { title: "Members", path: "/people/members" },
             { title: "Alumni", path: "/people/alumni" },
+            { title: "Directory (All)", path: "/people/directory" },
         ],
     },
     {
