@@ -54,10 +54,14 @@ export function ViewCountsProvider({
 function ViewCountValue({
   context,
   id,
+  size,
+  colorClassName,
   className,
 }: {
   context: ViewCountsContextValue;
   id: string;
+  size: ViewCountSize;
+  colorClassName: string;
   className: string;
 }) {
   const counts = use(context.counts);
@@ -69,7 +73,7 @@ function ViewCountValue({
 
   return (
     <span
-      className={`inline-flex flex-shrink-0 items-center gap-1 text-[14px] md:text-[15px] font-normal text-gray-500 ${className}`.trim()}
+      className={`inline-flex flex-shrink-0 items-center gap-1 ${SIZE_CLASS[size]} font-normal ${colorClassName} ${className}`.trim()}
       title="Views"
       aria-label={`${views} views`}
     >
@@ -79,18 +83,35 @@ function ViewCountValue({
   );
 }
 
+/** default: 상세 화면·목록형 행에 쓰는 크기. small: 프로필 카드처럼 좁은 자리에 쓰는 크기 (카드의 "See more"와 같다) */
+type ViewCountSize = 'default' | 'small';
+
+const SIZE_CLASS: Record<ViewCountSize, string> = {
+  default: 'text-[14px] md:text-[15px]',
+  small: 'text-xs sm:text-sm',
+};
+
+interface ViewCountProps {
+  id: string;
+  size?: ViewCountSize;
+  /** 글자색. 배경이 바뀌는 자리(선택된 카드 등)에서만 바꿔 준다 */
+  colorClassName?: string;
+  /** 위치·여백·보이기 등 바깥에서 정할 것 */
+  className?: string;
+}
+
 /**
- * 한 항목의 조회수 (눈 아이콘 + 숫자). 크기는 여기서 정하고(아이콘은 글자 크기에 비례), 위치는 className으로 준다.
+ * 한 항목의 조회수 (눈 아이콘 + 숫자). 크기는 size로 고르고(아이콘은 글자 크기에 비례), 위치는 className으로 준다.
  * `ViewCountsProvider` 밖이거나 조회수를 읽지 못했으면 아무것도 그리지 않는다.
  */
-export function ViewCount({ id, className = '' }: { id: string; className?: string }) {
+export function ViewCount({ id, size = 'default', colorClassName = 'text-gray-500', className = '' }: ViewCountProps) {
   const context = use(ViewCountsContext);
   if (!context) return null;
 
   // 숫자가 아직 도착하지 않았으면 이 자리만 비워 두고 나머지 화면은 그대로 그린다.
   return (
     <Suspense fallback={null}>
-      <ViewCountValue context={context} id={id} className={className} />
+      <ViewCountValue context={context} id={id} size={size} colorClassName={colorClassName} className={className} />
     </Suspense>
   );
 }

@@ -5,9 +5,10 @@ import React from 'react';
 import { ProfileItemProps } from '@/data/loaders/types';
 import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText';
 import { isActiveCaptain, ProfileCaptainBadge } from './ProfileCaptainBadge';
+import { ViewCount } from '@/components/ViewCount';
 
 export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
-    const { onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, captain, isAlumniPage } = props;
+    const { id, onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, captain, isAlumniPage } = props;
     // console.log('----ProfileCardItem rendered:', name_ko);
 
     // 졸업생 카드에 소속이 있으면 정보가 세 줄(Affiliation, Joined, E-mail)이 된다.
@@ -30,8 +31,17 @@ export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
                         <div className={`text-xl sm:text-2xl tracking-tight sm:tracking-normal font-medium ${isSelected ? 'text-interactive-primary 1.5md:text-white' : 'group-hover:text-interactive-primary'}`}>{name_en}</div>
                         <div className={`text-lg sm:text-xl ${isSelected ? 'text-interactive-primary 1.5md:text-white' : 'group-hover:text-interactive-primary'}`}>{name_ko}</div>
                     </div>
-                    <div>
+                    <div className="flex flex-col items-end">
                         <div className={`text-xs sm:text-sm ${isSelected ? 'text-interactive-primary underline 1.5md:hidden' : 'text-gray-600 group-hover:underline group-hover:text-interactive-primary'}`}>See more</div>
+                        {/* 조회수: 평소에는 숨기고, 카드에 마우스를 올렸을 때만 See more 아래에 보여 준다 (카드마다 숫자가 늘어서지 않게).
+                            자리는 늘 차지하므로 나타날 때 배치가 흔들리지 않는다. 터치 화면에서는 보이지 않고, 상세를 열면 거기에 나온다.
+                            선택된 카드는 넓은 화면에서 배경이 초록이라 글자를 흰색으로 맞춘다 */}
+                        <ViewCount
+                            id={id}
+                            size="small"
+                            colorClassName={isSelected ? 'text-interactive-primary 1.5md:text-white' : 'text-gray-500'}
+                            className="mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                        />
                     </div>
                 </div>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-2 sm:gap-x-3 tracking-tight sm:tracking-normal text-sm sm:text-base items-center
