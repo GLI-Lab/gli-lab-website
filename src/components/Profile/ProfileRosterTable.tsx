@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 
 import { StarIcon } from '@/components/Profile/ProfileCaptainBadge';
 import { ProfileHoverLink } from '@/components/Profile/ProfileHoverLink';
@@ -110,6 +110,9 @@ const LINK_ICONS: { key: keyof ProfileRosterLinks; label: string; solid: boolean
     path: 'M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z',
   },
 ];
+
+// 표의 열 수 (Name, Position, Admission, Joined, Captain, Affiliation, Links). 줄 전체를 차지하는 칸의 colSpan에 쓴다
+const COLUMN_COUNT = 7;
 
 // 칸 안쪽 여백과 Links 아이콘 한 칸의 크기. 모바일에서는 넓은 화면보다 작다
 const CELL = 'px-2 py-1.5 md:px-3 md:py-2';
@@ -242,78 +245,88 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
             </tr>
           </thead>
           <tbody>
-            {visibleRows.map((row) => (
-              // 교수 줄은 맨 위 고정이라는 것이 드러나게 바탕을 옅은 초록으로 칠하고, 아래 구분선도 초록빛으로 조금 진하게 긋는다
-              <tr
-                key={row.id}
-                className={`border-b last:border-b-0 ${row.isFaculty ? 'border-brand-primary/30 bg-brand-primary/5 hover:bg-brand-primary/10' : 'border-gray-100 hover:bg-gray-50'}`}
-              >
-                <td className={`${CELL} whitespace-nowrap`}>
-                  {row.link ? (
-                    <ProfileHoverLink profile={row.link} className={NAME_LINK}>
-                      {row.nameEn}
-                    </ProfileHoverLink>
-                  ) : (
-                    <span className="font-medium">{row.nameEn}</span>
-                  )}
-                  <span className="text-gray-600"> ({row.nameKo})</span>
-                </td>
-                <td className={`${CELL} whitespace-nowrap text-gray-700`}>
-                  {/* 교수, 대학원생, 입학 예정자의 직위에는 형광펜 밑줄을 긋는다 (위쪽 오른편에 뜻을 적어 두었다) */}
-                  {row.titleMarked ? (
-                    <span className={`${TITLE_MARKER} font-medium`}>{row.title}</span>
-                  ) : (
-                    row.title
-                  )}
-                </td>
-                <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>{cellText(row.admission)}</td>
-                <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>{cellText(joinedLabel(row))}</td>
-                <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>
-                  {/* 캡틴을 맡은 기간. 앞의 별은 사진 위 캡틴 배지와 같은 것으로, 지금 맡고 있으면 노란색이고 지난 캡틴은 회색이다.
-                      inline-flex가 아니라 flex다: inline-flex는 별의 아래 끝을 글자 기준선에 맞추어, 글자가 옆 칸들보다 위로 올라간다 */}
-                  {row.captainStart ? (
-                    <span className="flex items-center gap-1">
-                      <StarIcon
-                        className={`flex-shrink-0 w-4 h-4 md:w-[18px] md:h-[18px] ${isCurrentCaptain(row) ? 'text-amber-500' : 'text-gray-300'}`}
-                      />
-                      {captainLabel(row)}
-                    </span>
-                  ) : (
-                    cellText('')
-                  )}
-                </td>
-                <td className={`${CELL} whitespace-nowrap text-gray-700`}>{cellText(row.affiliation)}</td>
-                <td className={CELL}>
-                  <div className="flex gap-1 md:gap-1.5">
-                    {LINK_ICONS.map(({ key, label, solid, path }) =>
-                      !row.links[key] ? (
-                        // 링크가 없는 자리. 아이콘과 같은 크기로 비워 둔다
-                        <span key={key} className={`flex-shrink-0 ${ICON_BOX}`} aria-hidden />
-                      ) : (
-                        <a
-                          key={key}
-                          href={row.links[key]}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          title={label}
-                          aria-label={`${row.nameEn}: ${label}`}
-                          className={`flex-shrink-0 ${ICON_BOX} rounded-md bg-gray-100 text-gray-600 hover:bg-interactive-primary hover:text-white flex items-center justify-center transition-colors duration-200`}
-                        >
-                          {solid ? (
-                            <svg className="w-[15px] h-[15px] md:w-[18px] md:h-[18px]" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-                              <path d={path} />
-                            </svg>
-                          ) : (
-                            <svg className="w-[17px] h-[17px] md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={path} />
-                            </svg>
-                          )}
-                        </a>
-                      )
+            {visibleRows.map((row, index) => (
+              <Fragment key={row.id}>
+                {/* 교수 줄은 맨 위 고정이라는 것이 드러나게 바탕을 옅은 초록으로 칠하고, 아래 구분선은 이중선으로 긋는다.
+                    색은 표의 테두리·머리줄 아래 선과 같은 회색(gray-200)이다.
+                    이중선은 4px이어야 두 줄 사이가 벌어져 보인다 (1px 선, 2px 틈, 1px 선) */}
+                <tr
+                  className={`last:border-b-0 ${row.isFaculty ? 'border-b-4 border-double border-gray-200 bg-brand-primary/5 hover:bg-brand-primary/10' : 'border-b border-gray-100 hover:bg-gray-50'}`}
+                >
+                  <td className={`${CELL} whitespace-nowrap`}>
+                    {row.link ? (
+                      <ProfileHoverLink profile={row.link} className={NAME_LINK}>
+                        {row.nameEn}
+                      </ProfileHoverLink>
+                    ) : (
+                      <span className="font-medium">{row.nameEn}</span>
                     )}
-                  </div>
-                </td>
-              </tr>
+                    <span className="text-gray-600"> ({row.nameKo})</span>
+                  </td>
+                  <td className={`${CELL} whitespace-nowrap text-gray-700`}>
+                    {/* 교수, 대학원생, 입학 예정자의 직위에는 형광펜 밑줄을 긋는다 (위쪽 오른편에 뜻을 적어 두었다) */}
+                    {row.titleMarked ? (
+                      <span className={`${TITLE_MARKER} font-medium`}>{row.title}</span>
+                    ) : (
+                      row.title
+                    )}
+                  </td>
+                  <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>{cellText(row.admission)}</td>
+                  <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>{cellText(joinedLabel(row))}</td>
+                  <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>
+                    {/* 캡틴을 맡은 기간. 앞의 별은 사진 위 캡틴 배지와 같은 것으로, 지금 맡고 있으면 노란색이고 지난 캡틴은 회색이다.
+                        inline-flex가 아니라 flex다: inline-flex는 별의 아래 끝을 글자 기준선에 맞추어, 글자가 옆 칸들보다 위로 올라간다 */}
+                    {row.captainStart ? (
+                      <span className="flex items-center gap-1">
+                        <StarIcon
+                          className={`flex-shrink-0 w-4 h-4 md:w-[18px] md:h-[18px] ${isCurrentCaptain(row) ? 'text-amber-500' : 'text-gray-300'}`}
+                        />
+                        {captainLabel(row)}
+                      </span>
+                    ) : (
+                      cellText('')
+                    )}
+                  </td>
+                  <td className={`${CELL} whitespace-nowrap text-gray-700`}>{cellText(row.affiliation)}</td>
+                  <td className={CELL}>
+                    <div className="flex gap-1 md:gap-1.5">
+                      {LINK_ICONS.map(({ key, label, solid, path }) =>
+                        !row.links[key] ? (
+                          // 링크가 없는 자리. 아이콘과 같은 크기로 비워 둔다
+                          <span key={key} className={`flex-shrink-0 ${ICON_BOX}`} aria-hidden />
+                        ) : (
+                          <a
+                            key={key}
+                            href={row.links[key]}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            title={label}
+                            aria-label={`${row.nameEn}: ${label}`}
+                            className={`flex-shrink-0 ${ICON_BOX} rounded-md bg-gray-100 text-gray-600 hover:bg-interactive-primary hover:text-white flex items-center justify-center transition-colors duration-200`}
+                          >
+                            {solid ? (
+                              <svg className="w-[15px] h-[15px] md:w-[18px] md:h-[18px]" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                                <path d={path} />
+                              </svg>
+                            ) : (
+                              <svg className="w-[17px] h-[17px] md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={path} />
+                              </svg>
+                            )}
+                          </a>
+                        )
+                      )}
+                    </div>
+                  </td>
+                </tr>
+                {/* 교수 줄과 그 아래 줄들 사이를 조금 띄우는 빈 줄 (이중선 바로 아래).
+                    표의 줄에는 바깥 여백을 줄 수 없어서 빈 줄을 하나 넣는다 */}
+                {row.isFaculty && visibleRows[index + 1] && !visibleRows[index + 1].isFaculty && (
+                  <tr aria-hidden>
+                    <td colSpan={COLUMN_COUNT} className="h-1 md:h-1.5 p-0" />
+                  </tr>
+                )}
+              </Fragment>
             ))}
           </tbody>
         </table>
