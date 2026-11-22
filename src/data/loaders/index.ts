@@ -111,6 +111,10 @@ function toProfileLinkTarget(profile: ProfileData, href: string, isAlumni: boole
     summary: formatProfileSummary(profile, isAlumni),
     // 캡틴을 맡은 적이 있는 사람만 값이 있다 (profileLoader가 시작·끝이 모두 있을 때만 채운다)
     ...(profile.captain ? { captain: profile.captain } : {}),
+    // 교수만 표시한다. 호버 카드가 브랜드 색 바탕으로 그리고, 맨 아래에 참여 기간(status.joined)을 "Lab Director: <기간>" 줄로 보여 준다.
+    // 그 위 회색 줄(summary)에는 소속(status.affiliation.current)이 온다
+    ...(profile.type === 'faculty' ? { isFaculty: true } : {}),
+    ...(profile.type === 'faculty' && formatJoined(profile) ? { directorPeriod: formatJoined(profile) } : {}),
   };
 }
 

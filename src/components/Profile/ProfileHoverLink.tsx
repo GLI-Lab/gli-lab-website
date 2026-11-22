@@ -36,12 +36,17 @@ function ProfileCard({ profile }: { profile: ProfileLinkTarget }) {
   // 노란색은 사진 위 캡틴 배지의 별(amber)과 같은 계열이다
   const captain = hasCaptain(profile.captain) ? profile.captain : undefined;
 
+  // 카드의 테두리와 바탕. 교수는 브랜드 색(초록), 캡틴은 노란색, 나머지는 흰색이다.
+  // 교수의 바탕(#f0f5f1)은 브랜드 색을 흰색에 6%쯤 섞은 것으로, 새 소식 띠(NewsPopup)의 바탕과 같다.
+  // 카드가 본문 위에 뜨므로 bg-brand-primary/5 같은 반투명 색은 쓸 수 없다 (뒤의 글자가 비친다)
+  const tone = profile.isFaculty
+    ? "border-brand-primary/30 bg-[#f0f5f1]"
+    : captain
+      ? "border-amber-300 bg-amber-50"
+      : "border-gray-200 bg-white";
+
   return (
-    <div
-      className={`flex items-center gap-2.5 rounded-lg border px-2 py-1.5 shadow-lg ${
-        captain ? "border-amber-300 bg-amber-50" : "border-gray-200 bg-white"
-      }`}
-    >
+    <div className={`flex items-center gap-2.5 rounded-lg border px-2 py-1.5 shadow-lg ${tone}`}>
       <div className="relative h-[118px] w-[96px] shrink-0 overflow-hidden rounded-md bg-gray-100">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -69,6 +74,12 @@ function ProfileCard({ profile }: { profile: ProfileLinkTarget }) {
         {captain ? (
           <p className="mt-0.5 text-[14.5px] font-medium leading-snug text-amber-700">
             Captain: {formatCaptainPeriod(captain)}
+          </p>
+        ) : null}
+        {/* 교수는 맨 아래(소속 줄 다음)에 참여 기간을 "Lab Director: <기간>"으로 초록색 줄에 넣는다. 캡틴 줄과 같은 자리, 같은 꼴이다 */}
+        {profile.directorPeriod ? (
+          <p className="mt-0.5 text-[14.5px] font-medium leading-snug text-brand-primary">
+            Lab Director: {profile.directorPeriod}
           </p>
         ) : null}
       </div>

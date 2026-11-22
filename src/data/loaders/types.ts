@@ -106,6 +106,13 @@ export interface ProfileLinkTarget {
   summary: string;
   /** 캡틴을 맡은 기간 (지금 맡고 있으면 end가 "Present"). 맡은 적이 없으면 없다. 호버 카드가 이 사람을 노란 바탕으로 그린다 */
   captain?: ProfileCaptain;
+  /** 교수(role.type이 faculty)일 때만 true. 호버 카드가 이 사람을 브랜드 색(옅은 초록) 바탕으로 그린다 */
+  isFaculty?: boolean;
+  /**
+   * 교수의 참여 기간(status.joined). 예: "2024.03 - Present".
+   * 있으면 호버 카드가 맨 아래에 "Lab Director: <기간>"을 초록색으로 한 줄 넣는다. 교수가 아니면 없다
+   */
+  directorPeriod?: string;
 }
 
 /**

@@ -243,10 +243,13 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                     {type === "faculty" ? (
                         <div className="space-y-3 text-left tracking-normal sm:tracking-normal">
                             <div className={TITLE_STYLE}><ProfileTitleText type={type} title={title} /></div>
-                            <div className={`grid grid-cols-[auto,1fr] gap-x-4 ${INFO_LABEL_SIZE} items-center`}>
-                                <span className={INFO_LABEL_STYLE}>Affiliation:</span>
-                                <span className={INFO_VALUE_SIZE}>Dept. of Computer Science & Engineering</span>
-                            </div>
+                            {/* 교수의 소속. 값은 프로필 YAML의 status.affiliation.current (이름 호버 카드와 명단 표도 같은 값을 쓴다) */}
+                            {hasAffiliation(affiliation) && (
+                                <div className={`grid grid-cols-[auto,1fr] gap-x-4 ${INFO_LABEL_SIZE} items-center`}>
+                                    <span className={INFO_LABEL_STYLE}>Affiliation:</span>
+                                    <span className={INFO_VALUE_SIZE}>{affiliation?.current}</span>
+                                </div>
+                            )}
                         </div>
                     ) : (
                         <div className="text-left">

@@ -118,7 +118,8 @@ export const ProfileListDetail: React.FC<ProfileDetailProps> = (props) => {
                             </span>
                         </>
                     )}
-                    {hasAffiliation(affiliation) && (
+                    {/* 교수의 소속은 바로 위 목록 줄(ProfileListItem)에 이미 나오므로 여기서는 다시 적지 않는다 */}
+                    {hasAffiliation(affiliation) && type !== "faculty" && (
                         <>
                             <span className={`text-text-accent font-medium self-start`}>Affiliation</span>
                             <span className="text-[15.5px] md:text-[16.5px] self-start min-w-0 pl-1">

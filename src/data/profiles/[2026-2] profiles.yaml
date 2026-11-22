@@ -38,8 +38,8 @@
   contacts: {emails: ["bkoh@konkuk.ac.kr", "bkoh509@gmail.com"], homepage: ["bkoh509.github.io"], github: ["GLI-Lab", "bkoh509"], linkedin: ["bkoh509"], scholar: ["DzArhLgAAAAJ"]}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: null, end: null}
-    affiliation: {current: null, verified: null}
+    joined: {start: "2024.03", end: "Present"}
+    affiliation: {current: "Dept. of CSE, Konkuk University", verified: null}
   quote: 날뛰어라
   reflection: 
 
