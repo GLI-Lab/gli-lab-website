@@ -16,7 +16,7 @@
 #   contacts: {emails: ["number9you@gmail.com"], homepage: ["sites.google.com/view/bonyoukoo/home"], github: ["ninethyou"], linkedin: null}
 #   status: 
 #     period: {admission: "2025.09", graduation: null}
-#     joined: {start: "2025.04", end: "Current"}
+#     joined: {start: "2025.04", end: "Present"}
 #     affiliation: {current: null, verified: null}
 #   quote: 해보기나 했어?
 #   reflection: 
@@ -54,7 +54,7 @@
   contacts: {emails: ["number9you@gmail.com"], homepage: ["sites.google.com/view/bonyoukoo/home"], github: ["ninethyou"], linkedin: null}
   status: 
     period: {admission: "2025.09", graduation: null}
-    joined: {start: "2025.04", end: "Current"}
+    joined: {start: "2025.04", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 해보기나 했어?
   reflection: 
@@ -70,8 +70,8 @@
   contacts: {emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"], homepage: null, github: ["hyeyoon100"], linkedin: ["hye-yoon-baek1205"]}
   status: 
     period: {admission: "2025.03", graduation: null}
-    joined: {start: "2024.07", end: "Current"}
-    captain: {start: "2026.07", end: "Current"}
+    joined: {start: "2024.07", end: "Present"}
+    captain: {start: "2026.07", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 모든 벽은 문이다
   reflection: 
@@ -84,7 +84,7 @@
   contacts: {emails: ["ehdcjs987@gmail.com"], homepage: null, github: ["leedongcheon"], linkedin: null}
   status: 
     period: {admission: "2025.03", graduation: null}
-    joined: {start: "2024.11", end: "Current"}
+    joined: {start: "2024.11", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 오늘의 서툶이 내일의 실력이 된다
   reflection: 
@@ -101,7 +101,7 @@
   contacts: {emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"], homepage: null, github: ["seojmm"], linkedin: ["jimyeungseo"]}
   status: 
     period: {admission: "2025.03", graduation: null}
-    joined: {start: "2024.06", end: "Current"}
+    joined: {start: "2024.06", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 도망쳐서 도착한 곳에 낙원은 없다
   reflection: 
@@ -114,7 +114,7 @@
   contacts: {emails: ["hykoo0601@gmail.com"], homepage: null, github: ["sunyoonk"], linkedin: ["sunyoonk"]}
   status: 
     period: {admission: "2025.09", graduation: null}
-    joined: {start: "2025.01", end: "Current"}
+    joined: {start: "2025.01", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: No Pain, No Gain
   reflection: 
@@ -127,7 +127,7 @@
   contacts: {emails: ["jhc12931293@gmail.com", "jinho159@konkuk.ac.kr"], homepage: null, github: ["ChoiPi2"], linkedin: ["jinho-choi-ab4916335"], scholar: ["HZX5Eg0AAAAJ"]}
   status: 
     period: {admission: "2026.03", graduation: null}
-    joined: {start: "2024.12", end: "Current"}
+    joined: {start: "2024.12", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 기회는 스스로 만드는것
   reflection: 
@@ -140,7 +140,7 @@
   contacts: {emails: ["jooo316@naver.com"], homepage: null, github: ["jongwoogit"], linkedin: null}
   status: 
     period: {admission: "2026.09", graduation: null}
-    joined: {start: "2026.03", end: "Current"}
+    joined: {start: "2026.03", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 인생은 선택의 연속이다
   reflection: 
@@ -153,7 +153,7 @@
   contacts: {emails: ["parkwongyu0408@gmail.com"], homepage: null, github: ["Won-Gyu01"], linkedin: null}
   status: 
     period: {admission: "2026.09", graduation: null}
-    joined: {start: "2026.04", end: "Current"}
+    joined: {start: "2026.04", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 실패하지 않는다는 것을 안다면, 얼마나 큰 꿈을 꿀 것인가?
   reflection: 
@@ -169,7 +169,7 @@
   contacts: {emails: ["people7261@naver.com"], homepage: null, github: ["k-seyeong"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
+    joined: {start: "2025.07", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 나를 이기는 사람이 되자
   reflection: 
@@ -182,7 +182,7 @@
   contacts: {emails: ["donghyunlee01@gmail.com"], homepage: null, github: ["DunkelH"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
+    joined: {start: "2025.07", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 깨부숴라
   reflection: 
@@ -195,7 +195,7 @@
   contacts: {emails: ["whsonwh@gmail.com"], homepage: null, github: ["sonwh123"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.11", end: "Current"}
+    joined: {start: "2025.11", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 10년 전의 내가 존경할 사람이 되자
   reflection: 
@@ -215,7 +215,7 @@
   contacts: {emails: ["psh030122@gmail.com"], homepage: null, github: ["geosang122"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
+    joined: {start: "2025.07", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: Just do it
   reflection: 
@@ -228,7 +228,7 @@
   contacts: {emails: ["bear100152@gmail.com"], homepage: null, github: ["BearYeWon"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
+    joined: {start: "2025.07", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 성공은 한 번의 선택보다 매일의 태도에서 온다
   reflection: 
@@ -241,7 +241,7 @@
   contacts: {emails: ["hoan0616@naver.com"], homepage: null, github: ["Hwan616"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
+    joined: {start: "2025.07", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: Life is a matter of direction, Not speed
   reflection: 
@@ -254,7 +254,7 @@
   contacts: {emails: ["yeeunkim512@gmail.com"], homepage: null, github: ["katekim512"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.08", end: "Current"}
+    joined: {start: "2025.08", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: To infinity and beyond
   reflection: 
@@ -267,7 +267,7 @@
   contacts: {emails: ["km02020995@gmail.com", "qkrrbals1212@konkuk.ac.kr"], homepage: null, github: ["KMPAR"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.10", end: "Current"}
+    joined: {start: "2025.10", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 행복은 내가 선택하는 것
   reflection: 
@@ -280,7 +280,7 @@
   contacts: {emails: ["august0511@naver.com"], homepage: null, github: ["Bb-jh"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.12", end: "Current"}
+    joined: {start: "2025.12", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 오늘 걷지 않으면 내일은 뛰어야 한다
   reflection: 
@@ -293,7 +293,7 @@
   contacts: {emails: ["yscarlet214@gmail.com"], homepage: null, github: ["yscarlet"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.12", end: "Current"}
+    joined: {start: "2025.12", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 피할 수 없는 고통이라면 즐겨라
   reflection: 
@@ -306,7 +306,7 @@
   contacts: {emails: ["ronan@rutile.tech"], homepage: null, github: ["HUMBLE25"], linkedin: ["rutilegyeom"]}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2026.05", end: "Current"}
+    joined: {start: "2026.05", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: Memento mori
   reflection: 
@@ -319,7 +319,7 @@
   contacts: {emails: ["juni9565@konkuk.ac.kr"], homepage: null, github: ["galgalrobot"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2026.06", end: "Current"}
+    joined: {start: "2026.06", end: "Present"}
     affiliation: {current: null, verified: null}
   quote: 인내심을 갖고 꾸준히 쌓아가자
   reflection: 

@@ -41,10 +41,10 @@ export interface ProfileRosterRow {
   titleMarked: boolean;
   /** 입학 시기 (예: "2025.03"). 멤버와 졸업생 모두 값이 있으면 채운다. 없는 사람(교수, 인턴 등)은 빈 문자열 */
   admission: string;
-  /** 합류·종료 시기 (예: "2024.06", "Current"). 없으면 빈 문자열 */
+  /** 합류·종료 시기 (예: "2024.06", "Present"). 없으면 빈 문자열 */
   joinedStart: string;
   joinedEnd: string;
-  /** 캡틴을 맡은 기간 (예: "2026.07", "Current"). 맡은 적이 없으면 둘 다 빈 문자열 */
+  /** 캡틴을 맡은 기간 (예: "2026.07", "Present"). 맡은 적이 없으면 둘 다 빈 문자열 */
   captainStart: string;
   captainEnd: string;
   /** 현재 소속 (주로 졸업생의 진로. 예: "카이스트"). 없으면 빈 문자열 */
@@ -64,8 +64,8 @@ const joinedLabel = (row: ProfileRosterRow) => [row.joinedStart, row.joinedEnd].
 
 const captainLabel = (row: ProfileRosterRow) => [row.captainStart, row.captainEnd].filter(Boolean).join(' - ');
 
-/** 지금 캡틴을 맡고 있는지 (끝이 "Current"). 사진 위 캡틴 배지(isActiveCaptain)와 같은 기준이다 */
-const isCurrentCaptain = (row: ProfileRosterRow) => row.captainStart !== '' && row.captainEnd.toLowerCase() === 'current';
+/** 지금 캡틴을 맡고 있는지 (끝이 "Present"). 사진 위 캡틴 배지(isActiveCaptain)와 같은 기준이다 */
+const isCurrentCaptain = (row: ProfileRosterRow) => row.captainStart !== '' && row.captainEnd.toLowerCase() === 'present';
 
 // 이름 링크의 모양. 논문 저자 이름(ProfileAuthorName)과 같다: 점선 밑줄, 포인터를 올리면 초록 실선
 const NAME_LINK =

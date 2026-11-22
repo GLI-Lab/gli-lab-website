@@ -308,7 +308,7 @@ function ProjectCard({
                       {renderMember(manager, profileLinks, `current-${i}`)}
                       {manager.since && (
                         <span className="ml-1.5 text-gray-400 text-[0.9em]">
-                          · {formatMonth(manager.since)} ~ {isOngoing ? "Current" : formatMonth(project.end_date)}
+                          · {formatMonth(manager.since)} ~ {isOngoing ? "Present" : formatMonth(project.end_date)}
                         </span>
                       )}
                     </span>

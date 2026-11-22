@@ -8,7 +8,7 @@
 # role에 "연구책임자(학생)"처럼 괄호를 붙이면 뱃지 디자인은 기본 역할과 같고, 표시 텍스트는 그대로다.
 
 # managers: 각 실무책임자에 since(시작)/until(끝)을 적음 (YYYY-MM)
-#   - until 없음  -> 현재 실무책임자 (since ~ Current, 과제 종료 시 종료월로 자동 표시)
+#   - until 없음  -> 현재 실무책임자 (since ~ Present, 과제 종료 시 종료월로 자동 표시)
 #   - until 있음  -> 실무책임자 (이전)  (since ~ until)
 #   - 현재/이전 모두 여러 명이면 세로로 나열됨
 #   - { ID: "[2025.04] 구본유", name: Bonyou Koo, since: 2026-04 }                 # 현재

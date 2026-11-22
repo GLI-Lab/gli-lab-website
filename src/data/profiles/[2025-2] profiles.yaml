@@ -33,7 +33,7 @@
   contacts: {emails: ["number9you@gmail.com"], homepage: ["sites.google.com/view/bonyoukoo/home"], github: ["ninethyou"], linkedin: null}
   status: 
     period: {admission: "2025.09", graduation: null}
-    joined: {start: "2025.04", end: "Current"}
+    joined: {start: "2025.04", end: "Present"}
     affiliation: null
     
 ###############################################
@@ -48,7 +48,7 @@
   contacts: {emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"], homepage: null, github: ["seojmm"], linkedin: ["jimyeungseo"]}
   status: 
     period: {admission: "2025.03", graduation: null}
-    joined: {start: "2024.06", end: "Current"}
+    joined: {start: "2024.06", end: "Present"}
     affiliation: null
 
 - id: "[2024.07] 백혜윤"
@@ -59,7 +59,7 @@
   contacts: {emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"], homepage: null, github: ["hyeyoon100"], linkedin: ["hye-yoon-baek1205"]}
   status: 
     period: {admission: "2025.03", graduation: null}
-    joined: {start: "2024.07", end: "Current"}
+    joined: {start: "2024.07", end: "Present"}
     affiliation: null
 
 - id: "[2024.11] 이동천"
@@ -70,7 +70,7 @@
   contacts: {emails: ["ehdcjs987@gmail.com"], homepage: null, github: ["leedongcheon"], linkedin: null}
   status: 
     period: {admission: "2025.03", graduation: null}
-    joined: {start: "2024.11", end: "Current"}
+    joined: {start: "2024.11", end: "Present"}
     affiliation: null
 
 - id: "[2025.01] 구해윤"
@@ -81,7 +81,7 @@
   contacts: {emails: ["hykoo0601@gmail.com"], homepage: null, github: ["sunyoonk"], linkedin: ["sunyoonk"]}
   status: 
     period: {admission: "2025.09", graduation: null}
-    joined: {start: "2025.01", end: "Current"}
+    joined: {start: "2025.01", end: "Present"}
     affiliation: null
   
 ###############################################
@@ -95,7 +95,7 @@
   contacts: {emails: ["jhc12931293@gmail.com", "jinho159@konkuk.ac.kr"], homepage: null, github: ["ChoiPi2"], linkedin: ["jinho-choi-ab4916335"], scholar: ["HZX5Eg0AAAAJ"]}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2024.12", end: "Current"}
+    joined: {start: "2024.12", end: "Present"}
     affiliation: null
 
 ###############################################
@@ -113,7 +113,7 @@
   contacts: {emails: ["james20042016@gmail.com"], homepage: null, github: ["yhLee205"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2024.06", end: "Current"}
+    joined: {start: "2024.06", end: "Present"}
     affiliation: null
 
 - id: "[2024.07] 지상준"
@@ -124,7 +124,7 @@
   contacts: {emails: ["wltkdwns0220@naver.com", "wltkdwns0220@konkuk.ac.kr"], homepage: ["approxy02.github.io/homepage/"], github: ["Approxy02"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2024.07", end: "Current"}
+    joined: {start: "2024.07", end: "Present"}
     affiliation: null
 
 - id: "[2025.07] 박상현"
@@ -135,7 +135,7 @@
   contacts: {emails: ["psh030122@gmail.com"], homepage: null, github: ["geosang122"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
+    joined: {start: "2025.07", end: "Present"}
     affiliation: null
 
 - id: "[2025.07] 사예원"
@@ -146,7 +146,7 @@
   contacts: {emails: ["bear100152@gmail.com"], homepage: null, github: ["BearYeWon"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
+    joined: {start: "2025.07", end: "Present"}
     affiliation: null
 
 - id: "[2025.07] 김세영"
@@ -157,7 +157,7 @@
   contacts: {emails: ["people7261@naver.com"], homepage: null, github: ["k-seyeong"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
+    joined: {start: "2025.07", end: "Present"}
     affiliation: null
 
 - id: "[2025.07] 이재진"
@@ -168,7 +168,7 @@
   contacts: {emails: ["y62945@naver.com"], homepage: null, github: ["jin1ee-02"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
+    joined: {start: "2025.07", end: "Present"}
     affiliation: null
 
 - id: "[2025.07] 이동현"
@@ -179,7 +179,7 @@
   contacts: {emails: ["donghyunlee01@gmail.com"], homepage: null, github: ["DunkelH"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
+    joined: {start: "2025.07", end: "Present"}
     affiliation: null
 
 - id: "[2025.07] 최환"
@@ -190,7 +190,7 @@
   contacts: {emails: ["hoan0616@naver.com"], homepage: null, github: ["Hwan616"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.07", end: "Current"}
+    joined: {start: "2025.07", end: "Present"}
     affiliation: null
 
 - id: "[2025.08] 김예은"
@@ -201,7 +201,7 @@
   contacts: {emails: ["yeeunkim512@gmail.com"], homepage: null, github: ["katekim512"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.08", end: "Current"}
+    joined: {start: "2025.08", end: "Present"}
     affiliation: null
 
 - id: "[2025.10] 박규민"
@@ -212,7 +212,7 @@
   contacts: {emails: ["km02020995@gmail.com", "qkrrbals1212@konkuk.ac.kr"], homepage: null, github: ["KMPAR"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.10", end: "Current"}
+    joined: {start: "2025.10", end: "Present"}
     affiliation: null
 
 - id: "[2025.11] 손원희"
@@ -223,7 +223,7 @@
   contacts: {emails: ["whsonwh@gmail.com"], homepage: null, github: ["sonwh123"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.11", end: "Current"}
+    joined: {start: "2025.11", end: "Present"}
     affiliation: null
 
 - id: "[2025.12] 최지현"
@@ -234,7 +234,7 @@
   contacts: {emails: ["august0511@naver.com"], homepage: null, github: ["Bb-jh"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.12", end: "Current"}
+    joined: {start: "2025.12", end: "Present"}
     affiliation: null
 
 - id: "[2025.12] 홍다연"
@@ -245,5 +245,5 @@
   contacts: {emails: ["yscarlet214@gmail.com"], homepage: null, github: ["yscarlet"], linkedin: null}
   status: 
     period: {admission: null, graduation: null}
-    joined: {start: "2025.12", end: "Current"}
+    joined: {start: "2025.12", end: "Present"}
     affiliation: null

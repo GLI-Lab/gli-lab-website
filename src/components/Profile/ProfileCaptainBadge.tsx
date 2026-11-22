@@ -1,7 +1,7 @@
 import type { ProfileCaptain } from '@/data/loaders/types';
 
 export function isActiveCaptain(captain?: ProfileCaptain): boolean {
-  return Boolean(captain?.start && captain.end.toLowerCase() === 'current');
+  return Boolean(captain?.start && captain.end.toLowerCase() === 'present');
 }
 
 interface ProfileCaptainBadgeProps {
