@@ -202,28 +202,40 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
   return (
     // 모바일에서는 글자·아이콘·칸 여백을 모두 한 단계 작게 한다. 열이 많아 표를 좌우로 밀어야 하므로, 한 화면에 더 많이 보이게 한다
     <div className="max-w-screen-1.5xl mx-auto px-3 sm:px-4 py-8 md:py-12 text-[13px] md:text-[16px]">
-      {/* 왼쪽: 전체 / 멤버 / 졸업생 거르기. 오른쪽: 형광펜 밑줄의 뜻. 좁은 화면에서는 뜻이 아랫줄로 내려가 오른쪽에 붙는다 */}
-      <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-        <div className="inline-flex border border-gray-300 rounded-lg overflow-hidden" role="group" aria-label="Group filter">
+      {/* 왼쪽: 전체 / 멤버 / 졸업생 거르기. 오른쪽: 형광펜 밑줄의 뜻.
+          둘은 항상 한 줄에 나란히 있고 글자 크기도 같다. 화면이 좁아지면 이 순서로 바뀐다 (필요한 폭은 Pretendard로 잰 값).
+            768px 이상(md)  : 15px, 뜻은 한 줄
+            440px 이상      : 13px, 뜻은 한 줄 (약 435px 필요)
+            412px 이상      : 12.5px, 뜻은 한 줄 (약 410px 필요)
+            412px 미만      : 12.5px, 뜻은 "Position:" 뒤에서 줄을 바꿔 두 줄 (아랫줄로 내려가지 않는다. 약 352px 필요)
+          440px 미만에서는 버튼의 좌우 여백도 10px에서 8px로 줄인다. 10px 그대로면 12.5px 한 줄에 약 422px,
+          두 줄에 약 364px이 필요해서 412px과 360px 휴대폰에 들어가지 않는다.
+          글자 크기나 여백을 바꾸면 필요한 폭이 달라지므로 440과 412도 다시 재야 한다 */}
+      <div className="mb-4 flex items-center gap-x-4">
+        <div className="shrink-0 inline-flex border border-gray-300 rounded-lg overflow-hidden" role="group" aria-label="Group filter">
           {filters.map(({ value, label, count }) => (
             <button
               key={value}
               type="button"
               aria-pressed={filter === value}
               onClick={() => setFilter(value)}
-              className={`px-2.5 py-1 md:px-3 md:py-1.5 text-[13px] md:text-[15px] md:leading-5 ${filter === value ? 'bg-interactive-primary text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+              className={`px-2 py-1 min-[440px]:px-2.5 md:px-3 md:py-1.5 text-[12.5px] min-[440px]:text-[13px] md:text-[15px] md:leading-5 ${filter === value ? 'bg-interactive-primary text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
             >
               {label} <span className={filter === value ? 'opacity-80' : 'text-gray-500'}>{count}</span>
             </button>
           ))}
         </div>
         {/* mr-2 md:mr-4: 논문·특허 페이지의 범례와 같은 오른쪽 여백 (그쪽은 줄 전체에 mx-2 md:mx-4) */}
-        <p className="ml-auto mr-2 md:mr-4 text-[12px] md:text-[15px] md:leading-5 text-gray-600">
+        <p className="ml-auto mr-2 md:mr-4 text-[12.5px] leading-tight min-[440px]:text-[13px] md:text-[15px] md:leading-5 text-gray-600">
           {/* 논문·특허 페이지의 범례("Name: GLI Lab ...")와 같은 꼴: 견본 글자 + ": 뜻".
               띠가 Position 열의 글자에 그어지므로 견본 글자도 Position이다.
-              Graduate member: 교수, 대학원생, 대학원 입학 예정자 */}
-          <span className={`${TITLE_MARKER} font-medium text-gray-800`}>Position</span>
-          <span className="ml-1.5">: Graduate member</span>
+              Graduate member: 교수, 대학원생, 대학원 입학 예정자.
+              412px 미만에서는 "Position:" 뒤에서 줄을 바꿔 두 줄로 보여 준다 (위의 표 참고) */}
+          <span className="block whitespace-nowrap min-[412px]:inline">
+            <span className={`${TITLE_MARKER} font-medium text-gray-800`}>Position</span>
+            <span className="ml-1.5">:</span>
+          </span>{' '}
+          <span className="whitespace-nowrap">Graduate member</span>
         </p>
       </div>
 
