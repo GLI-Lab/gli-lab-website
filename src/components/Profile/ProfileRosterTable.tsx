@@ -207,7 +207,7 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
               type="button"
               aria-pressed={filter === value}
               onClick={() => setFilter(value)}
-              className={`px-2.5 py-1 md:px-3 md:py-1.5 text-[13px] md:text-sm ${filter === value ? 'bg-interactive-primary text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
+              className={`px-2.5 py-1 md:px-3 md:py-1.5 text-[13px] md:text-[15px] md:leading-5 ${filter === value ? 'bg-interactive-primary text-white' : 'bg-white text-gray-700 hover:bg-gray-100'}`}
             >
               {label} <span className={filter === value ? 'opacity-80' : 'text-gray-500'}>{count}</span>
             </button>

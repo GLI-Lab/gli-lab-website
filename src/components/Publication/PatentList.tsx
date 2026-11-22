@@ -350,8 +350,8 @@ export default function PatentList({ className = '', patents, profileLinks = {} 
             </span>
           </div>
           
-          {/* Legend */}
-          <div className="flex flex-col md:items-end gap-1 text-gray-600">
+          {/* Legend. 넓은 화면에서는 주변 글자(16px)보다 한 단계 작은 15px */}
+          <div className="flex flex-col md:items-end gap-1 text-gray-600 md:text-[15px]">
             <div>
               <span className="underline decoration-dotted decoration-gray-400 underline-offset-4">Name</span>
               : GLI Lab (hover/click for profile)

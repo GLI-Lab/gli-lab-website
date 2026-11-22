@@ -444,8 +444,8 @@ export default function PaperList({ className = '', papers, profileLinks = {} }:
             </span>
           </div>
           
-          {/* Legend */}
-          <div className="flex flex-col md:items-end gap-1 text-gray-600">
+          {/* Legend. 넓은 화면에서는 주변 글자(16px)보다 한 단계 작은 15px */}
+          <div className="flex flex-col md:items-end gap-1 text-gray-600 md:text-[15px]">
             <div className="flex items-center gap-4 md:gap-6 gap-y-1 flex-wrap">
               <span>
                 <span aria-hidden className="inline-block h-[1.3em] w-[3.4em] rounded-md bg-brand-primary/[0.07] align-text-bottom" />
