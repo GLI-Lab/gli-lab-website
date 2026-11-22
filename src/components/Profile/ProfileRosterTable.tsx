@@ -147,7 +147,8 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
     const compare = (a: ProfileRosterRow, b: ProfileRosterRow) => {
       switch (sort.key) {
         case 'name':
-          return sign * a.nameEn.localeCompare(b.nameEn);
+          // 이름은 한글 이름의 가나다순으로 정렬한다 (칸에는 영문 이름이 먼저 보이지만, 찾을 때는 한글 순서가 익숙하다)
+          return sign * a.nameKo.localeCompare(b.nameKo, 'ko');
         case 'position':
           return sign * (a.order - b.order);
         case 'admission':
