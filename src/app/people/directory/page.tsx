@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import { SubCover } from '@/components/Covers';
 import { ProfileRosterTable, type ProfileRosterRow } from '@/components/Profile/ProfileRosterTable';
+import { isMarkedTitleType } from '@/components/Profile/ProfileTitleMarker';
 import { getAlumniProfiles, getProfileLinks, getProfiles } from '@/data/loaders';
 import { getMetadata } from '@/lib/GetMetadata';
 import type { ProfileSection } from '@/lib/profileSlug';
@@ -71,6 +72,7 @@ export default async function DirectoryPage() {
       sections: [section],
       title: profile.title,
       isFaculty: profile.type === 'faculty',
+      titleMarked: isMarkedTitleType(profile.type),
       // 입학 시기는 멤버와 졸업생 모두 값이 있으면 넣는다 (대학원을 마친 졸업생도 입학 시기가 있다)
       admission: profile.admission ?? '',
       joinedStart: profile.joined_start ?? '',

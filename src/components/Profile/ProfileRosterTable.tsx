@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react';
 
 import { StarIcon } from '@/components/Profile/ProfileCaptainBadge';
 import { ProfileHoverLink } from '@/components/Profile/ProfileHoverLink';
+import { TITLE_MARKER } from '@/components/Profile/ProfileTitleMarker';
 import type { ProfileLinkTarget } from '@/data/loaders/types';
 import type { ProfileSection } from '@/lib/profileSlug';
 
@@ -36,6 +37,8 @@ export interface ProfileRosterRow {
   title: string;
   /** 교수인지. 교수는 어떤 열로 정렬해도 맨 위에 고정한다 */
   isFaculty: boolean;
+  /** 직위·학기 글자에 형광펜 밑줄을 긋는지 (교수, 대학원생, 대학원 입학 예정자. isMarkedTitleType 참고) */
+  titleMarked: boolean;
   /** 입학 시기 (예: "2025.03"). 멤버와 졸업생 모두 값이 있으면 채운다. 없는 사람(교수, 인턴 등)은 빈 문자열 */
   admission: string;
   /** 합류·종료 시기 (예: "2024.06", "Current"). 없으면 빈 문자열 */
@@ -195,7 +198,8 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
   return (
     // 모바일에서는 글자·아이콘·칸 여백을 모두 한 단계 작게 한다. 열이 많아 표를 좌우로 밀어야 하므로, 한 화면에 더 많이 보이게 한다
     <div className="max-w-screen-1.5xl mx-auto px-3 sm:px-4 py-8 md:py-12 text-[13px] md:text-[16px]">
-      <div className="mb-4">
+      {/* 왼쪽: 전체 / 멤버 / 졸업생 거르기. 오른쪽: 형광펜 밑줄의 뜻. 좁은 화면에서는 뜻이 아랫줄로 내려가 오른쪽에 붙는다 */}
+      <div className="mb-4 flex flex-wrap items-center gap-x-4 gap-y-2">
         <div className="inline-flex border border-gray-300 rounded-lg overflow-hidden" role="group" aria-label="Group filter">
           {filters.map(({ value, label, count }) => (
             <button
@@ -209,6 +213,14 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
             </button>
           ))}
         </div>
+        {/* mr-2 md:mr-4: 논문·특허 페이지의 범례와 같은 오른쪽 여백 (그쪽은 줄 전체에 mx-2 md:mx-4) */}
+        <p className="ml-auto mr-2 md:mr-4 text-[12px] md:text-[15px] md:leading-5 text-gray-600">
+          {/* 논문·특허 페이지의 범례("Name: GLI Lab ...")와 같은 꼴: 견본 글자 + ": 뜻".
+              띠가 Position 열의 글자에 그어지므로 견본 글자도 Position이다.
+              Graduate member: 교수, 대학원생, 대학원 입학 예정자 */}
+          <span className={`${TITLE_MARKER} font-medium text-gray-800`}>Position</span>
+          <span className="ml-1.5">: Graduate member</span>
+        </p>
       </div>
 
       {/* 좁은 화면에서는 표가 이 상자 안에서 좌우로 밀린다 (페이지 전체가 밀리지 않게).
@@ -246,7 +258,14 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
                   )}
                   <span className="text-gray-600"> ({row.nameKo})</span>
                 </td>
-                <td className={`${CELL} whitespace-nowrap text-gray-700`}>{row.title}</td>
+                <td className={`${CELL} whitespace-nowrap text-gray-700`}>
+                  {/* 교수, 대학원생, 입학 예정자의 직위에는 형광펜 밑줄을 긋는다 (위쪽 오른편에 뜻을 적어 두었다) */}
+                  {row.titleMarked ? (
+                    <span className={`${TITLE_MARKER} font-medium`}>{row.title}</span>
+                  ) : (
+                    row.title
+                  )}
+                </td>
                 <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>{cellText(row.admission)}</td>
                 <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>{cellText(joinedLabel(row))}</td>
                 <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>

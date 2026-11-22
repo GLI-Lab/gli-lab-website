@@ -18,6 +18,7 @@ import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText
 import { isActiveCaptain, ProfileCaptainBadge } from './ProfileCaptainBadge';
 import { hasCaptain, ProfileCaptainText } from './ProfileCaptainText';
 import { ProfileQuoteText } from './ProfileQuoteText';
+import { ProfileTitleText } from './ProfileTitleMarker';
 import { copyLinkWithToast } from '@/lib/copyLink';
 import { ViewCount } from '@/components/ViewCount';
 
@@ -58,7 +59,7 @@ function WrappedContactEntries({
 }
 
 export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolean }> = (props) => {
-    const {id, yamlId, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, captain, cv, cvVersion, quote, reflection, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false, isModal = false, profileLinks } = props;
+    const {id, yamlId, type, title, name_en, name_ko, admission, joined_start, joined_end, bs, ms, phd, photo, email, interest, homepage, github, linkedin, scholar, graduation, affiliation, captain, cv, cvVersion, quote, reflection, studies = [], papers = [], patents = [], projects = [], seminars = [], isAlumniPage = false, isModal = false, profileLinks } = props;
     const section = isAlumniPage ? 'alumni' : 'members';
     const searchParams = useSearchParams();
     const cardColumns = parseProfileColsParam(searchParams.get('cols') ?? undefined);
@@ -267,7 +268,7 @@ export const ProfileCardDetail: React.FC<ProfileDetailProps & { isModal?: boolea
                     />
                 </div>
                 <div className={`grid grid-cols-[auto,1fr] gap-x-4 gap-y-1 mb-1`}>
-                    <span className={`font-medium text-[17px] md:text-[18px] whitespace-nowrap`}>{title}</span>
+                    <span className={`font-medium text-[17px] md:text-[18px] whitespace-nowrap`}><ProfileTitleText type={type} title={title} /></span>
                 </div>
                 <div className="my-4"></div>
 

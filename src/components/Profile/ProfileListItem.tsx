@@ -4,6 +4,7 @@ import Image from 'next/image';
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { ProfileItemProps, type ProfileLinks } from '@/data/loaders/types';
 import { ProfileListDetail } from './ProfileListDetail';
+import { ProfileTitleText } from './ProfileTitleMarker';
 import { type StudyData, type PaperData, type PatentData, type ProjectData, type SeminarData } from '@/data/loaders/types';
 import useEmblaCarousel from "embla-carousel-react"
 import Fade from 'embla-carousel-fade'
@@ -241,7 +242,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                     {/* Faculty Information */}
                     {type === "faculty" ? (
                         <div className="space-y-3 text-left tracking-normal sm:tracking-normal">
-                            <div className={TITLE_STYLE}>{title}</div>
+                            <div className={TITLE_STYLE}><ProfileTitleText type={type} title={title} /></div>
                             <div className={`grid grid-cols-[auto,1fr] gap-x-4 ${INFO_LABEL_SIZE} items-center`}>
                                 <span className={INFO_LABEL_STYLE}>Affiliation:</span>
                                 <span className={INFO_VALUE_SIZE}>Dept. of Computer Science & Engineering</span>
@@ -249,7 +250,7 @@ export const ProfileListItem: React.FC<ProfileListItemProps> = (props) => {
                         </div>
                     ) : (
                         <div className="text-left">
-                            <div className={TITLE_STYLE}>{title}</div>
+                            <div className={TITLE_STYLE}><ProfileTitleText type={type} title={title} /></div>
                         </div>
                     )}
                     

@@ -13,9 +13,15 @@ interface ProfileCaptainTextProps {
   className?: string;
 }
 
+/**
+ * 캡틴 기간의 형광펜. 모양(굵은 글자, 좌우 여백)은 사이트의 .highlight 그대로이고,
+ * 색만 직위의 형광펜 밑줄(TITLE_MARKER)과 같은 반투명 노란색(amber-500 40%)으로 바꾼다.
+ */
+const CAPTAIN_HIGHLIGHT = 'highlight bg-amber-500/40';
+
 export function ProfileCaptainText({
   captain,
-  className = 'highlight',
+  className = CAPTAIN_HIGHLIGHT,
 }: ProfileCaptainTextProps) {
   if (!hasCaptain(captain)) return null;
 
