@@ -46,7 +46,7 @@ function ProfileCard({ profile }: { profile: ProfileLinkTarget }) {
       : "border-gray-200 bg-white";
 
   return (
-    <div className={`flex items-center gap-2.5 rounded-lg border px-2 py-1.5 shadow-lg ${tone}`}>
+    <div className={`flex items-center gap-2.5 rounded-lg border pl-2 pr-3 py-1.5 shadow-lg ${tone}`}>
       <div className="relative h-[118px] w-[96px] shrink-0 overflow-hidden rounded-md bg-gray-100">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
