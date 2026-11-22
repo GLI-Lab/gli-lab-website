@@ -9,6 +9,7 @@ import type { ProfileSection } from '@/lib/profileSlug';
 /**
  * 멤버와 졸업생 전체를 한 표로 보여 주는 명단 (/people/directory).
  * 열 제목을 누르면 정렬되고, 전체 / 멤버 / 졸업생으로 걸러 볼 수 있다.
+ * 교수는 어떤 열로 정렬해도 맨 위에 고정이고, 줄 바탕색이 조금 다르다.
  * 이름은 다른 페이지의 사람 이름과 같은 링크다(ProfileHoverLink): 밑줄이 있고, 포인터를 올리면 얼굴과 짧은 소개가 뜨며,
  * 누르면 그 사람의 프로필로 간다.
  * 데이터는 page(서버)가 넘겨 준다. 조회수는 여기서 보여 주지 않는다 (관리자 화면 /admin/views 에만 있다).
@@ -26,11 +27,14 @@ export interface ProfileRosterRow {
   id: string;
   nameEn: string;
   nameKo: string;
-  /** 멤버 목록과 졸업생 목록에 모두 있는 사람은 둘 다 들어 있다 (한 줄로 합쳐서 보여 준다) */
+  /** 멤버 목록과 졸업생 목록에 모두 있는 사람은 둘 다 들어 있다 (한 줄로 합쳐서 보여 준다).
+      표에 열로 보이지는 않고, 위의 전체 / 멤버 / 졸업생 거르기에 쓴다 */
   sections: ProfileSection[];
   /** 직위·학기 (예: "M.S. Student (4학기)") */
   title: string;
-  /** 입학 시기 (예: "2025.03"). 멤버만 채우고, 졸업생이나 값이 없는 사람은 빈 문자열 */
+  /** 교수인지. 교수는 어떤 열로 정렬해도 맨 위에 고정한다 */
+  isFaculty: boolean;
+  /** 입학 시기 (예: "2025.03"). 멤버와 졸업생 모두 값이 있으면 채운다. 없는 사람(교수, 인턴 등)은 빈 문자열 */
   admission: string;
   /** 합류·종료 시기 (예: "2024.06", "Current"). 없으면 빈 문자열 */
   joinedStart: string;
@@ -45,12 +49,8 @@ export interface ProfileRosterRow {
 }
 
 type Filter = 'all' | ProfileSection;
-type SortKey = 'name' | 'group' | 'position' | 'admission' | 'joined' | 'affiliation';
+type SortKey = 'name' | 'position' | 'admission' | 'joined' | 'affiliation';
 type Sort = { key: SortKey; direction: 'asc' | 'desc' };
-
-const SECTION_LABEL: Record<ProfileSection, string> = { members: 'Member', alumni: 'Alumni' };
-
-const groupLabel = (row: ProfileRosterRow) => row.sections.map((section) => SECTION_LABEL[section]).join(' · ');
 
 const joinedLabel = (row: ProfileRosterRow) => [row.joinedStart, row.joinedEnd].filter(Boolean).join(' - ');
 
@@ -112,8 +112,9 @@ function compareText(a: string, b: string, sign: number): number {
 
 export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
   const [filter, setFilter] = useState<Filter>('all');
-  // 처음에는 사이트에 나오는 순서(교수 → 박사과정 → … → 졸업생)대로 보여 준다
-  const [sort, setSort] = useState<Sort>({ key: 'position', direction: 'asc' });
+  // 처음에는 입학이 빠른 순서로 보여 준다: 교수(고정) → 입학 시기가 있는 사람(멤버·졸업생 구분 없이 빠른 순) → 값이 없는 사람들.
+  // 값이 없는 사람들(입학 예정, 인턴 등)끼리는 사이트에 나오는 순서를 따른다.
+  const [sort, setSort] = useState<Sort>({ key: 'admission', direction: 'asc' });
 
   const filters: { value: Filter; label: string; count: number }[] = useMemo(
     () => [
@@ -131,8 +132,6 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
       switch (sort.key) {
         case 'name':
           return sign * a.nameEn.localeCompare(b.nameEn);
-        case 'group':
-          return sign * groupLabel(b).localeCompare(groupLabel(a)); // Member가 Alumni보다 먼저
         case 'position':
           return sign * (a.order - b.order);
         case 'admission':
@@ -143,8 +142,11 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
           return compareText(a.affiliation, b.affiliation, sign);
       }
     };
-    // 값이 같으면 사이트 순서대로 둔다 (정렬할 때마다 순서가 흔들리지 않게)
-    return [...filtered].sort((a, b) => compare(a, b) || a.order - b.order);
+    // 교수는 어떤 열로, 어느 방향으로 정렬해도 맨 위에 고정한다.
+    // 그다음은 고른 열의 값 순서이고, 값이 같으면 사이트 순서대로 둔다 (정렬할 때마다 순서가 흔들리지 않게)
+    return [...filtered].sort(
+      (a, b) => Number(b.isFaculty) - Number(a.isFaculty) || compare(a, b) || a.order - b.order
+    );
   }, [rows, filter, sort]);
 
   const changeSort = (key: SortKey) => {
@@ -205,7 +207,6 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
           <thead className="bg-gray-50 text-left text-gray-700 border-b border-gray-200">
             <tr>
               {sortableHeader('name', 'Name')}
-              {sortableHeader('group', 'Group')}
               {sortableHeader('position', 'Position')}
               {sortableHeader('admission', 'Admission')}
               {sortableHeader('joined', 'Joined')}
@@ -217,7 +218,11 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
           </thead>
           <tbody>
             {visibleRows.map((row) => (
-              <tr key={row.id} className="border-b border-gray-100 last:border-b-0 hover:bg-gray-50">
+              // 교수 줄은 맨 위 고정이라는 것이 드러나게 바탕을 옅은 초록으로 칠하고, 아래 구분선도 초록빛으로 조금 진하게 긋는다
+              <tr
+                key={row.id}
+                className={`border-b last:border-b-0 ${row.isFaculty ? 'border-brand-primary/30 bg-brand-primary/5 hover:bg-brand-primary/10' : 'border-gray-100 hover:bg-gray-50'}`}
+              >
                 <td className={`${CELL} whitespace-nowrap`}>
                   {row.link ? (
                     <ProfileHoverLink profile={row.link} className={NAME_LINK}>
@@ -228,7 +233,6 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
                   )}
                   <span className="text-gray-600"> ({row.nameKo})</span>
                 </td>
-                <td className={`${CELL} whitespace-nowrap`}>{groupLabel(row)}</td>
                 <td className={`${CELL} whitespace-nowrap text-gray-700`}>{row.title}</td>
                 <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>{cellText(row.admission)}</td>
                 <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>{cellText(joinedLabel(row))}</td>

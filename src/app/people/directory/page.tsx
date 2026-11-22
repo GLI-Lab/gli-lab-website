@@ -26,7 +26,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
 
 /**
  * 직위 종류(type)의 순서. 멤버·졸업생 페이지가 사람을 묶어 보여 주는 순서(ProfileCards의 categories)와 같다.
- * 표의 처음 순서와 Position 열의 정렬 기준으로 쓴다. 여기 없는 종류는 맨 뒤로 간다.
+ * Position 열의 정렬 기준이고, 다른 열로 정렬할 때 값이 같은 사람들 사이의 순서이기도 하다. 여기 없는 종류는 맨 뒤로 간다.
+ * (표의 처음 순서는 입학 시기다. ProfileRosterTable 참고)
  */
 const TYPE_ORDER = ['faculty', 'phd', 'phd-ms', 'ms', 'ims', 'researcher', 'intern'];
 
@@ -69,8 +70,9 @@ export default async function DirectoryPage() {
       nameKo: profile.name_ko,
       sections: [section],
       title: profile.title,
-      // 입학 시기는 재학 중인 멤버에게만 의미가 있어 멤버만 채운다 (졸업생은 빈칸)
-      admission: section === 'members' ? (profile.admission ?? '') : '',
+      isFaculty: profile.type === 'faculty',
+      // 입학 시기는 멤버와 졸업생 모두 값이 있으면 넣는다 (대학원을 마친 졸업생도 입학 시기가 있다)
+      admission: profile.admission ?? '',
       joinedStart: profile.joined_start ?? '',
       joinedEnd: profile.joined_end ?? '',
       affiliation: profile.affiliation?.current?.trim() ?? '',
