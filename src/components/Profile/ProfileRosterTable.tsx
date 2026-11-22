@@ -119,7 +119,10 @@ const CELL = 'px-2 py-1.5 md:px-3 md:py-2';
 // Name 칸(첫 열)과 Position 칸 사이. 다른 칸 사이보다 여백을 넓힌다 (양쪽 8px → 12px, 넓은 화면 12px → 16px)
 const NAME_CELL = 'pr-3 md:pr-4';
 const AFTER_NAME_CELL = 'pl-3 md:pl-4';
-const ICON_BOX = 'w-6 h-6 md:w-7 md:h-7';
+const ICON_BOX = 'w-[26px] h-[26px] md:w-7 md:h-7';
+// Links 칸의 안쪽 여백. 모바일에서는 위아래를 다른 칸(6px)보다 1px씩 줄인다:
+// 줄 높이는 가장 큰 아이콘 칸이 정하므로, 아이콘 상자가 26px이어도 줄 높이가 24px 때와 같다 (26 + 5 × 2 = 24 + 6 × 2)
+const LINKS_CELL = 'px-2 py-[5px] md:px-3 md:py-2';
 
 /** 글자 비교. 빈 값은 정렬 방향과 상관없이 항상 아래로 보낸다 (빈칸이 맨 위를 차지하지 않게) */
 function compareText(a: string, b: string, sign: number): number {
@@ -385,8 +388,8 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
                     )}
                   </td>
                   <td className={`${CELL} whitespace-nowrap text-gray-700`}>{cellText(row.affiliation)}</td>
-                  <td className={CELL}>
-                    <div className="flex gap-1 md:gap-1.5">
+                  <td className={LINKS_CELL}>
+                    <div className="flex gap-1.5">
                       {LINK_ICONS.map(({ key, label, solid, path }) =>
                         !row.links[key] ? (
                           // 링크가 없는 자리. 아이콘과 같은 크기로 비워 둔다
@@ -402,11 +405,11 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
                             className={`flex-shrink-0 ${ICON_BOX} rounded-md bg-gray-100 text-gray-600 hover:bg-interactive-primary hover:text-white flex items-center justify-center transition-colors duration-200`}
                           >
                             {solid ? (
-                              <svg className="w-[15px] h-[15px] md:w-[18px] md:h-[18px]" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
+                              <svg className="w-4 h-4 md:w-[18px] md:h-[18px]" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
                                 <path d={path} />
                               </svg>
                             ) : (
-                              <svg className="w-[17px] h-[17px] md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
+                              <svg className="w-[18px] h-[18px] md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden>
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={path} />
                               </svg>
                             )}
