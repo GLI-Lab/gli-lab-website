@@ -51,7 +51,7 @@
   name: {en: Bonyou Koo, ko: 구본유}
   education: {bs: "Computer Science & Engineering, Pukyong National University", ms: "Information Convergence Engineering, Pusan National University", phd: null}
   interests: [Graph ML/DL, Graph Anomaly Detection, Text-Attributed Graph]
-  contacts: {emails: ["number9you@gmail.com"], homepage: ["sites.google.com/view/bonyoukoo/home"], github: ["ninethyou"], linkedin: null}
+  contacts: {emails: ["number9you@gmail.com"], homepage: ["sites.google.com/view/bonyoukoo/home"], github: ["ninethyou"], linkedin: null, scholar: ["qAHKxYQAAAAJ"]}
   status: 
     period: {admission: "2025.09", graduation: null}
     joined: {start: "2025.04", end: "Present"}
@@ -67,7 +67,7 @@
   name: {en: Hye-Yoon Baek, ko: 백혜윤}
   education: {bs: ["English Language & Literature, Konkuk University", "Smart ICT Convergence, Konkuk University"], ms: "Computer Science & Engineering, Konkuk University", phd: null}
   interests: [Graph ML/DL, Information Retrieval, Neuro-Symbolic LLM, Logical Consistency of LLMs]
-  contacts: {emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"], homepage: ["hyeyoon100.github.io"], github: ["hyeyoon100"], linkedin: ["hye-yoon-baek1205"]}
+  contacts: {emails: ["hyeyoonbaek@gmail.com", "hannah100@konkuk.ac.kr"], homepage: ["hyeyoon100.github.io"], github: ["hyeyoon100"], linkedin: ["hye-yoon-baek1205"], scholar: ["dnfkkDUAAAAJ"]}
   status: 
     period: {admission: "2025.03", graduation: null}
     joined: {start: "2024.07", end: "Present"}
