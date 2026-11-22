@@ -68,7 +68,7 @@ function ProfileCard({ profile }: { profile: ProfileLinkTarget }) {
         ) : null}
         {captain ? (
           <p className="mt-0.5 text-[14.5px] font-medium leading-snug text-amber-700">
-            Captain {formatCaptainPeriod(captain)}
+            Captain: {formatCaptainPeriod(captain)}
           </p>
         ) : null}
       </div>

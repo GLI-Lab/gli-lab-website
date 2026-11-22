@@ -88,16 +88,16 @@ function formatJoined(profile: ProfileData): string {
   return end;
 }
 
-/** 호버 카드의 마지막 줄. 프로필 카드에 보이는 항목 중 하나만 고른다. */
+/** 호버 카드의 회색 줄. 프로필 카드에 보이는 항목 중 하나만 고른다. 레이블 뒤에는 콜론을 붙여 쓴다 (예: "Admission: 2025.03") */
 function formatProfileSummary(profile: ProfileData, isAlumni: boolean): string {
   const affiliation = profile.affiliation?.current?.trim();
   if (affiliation) return affiliation;
 
   const joined = formatJoined(profile);
   const shortStay = profile.type === 'intern' || profile.type === 'pms' || profile.type === 'pphd';
-  if ((isAlumni || shortStay) && joined) return `Joined ${joined}`;
-  if (!isAlumni && profile.admission?.trim()) return `Admission ${profile.admission.trim()}`;
-  if (joined) return `Joined ${joined}`;
+  if ((isAlumni || shortStay) && joined) return `Joined: ${joined}`;
+  if (!isAlumni && profile.admission?.trim()) return `Admission: ${profile.admission.trim()}`;
+  if (joined) return `Joined: ${joined}`;
   return '';
 }
 
