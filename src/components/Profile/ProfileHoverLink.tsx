@@ -2,6 +2,8 @@
 
 import { getImageProps } from "next/image";
 import { HoverCardLink } from "@/components/HoverCardLink";
+import { ProfileCaptainBadge } from "@/components/Profile/ProfileCaptainBadge";
+import { formatCaptainPeriod, hasCaptain } from "@/components/Profile/ProfileCaptainText";
 import type { ProfileLinkTarget, ProfileLinks } from "@/data/loaders/types";
 
 interface ProfileHoverLinkProps {
@@ -30,9 +32,17 @@ function hoverPhotoSrc(photo: string): string {
 }
 
 function ProfileCard({ profile }: { profile: ProfileLinkTarget }) {
+  // 캡틴을 맡았던(맡고 있는) 사람의 카드는 바탕을 연한 노란색으로 칠하고, 맨 아래(입학·참여 기간 줄 다음)에 캡틴 기간을 한 줄 넣는다.
+  // 노란색은 사진 위 캡틴 배지의 별(amber)과 같은 계열이다
+  const captain = hasCaptain(profile.captain) ? profile.captain : undefined;
+
   return (
-    <div className="flex items-center gap-2.5 rounded-lg border border-gray-200 bg-white px-2 py-1.5 shadow-lg">
-      <div className="h-[118px] w-[96px] shrink-0 overflow-hidden rounded-md bg-gray-100">
+    <div
+      className={`flex items-center gap-2.5 rounded-lg border px-2 py-1.5 shadow-lg ${
+        captain ? "border-amber-300 bg-amber-50" : "border-gray-200 bg-white"
+      }`}
+    >
+      <div className="relative h-[118px] w-[96px] shrink-0 overflow-hidden rounded-md bg-gray-100">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={hoverPhotoSrc(profile.photo)}
@@ -42,6 +52,8 @@ function ProfileCard({ profile }: { profile: ProfileLinkTarget }) {
           decoding="async"
           className="h-full w-full object-cover"
         />
+        {/* 지금 캡틴인 사람은 프로필 카드처럼 사진 왼쪽 위에 흰 원 안의 별을 단다 (지난 캡틴은 배지가 스스로 그리지 않는다) */}
+        {captain ? <ProfileCaptainBadge captain={captain} size="hover" /> : null}
       </div>
       <div className="min-w-0">
         <p className="text-[17.5px] font-medium leading-snug text-gray-900">{profile.nameEn}</p>
@@ -53,6 +65,11 @@ function ProfileCard({ profile }: { profile: ProfileLinkTarget }) {
         ) : null}
         {profile.summary ? (
           <p className="mt-0.5 line-clamp-2 text-[14.5px] leading-snug text-gray-500">{profile.summary}</p>
+        ) : null}
+        {captain ? (
+          <p className="mt-0.5 text-[14.5px] font-medium leading-snug text-amber-700">
+            Captain {formatCaptainPeriod(captain)}
+          </p>
         ) : null}
       </div>
     </div>

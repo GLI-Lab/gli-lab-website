@@ -104,6 +104,8 @@ export interface ProfileLinkTarget {
   photo: string;
   /** 소속, 입학, 참여 기간 중 카드에 넣을 한 줄. 없으면 빈 문자열 */
   summary: string;
+  /** 캡틴을 맡은 기간 (지금 맡고 있으면 end가 "Current"). 맡은 적이 없으면 없다. 호버 카드가 이 사람을 노란 바탕으로 그린다 */
+  captain?: ProfileCaptain;
 }
 
 /**

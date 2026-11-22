@@ -109,6 +109,8 @@ function toProfileLinkTarget(profile: ProfileData, href: string, isAlumni: boole
     title: profile.title,
     photo: profile.photo?.[0] || PROFILE_PLACEHOLDER_PHOTO,
     summary: formatProfileSummary(profile, isAlumni),
+    // 캡틴을 맡은 적이 있는 사람만 값이 있다 (profileLoader가 시작·끝이 모두 있을 때만 채운다)
+    ...(profile.captain ? { captain: profile.captain } : {}),
   };
 }
 

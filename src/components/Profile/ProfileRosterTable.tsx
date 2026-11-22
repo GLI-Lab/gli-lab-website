@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 
+import { StarIcon } from '@/components/Profile/ProfileCaptainBadge';
 import { ProfileHoverLink } from '@/components/Profile/ProfileHoverLink';
 import type { ProfileLinkTarget } from '@/data/loaders/types';
 import type { ProfileSection } from '@/lib/profileSlug';
@@ -10,6 +11,7 @@ import type { ProfileSection } from '@/lib/profileSlug';
  * 멤버와 졸업생 전체를 한 표로 보여 주는 명단 (/people/directory).
  * 열 제목을 누르면 정렬되고, 전체 / 멤버 / 졸업생으로 걸러 볼 수 있다.
  * 교수는 어떤 열로 정렬해도 맨 위에 고정이고, 줄 바탕색이 조금 다르다.
+ * 캡틴을 맡았던 사람은 Captain 열에 기간이 나오고, 이름의 호버 카드도 노란 바탕으로 뜬다 (ProfileHoverLink가 그린다).
  * 이름은 다른 페이지의 사람 이름과 같은 링크다(ProfileHoverLink): 밑줄이 있고, 포인터를 올리면 얼굴과 짧은 소개가 뜨며,
  * 누르면 그 사람의 프로필로 간다.
  * 데이터는 page(서버)가 넘겨 준다. 조회수는 여기서 보여 주지 않는다 (관리자 화면 /admin/views 에만 있다).
@@ -39,6 +41,9 @@ export interface ProfileRosterRow {
   /** 합류·종료 시기 (예: "2024.06", "Current"). 없으면 빈 문자열 */
   joinedStart: string;
   joinedEnd: string;
+  /** 캡틴을 맡은 기간 (예: "2026.07", "Current"). 맡은 적이 없으면 둘 다 빈 문자열 */
+  captainStart: string;
+  captainEnd: string;
   /** 현재 소속 (주로 졸업생의 진로. 예: "카이스트"). 없으면 빈 문자열 */
   affiliation: string;
   links: ProfileRosterLinks;
@@ -49,10 +54,15 @@ export interface ProfileRosterRow {
 }
 
 type Filter = 'all' | ProfileSection;
-type SortKey = 'name' | 'position' | 'admission' | 'joined' | 'affiliation';
+type SortKey = 'name' | 'position' | 'admission' | 'joined' | 'captain' | 'affiliation';
 type Sort = { key: SortKey; direction: 'asc' | 'desc' };
 
 const joinedLabel = (row: ProfileRosterRow) => [row.joinedStart, row.joinedEnd].filter(Boolean).join(' - ');
+
+const captainLabel = (row: ProfileRosterRow) => [row.captainStart, row.captainEnd].filter(Boolean).join(' - ');
+
+/** 지금 캡틴을 맡고 있는지 (끝이 "Current"). 사진 위 캡틴 배지(isActiveCaptain)와 같은 기준이다 */
+const isCurrentCaptain = (row: ProfileRosterRow) => row.captainStart !== '' && row.captainEnd.toLowerCase() === 'current';
 
 // 이름 링크의 모양. 논문 저자 이름(ProfileAuthorName)과 같다: 점선 밑줄, 포인터를 올리면 초록 실선
 const NAME_LINK =
@@ -138,6 +148,8 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
           return compareText(a.admission, b.admission, sign);
         case 'joined':
           return compareText(a.joinedStart, b.joinedStart, sign);
+        case 'captain':
+          return compareText(a.captainStart, b.captainStart, sign);
         case 'affiliation':
           return compareText(a.affiliation, b.affiliation, sign);
       }
@@ -210,6 +222,7 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
               {sortableHeader('position', 'Position')}
               {sortableHeader('admission', 'Admission')}
               {sortableHeader('joined', 'Joined')}
+              {sortableHeader('captain', 'Captain')}
               {sortableHeader('affiliation', 'Affiliation')}
               <th scope="col" className={`${CELL} font-medium`}>
                 Links
@@ -236,6 +249,20 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
                 <td className={`${CELL} whitespace-nowrap text-gray-700`}>{row.title}</td>
                 <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>{cellText(row.admission)}</td>
                 <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>{cellText(joinedLabel(row))}</td>
+                <td className={`${CELL} whitespace-nowrap tabular-nums text-gray-700`}>
+                  {/* 캡틴을 맡은 기간. 앞의 별은 사진 위 캡틴 배지와 같은 것으로, 지금 맡고 있으면 노란색이고 지난 캡틴은 회색이다.
+                      inline-flex가 아니라 flex다: inline-flex는 별의 아래 끝을 글자 기준선에 맞추어, 글자가 옆 칸들보다 위로 올라간다 */}
+                  {row.captainStart ? (
+                    <span className="flex items-center gap-1">
+                      <StarIcon
+                        className={`flex-shrink-0 w-4 h-4 md:w-[18px] md:h-[18px] ${isCurrentCaptain(row) ? 'text-amber-500' : 'text-gray-300'}`}
+                      />
+                      {captainLabel(row)}
+                    </span>
+                  ) : (
+                    cellText('')
+                  )}
+                </td>
                 <td className={`${CELL} whitespace-nowrap text-gray-700`}>{cellText(row.affiliation)}</td>
                 <td className={CELL}>
                   <div className="flex gap-1 md:gap-1.5">

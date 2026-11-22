@@ -6,11 +6,12 @@ export function isActiveCaptain(captain?: ProfileCaptain): boolean {
 
 interface ProfileCaptainBadgeProps {
   captain: ProfileCaptain;
-  /** card: 115→140→150px 사진, detail: 280→320px 사진, list: 280→250px 사진 */
-  size?: 'card' | 'detail' | 'list';
+  /** card: 115→140→150px 사진, detail: 280→320px 사진, list: 280→250px 사진, hover: 96px 사진(이름 호버 카드) */
+  size?: 'card' | 'detail' | 'list' | 'hover';
 }
 
-function StarIcon({ className }: { className?: string }) {
+/** 캡틴을 나타내는 별. 사진 위 배지(프로필 카드·상세·호버 카드)와 명단 표(Directory)가 같이 쓴다 */
+export function StarIcon({ className }: { className?: string }) {
   return (
     <svg
       className={className}
@@ -56,6 +57,11 @@ const SIZE_PRESETS = {
   list: {
     badge: 'top-3 left-3 w-[32px] h-[32px] 1.5md:top-3 1.5md:left-3 1.5md:w-[32px] 1.5md:h-[32px]',
     icon: 'w-[32px] h-[32px] 1.5md:w-[32px] 1.5md:h-[32px]',
+  },
+  // ProfileHoverLink(이름 호버 카드) photo: w-[96px]. card의 가장 작은 크기(115px 사진에 20px 배지)를 사진 폭에 맞춰 줄인 것
+  hover: {
+    badge: 'top-1 left-1 w-[18px] h-[18px]',
+    icon: 'w-[20px] h-[20px]',
   },
 } as const;
 

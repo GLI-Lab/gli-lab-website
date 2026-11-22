@@ -75,6 +75,9 @@ export default async function DirectoryPage() {
       admission: profile.admission ?? '',
       joinedStart: profile.joined_start ?? '',
       joinedEnd: profile.joined_end ?? '',
+      // 캡틴을 맡은 기간. 맡은 적이 없으면 둘 다 빈 문자열
+      captainStart: profile.captain?.start ?? '',
+      captainEnd: profile.captain?.end ?? '',
       affiliation: profile.affiliation?.current?.trim() ?? '',
       links: {
         homepage: firstUrl(profile.homepage),
