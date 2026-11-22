@@ -69,7 +69,7 @@ const isCurrentCaptain = (row: ProfileRosterRow) => row.captainStart !== '' && r
 
 // 이름 링크의 모양. 논문 저자 이름(ProfileAuthorName)과 같다: 점선 밑줄, 포인터를 올리면 초록 실선
 const NAME_LINK =
-  'font-medium underline decoration-dotted decoration-gray-400 underline-offset-4 hover:text-brand-primary hover:decoration-solid hover:decoration-brand-primary transition-colors';
+  'underline decoration-dotted decoration-gray-400 underline-offset-4 hover:text-brand-primary hover:decoration-solid hover:decoration-brand-primary transition-colors';
 
 /**
  * Links 열의 아이콘. 그림과 색(회색 바탕, 호버 때 초록)은 목록형 프로필(ProfileListItem)의 링크 버튼과 같고,
@@ -116,6 +116,9 @@ const COLUMN_COUNT = 7;
 
 // 칸 안쪽 여백과 Links 아이콘 한 칸의 크기. 모바일에서는 넓은 화면보다 작다
 const CELL = 'px-2 py-1.5 md:px-3 md:py-2';
+// Name 칸(첫 열)과 Position 칸 사이. 다른 칸 사이보다 여백을 넓힌다 (양쪽 8px → 12px, 넓은 화면 12px → 16px)
+const NAME_CELL = 'pr-3 md:pr-4';
+const AFTER_NAME_CELL = 'pl-3 md:pl-4';
 const ICON_BOX = 'w-6 h-6 md:w-7 md:h-7';
 
 /** 글자 비교. 빈 값은 정렬 방향과 상관없이 항상 아래로 보낸다 (빈칸이 맨 위를 차지하지 않게) */
@@ -174,13 +177,13 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
     );
   };
 
-  const sortableHeader = (key: SortKey, label: string) => {
+  const sortableHeader = (key: SortKey, label: string, extraClassName = '') => {
     const active = sort.key === key;
     return (
       <th
         scope="col"
         aria-sort={active ? (sort.direction === 'asc' ? 'ascending' : 'descending') : 'none'}
-        className={`${CELL} font-medium whitespace-nowrap`}
+        className={`${CELL} ${extraClassName} font-medium whitespace-nowrap`}
       >
         <button
           type="button"
@@ -246,8 +249,8 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
         <table className="w-full border-collapse">
           <thead className="bg-gray-50 text-left text-gray-700 border-b border-gray-200">
             <tr>
-              {sortableHeader('name', 'Name')}
-              {sortableHeader('position', 'Position')}
+              {sortableHeader('name', 'Name', NAME_CELL)}
+              {sortableHeader('position', 'Position', AFTER_NAME_CELL)}
               {sortableHeader('admission', 'Admission')}
               {sortableHeader('joined', 'Joined')}
               {sortableHeader('captain', 'Captain')}
@@ -266,20 +269,25 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
                 <tr
                   className={`last:border-b-0 ${row.isFaculty ? 'border-b-4 border-double border-gray-200 bg-brand-primary/5 hover:bg-brand-primary/10' : 'border-b border-gray-100 hover:bg-gray-50'}`}
                 >
-                  <td className={`${CELL} whitespace-nowrap`}>
+                  {/* 이름 칸은 영문 이름과 괄호 안 한글 이름 모두 조금 굵게(500) 쓴다. 직위 칸은 보통 굵기다.
+                      링크(밑줄, 호버 카드, 클릭)는 한글 이름까지 덮는다. 한글 이름은 회색이고, 포인터를 올리면 영문 이름과 같이 초록이 된다 */}
+                  <td className={`${CELL} ${NAME_CELL} whitespace-nowrap font-medium`}>
                     {row.link ? (
-                      <ProfileHoverLink profile={row.link} className={NAME_LINK}>
+                      <ProfileHoverLink profile={row.link} className={`group ${NAME_LINK}`}>
                         {row.nameEn}
+                        <span className="text-gray-600 group-hover:text-brand-primary transition-colors"> ({row.nameKo})</span>
                       </ProfileHoverLink>
                     ) : (
-                      <span className="font-medium">{row.nameEn}</span>
+                      <>
+                        {row.nameEn}
+                        <span className="text-gray-600"> ({row.nameKo})</span>
+                      </>
                     )}
-                    <span className="text-gray-600"> ({row.nameKo})</span>
                   </td>
-                  <td className={`${CELL} whitespace-nowrap text-gray-700`}>
+                  <td className={`${CELL} ${AFTER_NAME_CELL} whitespace-nowrap text-gray-700`}>
                     {/* 교수, 대학원생, 입학 예정자의 직위에는 형광펜 밑줄을 긋는다 (위쪽 오른편에 뜻을 적어 두었다) */}
                     {row.titleMarked ? (
-                      <span className={`${TITLE_MARKER} font-medium`}>{row.title}</span>
+                      <span className={TITLE_MARKER}>{row.title}</span>
                     ) : (
                       row.title
                     )}
