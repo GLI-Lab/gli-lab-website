@@ -174,16 +174,17 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
     );
   }, [rows, filter, sort]);
 
-  // 화면 아래에 붙는 가로 스크롤 막대 (그리는 곳은 아래 표 상자).
+  // 화면 아래에 붙어 늘 보이는 가로 스크롤 막대 (그리는 곳은 아래 표 상자).
   // 표가 상자보다 넓으면 좌우로 밀어야 하는데, 브라우저의 스크롤바는 표 맨 아래에 있어서 긴 표에서는 끝까지 내려가야 보이고,
-  // 휴대폰이나 트랙패드에서는 밀 때만 잠깐 나타난다. 그래서 막대를 직접 그려 화면 아래에 붙여 두고(sticky) 표 상자의 위치와 맞춘다.
-  // 휴대폰에서도 그린다: 손가락으로 밀 수 있지만, 막대가 보여야 옆으로 더 있다는 것과 지금 어디쯤인지가 바로 드러난다.
+  // 트랙패드나 일부 브라우저 설정에서는 밀 때만 잠깐 나타난다. 그래서 막대를 직접 그려 화면 아래에 붙여 두고(sticky) 표 상자의 위치와 맞춘다.
+  // 터치 기기(휴대폰, 태블릿)에서는 그리지 않는다. 손가락으로 밀면 되고,
+  // 아이폰 Safari는 주소창이 화면 아래에서 페이지 위에 떠 있어 화면 아래 끝에 붙인 것이 주소창에 가려진다.
   const tableBoxRef = useRef<HTMLDivElement>(null);
   const scrollTrackRef = useRef<HTMLDivElement>(null);
   const scrollThumbRef = useRef<HTMLDivElement>(null);
   // 끄는 동안에만 값이 있다: 포인터의 가로 위치를 받아 표를 그 자리로 옮기는 함수
   const dragScrollRef = useRef<((clientX: number) => void) | null>(null);
-  // 손잡이의 길이 = 보이는 폭 / 표 전체 폭. 0이면 표가 상자에 다 들어가는 것이라 막대를 그리지 않는다
+  // 손잡이의 길이 = 보이는 폭 / 표 전체 폭. 0이면 막대를 그리지 않는다: 표가 상자에 다 들어가거나, 터치 기기일 때
   const [thumbRatio, setThumbRatio] = useState(0);
 
   // 표 상자가 밀린 만큼 손잡이를 옮긴다. 스크롤할 때마다 불리므로 state를 거치지 않고 바로 옮긴다 (표 전체를 다시 그리지 않게)
@@ -201,13 +202,20 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
     const box = tableBoxRef.current;
     const table = box?.querySelector('table');
     if (!box || !table) return;
+    // 주로 쓰는 입력 장치가 손가락인지 (휴대폰, 태블릿)
+    const touchDevice = window.matchMedia('(pointer: coarse)');
     // 창 폭이 바뀌거나, 필터로 줄이 바뀌어 칸 폭이 달라지면 다시 잰다
-    const update = () => setThumbRatio(box.scrollWidth > box.clientWidth ? box.clientWidth / box.scrollWidth : 0);
+    const update = () =>
+      setThumbRatio(!touchDevice.matches && box.scrollWidth > box.clientWidth ? box.clientWidth / box.scrollWidth : 0);
     update();
     const observer = new ResizeObserver(update);
     observer.observe(box);
     observer.observe(table);
-    return () => observer.disconnect();
+    touchDevice.addEventListener('change', update);
+    return () => {
+      observer.disconnect();
+      touchDevice.removeEventListener('change', update);
+    };
   }, []);
 
   // 막대가 새로 생기거나 손잡이 길이가 바뀌면 표 상자의 현재 위치에 맞춘다
@@ -431,12 +439,11 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
           </tbody>
         </table>
         </div>
-        {/* 화면 아래에 붙는 가로 스크롤 막대. 표가 화면 아래로 이어지는 동안에는 화면 아래 끝에 떠 있고,
+        {/* 화면 아래에 붙는 가로 스크롤 막대 (마우스를 쓰는 기기에서만). 표가 화면 아래로 이어지는 동안에는 화면 아래 끝에 떠 있고,
             표 끝까지 내려가면 표 바로 아래 제자리에 놓인다. 브라우저의 스크롤바가 아니라 직접 그린 것이라,
-            스크롤바를 늘 보여 주지 않는 환경(휴대폰, 트랙패드)에서도 보인다. 이때 표 상자 자신의 스크롤바는 숨긴다 (두 개가 겹쳐 보이지 않게).
+            스크롤바를 늘 보여 주지 않는 환경(트랙패드 등)에서도 보인다. 이때 표 상자 자신의 스크롤바는 숨긴다 (두 개가 겹쳐 보이지 않게).
             표 상자의 위치를 한 번 더 보여 주는 것이므로 보조 기기에는 숨긴다.
-            휴대폰 폭에서는 막대를 조금 얇게 그린다 (10px, 넓은 화면 12px).
-            touch-none: 손가락으로 막대를 끌 때 페이지가 같이 밀리지 않게 한다 */}
+            touch-none: 터치도 되는 노트북에서 손가락으로 막대를 끌 때 페이지가 같이 밀리지 않게 한다 */}
         {thumbRatio > 0 && (
           <div
             ref={scrollTrackRef}
@@ -445,7 +452,7 @@ export function ProfileRosterTable({ rows }: { rows: ProfileRosterRow[] }) {
             onPointerMove={moveDragScroll}
             onPointerUp={endDragScroll}
             onPointerCancel={endDragScroll}
-            className="group sticky bottom-0 h-2.5 md:h-3 rounded-b-[7px] border-t border-gray-200 bg-gray-100 touch-none select-none"
+            className="group sticky bottom-0 h-3 rounded-b-[7px] border-t border-gray-200 bg-gray-100 touch-none select-none"
           >
             <div
               ref={scrollThumbRef}
