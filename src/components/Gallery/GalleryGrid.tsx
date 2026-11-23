@@ -15,6 +15,7 @@ import { GalleryModal } from './GalleryModal';
 import { GalleryItem, GallerySkeletonCard } from './GalleryItem';
 import { buildGalleryPath, findGalleryItemBySlug, GALLERY_BASE_PATH } from './gallerySlug';
 import { preloadGalleryModalImages } from '@/lib/preloadImages';
+import { ViewCountsToggle } from '@/components/ViewCount';
 import {
   useGalleryLayout,
   buildGallerySliderMarks,
@@ -159,6 +160,10 @@ function GalleryGridSynced({
   const [pendingItem, setPendingItem] = useState<string | null>(null);
   const [selectedItem, setSelectedItem] = useState<GalleryItemType | null>(null);
   const [imageIndexByItemId, setImageIndexByItemId] = useState<Record<string, number>>({});
+  // 조회수를 늘 보여 줄지 (Total 줄 오른쪽의 눈 모양 버튼). 꺼져 있으면 카드에 마우스를 올렸을 때만 보인다
+  const [showViewCounts, setShowViewCounts] = useState(false);
+  // 눈 모양 버튼에 마우스를 올리고 있는 동안: 누르지 않아도 모든 카드의 조회수를 미리 보여 준다
+  const [previewViewCounts, setPreviewViewCounts] = useState(false);
   const itemRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const lastScrolledIdRef = useRef<string | null>(null);
 
@@ -326,11 +331,21 @@ function GalleryGridSynced({
       />
       )}
 
-      <div className="mb-2 md:mb-4" data-gallery-total>
+      {/* mx-2 md:mx-4: 논문·특허·뉴스 페이지의 "Total ..." 줄과 같은 좌우 여백 (카드 끝에서 조금 들여 쓴다) */}
+      <div className="mb-2 md:mb-4 mx-2 md:mx-4 flex items-center justify-between" data-gallery-total>
         <p className="text-gray-600 text-base md:text-lg">
           Total{' '}
           <span className="font-semibold text-gray-900">{visibleItems.length}</span> items
         </p>
+        {/* 눈 모양 버튼: 켜면 모든 카드의 조회수를 늘 보여 준다 (꺼져 있으면 카드에 마우스를 올렸을 때만).
+            버튼의 누르는 영역(안쪽 여백 6px)이 글자 줄보다 높고 눈 모양보다 넓으므로 음수 여백으로 되돌린다:
+            위아래는 이 줄의 높이가 그대로이게(아래 카드들의 위치가 달라지지 않게), 오른쪽은 눈 모양이 이 줄의 오른쪽 끝에 맞게 */}
+        <ViewCountsToggle
+          pressed={showViewCounts}
+          onChange={setShowViewCounts}
+          onPreview={setPreviewViewCounts}
+          className="p-1.5 -my-1.5 -mr-1.5"
+        />
       </div>
 
       <div className="relative overflow-visible" data-gallery-grid-wrap>
@@ -344,6 +359,7 @@ function GalleryGridSynced({
               onCardClick={handleCardClick}
               imageIndex={imageIndexByItemId[item.id] ?? 0}
               onImageIndexChange={(index) => handleItemImageIndexChange(item.id, index)}
+              showViewCount={showViewCounts || previewViewCounts}
               setItemRef={(el) => {
                 itemRefs.current[item.id] = el;
               }}

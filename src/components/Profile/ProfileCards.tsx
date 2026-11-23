@@ -5,6 +5,7 @@ import { useRouter, useSearchParams, usePathname } from 'next/navigation';
 import { ProfileCardItem } from './ProfileCardItem';
 import { ProfileListItem } from './ProfileListItem';
 import { ProfileCardDetail } from './ProfileCardDetail';
+import { ViewCountsToggle } from '@/components/ViewCount';
 import { type ProfileData, type PaperData, type StudyData, type PatentData, type ProjectData, type SeminarData, type ProfileLinks } from '@/data/loaders/types';
 import { getPapersForProfile, getPatentsForProfile, getSeminarsForProfile } from '@/data/loaders/utils';
 import { buildProfilePath, DEFAULT_MEMBER_PROFILE_YAML_ID, findProfileById, getProfileSectionBasePath, getProfileSlugFromPathname, PROFILE_MOBILE_BREAKPOINT, type ProfileSection } from '@/lib/profileSlug';
@@ -119,6 +120,10 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
     const [cardColumns, setCardColumns] = useState<1 | 2>(() =>
         searchParams.get('cols') === '1' ? 1 : 2
     );
+    // 카드형에서 조회수를 늘 보여 줄지 (보기 방식 버튼 옆의 눈 모양 버튼). 꺼져 있으면 카드에 마우스를 올렸을 때만 보인다
+    const [showViewCounts, setShowViewCounts] = useState(false);
+    // 눈 모양 버튼에 마우스를 올리고 있는 동안: 누르지 않아도 모든 카드의 조회수를 미리 보여 준다
+    const [previewViewCounts, setPreviewViewCounts] = useState(false);
 
     /**
      * 주소를 url로 바꾼다.
@@ -527,8 +532,21 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
         backdropMouseDownRef.current = false;
     };
 
+    // bg-white: 넓은 화면에서 이 버튼 묶음은 위에 붙어 있고(sticky) 카드들이 그 밑으로 지나간다.
+    // 눈 모양에는 상자가 없고 상자들 사이에도 틈이 있어서, 뒤의 카드가 비치지 않게 묶음 전체(눈부터 맨 오른쪽 버튼까지)에
+    // 흰 바탕 하나를 깐다. 테두리는 없어서 흰 배경 위에서는 보이지 않는다
     const viewToggleButtons = (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 bg-white rounded-lg">
+            {/* 눈 모양 버튼: 켜면 모든 카드의 조회수를 늘 보여 준다. 목록형은 조회수가 원래 늘 보이므로 카드형에서만 둔다.
+                pl-2.5: 흰 바탕의 왼쪽 끝에서 눈 모양까지의 여백 */}
+            {isCardView && (
+                <ViewCountsToggle
+                    pressed={showViewCounts}
+                    onChange={setShowViewCounts}
+                    onPreview={setPreviewViewCounts}
+                    className="py-1.5 pl-2.5 pr-1.5"
+                />
+            )}
             {isCardView && (
                 <div className="hidden 1.5xl:flex bg-white border border-gray-300 rounded-lg p-1 1.5md:shadow-sm">
                     <button
@@ -732,6 +750,7 @@ export function ProfileCards({ profiles, studies = [], papers = [], patents = []
                                                 onClick={() => handleProfileClick(profile)}
                                                 isSelected={isProfileSelected(profile)}
                                                 isAlumniPage={isAlumniPage}
+                                                showViewCount={showViewCounts || previewViewCounts}
                                                 {...profile}
                                             />
                                         </div>

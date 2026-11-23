@@ -4,6 +4,7 @@ import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { GalleryItem as GalleryItemType } from './types';
 import { ImageCarousel } from './ImageCarousel';
 import { isNewItem, formatDateForDisplay } from './helpers';
+import { ViewCount } from '@/components/ViewCount';
 
 interface GalleryItemProps {
   item: GalleryItemType;
@@ -12,6 +13,8 @@ interface GalleryItemProps {
   /** GalleryGrid와 모달 간 캐러셀 인덱스 동기화 */
   imageIndex?: number;
   onImageIndexChange?: (index: number) => void;
+  /** true면 조회수를 늘 보여 준다. false면 카드에 마우스를 올렸을 때만 (목록 위의 눈 모양 버튼으로 고른다) */
+  showViewCount?: boolean;
 }
 
 /**
@@ -55,6 +58,7 @@ const GalleryItemComponent = ({
   setItemRef,
   imageIndex = 0,
   onImageIndexChange,
+  showViewCount = false,
 }: GalleryItemProps) => {
   const [isCardHovered, setIsCardHovered] = useState(false);
   const carouselInteractedRef = useRef(false);
@@ -194,11 +198,25 @@ const GalleryItemComponent = ({
             </div>
 
             {item.date && (
-              <div className="flex justify-between items-center">
-                <p className="text-sm text-gray-600">{formatDateForDisplay(item.date)}</p>
+              // 이 줄은 늘 한 줄(h-5, 스켈레톤과 같은 높이)이다. 3열이 막 시작되는 폭(1024px 근처)에서는 카드가 좁아
+              // 기간으로 적힌 날짜 + 조회수 + "See more"가 한 줄에 들어가지 않는데, 이때 글자가 두 줄로 꺾이면 카드 높이가 달라진다.
+              // 그래서 줄바꿈을 허용하되(flex-wrap) 둘째 줄을 잘라 낸다: 자리가 모자라면 "See more"가 통째로 빠지고 날짜와 조회수는 남는다.
+              <div className="flex flex-wrap justify-between items-center gap-x-3 h-5 overflow-hidden">
+                {/* 조회수: 날짜와 같은 크기로 날짜 옆에 둔다. 평소에는 숨기고 카드에 마우스를 올렸을 때만 보여 주며
+                    (프로필 카드와 같은 방식. 카드마다 숫자가 늘어서지 않게), 목록 위의 눈 모양 버튼을 켜면 늘 보여 준다.
+                    자리는 늘 차지하므로 나타날 때 배치가 흔들리지 않는다. 터치 화면에는 호버가 없어 버튼을 켜야 보이고, 앨범을 열면 거기에도 나온다.
+                    조회수를 넘겨받지 않는 곳(ViewCountsProvider 밖, 예: 홈 화면의 갤러리)에서는 아무것도 그리지 않는다 */}
+                <div className="flex items-center gap-2.5 whitespace-nowrap">
+                  <p className="text-sm text-gray-600">{formatDateForDisplay(item.date)}</p>
+                  <ViewCount
+                    id={item.id}
+                    size="caption"
+                    className={`transition-opacity duration-200 ${showViewCount ? '' : 'opacity-0 group-hover/details:opacity-100'}`}
+                  />
+                </div>
 
                 {item.description && (
-                  <span className="text-sm text-gray-500 group-hover/details:underline group-hover/details:text-interactive-primary transition-all duration-200">
+                  <span className="text-sm text-gray-500 whitespace-nowrap group-hover/details:underline group-hover/details:text-interactive-primary transition-all duration-200">
                     See more
                   </span>
                 )}

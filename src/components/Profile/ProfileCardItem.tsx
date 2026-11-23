@@ -7,8 +7,13 @@ import { hasAffiliation, ProfileAffiliationText } from './ProfileAffiliationText
 import { isActiveCaptain, ProfileCaptainBadge } from './ProfileCaptainBadge';
 import { ViewCount } from '@/components/ViewCount';
 
-export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
-    const { id, onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, captain, isAlumniPage } = props;
+interface ProfileCardItemProps extends ProfileItemProps {
+    /** true면 조회수를 늘 보여 준다. false면 카드에 마우스를 올렸을 때만 (목록 위의 눈 모양 버튼으로 고른다) */
+    showViewCount?: boolean;
+}
+
+export const ProfileCardItem: React.FC<ProfileCardItemProps> = (props) => {
+    const { id, onClick, type, name_en, name_ko, admission, photo, email, isSelected, joined_start, joined_end, graduation, affiliation, captain, isAlumniPage, showViewCount = false } = props;
     // console.log('----ProfileCardItem rendered:', name_ko);
 
     // 졸업생 카드에 소속이 있으면 정보가 세 줄(Affiliation, Joined, E-mail)이 된다.
@@ -32,15 +37,18 @@ export const ProfileCardItem: React.FC<ProfileItemProps> = (props) => {
                         <div className={`text-lg sm:text-xl ${isSelected ? 'text-interactive-primary 1.5md:text-white' : 'group-hover:text-interactive-primary'}`}>{name_ko}</div>
                     </div>
                     <div className="flex flex-col items-end">
-                        <div className={`text-xs sm:text-sm ${isSelected ? 'text-interactive-primary underline 1.5md:hidden' : 'text-gray-600 group-hover:underline group-hover:text-interactive-primary'}`}>See more</div>
+                        {/* 선택된 카드는 넓은 화면에서 상세가 이미 옆에 떠 있으므로 See more를 보이지 않게 한다.
+                            hidden이 아니라 invisible: 자리는 그대로 두어 아래 조회수가 위로 올라오지 않게 한다 (다른 카드와 같은 높이에 있도록) */}
+                        <div className={`text-xs sm:text-sm ${isSelected ? 'text-interactive-primary underline 1.5md:invisible' : 'text-gray-600 group-hover:underline group-hover:text-interactive-primary'}`}>See more</div>
                         {/* 조회수: 평소에는 숨기고, 카드에 마우스를 올렸을 때만 See more 아래에 보여 준다 (카드마다 숫자가 늘어서지 않게).
-                            자리는 늘 차지하므로 나타날 때 배치가 흔들리지 않는다. 터치 화면에서는 보이지 않고, 상세를 열면 거기에 나온다.
+                            목록 위의 눈 모양 버튼을 켜면 늘 보여 준다.
+                            자리는 늘 차지하므로 나타날 때 배치가 흔들리지 않는다. 터치 화면에는 호버가 없어 버튼을 켜야 보이고, 상세를 열면 거기에도 나온다.
                             선택된 카드는 넓은 화면에서 배경이 초록이라 글자를 흰색으로 맞춘다 */}
                         <ViewCount
                             id={id}
                             size="small"
                             colorClassName={isSelected ? 'text-interactive-primary 1.5md:text-white' : 'text-gray-500'}
-                            className="mt-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                            className={`mt-0.5 transition-opacity duration-200 ${showViewCount ? '' : 'opacity-0 group-hover:opacity-100'}`}
                         />
                     </div>
                 </div>
