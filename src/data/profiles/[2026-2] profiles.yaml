@@ -98,7 +98,7 @@
   education: {bs: "Computer Science & Engineering, Konkuk University", ms: "Computer Science & Engineering, Konkuk University", phd: null}
   academic: {year: 1, semester: 1}
   interests: [Graph ML/DL, LLM Optimization, Multimodal News Recommendation, Causal Mining, Reinforcement Learning, Fake News Detection]
-  contacts: {emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"], homepage: null, github: ["seojmm"], linkedin: ["jimyeungseo"]}
+  contacts: {emails: ["myungs8562@gmail.com", "rfyam8562@konkuk.ac.kr"], homepage: ["https://seojmm.github.io/"], github: ["seojmm"], linkedin: ["jimyeungseo"]}
   status: 
     period: {admission: "2025.03", graduation: null}
     joined: {start: "2024.06", end: "Present"}
@@ -147,7 +147,7 @@
 
 - id: "[2026.04] 박원규"
   role: {type: ms, title: M.S. Student (1학기)}
-  name: {en: Won-Gyu Park, ko: 박원규}
+  name: {en: Wongyu Park, ko: 박원규}
   education: {bs: ["Department of Information Communications Engineering, Soonchunhyang University", "Intelligent Information and Communications, Soonchunhyang University"], ms: null, phd: null}
   interests: [Graph ML/DL]
   contacts: {emails: ["parkwongyu0408@gmail.com"], homepage: null, github: ["Won-Gyu01"], linkedin: null}
